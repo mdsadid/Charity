@@ -19,7 +19,19 @@ class WebsiteController extends Controller
     function aboutUs() {
         $pageTitle = 'About Us';
 
-        return view($this->activeTheme . 'page.aboutUs');
+        return view($this->activeTheme . 'page.aboutUs', compact('pageTitle'));
+    }
+
+    function faq() {
+        $pageTitle = 'FAQ';
+
+        return view($this->activeTheme . 'page.faq', compact('pageTitle'));
+    }
+
+    function campaigns() {
+        $pageTitle = 'Campaigns';
+
+        return view($this->activeTheme . 'page.campaign', compact('pageTitle'));
     }
 
     function changeLanguage($lang = null) {

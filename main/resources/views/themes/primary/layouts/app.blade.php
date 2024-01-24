@@ -20,6 +20,17 @@
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/custom.css') }}">
 
         <style>
+            .breadcrumb::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url("{{ asset($activeThemeTrue . 'images/breadcrumb-vector.png') }}") center bottom no-repeat;
+                z-index: -1;
+            }
+
             .footer-area::after {
                 content: "";
                 position: absolute;
@@ -112,6 +123,24 @@
                 </nav>
             </div>
         </header>
+
+        @if (!request()->routeIs('home'))
+            <section class="breadcrumb bg-img" data-background-image="assets/images/thumbs/breadcrumb-bg.png">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="breadcrumb__wrapper">
+                                <h1 class="breadcrumb__title">About Us</h1>
+                                <ul class="breadcrumb__list">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li>About Us</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @endif
 
         @yield('content')
 
