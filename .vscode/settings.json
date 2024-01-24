@@ -1,0 +1,21 @@
+{
+    "laravel_goto_view.folders": {
+        "default": "/main/resources/views",
+        "js": "/main/resources/js/Pages",
+        "vendor": "/main/resources/views/vendor"
+    },
+    "cSpell.words": [
+        "bkash",
+        "endforeach",
+        "endforelse",
+        "endphp",
+        "endpush",
+        "endsection",
+        "forelse",
+        "recaptcha",
+        "Unban"
+    ],
+    "files.readonlyInclude": {
+        "**/main/vendor/**": true
+    }
+}

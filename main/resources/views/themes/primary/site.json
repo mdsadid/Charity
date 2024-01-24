@@ -1,0 +1,316 @@
+{
+    "login": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Login",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "heading": "text",
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "register": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Register",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "heading": "text",
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "email_confirm": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Email Confirmation",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "mobile_confirm": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Mobile Confirmation",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "2fa_confirm": {
+        "builder": true,
+        "no_selection":true,
+        "name": "2FA Confirmation",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "forgot_password": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Forgot Password",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "code_verification": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Code Verification",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "password_reset": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Password Reset",
+        "content": {
+            "images":{
+                "image":{
+                    "size":"775x385"
+                }
+            },
+            "form_heading": "text",
+            "submit_button_text": "text"
+        }
+    },
+    "kyc": {
+        "builder": true,
+        "no_selection":true,
+        "name": "KYC Instruction",
+        "content": {
+            "Verification_required_heading": "text",
+            "Verification_required_details": "textarea",
+            "Verification_pending_heading": "text",
+            "Verification_pending_details": "textarea"
+        }
+    },
+    "banner": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Banner Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "feature": {
+        "builder": true,
+        "name": "Feature Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "images":{
+                "background_image":{
+                    "size":"500x500",
+                    "thumb":"100x100"
+                },
+                "feature_image":{
+                    "size":"500x500",
+                    "thumb":"100x100"
+                }
+            },
+            "select":{
+                "name":"trx_type",
+                "options":{
+                  "deposit":"Deposit",
+                  "withdraw":"Withdraw"
+                }
+            },
+            "title": "text",
+            "description": "textarea",
+            "feature_icon": "icon",
+            "demo_icon": "icon",
+            "abc": "textarea-editor",
+            "modal": true
+        }
+    },
+    "about": {
+        "builder": true,
+        "name": "About Us",
+        "content": {
+            "images":{
+                "background_image":{
+                    "size":"500x500",
+                    "thumb":"100x100"
+                },
+                "about_image":{
+                    "size":"500x500",
+                    "thumb":"100x100"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "abc": "textarea-editor",
+            "about_icon": "icon"
+        }
+    },
+    "service": {
+        "builder": true,
+        "name": "Service Section",
+        "content": {
+            "select":{
+                "name":"trx_type",
+                "options":{
+                  "deposit":"Deposit",
+                  "withdraw":"Withdraw"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "select":{
+                "name":"trx_type",
+                "options":{
+                  "deposit":"Deposit",
+                  "withdraw":"Withdraw"
+                }
+            },
+            "service_icon": "icon",
+            "title": "text",
+            "description": "textarea",
+            "modal": false
+        }
+    },
+    "counter": {
+        "builder": true,
+        "name": "Counter Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "title": "text",
+            "counter_digit": "text",
+            "sub_title": "text",
+            "counter_icon": "icon",
+            "counter_icon_2": "icon",
+            "modal": true
+        }
+    },
+    "policy_pages": {
+        "builder": true,
+        "no_selection":true,
+        "name": "Policy Pages",
+        "element": {
+            "title": "text",
+            "details": "textarea-editor",
+            "modal": false
+        }
+    },
+    "faq": {
+        "builder": true,
+        "name": "FAQ Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "question": "text",
+            "answer": "textarea-editor",
+            "modal": false
+        }
+    },
+    "blog": {
+        "builder": true,
+        "name": "Blog Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "images":{
+                "blog_image_1":{
+                    "size":"728x465",
+                    "thumb":"120x80"
+                },
+                "blog_image_2":{
+                    "size":"728x465",
+                    "thumb":"120x80"
+                }
+            },
+            "title": "text",
+            "description": "textarea",
+            "description_nic": "textarea-editor",
+            "blog_icon": "icon",
+            "modal": true
+        }
+    },
+    "subscribe": {
+        "builder": true,
+        "name": "Subscribe Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "social_icon": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Social Icons",
+        "element": {
+            "title": "text",
+            "social_icon": "icon",
+            "url": "text",
+            "modal": true
+        }
+    },
+    "contact_us": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Contact Us",
+        "content": {
+            "title": "text",
+            "short_details": "text",
+            "email_address": "text",
+            "contact_details": "text",
+            "contact_number": "text",
+            "latitude": "text",
+            "longitude": "text",
+            "website_footer": "textarea-editor"
+        }
+    }
+}
