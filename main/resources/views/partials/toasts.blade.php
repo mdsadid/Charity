@@ -1,20 +1,22 @@
 <link rel="stylesheet" href="{{ asset('assets/universal/css/iziToast.min.css') }}">
 <script src="{{ asset('assets/universal/js/iziToast.min.js') }}"></script>
 
-@if(session()->has('toasts'))
-    @foreach(session('toasts') as $msg)
+@if (session()->has('toasts'))
+    @foreach (session('toasts') as $msg)
         <script>
             "use strict";
-            iziToast.{{ $msg[0] }}({message:"{{ __($msg[1]) }}", position: "topRight"});
+            iziToast.{{ $msg[0] }}({
+                message: "{{ __($msg[1]) }}",
+                position: "topRight"
+            });
         </script>
     @endforeach
 @endif
 
-
 @if (isset($errors) && $errors->any())
     @php
         $collection = collect($errors->all());
-        $errors     = $collection->unique();
+        $errors = $collection->unique();
     @endphp
 
     <script>
@@ -26,11 +28,12 @@
             });
         @endforeach
     </script>
-
 @endif
+
 <script>
     "use strict";
-    function showToasts(status,message) {
+
+    function showToasts(status, message) {
         if (typeof message == 'string') {
             iziToast[status]({
                 message: message,

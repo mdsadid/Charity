@@ -12,7 +12,14 @@ class WebsiteController extends Controller
 {
     function home() {
         $pageTitle = 'Home';
+
         return view($this->activeTheme . 'page.home', compact('pageTitle'));
+    }
+
+    function aboutUs() {
+        $pageTitle = 'About Us';
+
+        return view($this->activeTheme . 'page.aboutUs');
     }
 
     function changeLanguage($lang = null) {
@@ -88,17 +95,17 @@ class WebsiteController extends Controller
     }
 
     function placeholderImage($size = null) {
-        $imgWidth = explode('x',$size)[0];
+        $imgWidth  = explode('x',$size)[0];
         $imgHeight = explode('x',$size)[1];
-        $text = $imgWidth . '×' . $imgHeight;
-        $fontFile = realpath('assets/font/RobotoMono-Regular.ttf');
-        $fontSize = round(($imgWidth - 50) / 8);
+        $text      = $imgWidth . '×' . $imgHeight;
+        $fontFile  = realpath('assets/font/RobotoMono-Regular.ttf');
+        $fontSize  = round(($imgWidth - 50) / 8);
 
         if ($fontSize <= 9) {
             $fontSize = 9;
         }
 
-        if($imgHeight < 100 && $fontSize > 30){
+        if ($imgHeight < 100 && $fontSize > 30) {
             $fontSize = 30;
         }
 
@@ -106,7 +113,7 @@ class WebsiteController extends Controller
         $colorFill = imagecolorallocate($image, 100, 100, 100);
         $bgFill    = imagecolorallocate($image, 175, 175, 175);
         imagefill($image, 0, 0, $bgFill);
-        $textBox = imagettfbbox($fontSize, 0, $fontFile, $text);
+        $textBox    = imagettfbbox($fontSize, 0, $fontFile, $text);
         $textWidth  = abs($textBox[4] - $textBox[0]);
         $textHeight = abs($textBox[5] - $textBox[1]);
         $textX      = ($imgWidth - $textWidth) / 2;

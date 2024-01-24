@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller('WebsiteController')->group(function () {
     Route::get('/', 'home')->name('home');
+    Route::get('/about-us', 'aboutUs')->name('about.us');
     Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
 
     // Contact

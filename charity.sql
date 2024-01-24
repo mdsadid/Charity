@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 24, 2024 at 07:47 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: localhost:3306
+-- Generation Time: Jan 24, 2024 at 11:57 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `phinix`
+-- Database: `charity`
 --
 
 -- --------------------------------------------------------
@@ -28,16 +28,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admins` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `username` varchar(40) NOT NULL,
-  `contact` varchar(40) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(255) DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -56,11 +56,11 @@ INSERT INTO `admins` (`id`, `name`, `email`, `username`, `contact`, `address`, `
 --
 
 CREATE TABLE `admin_notifications` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `title` varchar(255) DEFAULT NULL,
-  `is_read` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
-  `click_url` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_read` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `click_url` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -99,10 +99,10 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 --
 
 CREATE TABLE `admin_password_resets` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(40) DEFAULT NULL,
-  `code` varchar(40) DEFAULT NULL,
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
+  `id` bigint UNSIGNED NOT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -123,12 +123,12 @@ INSERT INTO `admin_password_resets` (`id`, `email`, `code`, `status`, `created_a
 --
 
 CREATE TABLE `contacts` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -148,22 +148,22 @@ INSERT INTO `contacts` (`id`, `name`, `email`, `subject`, `message`, `status`, `
 --
 
 CREATE TABLE `deposits` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `method_code` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `method_currency` varchar(40) DEFAULT NULL,
-  `charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `rate` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `final_amo` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `detail` text DEFAULT NULL,
-  `btc_amo` varchar(255) DEFAULT NULL,
-  `btc_wallet` varchar(255) DEFAULT NULL,
-  `trx` varchar(40) DEFAULT NULL,
-  `payment_try` int(10) NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=>success, 2=>pending, 3=>cancel',
-  `from_api` tinyint(1) NOT NULL DEFAULT 0,
-  `admin_feedback` varchar(255) DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `method_code` int UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `method_currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `rate` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `final_amo` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `detail` text COLLATE utf8mb4_unicode_ci,
+  `btc_amo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `btc_wallet` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_try` int NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=>success, 2=>pending, 3=>cancel',
+  `from_api` tinyint(1) NOT NULL DEFAULT '0',
+  `admin_feedback` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -185,13 +185,13 @@ INSERT INTO `deposits` (`id`, `user_id`, `method_code`, `amount`, `method_curren
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` bigint UNSIGNED NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -201,9 +201,9 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `forms` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `act` varchar(40) DEFAULT NULL,
-  `form_data` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `act` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `form_data` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -228,17 +228,17 @@ INSERT INTO `forms` (`id`, `act`, `form_data`, `created_at`, `updated_at`) VALUE
 --
 
 CREATE TABLE `gateways` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `form_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `code` int(10) UNSIGNED DEFAULT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `alias` varchar(40) NOT NULL DEFAULT 'NULL',
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '1=>Active, 2=>Inactive',
-  `gateway_parameters` text DEFAULT NULL,
-  `supported_currencies` text DEFAULT NULL,
-  `crypto` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: fiat currency, 1: crypto currency',
-  `extra` text DEFAULT NULL,
-  `guideline` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `form_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `code` int UNSIGNED DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '1=>Active, 2=>Inactive',
+  `gateway_parameters` text COLLATE utf8mb4_unicode_ci,
+  `supported_currencies` text COLLATE utf8mb4_unicode_ci,
+  `crypto` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT '0: fiat currency, 1: crypto currency',
+  `extra` text COLLATE utf8mb4_unicode_ci,
+  `guideline` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -276,18 +276,18 @@ INSERT INTO `gateways` (`id`, `form_id`, `code`, `name`, `alias`, `status`, `gat
 --
 
 CREATE TABLE `gateway_currencies` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `currency` varchar(40) DEFAULT NULL,
-  `symbol` varchar(40) DEFAULT NULL,
-  `method_code` int(10) UNSIGNED DEFAULT NULL,
-  `gateway_alias` varchar(40) DEFAULT NULL,
-  `min_amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `max_amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `percent_charge` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `fixed_charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `rate` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `gateway_parameter` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `symbol` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `method_code` int UNSIGNED DEFAULT NULL,
+  `gateway_alias` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `min_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `max_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `percent_charge` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `fixed_charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `rate` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `gateway_parameter` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -326,10 +326,10 @@ INSERT INTO `gateway_currencies` (`id`, `name`, `currency`, `symbol`, `method_co
 --
 
 CREATE TABLE `languages` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `code` varchar(40) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -350,9 +350,9 @@ INSERT INTO `languages` (`id`, `name`, `code`, `status`, `created_at`, `updated_
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -390,15 +390,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `notification_templates` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `act` varchar(40) DEFAULT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `subj` varchar(255) DEFAULT NULL,
-  `email_body` text DEFAULT NULL,
-  `sms_body` text DEFAULT NULL,
-  `shortcodes` text DEFAULT NULL,
-  `email_status` tinyint(1) NOT NULL DEFAULT 1,
-  `sms_status` tinyint(1) NOT NULL DEFAULT 1,
+  `id` bigint UNSIGNED NOT NULL,
+  `act` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subj` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_body` text COLLATE utf8mb4_unicode_ci,
+  `sms_body` text COLLATE utf8mb4_unicode_ci,
+  `shortcodes` text COLLATE utf8mb4_unicode_ci,
+  `email_status` tinyint(1) NOT NULL DEFAULT '1',
+  `sms_status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -433,8 +433,8 @@ INSERT INTO `notification_templates` (`id`, `act`, `name`, `subj`, `email_body`,
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `code` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -452,12 +452,12 @@ INSERT INTO `password_resets` (`email`, `code`, `created_at`) VALUES
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -471,13 +471,13 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `plugins` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `act` varchar(40) NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `image` varchar(40) NOT NULL,
-  `script` text NOT NULL,
-  `shortcode` text NOT NULL COMMENT 'object',
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
+  `id` bigint UNSIGNED NOT NULL,
+  `act` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `script` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shortcode` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'object',
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -499,31 +499,31 @@ INSERT INTO `plugins` (`id`, `act`, `name`, `image`, `script`, `shortcode`, `sta
 --
 
 CREATE TABLE `settings` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `site_name` varchar(40) DEFAULT NULL,
-  `site_cur` varchar(40) DEFAULT NULL COMMENT 'site currency text',
-  `cur_sym` varchar(40) DEFAULT NULL COMMENT 'site currency symbol',
-  `email_from` varchar(40) DEFAULT NULL,
-  `email_template` text DEFAULT NULL,
-  `sms_body` varchar(255) DEFAULT NULL,
-  `sms_from` varchar(255) DEFAULT NULL,
-  `mail_config` text DEFAULT NULL,
-  `sms_config` text DEFAULT NULL,
-  `universal_shortcodes` text DEFAULT NULL,
-  `first_color` varchar(40) DEFAULT NULL,
-  `second_color` varchar(40) DEFAULT NULL,
-  `signup` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'user registration',
-  `enforce_ssl` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'enforce ssl',
-  `agree_policy` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'accept terms and policy',
-  `strong_pass` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'enforce strong password',
-  `kc` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'kyc confirmation',
-  `ec` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'email confirmation',
-  `ea` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'email alert',
-  `sc` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'sms confirmation',
-  `sa` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'sms alert',
-  `site_maintenance` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
-  `language` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
-  `active_theme` varchar(40) NOT NULL DEFAULT 'primary',
+  `id` bigint UNSIGNED NOT NULL,
+  `site_name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_cur` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'site currency text',
+  `cur_sym` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'site currency symbol',
+  `email_from` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_template` text COLLATE utf8mb4_unicode_ci,
+  `sms_body` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sms_from` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mail_config` text COLLATE utf8mb4_unicode_ci,
+  `sms_config` text COLLATE utf8mb4_unicode_ci,
+  `universal_shortcodes` text COLLATE utf8mb4_unicode_ci,
+  `first_color` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_color` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `signup` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'user registration',
+  `enforce_ssl` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'enforce ssl',
+  `agree_policy` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'accept terms and policy',
+  `strong_pass` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'enforce strong password',
+  `kc` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'kyc confirmation',
+  `ec` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'email confirmation',
+  `ea` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'email alert',
+  `sc` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'sms confirmation',
+  `sa` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'sms alert',
+  `site_maintenance` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `language` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `active_theme` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'primary',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -542,9 +542,9 @@ INSERT INTO `settings` (`id`, `site_name`, `site_cur`, `cur_sym`, `email_from`, 
 --
 
 CREATE TABLE `site_data` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `data_key` varchar(40) DEFAULT NULL,
-  `data_info` longtext DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `data_key` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data_info` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -571,8 +571,8 @@ INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_a
 --
 
 CREATE TABLE `subscribers` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(40) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -591,15 +591,15 @@ INSERT INTO `subscribers` (`id`, `email`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `transactions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `post_balance` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `trx_type` varchar(40) DEFAULT NULL,
-  `trx` varchar(40) DEFAULT NULL,
-  `details` varchar(255) DEFAULT NULL,
-  `remark` varchar(40) DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `post_balance` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `trx_type` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `details` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remark` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -626,31 +626,31 @@ INSERT INTO `transactions` (`id`, `user_id`, `amount`, `charge`, `post_balance`,
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `firstname` varchar(40) DEFAULT NULL,
-  `lastname` varchar(40) DEFAULT NULL,
-  `username` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `country_code` varchar(40) DEFAULT NULL,
-  `country_name` varchar(40) DEFAULT NULL,
-  `mobile` varchar(40) DEFAULT NULL,
-  `ref_by` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `balance` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `password` varchar(255) NOT NULL,
-  `address` text DEFAULT NULL,
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '0: banned, 1: active',
-  `kyc_data` text DEFAULT NULL,
-  `kc` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: KYC unconfirmed, 2: KYC pending, 1: KYC confirmed',
-  `ec` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: email unconfirmed, 1: email confirmed',
-  `sc` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: mobile unconfirmed, 1: mobile confirmed',
-  `ver_code` varchar(40) DEFAULT NULL COMMENT 'stores verification code',
+  `id` bigint UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `firstname` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastname` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref_by` int UNSIGNED NOT NULL DEFAULT '0',
+  `balance` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0: banned, 1: active',
+  `kyc_data` text COLLATE utf8mb4_unicode_ci,
+  `kc` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT '0: KYC unconfirmed, 2: KYC pending, 1: KYC confirmed',
+  `ec` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT '0: email unconfirmed, 1: email confirmed',
+  `sc` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT '0: mobile unconfirmed, 1: mobile confirmed',
+  `ver_code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'stores verification code',
   `ver_code_send_at` datetime DEFAULT NULL COMMENT 'verification send time',
-  `ts` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0: 2fa off, 1: 2fa on',
-  `tc` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '0: 2fa unconfirmed, 1: 2fa confirmed',
-  `tsc` varchar(255) DEFAULT NULL,
-  `ban_reason` varchar(255) DEFAULT NULL,
-  `remember_token` varchar(255) DEFAULT NULL,
+  `ts` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT '0: 2fa off, 1: 2fa on',
+  `tc` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0: 2fa unconfirmed, 1: 2fa confirmed',
+  `tsc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ban_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -675,19 +675,19 @@ INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`
 --
 
 CREATE TABLE `withdrawals` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `method_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `currency` varchar(40) DEFAULT NULL,
-  `rate` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `trx` varchar(40) DEFAULT NULL,
-  `final_amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `after_charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `withdraw_information` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=>success, 2=>pending, 3=>cancel,  ',
-  `admin_feedback` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `method_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `user_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rate` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `final_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `after_charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `withdraw_information` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=>success, 2=>pending, 3=>cancel,  ',
+  `admin_feedback` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -708,17 +708,17 @@ INSERT INTO `withdrawals` (`id`, `method_id`, `user_id`, `amount`, `currency`, `
 --
 
 CREATE TABLE `withdraw_methods` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `form_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `name` varchar(40) DEFAULT NULL,
-  `min_amount` decimal(28,8) DEFAULT 0.00000000,
-  `max_amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `fixed_charge` decimal(28,8) DEFAULT 0.00000000,
-  `rate` decimal(28,8) DEFAULT 0.00000000,
+  `id` bigint UNSIGNED NOT NULL,
+  `form_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `min_amount` decimal(28,8) DEFAULT '0.00000000',
+  `max_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `fixed_charge` decimal(28,8) DEFAULT '0.00000000',
+  `rate` decimal(28,8) DEFAULT '0.00000000',
   `percent_charge` decimal(5,2) DEFAULT NULL,
-  `currency` varchar(40) DEFAULT NULL,
-  `guideline` text DEFAULT NULL,
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
+  `currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guideline` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -882,127 +882,127 @@ ALTER TABLE `withdraw_methods`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
 --
 ALTER TABLE `admin_password_resets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `deposits`
 --
 ALTER TABLE `deposits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `gateways`
 --
 ALTER TABLE `gateways`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `gateway_currencies`
 --
 ALTER TABLE `gateway_currencies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
 --
 ALTER TABLE `notification_templates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `plugins`
 --
 ALTER TABLE `plugins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `site_data`
 --
 ALTER TABLE `site_data`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
 --
 ALTER TABLE `subscribers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`
 --
 ALTER TABLE `withdrawals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `withdraw_methods`
 --
 ALTER TABLE `withdraw_methods`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
