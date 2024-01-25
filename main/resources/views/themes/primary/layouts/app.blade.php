@@ -240,14 +240,15 @@
         @if ($cookie->data_info->status == ManageStatus::ACTIVE && !\Cookie::get('gdpr_cookie'))
             <!-- cookies dark version start -->
             <div class="cookies-card text-center hide">
-                <div class="cookies-card__icon bg--base">
-                    <i class="las la-cookie-bite"></i>
+                <div class="cookies-card__icon">
+                    <img src="{{ getImage('assets/images/cookie.png') }}" alt="cookies">
                 </div>
 
-                <p class="mt-4 cookies-card__content">{{ $cookie->data_info->short_details }} <a href="{{ route('cookie.policy') }}" target="_blank">@lang('learn more')</a></p>
+                <p class="mt-4 cookies-card__content">{{ $cookie->data_info->short_details }}</p>
 
                 <div class="cookies-card__btn mt-4">
-                    <button type="button" class="btn btn--base w-100 policy">@lang('Allow')</button>
+                    <button type="button" class="btn btn--base px-5 policy">@lang('Allow')</button>
+                    <a href="{{ route('cookie.policy') }}" target="_blank" type="button" class="text--base px-5 pt-3">@lang('Learn More')</a>
                 </div>
             </div>
             <!-- cookies dark version end -->

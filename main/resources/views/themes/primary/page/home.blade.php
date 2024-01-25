@@ -3,72 +3,34 @@
 @section('content')
     <section class="banner-section">
         <div class="banner-slider">
-            <div class="banner-slider__slide bg-img" data-background-image="assets/images/thumbs/slider-bg-1.jpg">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-lg-6 col-md-7">
-                            <div class="banner-content">
-                                <h4 class="banner-content__subtitle">Pledge for Progress</h4>
-                                <h1 class="banner-content__title">Empowering Dreams, One Backing at a Time</h1>
-                                <p class="banner-content__desc">Crowdfunding is a funding method where individuals or organizations raise small amounts of money from a large number of people, typically via online platforms.</p>
-                                <div class="banner-content__button d-flex gap-3 flex-wrap">
-                                    <a href="#" class="btn btn--base">Join With Us</a>
-                                    <a href="#" class="btn btn--base">Explore Campaign</a>
+            @foreach ($bannerElements as $banner)
+                <div class="banner-slider__slide bg-img" data-background-image="{{ getImage('assets/images/site/banner/' . @$banner->data_info->background_image, '1920x1080') }}">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-lg-6 col-md-7">
+                                <div class="banner-content">
+                                    <h4 class="banner-content__subtitle">{{ __(@$banner->data_info->title) }}</h4>
+                                    <h1 class="banner-content__title">{{ __(@$banner->data_info->heading) }}</h1>
+                                    <p class="banner-content__desc">{{ __(@$banner->data_info->short_description) }}</p>
+                                    <div class="banner-content__button d-flex gap-3 flex-wrap">
+                                        <a href="{{ @$banner->data_info->first_button_url }}" class="btn btn--base" target="_blank">
+                                            {{ __(@$banner->data_info->first_button_text) }}
+                                        </a>
+                                        <a href="{{ @$banner->data_info->second_button_url }}" class="btn btn--base" target="_blank">
+                                            {{ __(@$banner->data_info->second_button_text) }}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-5 col-sm-10">
-                            <div class="banner-img">
-                                <img src="assets/images/thumbs/slider-bg-1.jpg" alt="image">
+                            <div class="col-lg-6 col-md-5 col-sm-10">
+                                <div class="banner-img">
+                                    <img src="{{ getImage('assets/images/site/banner/' . @$banner->data_info->background_image, '1920x1080') }}" alt="image">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="banner-slider__slide bg-img" data-background-image="assets/images/thumbs/slider-bg-2.jpg">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-lg-6 col-md-7">
-                            <div class="banner-content">
-                                <h4 class="banner-content__subtitle">Join the Backing Revolution</h4>
-                                <h1 class="banner-content__title">Backing Visionaries, Building Tomorrow</h1>
-                                <p class="banner-content__desc">Crowdfunding is a funding method where individuals or organizations raise small amounts of money from a large number of people, typically via online platforms.</p>
-                                <div class="banner-content__button d-flex gap-3 flex-wrap">
-                                    <a href="#" class="btn btn--base">Join With Us</a>
-                                    <a href="#" class="btn btn--base">Explore Campaign</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-5 col-sm-10">
-                            <div class="banner-img">
-                                <img src="assets/images/thumbs/slider-bg-2.jpg" alt="image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="banner-slider__slide bg-img" data-background-image="assets/images/thumbs/slider-bg-3.jpg">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-lg-6 col-md-7">
-                            <div class="banner-content">
-                                <h4 class="banner-content__subtitle">Back, Believe, Build</h4>
-                                <h1 class="banner-content__title">Where Ideas Take Flight, Fueled by You</h1>
-                                <p class="banner-content__desc">Crowdfunding is a funding method where individuals or organizations raise small amounts of money from a large number of people, typically via online platforms.</p>
-                                <div class="banner-content__button d-flex gap-3 flex-wrap">
-                                    <a href="#" class="btn btn--base">Join With Us</a>
-                                    <a href="#" class="btn btn--base">Explore Campaign</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-5 col-sm-10">
-                            <div class="banner-img">
-                                <img src="assets/images/thumbs/slider-bg-3.jpg" alt="image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
     <div class="about pt-120 pb-60">
@@ -76,31 +38,32 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-xxl-6 col-md-5">
                     <div class="about__img" data-aos="fade-up" data-aos-duration="1500">
-                        <img src="assets/images/thumbs/about-img.png" alt="Image">
+                        <img src="{{ getImage('assets/images/site/about/' . @$aboutUsContent->data_info->image, '655x690') }}" alt="Image">
                     </div>
                 </div>
                 <div class="col-xxl-5 col-lg-6 col-md-7">
                     <div class="about__content" data-aos="fade-up" data-aos-duration="1500">
                         <div class="section-heading">
-                            <h2 class="section-heading__title">Together We Fund, Together We Flourish</h2>
+                            <h2 class="section-heading__title">{{ __(@$aboutUsContent->data_info->heading) }}</h2>
                         </div>
-                        <p class="about__desc">Welcome to our community, where our mantra is simple yet powerful: "Together We Fund, Together We Flourish." We believe that collective generosity cultivates flourishing outcomes.</p>
+                        <p class="about__desc">{{ __(@$aboutUsContent->data_info->description) }}</p>
                         <div class="row about__card-row g-4">
                             <div class="col-sm-6">
                                 <div class="about__card">
                                     <div class="counter">$ <span class="odometer" data-count="12000">0</span></div>
-                                    <span class="name">Total Fund Raised</span>
+                                    <span class="name">@lang('Total Fund Raised')</span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="about__card">
                                     <div class="counter"><span class="odometer" data-count="150">0</span>+</div>
-                                    <span class="name">Total Causes</span>
+                                    <span class="name">@lang('Total Causes')</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="about__desc">Join us on this journey of shared purpose, as every contribution sows the seeds for a thriving, interconnected future.</p>
-                        <a href="about.html" class="btn btn--base">Learn More</a>
+                        <a href="{{ @$aboutUsContent->data_info->button_url }}" class="btn btn--base" target="_blank">
+                            {{ __(@$aboutUsContent->data_info->button_text) }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -111,8 +74,8 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">Featured Campaign</h2>
-                        <p class="section-heading__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.</p>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$featuredCampaignContent->data_info->section_heading) }}</h2>
+                        <p class="section-heading__desc">{{ __(@$featuredCampaignContent->data_info->description) }}</p>
                     </div>
                 </div>
             </div>
@@ -336,131 +299,54 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">Discover Our Volunteer</h2>
-                        <p class="section-heading__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.</p>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$volunteerContent->data_info->section_heading) }}</h2>
+                        <p class="section-heading__desc">{{ __(@$volunteerContent->data_info->description) }}</p>
                     </div>
                 </div>
             </div>
             <div class="row g-4 justify-content-center">
-                <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="volunteer__card">
-                        <div class="volunteer__img">
-                            <img src="assets/images/thumbs/volunteer-1.jpg" alt="image">
-                        </div>
-                        <div class="volunteer__txt">
-                            <h3 class="volunteer__name">John Doe</h3>
-                            <ul>
-                                <li>
-                                    <span>Participate:</span>
-                                    10 Campaigns
-                                </li>
-                                <li>
-                                    <span>From:</span>
-                                    Bangladesh
-                                </li>
-                                <li>
-                                    <span>Social:</span>
-                                    <div class="social">
-                                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="volunteer__card">
-                        <div class="volunteer__img">
-                            <img src="assets/images/thumbs/volunteer-2.jpg" alt="image">
-                        </div>
-                        <div class="volunteer__txt">
-                            <h3 class="volunteer__name">John Doe</h3>
-                            <ul>
-                                <li>
-                                    <span>Participate:</span>
-                                    10 Campaigns
-                                </li>
-                                <li>
-                                    <span>From:</span>
-                                    Bangladesh
-                                </li>
-                                <li>
-                                    <span>Social:</span>
-                                    <div class="social">
-                                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                    </div>
-                                </li>
-                            </ul>
+                @foreach ($volunteerElements as $volunteer)
+                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="volunteer__card">
+                            <div class="volunteer__img">
+                                <img src="{{ getImage('assets/images/site/volunteer/' . @$volunteer->data_info->volunteer_image, '305x350') }}" alt="image">
+                            </div>
+                            <div class="volunteer__txt">
+                                <h3 class="volunteer__name">{{ __(@$volunteer->data_info->name) }}</h3>
+                                <ul>
+                                    <li>
+                                        <span>@lang('Participate'):</span>
+                                        {{ @$volunteer->data_info->participated }} @lang('Campaigns')
+                                    </li>
+                                    <li>
+                                        <span>@lang('From'):</span>
+                                        {{ __(@$volunteer->data_info->from) }}
+                                    </li>
+                                    <li>
+                                        <span>@lang('Social'):</span>
+                                        <div class="social">
+                                            <a href="{{ @$volunteer->data_info->facebook }}" target="_blank">
+                                                <i class="fa-brands fa-facebook-f"></i>
+                                            </a>
+                                            <a href="{{ @$volunteer->data_info->twitter }}" target="_blank">
+                                                <i class="fa-brands fa-x-twitter"></i>
+                                            </a>
+                                            <a href="{{ @$volunteer->data_info->instagram }}" target="_blank">
+                                                <i class="fa-brands fa-instagram"></i>
+                                            </a>
+                                            <a href="{{ @$volunteer->data_info->linkedin }}" target="_blank">
+                                                <i class="fa-brands fa-linkedin-in"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="volunteer__card">
-                        <div class="volunteer__img">
-                            <img src="assets/images/thumbs/volunteer-3.jpg" alt="image">
-                        </div>
-                        <div class="volunteer__txt">
-                            <h3 class="volunteer__name">John Doe</h3>
-                            <ul>
-                                <li>
-                                    <span>Participate:</span>
-                                    10 Campaigns
-                                </li>
-                                <li>
-                                    <span>From:</span>
-                                    Bangladesh
-                                </li>
-                                <li>
-                                    <span>Social:</span>
-                                    <div class="social">
-                                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="volunteer__card">
-                        <div class="volunteer__img">
-                            <img src="assets/images/thumbs/volunteer-4.jpg" alt="image">
-                        </div>
-                        <div class="volunteer__txt">
-                            <h3 class="volunteer__name">John Doe</h3>
-                            <ul>
-                                <li>
-                                    <span>Participate:</span>
-                                    10 Campaigns
-                                </li>
-                                <li>
-                                    <span>From:</span>
-                                    Bangladesh
-                                </li>
-                                <li>
-                                    <span>Social:</span>
-                                    <div class="social">
-                                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="d-flex justify-content-center pt-lg-5 pt-4" data-aos="fade-up" data-aos-duration="1500">
-                <a href="volunteer.html" class="btn btn--base">See All Volunteer</a>
+                <a href="volunteer.html" class="btn btn--base">@lang('See All Volunteer')</a>
             </div>
         </div>
     </div>
@@ -664,13 +550,16 @@
     <div class="counter-section py-60">
         <div class="container">
             <div class="row counter-section__row g-4">
-                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="counter-section__card">
-                        <h3 class="counter-section__number odometer" data-count="1203">0</h3>
-                        <p class="counter-section__name">Total Volunteer</p>
+                @foreach ($counterElements as $counter)
+                    <div class="col-md-3 col-6" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="counter-section__card">
+                            <h3 class="counter-section__number odometer" data-count="{{ @$counter->data_info->counter_digit }}">0</h3>
+                            <p class="counter-section__name">{{ __(@$counter->data_info->title) }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-duration="1500">
+                @endforeach
+
+                {{-- <div class="col-md-3 col-6" data-aos="fade-up" data-aos-duration="1500">
                     <div class="counter-section__card">
                         <h3 class="counter-section__number odometer" data-count="3627">0</h3>
                         <p class="counter-section__name">Total Volunteer</p>
@@ -687,7 +576,7 @@
                         <h3 class="counter-section__number odometer" data-count="1596">0</h3>
                         <p class="counter-section__name">Total Volunteer</p>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -819,3 +708,37 @@
         </div>
     </div>
 @endsection
+
+@push('page-style')
+    <style>
+        .banner-img::after {
+            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
+            mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
+        }
+
+        .banner-img img {
+            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
+            background: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
+            mask-image: image(url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}"));
+        }
+
+        .about::after {
+            content: "";
+            position: absolute;
+            bottom: 100px;
+            right: 70px;
+            width: 100px;
+            height: 100px;
+            background: url("{{ asset($activeThemeTrue . 'images/animation-vector-1.png') }}") center center no-repeat;
+            background-size: contain;
+            opacity: 0.2;
+            animation: bounceNormal 5s linear infinite;
+            z-index: -1;
+        }
+
+        .counter-section__card {
+            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
+            mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
+        }
+    </style>
+@endpush

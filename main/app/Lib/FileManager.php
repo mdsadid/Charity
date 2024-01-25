@@ -134,7 +134,6 @@ class FileManager
         }
     }
 
-
     /**
      * Upload the file if this is not a image
      *

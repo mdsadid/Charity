@@ -119,7 +119,7 @@ function paginateLinks($data) {
 }
 
 function keyToTitle($text) {
-    return ucfirst(preg_replace("/[^A-Za-z0-9 ]/", ' ', $text));
+    return ucwords(preg_replace("/[^A-Za-z0-9 ]/", ' ', $text));
 }
 
 function titleToKey($text) {

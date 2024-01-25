@@ -11,15 +11,22 @@ use Illuminate\Support\Facades\Cookie;
 class WebsiteController extends Controller
 {
     function home() {
-        $pageTitle = 'Home';
+        $pageTitle               = 'Home';
+        $bannerElements          = getSiteData('banner.element', false, null, true);
+        $aboutUsContent          = getSiteData('about.content', true);
+        $featuredCampaignContent = getSiteData('featured_campaign.content', true);
+        $volunteerContent        = getSiteData('volunteer.content', true);
+        $volunteerElements       = getSiteData('volunteer.element', false, null, true);
+        $counterElements         = getSiteData('counter.element', false, null, true);
 
-        return view($this->activeTheme . 'page.home', compact('pageTitle'));
+        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements'));
     }
 
     function aboutUs() {
-        $pageTitle = 'About Us';
+        $pageTitle      = 'About Us';
+        $aboutUsContent = getSiteData('about.content', true);
 
-        return view($this->activeTheme . 'page.aboutUs', compact('pageTitle'));
+        return view($this->activeTheme . 'page.aboutUs', compact('pageTitle', 'aboutUsContent'));
     }
 
     function faq() {

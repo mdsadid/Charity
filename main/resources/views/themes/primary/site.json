@@ -1,12 +1,12 @@
 {
     "login": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Login",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "heading": "text",
@@ -16,12 +16,12 @@
     },
     "register": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Register",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "heading": "text",
@@ -31,12 +31,12 @@
     },
     "email_confirm": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Email Confirmation",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "form_heading": "text",
@@ -45,12 +45,12 @@
     },
     "mobile_confirm": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Mobile Confirmation",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "form_heading": "text",
@@ -59,12 +59,12 @@
     },
     "2fa_confirm": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "2FA Confirmation",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "form_heading": "text",
@@ -73,12 +73,12 @@
     },
     "forgot_password": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Forgot Password",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "form_heading": "text",
@@ -87,12 +87,12 @@
     },
     "code_verification": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Code Verification",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "form_heading": "text",
@@ -101,12 +101,12 @@
     },
     "password_reset": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Password Reset",
         "content": {
-            "images":{
-                "image":{
-                    "size":"775x385"
+            "images": {
+                "image": {
+                    "size": "775x385"
                 }
             },
             "form_heading": "text",
@@ -115,7 +115,7 @@
     },
     "kyc": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "KYC Instruction",
         "content": {
             "Verification_required_heading": "text",
@@ -126,87 +126,102 @@
     },
     "banner": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Banner Section",
-        "content": {
-            "heading": "text",
-            "subheading": "text"
-        }
-    },
-    "feature": {
-        "builder": true,
-        "name": "Feature Section",
-        "content": {
-            "heading": "text",
-            "subheading": "text"
-        },
         "element": {
-            "images":{
-                "background_image":{
-                    "size":"500x500",
-                    "thumb":"100x100"
-                },
-                "feature_image":{
-                    "size":"500x500",
-                    "thumb":"100x100"
-                }
-            },
-            "select":{
-                "name":"trx_type",
-                "options":{
-                  "deposit":"Deposit",
-                  "withdraw":"Withdraw"
+            "images": {
+                "background_image": {
+                    "size": "1920x1080"
                 }
             },
             "title": "text",
-            "description": "textarea",
-            "feature_icon": "icon",
-            "demo_icon": "icon",
-            "abc": "textarea-editor",
-            "modal": true
+            "heading": "text",
+            "short_description": "textarea",
+            "first_button_text": "text",
+            "first_button_url": "text",
+            "second_button_text": "text",
+            "second_button_url": "text",
+            "modal": false
         }
     },
     "about": {
         "builder": true,
         "name": "About Us",
         "content": {
-            "images":{
-                "background_image":{
-                    "size":"500x500",
-                    "thumb":"100x100"
+            "images": {
+                "background_image": {
+                    "size": "1920x1080"
                 },
-                "about_image":{
-                    "size":"500x500",
-                    "thumb":"100x100"
+                "image": {
+                    "size": "655x690"
                 }
             },
             "heading": "text",
-            "subheading": "text",
             "description": "textarea",
-            "abc": "textarea-editor",
-            "about_icon": "icon"
+            "button_text": "text",
+            "button_url": "text"
+        }
+    },
+    "featured_campaign": {
+        "builder": true,
+        "name": "Featured Campaign Section",
+        "content": {
+            "section_heading": "text",
+            "description": "textarea"
+        }
+    },
+    "volunteer": {
+        "builder": true,
+        "name": "Volunteer Section",
+        "content": {
+            "section_heading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "images": {
+                "volunteer_image": {
+                    "size": "305x350"
+                }
+            },
+            "name": "text",
+            "participated": "text",
+            "from": "text",
+            "facebook": "text",
+            "twitter": "text",
+            "instagram": "text",
+            "linkedin": "text",
+            "modal": false
+        }
+    },
+    "counter": {
+        "builder": true,
+        "name": "Counter Section",
+        "element": {
+            "title": "text",
+            "counter_digit": "text",
+            "modal": true
         }
     },
     "service": {
         "builder": true,
         "name": "Service Section",
         "content": {
-            "select":{
-                "name":"trx_type",
-                "options":{
-                  "deposit":"Deposit",
-                  "withdraw":"Withdraw"
+            "select": {
+                "name": "trx_type",
+                "options": {
+                    "deposit": "Deposit",
+                    "withdraw": "Withdraw"
                 }
             },
             "heading": "text",
             "subheading": "text"
         },
         "element": {
-            "select":{
-                "name":"trx_type",
-                "options":{
-                  "deposit":"Deposit",
-                  "withdraw":"Withdraw"
+            "select": {
+                "name": "trx_type",
+                "options": {
+                    "deposit": "Deposit",
+                    "withdraw": "Withdraw"
                 }
             },
             "service_icon": "icon",
@@ -215,25 +230,9 @@
             "modal": false
         }
     },
-    "counter": {
-        "builder": true,
-        "name": "Counter Section",
-        "content": {
-            "heading": "text",
-            "subheading": "text"
-        },
-        "element": {
-            "title": "text",
-            "counter_digit": "text",
-            "sub_title": "text",
-            "counter_icon": "icon",
-            "counter_icon_2": "icon",
-            "modal": true
-        }
-    },
     "policy_pages": {
         "builder": true,
-        "no_selection":true,
+        "no_selection": true,
         "name": "Policy Pages",
         "element": {
             "title": "text",
@@ -262,14 +261,14 @@
             "subheading": "text"
         },
         "element": {
-            "images":{
-                "blog_image_1":{
-                    "size":"728x465",
-                    "thumb":"120x80"
+            "images": {
+                "blog_image_1": {
+                    "size": "728x465",
+                    "thumb": "120x80"
                 },
-                "blog_image_2":{
-                    "size":"728x465",
-                    "thumb":"120x80"
+                "blog_image_2": {
+                    "size": "728x465",
+                    "thumb": "120x80"
                 }
             },
             "title": "text",
