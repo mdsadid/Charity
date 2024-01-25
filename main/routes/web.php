@@ -7,6 +7,8 @@ Route::controller('WebsiteController')->group(function () {
     Route::get('about-us', 'aboutUs')->name('about.us');
     Route::get('faq', 'faq')->name('faq');
     Route::get('campaign', 'campaigns')->name('campaign');
+    Route::get('event', 'events')->name('event');
+    Route::get('contact', 'contact')->name('contact');
 
     Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
 

@@ -12,9 +12,8 @@ use App\Notify\Notify;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-function systemDetails()
-{
-    $system['name']          = 'Phinix Admin';
+function systemDetails() {
+    $system['name']          = 'Charity Admin';
     $system['version']       = '1.0';
     $system['build_version'] = '0.0.1';
     return $system;
@@ -23,8 +22,8 @@ function systemDetails()
 function verificationCode($length) {
     if ($length <= 0) return 0;
     $min = pow(10, $length - 1);
-    $max = (int) ($min - 1).'9';
-    return random_int($min,$max);
+    $max = (int) ($min - 1) . '9';
+    return random_int($min, $max);
 }
 
 function navigationActive($routeName, $type = null, $param = null) {
@@ -53,7 +52,9 @@ function bs($fieldName = null) {
         cache()->put('setting', $setting);
     }
 
-    if ($fieldName) { return @$setting->$fieldName; }
+    if ($fieldName) {
+        return @$setting->$fieldName;
+    }
 
     return $setting;
 }
@@ -283,7 +284,7 @@ function verifyG2fa($user, $code, $secret = null) {
     if ($oneCode == $userCode) {
         $user->tc = ManageStatus::YES;
         $user->save();
-        
+
         return true;
     } else {
         return false;
@@ -298,7 +299,7 @@ function getTrx($length = 12) {
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
-    
+
     return $randomString;
 }
 
@@ -341,13 +342,13 @@ function appendQuery($key, $value) {
     return request()->fullUrlWithQuery([$key => $value]);
 }
 
-function strLimit($title = null, $length = 10)
-{
+function strLimit($title = null, $length = 10) {
     return Str::limit($title, $length);
 }
 
 function ordinal($number) {
     $ends = array('th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th');
+
     if ((($number % 100) >= 11) && (($number % 100) <= 13))
         return $number . 'th';
     else

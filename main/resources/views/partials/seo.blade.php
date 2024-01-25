@@ -1,5 +1,5 @@
 @if ($seo)
-    <meta name="title" Content="{{ $setting->siteName(__($pageTitle)) }}">
+    <meta name="title" content="{{ $setting->siteName(__($pageTitle)) }}">
     <meta name="description" content="{{ $seo->description }}">
     <meta name="keywords" content="{{ implode(',', $seo->keywords) }}">
     <link rel="shortcut icon" href="{{ getImage(getFilePath('logoFavicon') . '/favicon.png') }}" type="image/x-icon">

@@ -63,7 +63,9 @@
         <header class="header" id="header">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand logo" href="index.html"><img src="assets/images/logo/logo1.png" alt=""></a>
+                    <a class="navbar-brand logo" href="{{ route('home') }}">
+                        <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_light.png') }}" alt="logo">
+                    </a>
                     <button class="navbar-toggler header-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span id="hiddenNav"><i class="las la-bars"></i></span>
                     </button>
@@ -88,22 +90,22 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
+                                <a class="nav-link" href="{{ route('home') }}">@lang('Home')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="about.html">About</a>
+                                <a class="nav-link" href="{{ route('about.us') }}">@lang('About Us')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="faq.html">Faq</a>
+                                <a class="nav-link" href="{{ route('faq') }}">@lang('FAQ')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="donation.html">Campaigns</a>
+                                <a class="nav-link" href="{{ route('campaign') }}">@lang('Campaigns')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="event.html">Events</a>
+                                <a class="nav-link" href="{{ route('event') }}">@lang('Events')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact</a>
+                                <a class="nav-link" href="{{ route('contact') }}">@lang('Contact')</a>
                             </li>
                             <li class="nav-item d-lg-block d-none">
                                 <div class="d-flex gap-2">

@@ -34,41 +34,10 @@ class WebsiteController extends Controller
         return view($this->activeTheme . 'page.campaign', compact('pageTitle'));
     }
 
-    function changeLanguage($lang = null) {
-        $language = Language::where('code', $lang)->first();
+    function events() {
+        $pageTitle = 'Events';
 
-        if (!$language) $lang = 'en';
-        session()->put('lang', $lang);
-        return back();
-    }
-
-    function cookieAccept() {
-        Cookie::queue('gdpr_cookie', bs('site_name'), 43200);
-    }
-
-    function cookiePolicy() {
-        $pageTitle = 'Cookie Policy';
-        $cookie    = SiteData::where('data_key', 'cookie.data')->first();
-
-        return view($this->activeTheme . 'page.cookie',compact('pageTitle', 'cookie'));
-    }
-
-    function maintenance() {
-        if(bs('site_maintenance') == ManageStatus::INACTIVE) {
-            return to_route('home');
-        }
-
-        $maintenance = SiteData::where('data_key', 'maintenance.data')->first();
-        $pageTitle   = $maintenance->data_info->heading;
-
-        return view($this->activeTheme . 'page.maintenance', compact('pageTitle', 'maintenance'));
-    }
-
-    public function policyPages($slug,$id) {
-        $policy    = SiteData::where('id', $id)->where('data_key', 'policy_pages.element')->firstOrFail();
-        $pageTitle = $policy->data_info->title;
-
-        return view($this->activeTheme . 'page.policy', compact('policy', 'pageTitle'));
+        return view($this->activeTheme . 'page.event', compact('pageTitle'));
     }
 
     function contact() {
@@ -101,9 +70,46 @@ class WebsiteController extends Controller
         $contact->subject = request('subject');
         $contact->message = request('message');
         $contact->save();
-        
+
         $toast[] = ['success', 'We register this contact in our record, kindly await the admin\'s response'];
         return back()->withToasts($toast);
+    }
+
+    function changeLanguage($lang = null) {
+        $language = Language::where('code', $lang)->first();
+
+        if (!$language) $lang = 'en';
+        session()->put('lang', $lang);
+        return back();
+    }
+
+    function cookieAccept() {
+        Cookie::queue('gdpr_cookie', bs('site_name'), 43200);
+    }
+
+    function cookiePolicy() {
+        $pageTitle = 'Cookie Policy';
+        $cookie    = SiteData::where('data_key', 'cookie.data')->first();
+
+        return view($this->activeTheme . 'page.cookie',compact('pageTitle', 'cookie'));
+    }
+
+    function maintenance() {
+        if(bs('site_maintenance') == ManageStatus::INACTIVE) {
+            return to_route('home');
+        }
+
+        $maintenance = SiteData::where('data_key', 'maintenance.data')->first();
+        $pageTitle   = $maintenance->data_info->heading;
+
+        return view($this->activeTheme . 'page.maintenance', compact('pageTitle', 'maintenance'));
+    }
+
+    function policyPages($slug,$id) {
+        $policy    = SiteData::where('id', $id)->where('data_key', 'policy_pages.element')->firstOrFail();
+        $pageTitle = $policy->data_info->title;
+
+        return view($this->activeTheme . 'page.policy', compact('policy', 'pageTitle'));
     }
 
     function placeholderImage($size = null) {
