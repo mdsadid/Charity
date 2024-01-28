@@ -52,10 +52,12 @@ class WebsiteController extends Controller
     }
 
     function contact() {
-        $pageTitle = 'Contact';
-        $user      = auth()->user();
+        $pageTitle       = 'Contact';
+        $user            = auth()->user();
+        $contactContent  = getSiteData('contact_us.content', true);
+        $contactElements = getSiteData('contact_us.element', false, null, true);
 
-        return view($this->activeTheme . 'page.contact', compact('pageTitle', 'user'));
+        return view($this->activeTheme . 'page.contact', compact('pageTitle', 'user', 'contactContent', 'contactElements'));
     }
 
     function contactStore() {
@@ -82,7 +84,7 @@ class WebsiteController extends Controller
         $contact->message = request('message');
         $contact->save();
 
-        $toast[] = ['success', 'We register this contact in our record, kindly await the admin\'s response'];
+        $toast[] = ['success', 'We have received your message, kindly wait for the admin\'s response'];
         return back()->withToasts($toast);
     }
 

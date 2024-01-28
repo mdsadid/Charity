@@ -217,6 +217,25 @@
             "modal": false
         }
     },
+    "contact_us": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Contact Us Section",
+        "content": {
+            "heading": "text",
+            "description": "textarea",
+            "form_heading": "text",
+            "form_button_name": "text",
+            "latitude": "text",
+            "longitude": "text"
+        },
+        "element": {
+            "icon": "icon",
+            "heading": "text",
+            "data": "text",
+            "modal": true
+        }
+    },
     "featured_campaign": {
         "builder": true,
         "name": "Featured Campaign Section",
@@ -282,7 +301,7 @@
             "service_icon": "icon",
             "title": "text",
             "description": "textarea",
-            "modal": false
+            "modal": true
         }
     },
     "policy_pages": {
@@ -337,21 +356,6 @@
             "social_icon": "icon",
             "url": "text",
             "modal": true
-        }
-    },
-    "contact_us": {
-        "builder": true,
-        "no_selection": true,
-        "name": "Contact Us",
-        "content": {
-            "title": "text",
-            "short_details": "text",
-            "email_address": "text",
-            "contact_details": "text",
-            "contact_number": "text",
-            "latitude": "text",
-            "longitude": "text",
-            "website_footer": "textarea-editor"
         }
     }
 }
