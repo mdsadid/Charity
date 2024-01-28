@@ -21,19 +21,19 @@
                             <form action="" method="POST" class="row g-3">
                                 @csrf
                                 <div class="col-sm-6">
-                                    <label class="form--label">@lang('Your Full Name') <span class="text--danger">*</span></label>
+                                    <label class="form--label required">@lang('Your Full Name')</label>
                                     <input type="text" name="name" class="form--control" value="{{ old('name', @$user->fullname) }}" @readonly($user) required>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form--label">@lang('Your Email') <span class="text--danger">*</span></label>
+                                    <label class="form--label required">@lang('Your Email')</label>
                                     <input type="email" name="email" class="form--control" value="{{ old('email', @$user->email) }}" @readonly($user) required>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form--label">@lang('Subject') <span class="text--danger">*</span></label>
+                                    <label class="form--label required">@lang('Subject')</label>
                                     <input type="text" name="subject" class="form--control" value="{{ old('subject') }}" required>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form--label">@lang('Message') <span class="text--danger">*</span></label>
+                                    <label class="form--label required">@lang('Message')</label>
                                     <textarea name="message" class="form--control" rows="10" required>{{ old('message') }}</textarea>
                                 </div>
                                 <div class="col-12">

@@ -7028,8 +7028,6 @@ input[type=number] {
     width: 200px;
     height: 180px;
     background: hsl(var(--black));
-    -webkit-mask-image: url("../images/thumbs/slider-img-shape.png");
-    mask-image: url("../images/thumbs/slider-img-shape.png");
     mask-mode: match-source;
     -webkit-mask-mode: match-source;
     -webkit-mask-size: contain;

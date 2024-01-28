@@ -85,6 +85,11 @@
 
 @push('page-style')
     <style>
+        .about__img::after {
+            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape.png') }}");
+            mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape.png') }}");
+        }
+
         .about::after {
             content: "";
             position: absolute;
