@@ -347,12 +347,15 @@
             "subheading": "text"
         }
     },
-    "social_icon": {
+    "footer": {
         "builder": true,
         "no_selection": true,
-        "name": "Social Icons",
+        "name": "Footer Section",
+        "content": {
+            "footer_text": "textarea",
+            "copyright_text": "text"
+        },
         "element": {
-            "title": "text",
             "social_icon": "icon",
             "url": "text",
             "modal": true

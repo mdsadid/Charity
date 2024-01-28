@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 28, 2024 at 07:03 AM
+-- Generation Time: Jan 28, 2024 at 11:42 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -533,7 +533,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `site_name`, `site_cur`, `cur_sym`, `email_from`, `email_template`, `sms_body`, `sms_from`, `mail_config`, `sms_config`, `universal_shortcodes`, `first_color`, `second_color`, `signup`, `enforce_ssl`, `agree_policy`, `strong_pass`, `kc`, `ec`, `ea`, `sc`, `sa`, `site_maintenance`, `language`, `active_theme`, `created_at`, `updated_at`) VALUES
-(1, 'Charity', 'USD', '$', 'info@softphinix.com', '<p><strong>Hello {{fullname}} ({{username}})</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{message}}</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{site_name}}</strong>&nbsp;. All Rights Reserved.</p>', 'hi {{fullname}} ({{username}}), {{message}}', 'PhinixAdmin', '{\"name\":\"php\"}', '{\"name\":\"custom\",\"nexmo\":{\"api_key\":\"------\",\"api_secret\":\"------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"-----------------------\",\"from\":\"----------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\",\"Demo Api\"],\"value\":[\"test_api\",\"Demo Api\"]},\"body\":{\"name\":[\"from_number\",\"Demo bodyt Api\"],\"value\":[\"565754\",\"Demo body API\"]}}}', '{\r\n    \"site_name\":\"Name of your site\",\r\n    \"site_currency\":\"Currency of your site\",\r\n    \"currency_symbol\":\"Symbol of currency\"\r\n}', '1b6be6', '8d0fe9', 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 'primary', NULL, '2024-01-25 04:59:00');
+(1, 'Charity', 'USD', '$', 'info@softphinix.com', '<p><strong>Hello {{fullname}} ({{username}})</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{message}}</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{site_name}}</strong>&nbsp;. All Rights Reserved.</p>', 'hi {{fullname}} ({{username}}), {{message}}', 'PhinixAdmin', '{\"name\":\"php\"}', '{\"name\":\"custom\",\"nexmo\":{\"api_key\":\"------\",\"api_secret\":\"------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"-----------------------\",\"from\":\"----------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\",\"Demo Api\"],\"value\":[\"test_api\",\"Demo Api\"]},\"body\":{\"name\":[\"from_number\",\"Demo bodyt Api\"],\"value\":[\"565754\",\"Demo body API\"]}}}', '{\r\n    \"site_name\":\"Name of your site\",\r\n    \"site_currency\":\"Currency of your site\",\r\n    \"currency_symbol\":\"Symbol of currency\"\r\n}', '1b6be6', '8d0fe9', 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 'primary', NULL, '2024-01-28 09:38:38');
 
 -- --------------------------------------------------------
 
@@ -595,7 +595,16 @@ INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_a
 (43, 'faq.element', '{\"question\":\"Is crowdfunding only for business startups?\",\"answer\":\"No, crowdfunding is versatile and can be used for various purposes, including supporting creative projects, charitable causes, personal needs, or even product launches. It\'s not limited to business startups and has been successfully used across diverse sectors.<br \\/>\"}', '2024-01-28 06:21:14', '2024-01-28 06:21:14'),
 (44, 'faq.element', '{\"question\":\"Are there risks involved in crowdfunding?\",\"answer\":\"Yes, there are risks associated with crowdfunding. Contributors may not receive the promised rewards or returns, and projects may not be completed as planned. Due diligence is crucial for both creators and backers to minimize these risks.<br \\/>\"}', '2024-01-28 06:22:02', '2024-01-28 06:22:02'),
 (45, 'faq.element', '{\"question\":\"How do creators set crowdfunding goals?\",\"answer\":\"Creators should carefully calculate their funding needs, considering the costs associated with their project or cause. It\'s essential to set a realistic goal that covers expenses while appealing to potential backers. Unrealistic goals can lead to unsuccessful campaigns.<br \\/>\"}', '2024-01-28 06:22:33', '2024-01-28 06:22:33'),
-(46, 'faq.element', '{\"question\":\"What tips can enhance a crowdfunding campaign\'s success?\",\"answer\":\"Success often hinges on effective communication, a compelling story, and a well-thought-out marketing strategy. Engaging with the audience, offering attractive rewards, and providing regular updates can build trust and momentum for a crowdfunding campaign.<br \\/>\"}', '2024-01-28 06:23:01', '2024-01-28 06:23:01');
+(46, 'faq.element', '{\"question\":\"What tips can enhance a crowdfunding campaign\'s success?\",\"answer\":\"Success often hinges on effective communication, a compelling story, and a well-thought-out marketing strategy. Engaging with the audience, offering attractive rewards, and providing regular updates can build trust and momentum for a crowdfunding campaign.<br \\/>\"}', '2024-01-28 06:23:01', '2024-01-28 06:23:01'),
+(47, 'contact_us.content', '{\"heading\":\"Get In Touch With Us\",\"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\",\"form_heading\":\"We are waiting to hear from you\",\"form_button_name\":\"Send Message\",\"latitude\":\"23.815406\",\"longitude\":\"90.371220\"}', '2024-01-28 07:22:17', '2024-01-28 09:27:21'),
+(48, 'contact_us.element', '{\"icon\":\"<i class=\\\"fas fa-map-marker-alt\\\"><\\/i>\",\"heading\":\"Address\",\"data\":\"House - 60, Road - 20, Sector - 11, Uttara, Dhaka, Bangladesh.\"}', '2024-01-28 08:41:57', '2024-01-28 08:41:57'),
+(49, 'contact_us.element', '{\"icon\":\"<i class=\\\"fas fa-envelope\\\"><\\/i>\",\"heading\":\"Email Address\",\"data\":\"example@example.com\"}', '2024-01-28 08:44:00', '2024-01-28 08:44:00'),
+(50, 'contact_us.element', '{\"icon\":\"<i class=\\\"fas fa-phone\\\"><\\/i>\",\"heading\":\"Phone\",\"data\":\"+880 1234 567 890\"}', '2024-01-28 08:46:13', '2024-01-28 08:46:13'),
+(51, 'footer.content', '{\"footer_text\":\"Your Support, Their Dreams - Transforming Lives with us.\",\"copyright_text\":\"\\u00a9 Copyright 2024. All rights reserved.\"}', '2024-01-28 10:51:36', '2024-01-28 10:51:36'),
+(52, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-facebook-f\\\"><\\/i>\",\"url\":\"https:\\/\\/www.facebook.com\\/\"}', '2024-01-28 10:52:44', '2024-01-28 10:52:44'),
+(53, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-twitter\\\"><\\/i>\",\"url\":\"https:\\/\\/twitter.com\\/\"}', '2024-01-28 10:56:10', '2024-01-28 10:56:10'),
+(54, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-linkedin-in\\\"><\\/i>\",\"url\":\"https:\\/\\/www.linkedin.com\\/\"}', '2024-01-28 11:01:24', '2024-01-28 11:01:24'),
+(55, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-instagram\\\"><\\/i>\",\"url\":\"https:\\/\\/www.instagram.com\\/\"}', '2024-01-28 11:02:20', '2024-01-28 11:02:20');
 
 -- --------------------------------------------------------
 
@@ -933,7 +942,7 @@ ALTER TABLE `admin_password_resets`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `deposits`
@@ -1005,7 +1014,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `site_data`
 --
 ALTER TABLE `site_data`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `subscribers`

@@ -148,6 +148,12 @@
 
         @yield('content')
 
+        @php
+            $footerContent         = getSiteData('footer.content', true);
+            $footerElements        = getSiteData('footer.element', false, null, true);
+            $footerContactElements = getSiteData('contact_us.element', false, null, true);
+        @endphp
+
         <footer class="footer-area">
             <div class="pb-60 pt-60">
                 <div class="container">
@@ -155,20 +161,25 @@
                         <div class="col-xl-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
                             <div class="footer-item">
                                 <div class="footer-item__logo">
-                                    <a href="index.html"> <img src="assets/images/logo/logo1.png" alt=""></a>
+                                    <a href="{{ route('home') }}">
+                                        <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_light.png') }}" alt="footer logo">
+                                    </a>
                                 </div>
-                                <p class="footer-item__desc"> Herbal Shop brings you tons of products in over 20+ different categories, including men's fashion, women's fashion, baby fashion, and more. </p>
+                                <p class="footer-item__desc">{{ __(@$footerContent->data_info->footer_text) }}</p>
                                 <ul class="social-list">
-                                    <li class="social-list__item"><a href="https://www.facebook.com" class="social-list__link flex-center"><i class="fab fa-facebook-f"></i></a> </li>
-                                    <li class="social-list__item"><a href="https://www.twitter.com" class="social-list__link flex-center active"> <i class="fab fa-twitter"></i></a></li>
-                                    <li class="social-list__item"><a href="https://www.linkedin.com" class="social-list__link flex-center"> <i class="fab fa-linkedin-in"></i></a></li>
-                                    <li class="social-list__item"><a href="https://www.pinterest.com" class="social-list__link flex-center"> <i class="fab fa-instagram"></i></a></li>
+                                    @foreach ($footerElements as $socialInfo)
+                                        <li class="social-list__item">
+                                            <a href="{{ @$socialInfo->data_info->url }}" class="social-list__link flex-center">
+                                                @php echo @$socialInfo->data_info->social_icon @endphp
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
                             <div class="footer-item">
-                                <h5 class="footer-item__title">Userful Link</h5>
+                                <h5 class="footer-item__title">@lang('Useful Link')</h5>
                                 <ul class="footer-menu">
                                     <li class="footer-menu__item"><a href="#" class="footer-menu__link">Home</a></li>
                                     <li class="footer-menu__item"><a href="#" class="footer-menu__link">About Us </a></li>
@@ -190,33 +201,18 @@
                         </div>
                         <div class="col-xl-3 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
                             <div class="footer-item">
-                                <h5 class="footer-item__title">Contact With Us</h5>
+                                <h5 class="footer-item__title">@lang('Contact With Us')</h5>
                                 <ul class="footer-contact-menu">
-                                    <li class="footer-contact-menu__item">
-                                        <div class="footer-contact-menu__item-icon">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </div>
-                                        <div class="footer-contact-menu__item-content">
-                                            <p>15205 North Kierland Blvd.100
-                                                Old City House</p>
-                                        </div>
-                                    </li>
-                                    <li class="footer-contact-menu__item">
-                                        <div class="footer-contact-menu__item-icon">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                        <div class="footer-contact-menu__item-content">
-                                            <p>democompany@gmail.com</p>
-                                        </div>
-                                    </li>
-                                    <li class="footer-contact-menu__item">
-                                        <div class="footer-contact-menu__item-icon">
-                                            <i class="fas fa-phone"></i>
-                                        </div>
-                                        <div class="footer-contact-menu__item-content">
-                                            <p>123 - 456 - 7890 </p>
-                                        </div>
-                                    </li>
+                                    @foreach ($footerContactElements as $footerContact)
+                                        <li class="footer-contact-menu__item">
+                                            <div class="footer-contact-menu__item-icon">
+                                                @php echo $footerContact->data_info->icon @endphp
+                                            </div>
+                                            <div class="footer-contact-menu__item-content">
+                                                <p>{{ __(@$footerContact->data_info->data) }}</p>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -229,7 +225,7 @@
             <div class="bottom-footer py-3">
                 <div class="container">
                     <div class="text-center">
-                        <p class="bottom-footer__text"> &copy; Copyright 2023 . All rights reserved.</p>
+                        <p class="bottom-footer__text">{{ __(@$footerContent->data_info->copyright_text) }}</p>
                     </div>
                 </div>
             </div>
