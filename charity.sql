@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 25, 2024 at 11:54 AM
+-- Generation Time: Jan 28, 2024 at 07:03 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -575,7 +575,27 @@ INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_a
 (23, 'counter.element', '{\"title\":\"Total Volunteer\",\"counter_digit\":\"1203\"}', '2024-01-25 11:33:01', '2024-01-25 11:33:01'),
 (24, 'counter.element', '{\"title\":\"Total Volunteer\",\"counter_digit\":\"3627\"}', '2024-01-25 11:38:15', '2024-01-25 11:38:15'),
 (25, 'counter.element', '{\"title\":\"Total Volunteer\",\"counter_digit\":\"2785\"}', '2024-01-25 11:38:26', '2024-01-25 11:38:26'),
-(26, 'counter.element', '{\"title\":\"Total Volunteer\",\"counter_digit\":\"1596\"}', '2024-01-25 11:38:39', '2024-01-25 11:38:39');
+(26, 'counter.element', '{\"title\":\"Total Volunteer\",\"counter_digit\":\"1596\"}', '2024-01-25 11:38:39', '2024-01-25 11:38:39'),
+(27, 'breadcrumb.content', '{\"has_image\":\"1\",\"background_image\":\"65b24f623fe111706184546.png\"}', '2024-01-25 12:09:06', '2024-01-25 12:09:07'),
+(28, 'client_review.content', '{\"heading\":\"Client\\u2019s Review\",\"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-01-28 04:54:05', '2024-01-28 04:54:05'),
+(29, 'client_review.element', '{\"has_image\":\"1\",\"client_name\":\"Donald M. Hayman\",\"client_designation\":\"CEO & Founder\",\"client_review\":\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad quasi odit dolorem non iste itaque ratione sit quis. Animi ipsa quisquam repellendus natus eius error praesentium officia at sapiente iste.\",\"client_image\":\"65b5de61abb9a1706417761.jpg\"}', '2024-01-28 04:56:01', '2024-01-28 04:56:01'),
+(30, 'client_review.element', '{\"has_image\":\"1\",\"client_name\":\"John Doe\",\"client_designation\":\"Web Developer\",\"client_review\":\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad quasi odit dolorem non iste itaque ratione sit quis. Animi ipsa quisquam repellendus natus eius error praesentium officia at sapiente iste.\",\"client_image\":\"65b5dea35d3a51706417827.jpg\"}', '2024-01-28 04:57:07', '2024-01-28 04:57:07'),
+(31, 'client_review.element', '{\"has_image\":\"1\",\"client_name\":\"Mark Smith\",\"client_designation\":\"Web Designer\",\"client_review\":\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad quasi odit dolorem non iste itaque ratione sit quis. Animi ipsa quisquam repellendus natus eius error praesentium officia at sapiente iste.\",\"client_image\":\"65b5ded10c2a91706417873.jpg\"}', '2024-01-28 04:57:53', '2024-01-28 04:57:53'),
+(32, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea1ceb5641706420764.png\"}', '2024-01-28 05:46:04', '2024-01-28 05:46:05'),
+(33, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea2a74b941706420778.png\"}', '2024-01-28 05:46:18', '2024-01-28 05:46:18'),
+(34, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea337412f1706420787.png\"}', '2024-01-28 05:46:27', '2024-01-28 05:46:27'),
+(35, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea3d571c61706420797.png\"}', '2024-01-28 05:46:37', '2024-01-28 05:46:37'),
+(36, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea48bce621706420808.png\"}', '2024-01-28 05:46:48', '2024-01-28 05:46:48'),
+(37, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea53051e61706420819.png\"}', '2024-01-28 05:46:58', '2024-01-28 05:46:59'),
+(38, 'faq.content', '{\"heading\":\"Frequently Asked Question\",\"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-01-28 06:18:23', '2024-01-28 06:29:44'),
+(39, 'faq.element', '{\"question\":\"What is crowdfunding?\",\"answer\":\"Crowdfunding is a method of raising funds from a large number of people, typically via online platforms. It allows individuals, businesses, or organizations to present their projects, causes, or ventures to a wide audience, inviting contributions from interested individuals, known as backers or supporters.<br \\/>\"}', '2024-01-28 06:19:09', '2024-01-28 06:19:09'),
+(40, 'faq.element', '{\"question\":\"How does crowdfunding work?\",\"answer\":\"Crowdfunding involves creating a campaign that outlines the details of a project or cause, including its purpose, goals, and often, rewards for backers. Supporters can then contribute financially to the campaign through the crowdfunding platform. If the funding goal is reached within a specified timeframe, the project is funded, and funds are typically released to the campaign creator.<br \\/>\"}', '2024-01-28 06:19:39', '2024-01-28 06:19:39'),
+(41, 'faq.element', '{\"question\":\"What types of crowdfunding are there?\",\"answer\":\"There are various types of crowdfunding, including reward-based (backers receive non-financial incentives), equity-based (backers receive a share of the project), donation-based (contributors give without expecting anything in return), and debt-based (backers lend money to the project, expecting repayment with interest).<br \\/>\"}', '2024-01-28 06:20:10', '2024-01-28 06:20:10'),
+(42, 'faq.element', '{\"question\":\"What are the benefits of crowdfunding?\",\"answer\":\"Crowdfunding offers a democratized approach to funding, allowing creators to access capital from a broad audience. It also provides a platform for testing market interest, building a community around a project, and gaining early support and validation.<br \\/>\"}', '2024-01-28 06:20:40', '2024-01-28 06:20:40'),
+(43, 'faq.element', '{\"question\":\"Is crowdfunding only for business startups?\",\"answer\":\"No, crowdfunding is versatile and can be used for various purposes, including supporting creative projects, charitable causes, personal needs, or even product launches. It\'s not limited to business startups and has been successfully used across diverse sectors.<br \\/>\"}', '2024-01-28 06:21:14', '2024-01-28 06:21:14'),
+(44, 'faq.element', '{\"question\":\"Are there risks involved in crowdfunding?\",\"answer\":\"Yes, there are risks associated with crowdfunding. Contributors may not receive the promised rewards or returns, and projects may not be completed as planned. Due diligence is crucial for both creators and backers to minimize these risks.<br \\/>\"}', '2024-01-28 06:22:02', '2024-01-28 06:22:02'),
+(45, 'faq.element', '{\"question\":\"How do creators set crowdfunding goals?\",\"answer\":\"Creators should carefully calculate their funding needs, considering the costs associated with their project or cause. It\'s essential to set a realistic goal that covers expenses while appealing to potential backers. Unrealistic goals can lead to unsuccessful campaigns.<br \\/>\"}', '2024-01-28 06:22:33', '2024-01-28 06:22:33'),
+(46, 'faq.element', '{\"question\":\"What tips can enhance a crowdfunding campaign\'s success?\",\"answer\":\"Success often hinges on effective communication, a compelling story, and a well-thought-out marketing strategy. Engaging with the audience, offering attractive rewards, and providing regular updates can build trust and momentum for a crowdfunding campaign.<br \\/>\"}', '2024-01-28 06:23:01', '2024-01-28 06:23:01');
 
 -- --------------------------------------------------------
 
@@ -985,7 +1005,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `site_data`
 --
 ALTER TABLE `site_data`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `subscribers`

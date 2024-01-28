@@ -32,9 +32,11 @@ class WebsiteController extends Controller
     }
 
     function faq() {
-        $pageTitle = 'FAQ';
+        $pageTitle   = 'FAQ';
+        $faqContent  = getSiteData('faq.content', true);
+        $faqElements = getSiteData('faq.element', false, null, true);
 
-        return view($this->activeTheme . 'page.faq', compact('pageTitle'));
+        return view($this->activeTheme . 'page.faq', compact('pageTitle', 'faqContent', 'faqElements'));
     }
 
     function campaigns() {

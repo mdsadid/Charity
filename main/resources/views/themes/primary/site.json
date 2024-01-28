@@ -204,6 +204,19 @@
             "modal": true
         }
     },
+    "faq": {
+        "builder": true,
+        "name": "FAQ Section",
+        "content": {
+            "heading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "question": "text",
+            "answer": "textarea-editor",
+            "modal": false
+        }
+    },
     "featured_campaign": {
         "builder": true,
         "name": "Featured Campaign Section",
@@ -279,19 +292,6 @@
         "element": {
             "title": "text",
             "details": "textarea-editor",
-            "modal": false
-        }
-    },
-    "faq": {
-        "builder": true,
-        "name": "FAQ Section",
-        "content": {
-            "heading": "text",
-            "subheading": "text"
-        },
-        "element": {
-            "question": "text",
-            "answer": "textarea-editor",
             "modal": false
         }
     },
