@@ -144,9 +144,20 @@
             "modal": false
         }
     },
+    "breadcrumb": {
+        "builder": true,
+        "name": "Breadcrumb",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1920x700"
+                }
+            }
+        }
+    },
     "about": {
         "builder": true,
-        "name": "About Us",
+        "name": "About Us Section",
         "content": {
             "images": {
                 "background_image": {
@@ -160,6 +171,37 @@
             "description": "textarea",
             "button_text": "text",
             "button_url": "text"
+        }
+    },
+    "client_review": {
+        "builder": true,
+        "name": "Client Review Section",
+        "content": {
+            "heading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "images": {
+                "client_image": {
+                    "size": "500x500"
+                }
+            },
+            "client_name": "text",
+            "client_designation": "text",
+            "client_review": "textarea",
+            "modal": true
+        }
+    },
+    "partner": {
+        "builder": true,
+        "name": "Partner Section",
+        "element": {
+            "images": {
+                "image": {
+                    "size": "200x45"
+                }
+            },
+            "modal": true
         }
     },
     "featured_campaign": {

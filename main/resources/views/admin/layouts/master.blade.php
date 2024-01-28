@@ -26,19 +26,14 @@
 
                     <footer class="content-footer footer bg-footer-theme border-top">
                         <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                          <div class="mb-2 mb-md-0">
-                            <b class="text-primary">{{ __(systemDetails()['name']) }}</b>
-                            , @lang('Version') <b class="text-primary">{{ systemDetails()['version'] }}</b> ,
-                            © <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                          </div>
+                            <div class="mb-2 mb-md-0">
+                                <b class="text-primary">{{ __(systemDetails()['name']) }}</b>, @lang('Version') <b class="text-primary">{{ systemDetails()['version'] }}</b>, © <script>document.write(new Date().getFullYear())</script>
+                            </div>
                         </div>
                     </footer>
                 </div>
             </div>
         </div>
-
 
         <div class="layout-overlay layout-menu-toggle"></div>
         <div class="drag-target"></div>
@@ -46,5 +41,5 @@
 @endsection
 
 @push('page-script-lib')
-    <script src="{{asset('assets/admin/js/page/menu.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/page/menu.js') }}"></script>
 @endpush

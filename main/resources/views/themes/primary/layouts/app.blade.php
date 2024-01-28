@@ -127,15 +127,17 @@
         </header>
 
         @if (!request()->routeIs('home'))
-            <section class="breadcrumb bg-img" data-background-image="assets/images/thumbs/breadcrumb-bg.png">
+            @php $breadcrumbContent = getSiteData('breadcrumb.content', true); @endphp
+
+            <section class="breadcrumb bg-img" data-background-image="{{ getImage('assets/images/site/breadcrumb/' . $breadcrumbContent->data_info->background_image, '1920x700') }}">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <div class="breadcrumb__wrapper">
-                                <h1 class="breadcrumb__title">About Us</h1>
+                                <h1 class="breadcrumb__title">{{ $pageTitle }}</h1>
                                 <ul class="breadcrumb__list">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>About Us</li>
+                                    <li><a href="{{ route('home') }}">@lang('Home')</a></li>
+                                    <li>{{ $pageTitle }}</li>
                                 </ul>
                             </div>
                         </div>

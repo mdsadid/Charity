@@ -128,7 +128,9 @@ function titleToKey($text) {
 
 function activeTheme($asset = false) {
     $theme = bs('active_theme');
+
     if ($asset) return 'assets/themes/' . $theme . '/';
+
     return 'themes.' . $theme . '.';
 }
 

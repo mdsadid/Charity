@@ -25,8 +25,10 @@ class WebsiteController extends Controller
     function aboutUs() {
         $pageTitle      = 'About Us';
         $aboutUsContent = getSiteData('about.content', true);
+        $clientContent  = getSiteData('client_review.content', true);
+        $clientElements = getSiteData('client_review.element', false, null, true);
 
-        return view($this->activeTheme . 'page.aboutUs', compact('pageTitle', 'aboutUsContent'));
+        return view($this->activeTheme . 'page.aboutUs', compact('pageTitle', 'aboutUsContent', 'clientContent', 'clientElements'));
     }
 
     function faq() {

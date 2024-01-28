@@ -558,25 +558,6 @@
                         </div>
                     </div>
                 @endforeach
-
-                {{-- <div class="col-md-3 col-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="counter-section__card">
-                        <h3 class="counter-section__number odometer" data-count="3627">0</h3>
-                        <p class="counter-section__name">Total Volunteer</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="counter-section__card">
-                        <h3 class="counter-section__number odometer" data-count="2785">0</h3>
-                        <p class="counter-section__name">Total Volunteer</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="counter-section__card">
-                        <h3 class="counter-section__number odometer" data-count="1596">0</h3>
-                        <p class="counter-section__name">Total Volunteer</p>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
