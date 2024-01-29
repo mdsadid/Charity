@@ -37,7 +37,7 @@
                                     <textarea name="message" class="form--control" rows="10" required>{{ old('message') }}</textarea>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn--base">{{ __(@$contactContent->data_info->form_button_name) }}</button>
+                                    <button type="submit" class="btn btn--base">{{ __(@$contactContent->data_info->form_button_name) }}</button>
                                 </div>
                             </form>
                         </div>

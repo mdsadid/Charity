@@ -122,10 +122,10 @@
         "no_selection": true,
         "name": "KYC Instruction",
         "content": {
-            "Verification_required_heading": "text",
-            "Verification_required_details": "textarea",
-            "Verification_pending_heading": "text",
-            "Verification_pending_details": "textarea"
+            "verification_required_heading": "text",
+            "verification_required_details": "textarea",
+            "verification_pending_heading": "text",
+            "verification_pending_details": "textarea"
         }
     },
     "banner": {

@@ -11,14 +11,14 @@ Route::namespace('User\Auth')->name('user.')->group(function () {
     });
 
     // User Registration Process
-    Route::controller('RegisterController')->group(function() {
+    Route::controller('RegisterController')->group(function () {
         Route::get('register', 'registerForm')->name('register');
         Route::post('register', 'register')->middleware('register.status');
         Route::post('check-user', 'checkUser')->name('check.user');
     });
 
     // Forgot Password
-    Route::controller('ForgotPasswordController')->prefix('password')->name('password.')->group(function() {
+    Route::controller('ForgotPasswordController')->prefix('password')->name('password.')->group(function () {
         Route::get('forgot', 'requestForm')->name('request.form');
         Route::post('forgot', 'sendResetCode');
         Route::get('verification/form', 'verificationForm')->name('code.verification.form');
@@ -26,7 +26,7 @@ Route::namespace('User\Auth')->name('user.')->group(function () {
     });
 
     // Reset Password
-    Route::controller('ResetPasswordController')->prefix('password/reset')->name('password.')->group(function() {
+    Route::controller('ResetPasswordController')->prefix('password/reset')->name('password.')->group(function () {
         Route::get('form/{token}', 'resetForm')->name('reset.form');
         Route::post('/', 'resetPassword')->name('reset');
     });
@@ -35,7 +35,7 @@ Route::namespace('User\Auth')->name('user.')->group(function () {
 Route::middleware('auth')->name('user.')->group(function () {
     Route::namespace('User')->group(function () {
         // Authorization
-        Route::controller('AuthorizationController')->group(function() {
+        Route::controller('AuthorizationController')->group(function () {
             Route::get('authorization', 'authorizeForm')->name('authorization');
             Route::get('resend-verify/{type}', 'sendVerifyCode')->name('send.verify.code');
             Route::post('verify-email', 'emailVerification')->name('verify.email');
@@ -45,17 +45,17 @@ Route::middleware('auth')->name('user.')->group(function () {
 
         // User Operation
         Route::middleware('authorize.status')->group(function () {
-            Route::controller('UserController')->group(function() {
+            Route::controller('UserController')->group(function () {
                 // KYC Dashboard
                 Route::get('dashboard', 'home')->name('home');
-    
+
                 // KYC Check
                 Route::prefix('kyc')->name('kyc.')->group(function () {
                     Route::get('data', 'kycData')->name('data');
                     Route::get('form', 'kycForm')->name('form');
                     Route::post('form', 'kycSubmit');
                 });
-    
+
                 // Profile Update
                 Route::get('profile/update', 'profile')->name('profile');
                 Route::post('profile/update', 'profileUpdate');
@@ -63,7 +63,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 // Password Change
                 Route::get('change/password', 'password')->name('change.password');
                 Route::post('change/password', 'passwordChange');
-    
+
                 // 2 Factor Authenticator
                 Route::prefix('twofactor')->name('twofactor.')->group(function () {
                     Route::get('/', 'show2faForm')->name('form');
@@ -76,8 +76,8 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('transactions', 'transactions')->name('transactions');
 
                 // Withdraw
-                Route::controller('WithdrawController')->prefix('withdraw')->name('withdraw.')->group(function(){
-                    Route::middleware('kyc.status')->group(function() {
+                Route::controller('WithdrawController')->prefix('withdraw')->name('withdraw.')->group(function () {
+                    Route::middleware('kyc.status')->group(function () {
                         Route::get('/', 'methods')->name('methods');
                         Route::post('/', 'store');
                         Route::get('preview', 'preview')->name('preview');
@@ -86,15 +86,15 @@ Route::middleware('auth')->name('user.')->group(function () {
 
                     Route::get('index', 'index')->name('index');
                 });
-    
+
                 // File Download
-                Route::get('file-download','fileDownload')->name('file.download');
+                Route::get('file-download', 'fileDownload')->name('file.download');
             });
         });
     });
 
     // Deposit
-    Route::middleware('authorize.status')->prefix('deposit')->name('deposit.')->controller('Gateway\PaymentController')->group(function(){
+    Route::middleware('authorize.status')->prefix('deposit')->name('deposit.')->controller('Gateway\PaymentController')->group(function () {
         Route::any('/', 'deposit')->name('index');
         Route::post('insert', 'depositInsert')->name('insert');
         Route::get('confirm', 'depositConfirm')->name('confirm');

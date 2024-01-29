@@ -13,10 +13,11 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
-    function home()
-    {
-        $pageTitle = 'Dashboard';
-        return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle'));
+    function home() {
+        $pageTitle  = 'Dashboard';
+        $kycContent = getSiteData('kyc.content', true);
+
+        return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent'));
     }
 
     function kycForm() {
@@ -29,9 +30,9 @@ class UserController extends Controller
             $toast[] = ['success', 'Your identity verification is being succeed'];
             return back()->withToasts($toast);
         }
-        
+
         $pageTitle = 'Identification Form';
-        $form      = Form::where('act','kyc')->first();
+        $form      = Form::where('act', 'kyc')->first();
 
         return view($this->activeTheme . 'user.kyc.form', compact('pageTitle','form'));
     }
