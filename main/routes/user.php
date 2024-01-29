@@ -11,7 +11,7 @@ Route::namespace('User\Auth')->name('user.')->group(function () {
     });
 
     // User Registration Process
-    Route::controller('RegisterController')->group(function(){
+    Route::controller('RegisterController')->group(function() {
         Route::get('register', 'registerForm')->name('register');
         Route::post('register', 'register')->middleware('register.status');
         Route::post('check-user', 'checkUser')->name('check.user');

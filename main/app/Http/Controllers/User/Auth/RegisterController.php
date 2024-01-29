@@ -23,16 +23,18 @@ class RegisterController extends Controller
     }
 
     function registerForm() {
-        $pageTitle  = 'Register';
-        $info       = json_decode(json_encode(getIpInfo()), true);
-        $mobileCode = @implode(',', $info['code']);
-        $countries  = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $pageTitle       = 'Register';
+        $info            = json_decode(json_encode(getIpInfo()), true);
+        $mobileCode      = @implode(',', $info['code']);
+        $countries       = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $registerContent = getSiteData('register.content', true);
+        $policyPages     = getSiteData('policy_pages.element', false, null, true);
 
-        return view($this->activeTheme . 'user.auth.register', compact('pageTitle', 'mobileCode', 'countries'));
+        return view($this->activeTheme . 'user.auth.register', compact('pageTitle', 'mobileCode', 'countries', 'registerContent', 'policyPages'));
     }
 
     protected function validator(array $data) {
-        $setting = bs();
+        $setting            = bs();
         $passwordValidation = Password::min(6);
 
         if ($setting->strong_pass) {
@@ -47,8 +49,8 @@ class RegisterController extends Controller
 
         $countryData  = (array)json_decode(file_get_contents(resource_path('views/partials/country.json')));
         $countryCodes = implode(',', array_keys($countryData));
-        $mobileCodes  = implode(',',array_column($countryData, 'dial_code'));
-        $countries    = implode(',',array_column($countryData, 'country'));
+        $mobileCodes  = implode(',', array_column($countryData, 'dial_code'));
+        $countries    = implode(',', array_column($countryData, 'country'));
         $validate     = Validator::make($data, [
             'firstname'    => 'required|string|max:40',
             'lastname'     => 'required|string|max:40',
@@ -56,24 +58,24 @@ class RegisterController extends Controller
             'mobile'       => 'required|max:40|regex:/^([0-9]*)$/',
             'password'     => ['required', 'confirmed', $passwordValidation],
             'username'     => 'required|unique:users|min:6|max:40',
-            'mobile_code'  => 'required|in:'.$mobileCodes,
-            'country_code' => 'required|in:'.$countryCodes,
-            'country'      => 'required|in:'.$countries,
+            'mobile_code'  => 'required|in:' . $mobileCodes,
+            'country_code' => 'required|in:' . $countryCodes,
+            'country'      => 'required|in:' . $countries,
             'agree'        => $agree
         ]);
 
         return $validate;
     }
 
-    function register()
-    {
+    function register() {
         $this->validator(request()->all())->validate();
 
         request()->session()->regenerateToken();
 
-        if(preg_match("/[^a-z0-9_]/", trim(request('username')))) {
+        if (preg_match("/[^a-z0-9_]/", trim(request('username')))) {
             $toast[] = ['info', 'Usernames are limited to lowercase letters, numbers, and underscores'];
             $toast[] = ['error', 'Username must exclude special characters, spaces, and capital letters'];
+
             return back()->withToasts($toast)->withInput(request()->all());
         }
 
@@ -88,11 +90,10 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        return $this->registered(request(), $user) ? : redirect($this->redirectPath());
+        return $this->registered(request(), $user) ?: redirect($this->redirectPath());
     }
 
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
         $setting = bs();
         $referBy = session()->get('reference');
 
@@ -101,7 +102,7 @@ class RegisterController extends Controller
         } else {
             $referUser = null;
         }
-  
+
         // User Create
         $user               = new User();
         $user->firstname    = $data['firstname'];
@@ -112,14 +113,13 @@ class RegisterController extends Controller
         $user->ref_by       = $referUser ? $referUser->id : 0;
         $user->country_code = $data['country_code'];
         $user->country_name = isset($data['country']) ? $data['country'] : null;
-        $user->mobile       = $data['mobile_code'].$data['mobile'];
+        $user->mobile       = $data['mobile_code'] . $data['mobile'];
         $user->kc           = $setting->kc ? ManageStatus::NO : ManageStatus::YES;
         $user->ec           = $setting->ec ? ManageStatus::NO : ManageStatus::YES;
         $user->sc           = $setting->sc ? ManageStatus::NO : ManageStatus::YES;
         $user->ts           = ManageStatus::NO;
         $user->tc           = ManageStatus::YES;
         $user->save();
-
 
         $adminNotification            = new AdminNotification();
         $adminNotification->user_id   = $user->id;
@@ -130,7 +130,7 @@ class RegisterController extends Controller
         return $user;
     }
 
-    function checkUser(){
+    function checkUser() {
         $exist['data'] = false;
         $exist['type'] = null;
 
@@ -146,11 +146,11 @@ class RegisterController extends Controller
             $exist['data'] = User::where('username', request('username'))->exists();
             $exist['type'] = 'username';
         }
+
         return response($exist);
     }
 
-    function registered()
-    {
+    function registered() {
         return to_route('user.home');
     }
 }

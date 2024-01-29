@@ -22,11 +22,13 @@
         "name": "Register",
         "content": {
             "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
                 "image": {
-                    "size": "775x385"
+                    "size": "635x645"
                 }
             },
-            "heading": "text",
             "form_heading": "text",
             "submit_button_text": "text"
         }
