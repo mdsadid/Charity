@@ -55,7 +55,7 @@
                                 @endguest
 
                                 @auth
-                                    <a href="dashboard.html" class="btn btn--sm btn--base">@lang('Dashboard')</a>
+                                    <a href="{{ route('user.home') }}" class="btn btn--sm btn--base">@lang('Dashboard')</a>
                                 @endauth
                                 <div class="language-box language-box-web">
                                     <select class="select form--control form-select">

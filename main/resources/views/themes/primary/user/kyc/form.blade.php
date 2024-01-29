@@ -1,7 +1,7 @@
 @extends($activeTheme . 'layouts.frontend')
 
 @section('page_content')
-    <div class="contact py-120">
+    <div class="kyc py-120">
         <div class="container">
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">

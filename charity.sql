@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 28, 2024 at 11:42 AM
+-- Generation Time: Jan 29, 2024 at 12:28 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -90,7 +90,8 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (20, 4, 'New member registered', 1, '/admin/user/index', '2023-12-05 16:07:25', '2023-12-06 17:13:01'),
 (21, 5, 'New member registered', 0, '/admin/user/index', '2023-12-05 16:09:35', '2023-12-06 17:13:01'),
 (22, 10, 'New member registered', 1, '/admin/user/index', '2023-12-05 17:19:44', '2023-12-06 17:13:01'),
-(23, 11, 'New member registered', 1, '/admin/user/index', '2023-12-05 17:20:42', '2023-12-06 17:16:45');
+(23, 11, 'New member registered', 1, '/admin/user/index', '2023-12-05 17:20:42', '2023-12-06 17:16:45'),
+(24, 12, 'New member registered', 0, '/admin/user/index', '2024-01-29 10:18:43', '2024-01-29 10:18:43');
 
 -- --------------------------------------------------------
 
@@ -215,7 +216,7 @@ CREATE TABLE `forms` (
 INSERT INTO `forms` (`id`, `act`, `form_data`, `created_at`, `updated_at`) VALUES
 (1, 'manual_deposit', '{\"trx_number\":{\"name\":\"Trx Number\",\"label\":\"trx_number\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"gender\":{\"name\":\"Gender\",\"label\":\"gender\",\"is_required\":\"required\",\"extensions\":null,\"options\":[\"Mail\",\"Female\",\"Custom\"],\"type\":\"select\"},\"nid_photo\":{\"name\":\"NID Photo\",\"label\":\"nid_photo\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png\",\"options\":[],\"type\":\"file\"}}', '2023-09-29 00:40:47', '2023-10-09 06:53:58'),
 (2, 'manual_deposit', '{\"demo\":{\"name\":\"Demo\",\"label\":\"demo\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"demo_two\":{\"name\":\"Demo two\",\"label\":\"demo_two\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"textarea\"},\"nid_photo\":{\"name\":\"NID Photo\",\"label\":\"nid_photo\",\"is_required\":\"required\",\"extensions\":\"jpeg,png\",\"options\":[],\"type\":\"file\"}}', '2023-10-08 08:30:23', '2023-11-21 06:09:58'),
-(3, 'kyc', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"voter_id\":{\"name\":\"Voter Id\",\"label\":\"voter_id\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"textarea\"},\"nid_photo\":{\"name\":\"NID Photo\",\"label\":\"nid_photo\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png,pdf\",\"options\":[],\"type\":\"file\"}}', '2023-10-09 06:58:42', '2023-11-23 08:34:42'),
+(3, 'kyc', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":\"\",\"options\":[],\"type\":\"text\"},\"voter_id\":{\"name\":\"Voter Id\",\"label\":\"voter_id\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"nid_photo\":{\"name\":\"NID Photo\",\"label\":\"nid_photo\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png,pdf\",\"options\":[],\"type\":\"file\"}}', '2023-10-09 06:58:42', '2024-01-29 11:58:41'),
 (4, 'manual_deposit', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"email\":{\"name\":\"email\",\"label\":\"email\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"trx_number\":{\"name\":\"Trx Number\",\"label\":\"trx_number\",\"is_required\":\"required\",\"extensions\":\"\",\"options\":[],\"type\":\"text\"}}', '2023-11-21 07:07:31', '2023-11-21 09:10:49'),
 (5, 'manual_deposit', '{\"nid_photo\":{\"name\":\"NID Photo\",\"label\":\"nid_photo\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png\",\"options\":[],\"type\":\"file\"}}', '2023-11-21 09:12:25', '2023-11-21 09:13:31'),
 (6, 'withdraw_method', '{\"full_name\":{\"name\":\"Full name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"father_name\":{\"name\":\"Father Name\",\"label\":\"father_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"mother_name\":{\"name\":\"Mother Name\",\"label\":\"mother_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 11:15:53', '2023-11-21 11:17:05'),
@@ -340,8 +341,7 @@ CREATE TABLE `languages` (
 
 INSERT INTO `languages` (`id`, `name`, `code`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'English', 'en', 1, NULL, '2023-09-17 11:48:33'),
-(4, 'Bangla', 'bn', 1, '2023-08-21 12:50:55', '2023-09-17 11:46:54'),
-(5, 'Hindi', 'hn', 1, '2023-08-22 08:46:06', '2023-11-29 16:38:20');
+(4, 'Bangla', 'bn', 1, '2023-08-21 12:50:55', '2023-09-17 11:46:54');
 
 -- --------------------------------------------------------
 
@@ -487,8 +487,8 @@ CREATE TABLE `plugins` (
 --
 
 INSERT INTO `plugins` (`id`, `act`, `name`, `image`, `script`, `shortcode`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'google-analytics', 'Google Analytics', 'analytics.png', '<script async src=\"https://www.googletagmanager.com/gtag/js?id={{app_key}}\"></script>\n                <script>\n                  window.dataLayer = window.dataLayer || [];\n                  function gtag(){dataLayer.push(arguments);}\n                  gtag(\"js\", new Date());\n                \n                  gtag(\"config\", \"{{app_key}}\");\n                </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"------\"}}', 0, NULL, '2023-12-03 16:47:11'),
-(2, 'google-recaptcha2', 'Google Recaptcha 2', 'captcha.png', '\n<script src=\"https://www.google.com/recaptcha/api.js\"></script>\n<div class=\"g-recaptcha\" data-sitekey=\"{{site_key}}\" data-callback=\"verifyCaptcha\"></div>\n<div id=\"g-recaptcha-error\"></div>', '{\"site_key\":{\"title\":\"Site Key\",\"value\":\"6LdPC88fAAAAADQlUf_DV6Hrvgm-pZuLJFSLDOWV\"},\"secret_key\":{\"title\":\"Secret Key\",\"value\":\"6LdPC88fAAAAAG5SVaRYDnV2NpCrptLg2XLYKRKB\"}}', 0, NULL, '2023-11-12 12:46:38'),
+(1, 'google-analytics', 'Google Analytics', 'analytics.png', '<script async src=\"https://www.googletagmanager.com/gtag/js?id={{app_key}}\"></script>\n                <script>\n                  window.dataLayer = window.dataLayer || [];\n                  function gtag(){dataLayer.push(arguments);}\n                  gtag(\"js\", new Date());\n                \n                  gtag(\"config\", \"{{app_key}}\");\n                </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"------\"}}', 0, NULL, '2024-01-29 10:13:38'),
+(2, 'google-recaptcha2', 'Google Recaptcha 2', 'captcha.png', '\n<script src=\"https://www.google.com/recaptcha/api.js\"></script>\n<div class=\"g-recaptcha\" data-sitekey=\"{{site_key}}\" data-callback=\"verifyCaptcha\"></div>\n<div id=\"g-recaptcha-error\"></div>', '{\"site_key\":{\"title\":\"Site Key\",\"value\":\"6LdPC88fAAAAADQlUf_DV6Hrvgm-pZuLJFSLDOWV\"},\"secret_key\":{\"title\":\"Secret Key\",\"value\":\"6LdPC88fAAAAAG5SVaRYDnV2NpCrptLg2XLYKRKB\"}}', 0, NULL, '2024-01-29 10:14:59'),
 (3, 'facebook-messenger', 'Facebook Messenger', 'messenger.png', '<div id=\"fb-root\"></div>\n<div id=\"fb-customer-chat\" class=\"fb-customerchat\"></div>\n\n<script>\n    var chatbox = document.getElementById(\'fb-customer-chat\');\n    chatbox.setAttribute(\"page_id\", {{page_id}});\n    chatbox.setAttribute(\"attribution\", \"biz_inbox\");\n</script>\n\n<!-- Your SDK code -->\n<script>\n    window.fbAsyncInit = function() {\n    FB.init({\n        xfbml            : true,\n        version          : \'v17.0\'\n    });\n    };\n\n    (function(d, s, id) {\n    var js, fjs = d.getElementsByTagName(s)[0];\n    if (d.getElementById(id)) return;\n    js = d.createElement(s); js.id = id;\n    js.src = \'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js\';\n    fjs.parentNode.insertBefore(js, fjs);\n    }(document, \'script\', \'facebook-jssdk\'));\n</script>', '{\"page_id\":{\"title\":\"Page Id\",\"value\":\"123-123456\"}}', 0, NULL, '2023-12-03 16:46:50'),
 (4, 'tawk-chat', 'Tawk.to', 'tawk.png', '<script>\n                        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n                        (function(){\n                        var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n                        s1.async=true;\n                        s1.src=\"https://embed.tawk.to/{{app_key}}\";\n                        s1.charset=\"UTF-8\";\n                        s1.setAttribute(\"crossorigin\",\"*\");\n                        s0.parentNode.insertBefore(s1,s0);\n                        })();\n                    </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"------\"}}', 0, NULL, '2023-11-09 10:50:01');
 
@@ -604,7 +604,10 @@ INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_a
 (52, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-facebook-f\\\"><\\/i>\",\"url\":\"https:\\/\\/www.facebook.com\\/\"}', '2024-01-28 10:52:44', '2024-01-28 10:52:44'),
 (53, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-twitter\\\"><\\/i>\",\"url\":\"https:\\/\\/twitter.com\\/\"}', '2024-01-28 10:56:10', '2024-01-28 10:56:10'),
 (54, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-linkedin-in\\\"><\\/i>\",\"url\":\"https:\\/\\/www.linkedin.com\\/\"}', '2024-01-28 11:01:24', '2024-01-28 11:01:24'),
-(55, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-instagram\\\"><\\/i>\",\"url\":\"https:\\/\\/www.instagram.com\\/\"}', '2024-01-28 11:02:20', '2024-01-28 11:02:20');
+(55, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-instagram\\\"><\\/i>\",\"url\":\"https:\\/\\/www.instagram.com\\/\"}', '2024-01-28 11:02:20', '2024-01-28 11:02:20'),
+(56, 'login.content', '{\"has_image\":\"1\",\"form_heading\":\"Sign in to your account\",\"submit_button_text\":\"Log In\",\"background_image\":\"65b74764a461f1706510180.png\",\"image\":\"65b74765412171706510181.png\"}', '2024-01-29 06:36:20', '2024-01-29 06:45:49'),
+(57, 'register.content', '{\"has_image\":\"1\",\"form_heading\":\"Create new account\",\"submit_button_text\":\"Sign Up\",\"background_image\":\"65b74f51b34751706512209.png\",\"image\":\"65b74f52152831706512210.png\"}', '2024-01-29 07:10:09', '2024-01-29 07:10:10'),
+(58, 'kyc.content', '{\"verification_required_heading\":\"Verification Needed\",\"verification_required_details\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\",\"verification_pending_heading\":\"Verification Pending\",\"verification_pending_details\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-01-29 10:35:38', '2024-01-29 10:56:49');
 
 -- --------------------------------------------------------
 
@@ -708,7 +711,8 @@ INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`
 (4, NULL, 'Demo', 'User Four', 'demouser4', 'demofour@demo.com', 'KW', 'Kuwait', '96512345678', 0, 0.00000000, '$2y$10$WMIdOJ01QcjUW9CSk1vjx.j6n4cWwD4V/T2O82ckTFYVg5m0dnUXK', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:07:25', '2023-12-05 16:07:25'),
 (5, NULL, 'Demo', 'User Five', 'demouser5', 'demofive@demo.com', 'MT', 'Malta', '35612345678', 0, 0.00000000, '$2y$10$mHk3S8SI3O7MCKlhvxLi7u4Px4v9ZXWm6Ux.pLPSe4wRB6Hm7dZVW', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:09:35', '2023-12-05 16:09:35'),
 (10, NULL, 'Demo', 'User Six', 'demouser6', 'demosix@demo.com', 'TM', 'Turkmenistan', '993123456789', 0, 0.00000000, '$2y$10$i3XurA7Zxy3h1dWiUP12b.s.Tcn0a9Do2gBUbmujUwz4bpvti1A7e', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:19:44', '2023-12-05 17:19:44'),
-(11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42');
+(11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42'),
+(12, NULL, 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$5ufZvVqdGzIT8BERXoBsReTHfvNEBCMcyDSOALEOlbHXizCoEzf16', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-01-29 12:25:16');
 
 -- --------------------------------------------------------
 
@@ -930,7 +934,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1014,7 +1018,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `site_data`
 --
 ALTER TABLE `site_data`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
@@ -1032,7 +1036,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`
