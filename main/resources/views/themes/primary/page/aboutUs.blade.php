@@ -1,6 +1,6 @@
-@extends($activeTheme . 'layouts.app')
+@extends($activeTheme . 'layouts.frontend')
 
-@section('content')
+@section('page_content')
     <div class="about py-120 bg-img" data-background-image="{{ getImage('assets/images/site/about/' . @$aboutUsContent->data_info->background_image, '1920x1080') }}">
         <div class="container">
             <div class="row justify-content-lg-between justify-content-center align-items-center">

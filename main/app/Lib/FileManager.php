@@ -224,6 +224,7 @@ class FileManager
     {
         $fileInfo  = new FileDetails;
         $filePaths = $fileInfo->fileDetails();
+        
         if (array_key_exists($method, $filePaths)) {
             $path = json_decode(json_encode($filePaths[$method]));
             return $path;

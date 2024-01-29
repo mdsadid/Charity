@@ -36,7 +36,7 @@ class FileDetails {
         ];
         
         $data['verify'] = [
-            'path'      =>'assets/verify'
+            'path' =>'assets/verify'
         ];
 
         return $data;

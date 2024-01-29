@@ -20,8 +20,10 @@ class LoginController extends Controller
     }
 
     function loginForm() {
-        $pageTitle = 'Login';
-        return view($this->activeTheme . 'user.auth.login', compact('pageTitle'));
+        $pageTitle    = 'Login';
+        $loginContent = getSiteData('login.content', true);
+
+        return view($this->activeTheme . 'user.auth.login', compact('pageTitle', 'loginContent'));
     }
 
     function login() {
