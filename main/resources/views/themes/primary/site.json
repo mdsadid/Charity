@@ -39,8 +39,11 @@
         "name": "Email Confirmation",
         "content": {
             "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
                 "image": {
-                    "size": "775x385"
+                    "size": "635x645"
                 }
             },
             "form_heading": "text",
@@ -53,12 +56,31 @@
         "name": "Mobile Confirmation",
         "content": {
             "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
                 "image": {
-                    "size": "775x385"
+                    "size": "635x645"
                 }
             },
             "form_heading": "text",
             "submit_button_text": "text"
+        }
+    },
+    "user_ban": {
+        "builder": true,
+        "no_selection": true,
+        "name": "User Ban",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
+                "image": {
+                    "size": "635x645"
+                }
+            },
+            "form_heading": "text"
         }
     },
     "2fa_confirm": {
@@ -67,8 +89,11 @@
         "name": "2FA Confirmation",
         "content": {
             "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
                 "image": {
-                    "size": "775x385"
+                    "size": "635x645"
                 }
             },
             "form_heading": "text",

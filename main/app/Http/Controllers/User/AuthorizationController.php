@@ -13,33 +13,33 @@ class AuthorizationController extends Controller
 
         if (!$user->status) {
             $pageTitle = 'Banned';
-            $type = 'ban';
-        }elseif(!$user->ec) {
-            $type = 'email';
-            $pageTitle = 'Confirm Email';
+            $type      = 'ban';
+        } elseif (!$user->ec) {
+            $type          = 'email';
+            $pageTitle     = 'Confirm Email';
             $toastTemplate = 'EVER_CODE';
-        }elseif (!$user->sc) {
-            $type = 'sms';
-            $pageTitle = 'Confirm Mobile Number';
+        } elseif (!$user->sc) {
+            $type          = 'sms';
+            $pageTitle     = 'Confirm Mobile Number';
             $toastTemplate = 'SVER_CODE';
-        }elseif (!$user->tc) {
+        } elseif (!$user->tc) {
             $pageTitle = '2FA Confirmation';
-            $type = '2fa';
-        }else{
+            $type      = '2fa';
+        } else {
             return to_route('user.home');
         }
 
         if (!$this->checkCodeValidity($user) && ($type != '2fa') && ($type != 'ban')) {
-            $user->ver_code = verificationCode(6);
+            $user->ver_code         = verificationCode(6);
             $user->ver_code_send_at = now();
             $user->save();
 
             notify($user, $toastTemplate, [
                 'code' => $user->ver_code
-            ],[$type]);
+            ], [$type]);
         }
 
-        return view($this->activeTheme. 'user.auth.authorization.'.$type, compact('user', 'pageTitle'));
+        return view($this->activeTheme . 'user.auth.authorization.' . $type, compact('user', 'pageTitle'));
     }
 
     function sendVerifyCode($type) {
@@ -48,6 +48,7 @@ class AuthorizationController extends Controller
         if ($this->checkCodeValidity($user)) {
             $targetTime = $user->ver_code_send_at->addMinutes(2)->timestamp;
             $delay      = $targetTime - time();
+
             throw ValidationException::withMessages(['resend' => 'Please try after ' . $delay . ' seconds']);
         }
 
@@ -56,16 +57,16 @@ class AuthorizationController extends Controller
         $user->save();
 
         if ($type == 'email') {
-            $type = 'email';
+            $type          = 'email';
             $toastTemplate = 'EVER_CODE';
         } else {
-            $type = 'sms';
+            $type          = 'sms';
             $toastTemplate = 'SVER_CODE';
         }
 
         notify($user, $toastTemplate, [
             'code' => $user->ver_code
-        ],[$type]);
+        ], [$type]);
 
         $toast[] = ['success', 'Verification code send success'];
         return back()->withToasts($toast);
@@ -110,7 +111,7 @@ class AuthorizationController extends Controller
 
         if ($response) {
             $toast[] = ['success', 'Verification success'];
-        }else{
+        } else {
             $toast[] = ['error', 'Wrong verification code'];
         }
 
@@ -118,7 +119,7 @@ class AuthorizationController extends Controller
     }
 
     protected function checkCodeValidity($user, $addMin = 2) {
-        if (!$user->ver_code_send_at){
+        if (!$user->ver_code_send_at) {
             return false;
         }
 

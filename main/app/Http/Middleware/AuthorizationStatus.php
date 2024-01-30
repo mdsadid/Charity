@@ -18,13 +18,13 @@ class AuthorizationStatus
         if (auth()->check()) {
             $user = auth()->user();
 
-            if ($user->status  && $user->ec  && $user->sc  && $user->tc) {
+            if ($user->status && $user->ec && $user->sc && $user->tc) {
                 return $next($request);
             } else {
                 return to_route('user.authorization');
             }
         }
-        
+
         abort(403);
     }
 }

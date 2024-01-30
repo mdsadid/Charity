@@ -1,73 +1,90 @@
-@extends($activeTheme. 'layouts.auth')
-@section('auth')
-    <div class="container">
-        <div class="row justify-content-center gy-4">
+@extends($activeTheme . 'layouts.frontend')
 
-            @if(!auth()->user()->ts)
-                <div class="col-md-6">
-                    <div class="card custom--card">
-                        <div class="card-header">
-                            <h5 class="card-title">@lang('Add Your Account')</h5>
-                        </div>
-
-                        <div class="card-body">
-                            <h6 class="mb-3">
-                                @lang('Use the QR code or setup key on your Google Authenticator app to add your account. ')
-                            </h6>
-
-                            <div class="form-group mx-auto text-center">
-                                <img class="mx-auto" src="{{$qrCodeUrl}}">
+@section('page_content')
+    <div class="dashboard py-60">
+        <div class="container">
+            <div class="row @if ($user->ts) justify-content-center @else g-4 @endif">
+                @if (!$user->ts)
+                    <div class="col-lg-6">
+                        <div class="card custom--card">
+                            <div class="card-header">
+                                <h3 class="title">@lang('Add Your Account')</h3>
                             </div>
-
-                            <div class="form-group">
-                                <label class="form-label">@lang('Setup Key')</label>
-                                <div class="input-group">
-                                    <input type="text" name="key" value="{{ $secret }}" class="form-control form--control referralURL" readonly>
-                                    <button type="button" class="input-group-text copytext" id="copyBoard"> <i class="fa fa-copy"></i> </button>
+                            <div class="card-body">
+                                <p>@lang('Use the QR code or setup key on your Google Authenticator app to add your account.')</p>
+                                <div class="qr-code-img">
+                                    <img src="{{ $qrCodeUrl }}" alt="QR Code">
                                 </div>
+                                <p class="fw-semibold mb-2">@lang('Setup Key')</p>
+                                <div class="account-setup-key mb-3">
+                                    <div class="input--group">
+                                        <input type="text" class="form--control referralURL" name="key" value="{{ $secret }}" id="accountSetupKey" readonly>
+                                        <span class="badge bg--success account-setup-key__badge">@lang('Copied')</span>
+                                        <button class="btn btn--base account-setup-key__copy">
+                                            <i class="las la-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text--base fw-semibold mb-1">
+                                    <i class="fa-solid fa-info-circle"></i> @lang('Help')
+                                </p>
+                                <p>
+                                    @lang('Google Authenticator is a mobile application designed for multifactor authentication. It generates time-sensitive codes utilized in the two-step verification process. To employ Google Authenticator, install the application on your mobile device.') <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank">@lang('Download')</a>
+                                </p>
                             </div>
-
-                            <label><i class="fa fa-info-circle"></i> @lang('Help')</label>
-                            <p>@lang('Google Authenticator is a multifactor app for mobile devices. It generates timed codes used during the 2-step verification process. To use Google Authenticator, install the Google Authenticator application on your mobile device.') <a class="text--base" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en" target="_blank">@lang('Download')</a></p>
                         </div>
-                    </div>
-                </div>
-            @endif
-
-            <div class="col-md-6">
-                @if(auth()->user()->ts)
-                    <div class="card custom--card">
-                        <div class="card-header">
-                            <h5 class="card-title">@lang('Disable 2FA Security')</h5>
-                        </div>
-                        <form class="verification-code-form" action="{{ route('user.twofactor.disable') }}" method="POST">
-                            <div class="card-body">
-                                @csrf
-                                <input type="hidden" name="key" value="{{ $secret }}">
-
-                                @include('partials.verificationCode')
-
-                                <button type="submit" class="btn btn--base w-100">@lang('Submit')</button>
-                            </div>
-                        </form>
-                    </div>
-                @else
-                    <div class="card custom--card">
-                        <div class="card-header">
-                            <h5 class="card-title">@lang('Enable 2FA Security')</h5>
-                        </div>
-                        <form class="verification-code-form" action="{{ route('user.twofactor.enable') }}" method="POST">
-                            <div class="card-body">
-                                @csrf
-                                <input type="hidden" name="key" value="{{ $secret }}">
-
-                                @include('partials.verificationCode')
-
-                                <button type="submit" class="btn btn--base w-100">@lang('Submit')</button>
-                            </div>
-                        </form>
                     </div>
                 @endif
+
+                <div class="col-lg-6">
+                    @if ($user->ts)
+                        <div class="card custom--card">
+                            <div class="card-header">
+                                <h3 class="title">@lang('Disable 2FA Security')</h3>
+                            </div>
+                            <div class="card-body">
+                                <p class="fw-semibold mb-2">@lang('Google Authenticator OTP') <span class="text--danger">*</span></p>
+                                <form action="{{ route('user.twofactor.disable') }}" method="POST" class="verification-code-form">
+                                    @csrf
+                                    <input type="hidden" name="key" value="{{ $secret }}">
+                                    <div class="row">
+                                        <div class="col-sm-12 form-group">
+                                            @include('partials.verificationCode')
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn--base w-100">
+                                                @lang('Submit')
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @else
+                        <div class="card custom--card">
+                            <div class="card-header">
+                                <h3 class="title">@lang('Enable 2FA Security')</h3>
+                            </div>
+                            <div class="card-body">
+                                <p class="fw-semibold mb-2">@lang('Google Authenticator OTP') <span class="text--danger">*</span></p>
+                                <form action="{{ route('user.twofactor.enable') }}" method="POST" class="verification-code-form">
+                                    @csrf
+                                    <input type="hidden" name="key" value="{{ $secret }}">
+                                    <div class="row">
+                                        <div class="col-sm-12 form-group">
+                                            @include('partials.verificationCode')
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn--base w-100">
+                                                @lang('Submit')
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -81,24 +98,17 @@
     <script src="{{ asset('assets/universal/js/verification-code.js') }}"></script>
 @endpush
 
-@push('page-style')
-    <style>
-        .copied::after {
-            background-color: #{{ $setting->first_color }};
-        }
-    </style>
-@endpush
-
 @push('page-script')
     <script>
-        (function($){
+        (function($) {
             "use strict";
-            
-            $('#copyBoard').click(function(){
+
+            $('#copyBoard').click(function() {
                 var copyText = document.getElementsByClassName("referralURL");
                 copyText = copyText[0];
                 copyText.select();
                 copyText.setSelectionRange(0, 99999);
+
                 /*For mobile devices*/
                 document.execCommand("copy");
                 copyText.blur();

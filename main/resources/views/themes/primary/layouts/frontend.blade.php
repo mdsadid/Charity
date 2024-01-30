@@ -48,15 +48,36 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('contact') }}">@lang('Contact')</a>
                         </li>
+
+                        @auth
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ auth()->user()->fullname }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-menu__list">
+                                        <a href="{{ route('user.home') }}" class="dropdown-menu__link">@lang('Dashboard')</a>
+                                    </li>
+                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="profile-settings.html">Profile Settings</a></li>
+                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
+                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="received-donation.html">Received Donation</a></li>
+                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="my-donation.html">My Donations</a></li>
+                                    <li class="dropdown-menu__list">
+                                        <a href="{{ route('user.twofactor.form') }}" class="dropdown-menu__link">@lang('2FA Settings')</a>
+                                    </li>
+                                    <li class="dropdown-menu__list">
+                                        <a href="{{ route('user.logout') }}" class="dropdown-menu__link">@lang('Log Out')</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endauth
+
                         <li class="nav-item d-lg-block d-none">
                             <div class="d-flex gap-2">
                                 @guest
                                     <a href="{{ route('user.login.form') }}" class="btn btn--sm btn--base">@lang('Log In')</a>
                                 @endguest
 
-                                @auth
-                                    <a href="{{ route('user.home') }}" class="btn btn--sm btn--base">@lang('Dashboard')</a>
-                                @endauth
                                 <div class="language-box language-box-web">
                                     <select class="select form--control form-select">
                                         <option selected>English</option>

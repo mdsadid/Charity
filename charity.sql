@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 29, 2024 at 12:28 PM
+-- Generation Time: Jan 30, 2024 at 12:31 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -443,7 +443,8 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`email`, `code`, `created_at`) VALUES
-('demouser@gmail.com', '835476', '2023-12-08 17:09:53');
+('demouser@gmail.com', '835476', '2023-12-08 17:09:53'),
+('sadid.hasan14@gmail.com', '967255', '2024-01-30 09:12:54');
 
 -- --------------------------------------------------------
 
@@ -607,7 +608,14 @@ INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_a
 (55, 'footer.element', '{\"social_icon\":\"<i class=\\\"fab fa-instagram\\\"><\\/i>\",\"url\":\"https:\\/\\/www.instagram.com\\/\"}', '2024-01-28 11:02:20', '2024-01-28 11:02:20'),
 (56, 'login.content', '{\"has_image\":\"1\",\"form_heading\":\"Sign in to your account\",\"submit_button_text\":\"Log In\",\"background_image\":\"65b74764a461f1706510180.png\",\"image\":\"65b74765412171706510181.png\"}', '2024-01-29 06:36:20', '2024-01-29 06:45:49'),
 (57, 'register.content', '{\"has_image\":\"1\",\"form_heading\":\"Create new account\",\"submit_button_text\":\"Sign Up\",\"background_image\":\"65b74f51b34751706512209.png\",\"image\":\"65b74f52152831706512210.png\"}', '2024-01-29 07:10:09', '2024-01-29 07:10:10'),
-(58, 'kyc.content', '{\"verification_required_heading\":\"Verification Needed\",\"verification_required_details\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\",\"verification_pending_heading\":\"Verification Pending\",\"verification_pending_details\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-01-29 10:35:38', '2024-01-29 10:56:49');
+(58, 'kyc.content', '{\"verification_required_heading\":\"Verification Needed\",\"verification_required_details\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\",\"verification_pending_heading\":\"Verification Pending\",\"verification_pending_details\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-01-29 10:35:38', '2024-01-29 10:56:49'),
+(59, 'forgot_password.content', '{\"has_image\":\"1\",\"form_heading\":\"Recover your account\",\"submit_button_text\":\"Next\",\"background_image\":\"65b889ba49ef11706592698.png\",\"image\":\"65b889bad9f7f1706592698.png\"}', '2024-01-30 05:31:38', '2024-01-30 05:33:54'),
+(60, 'code_verification.content', '{\"has_image\":\"1\",\"form_heading\":\"Enter the verification code\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b89466d3f5f1706595430.png\",\"image\":\"65b8946735e5d1706595431.png\"}', '2024-01-30 06:17:10', '2024-01-30 06:17:11'),
+(61, 'password_reset.content', '{\"has_image\":\"1\",\"form_heading\":\"Reset your password\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8a0de319171706598622.png\",\"image\":\"65b8a0de8cb621706598622.png\"}', '2024-01-30 07:10:22', '2024-01-30 07:10:22'),
+(62, 'email_confirm.content', '{\"has_image\":\"1\",\"form_heading\":\"Verify your email address\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8c50552abc1706607877.png\",\"image\":\"65b8c505e4e881706607877.png\"}', '2024-01-30 09:44:37', '2024-01-30 09:44:38'),
+(63, 'mobile_confirm.content', '{\"has_image\":\"1\",\"form_heading\":\"Verify your phone number\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8cad7221bf1706609367.png\",\"image\":\"65b8cad77c5201706609367.png\"}', '2024-01-30 10:09:27', '2024-01-30 10:09:27'),
+(64, 'user_ban.content', '{\"has_image\":\"1\",\"form_heading\":\"You are banned\",\"background_image\":\"65b8d184a65391706611076.png\",\"image\":\"65b8d1850888c1706611077.png\"}', '2024-01-30 10:37:56', '2024-01-30 10:37:57'),
+(65, '2fa_confirm.content', '{\"has_image\":\"1\",\"form_heading\":\"Verify two factor authentication\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8e90fe5ee11706617103.png\",\"image\":\"65b8e9104af471706617104.png\"}', '2024-01-30 12:18:23', '2024-01-30 12:29:35');
 
 -- --------------------------------------------------------
 
@@ -712,7 +720,7 @@ INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`
 (5, NULL, 'Demo', 'User Five', 'demouser5', 'demofive@demo.com', 'MT', 'Malta', '35612345678', 0, 0.00000000, '$2y$10$mHk3S8SI3O7MCKlhvxLi7u4Px4v9ZXWm6Ux.pLPSe4wRB6Hm7dZVW', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:09:35', '2023-12-05 16:09:35'),
 (10, NULL, 'Demo', 'User Six', 'demouser6', 'demosix@demo.com', 'TM', 'Turkmenistan', '993123456789', 0, 0.00000000, '$2y$10$i3XurA7Zxy3h1dWiUP12b.s.Tcn0a9Do2gBUbmujUwz4bpvti1A7e', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:19:44', '2023-12-05 17:19:44'),
 (11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42'),
-(12, NULL, 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$5ufZvVqdGzIT8BERXoBsReTHfvNEBCMcyDSOALEOlbHXizCoEzf16', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-01-29 12:25:16');
+(12, NULL, 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$ZzSC/ZVW0imzxunn9iwRP.VDasTXe0nMVVEdKaDNxHe96Ovw.3OCG', '{\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Bangladesh\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 1, 1, 'DQYWFGAATXLCEWBH', NULL, NULL, '2024-01-29 10:18:43', '2024-01-30 12:30:30');
 
 -- --------------------------------------------------------
 
@@ -1018,7 +1026,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `site_data`
 --
 ALTER TABLE `site_data`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `subscribers`

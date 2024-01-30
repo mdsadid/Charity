@@ -1,41 +1,54 @@
-@extends($activeTheme. 'layouts.app')
+@extends($activeTheme . 'layouts.app')
+
+@php $mobileConfirmContent = getSiteData('mobile_confirm.content', true); @endphp
+
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-7 col-xl-5">
-                <div class="text-end">
-                    <a href="{{ route('home') }}" class="fw-bold home-link"> <i class="las la-long-arrow-alt-left"></i> @lang('Go to Home')</a>
-                </div>
-                <div class="card custom--card">
-                    <div class="card-header">
-                        <h5 class="card-title">{{ __($pageTitle) }}</h5>
+    <section class="account py-120">
+        <div class="account__bg bg-img" data-background-image="{{ getImage('assets/images/site/mobile_confirm/' . @$mobileConfirmContent->data_info->background_image, '1920x1080') }}"></div>
+        <div class="container">
+            <div class="row justify-content-md-between justify-content-center align-items-center">
+                <div class="col-xl-6 col-lg-5 col-md-4">
+                    <div class="account-thumb">
+                        <img src="{{ getImage('assets/images/site/mobile_confirm/' . @$mobileConfirmContent->data_info->image, '635x645') }}" alt="">
                     </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <p>@lang('A six-digit verification code has been texted to your mobile phone') :  +{{ showMobileNumber(auth()->user()->mobile) }}</p>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-7">
+                    @include($activeTheme . 'partials.basicBackToHome')
+
+                    <div class="account-form">
+                        <div class="account-form__content mb-4">
+                            <h3 class="account-form__title mb-2">{{ __(@$mobileConfirmContent->data_info->form_heading) }}</h3>
                         </div>
-                        <form method="POST" action="{{ route('user.verify.mobile') }}" class="verification-code-form">
+                        <form action="{{ route('user.verify.mobile') }}" method="POST" class="verification-code-form">
                             @csrf
-
-                            @include('partials.verificationCode')
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn--base w-100">@lang('Submit')</button>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <div class="have-account text-left">
+                                        <p class="have-account__text">
+                                            @lang('A six-digit verification code has been sent to') <b>{{ '+' . showEmailAddress($user->mobile) }}</b>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    @include('partials.verificationCode')
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    <button type="submit" class="btn btn--base w-100">
+                                        {{ __(@$mobileConfirmContent->data_info->submit_button_text) }}
+                                    </button>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="have-account text-left">
+                                        <p class="have-account__text">@lang('If you don\'t receive any code, then you can use') <a href="{{ route('user.send.verify.code', 'phone') }}" class="have-account__link text--base">@lang('Resend')</a></p>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                @lang('If you don\'t receive any code you can') <a href="{{ route('user.send.verify.code', 'phone') }}">@lang('Send again')</a>
-                            </div>
-
-                            @if($errors->has('resend'))
-                                <small class="text-danger d-block">{{ $errors->first('resend') }}</small>
-                            @endif
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection
 
 @push('page-style-lib')
@@ -45,5 +58,3 @@
 @push('page-script-lib')
     <script src="{{ asset('assets/universal/js/verification-code.js') }}"></script>
 @endpush
-
-

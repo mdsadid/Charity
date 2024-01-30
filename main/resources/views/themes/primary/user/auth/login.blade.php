@@ -11,9 +11,8 @@
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-6 col-md-7">
-                    <a href="{{ route('home') }}" class="back-to-home">
-                        <i class="las la-arrow-left"></i>
-                    </a>
+                    @include($activeTheme . 'partials.basicBackToHome')
+
                     <div class="account-form">
                         <div class="account-form__content mb-4">
                             <h3 class="account-form__title mb-2">{{ __(@$loginContent->data_info->form_heading) }}</h3>
