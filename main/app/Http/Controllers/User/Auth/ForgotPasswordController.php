@@ -14,8 +14,10 @@ class ForgotPasswordController extends Controller
     }
 
     function requestForm() {
-        $pageTitle = 'Forgot Password';
-        return view($this->activeTheme . 'user.auth.password.email', compact('pageTitle'));
+        $pageTitle             = 'Forgot Password';
+        $forgotPasswordContent = getSiteData('forgot_password.content', true);
+
+        return view($this->activeTheme . 'user.auth.password.email', compact('pageTitle', 'forgotPasswordContent'));
     }
 
     function sendResetCode() {
@@ -27,7 +29,7 @@ class ForgotPasswordController extends Controller
         $user      = User::where($fieldType, request('value'))->first();
 
         if (!$user) {
-            $toast[] = ['error', 'No account corresponds to the given information'];
+            $toast[] = ['error', 'The given information does not correspond to any account'];
             return back()->withToasts($toast);
         }
 
@@ -49,16 +51,15 @@ class ForgotPasswordController extends Controller
             'browser'          => $userBrowserInfo['browser'],
             'ip'               => $userIpInfo['ip'],
             'time'             => $userIpInfo['time']
-        ],['email']);
+        ], ['email']);
 
         session()->put('user_pass_res_email', $user->email);
 
-        $toast[] = ['success', 'Well, we found you as a registered one'];
+        $toast[] = ['success', 'Well, we have found you as a registered one'];
         return to_route('user.password.code.verification.form')->withToasts($toast);
     }
 
-    function findFieldType()
-    {
+    function findFieldType() {
         $input = request('value');
 
         $fieldType = filter_var($input, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -67,15 +68,16 @@ class ForgotPasswordController extends Controller
     }
 
     function verificationForm() {
-        $pageTitle = 'Code Verification';
-        $email     = session()->get('user_pass_res_email');
+        $pageTitle         = 'Code Verification';
+        $email             = session()->get('user_pass_res_email');
+        $codeVerifyContent = getSiteData('code_verification.content', true);
 
         if (!$email) {
-            $toast[] = ['error','Oops! session expired'];
+            $toast[] = ['error', 'Oops! session expired'];
             return to_route('user.password.request.form')->withToasts($toast);
         }
 
-        return view($this->activeTheme . 'user.auth.password.codeVerification', compact('pageTitle', 'email'));
+        return view($this->activeTheme . 'user.auth.password.codeVerification', compact('pageTitle', 'email', 'codeVerifyContent'));
     }
 
     function verificationCode() {
@@ -98,7 +100,7 @@ class ForgotPasswordController extends Controller
 
         session()->flash('fpass_email', $email);
 
-        $toast[] = ['success','Code matched. You can reset your password'];
+        $toast[] = ['success', 'You can now reset your password'];
         return to_route('user.password.reset.form', $verCode)->withToasts($toast);
     }
 }

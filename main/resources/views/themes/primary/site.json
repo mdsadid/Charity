@@ -81,8 +81,11 @@
         "name": "Forgot Password",
         "content": {
             "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
                 "image": {
-                    "size": "775x385"
+                    "size": "635x645"
                 }
             },
             "form_heading": "text",
@@ -95,8 +98,11 @@
         "name": "Code Verification",
         "content": {
             "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
                 "image": {
-                    "size": "775x385"
+                    "size": "635x645"
                 }
             },
             "form_heading": "text",
@@ -109,8 +115,11 @@
         "name": "Password Reset",
         "content": {
             "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
                 "image": {
-                    "size": "775x385"
+                    "size": "635x645"
                 }
             },
             "form_heading": "text",

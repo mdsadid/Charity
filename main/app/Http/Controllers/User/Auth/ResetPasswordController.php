@@ -15,18 +15,17 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    function resetForm($verCode = null) {
-        $pageTitle = 'Account Recovery';
-        $email     = session('fpass_email');
+    function resetForm($code = null) {
+        $pageTitle            = 'Reset Password';
+        $email                = session('fpass_email');
+        $passwordResetContent = getSiteData('password_reset.content', true);
 
-        if (PasswordReset::where('code', $verCode)->where('email', $email)->count() != 1) {
+        if (PasswordReset::where('code', $code)->where('email', $email)->count() != 1) {
             $toast[] = ['error', 'Invalid verification code'];
             return to_route('user.password.request.form')->withToasts($toast);
         }
 
-        return view($this->activeTheme . 'user.auth.password.reset')->with(
-            ['code' => $verCode, 'email' => $email, 'pageTitle' => $pageTitle]
-        );
+        return view($this->activeTheme . 'user.auth.password.reset', compact('code', 'email', 'pageTitle', 'passwordResetContent'));
     }
 
     function resetPassword() {
@@ -62,7 +61,7 @@ class ResetPasswordController extends Controller
             'browser'          => $userBrowserInfo['browser'],
             'ip'               => $userIpInfo['ip'],
             'time'             => $userIpInfo['time']
-        ],['email']);
+        ], ['email']);
 
         $toast[] = ['success', 'Password reset successfully'];
         return to_route('user.login.form')->withToasts($toast);

@@ -1,35 +1,43 @@
-@extends($activeTheme. 'layouts.app')
+@extends($activeTheme . 'layouts.app')
+
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-7 col-xl-5">
-                <div class="text-end">
-                    <a href="{{ route('home') }}" class="fw-bold home-link"> <i class="las la-long-arrow-alt-left"></i> @lang('Go to Home')</a>
-                </div>
-                <div class="card custom--card">
-                    <div class="card-header">
-                        <h5 class="card-title">{{ __($pageTitle) }}</h5>
+    <section class="account py-120">
+        <div class="account__bg bg-img" data-background-image="{{ getImage('assets/images/site/forgot_password/' . @$forgotPasswordContent->data_info->background_image, '1920x1080') }}"></div>
+        <div class="container">
+            <div class="row justify-content-md-between justify-content-center align-items-center">
+                <div class="col-xl-6 col-lg-5 col-md-4">
+                    <div class="account-thumb">
+                        <img src="{{ getImage('assets/images/site/forgot_password/' . @$forgotPasswordContent->data_info->image, '635x645') }}" alt="">
                     </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <p>@lang('Please provide either your email address or username to retrieve your account.')</p>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-7">
+                    <a href="{{ route('home') }}" class="back-to-home">
+                        <i class="las la-arrow-left"></i>
+                    </a>
+                    <div class="account-form">
+                        <div class="account-form__content mb-4">
+                            <h3 class="account-form__title mb-2">{{ __(@$forgotPasswordContent->data_info->form_heading) }}</h3>
                         </div>
-                        <form method="POST" action="" class="verify-gcaptcha">
+                        <form action="" method="POST" class="verify-gcaptcha">
                             @csrf
-                            <div class="form-group">
-                                <label class="form-label">@lang('Email or Username')</label>
-                                <input type="text" class="form-control form--control" name="value" value="{{ old('value') }}" required>
-                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <label class="form--label">@lang('Username or Email Address')</label>
+                                    <input type="text" class="form--control" name="value" value="{{ old('value') }}" required>
+                                </div>
 
-                            <x-captcha />
+                                <x-captcha />
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn--base w-100">@lang('Submit')</button>
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn--base w-100" id="recaptcha">
+                                        {{ __(@$forgotPasswordContent->data_info->submit_button_text) }}
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

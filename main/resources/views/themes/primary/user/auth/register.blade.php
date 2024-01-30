@@ -7,7 +7,7 @@
             <div class="row justify-content-md-between justify-content-center align-items-center">
                 <div class="col-xl-6 col-lg-5 col-md-4">
                     <div class="account-thumb">
-                        <img src="{{ getImage('assets/images/site/register/' . @$registerContent->data_info->image, '635x645') }}" alt="register">
+                        <img src="{{ getImage('assets/images/site/register/' . @$registerContent->data_info->image, '635x645') }}" alt="">
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-6 col-md-7">

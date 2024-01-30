@@ -1,38 +1,54 @@
-@extends($activeTheme. 'layouts.app')
+@extends($activeTheme . 'layouts.app')
+
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-7 col-xl-5">
-                <div class="text-end">
-                    <a href="{{ route('home') }}" class="fw-bold home-link"> <i class="las la-long-arrow-alt-left"></i> @lang('Go to Home')</a>
-                </div>
-                <div class="card custom--card">
-                    <div class="card-header">
-                        <h5 class="card-title">@lang('Email Address Verification')</h5>
+    <section class="account py-120">
+        <div class="account__bg bg-img" data-background-image="{{ getImage('assets/images/site/code_verification/' . @$codeVerifyContent->data_info->background_image, '1920x1080') }}"></div>
+        <div class="container">
+            <div class="row justify-content-md-between justify-content-center align-items-center">
+                <div class="col-xl-6 col-lg-5 col-md-4">
+                    <div class="account-thumb">
+                        <img src="{{ getImage('assets/images/site/code_verification/' . @$codeVerifyContent->data_info->image, '635x645') }}" alt="">
                     </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <p>@lang('A six-digit verification code has been emailed to you') :  {{ showEmailAddress($email) }}</p>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-7">
+                    <a href="{{ route('home') }}" class="back-to-home">
+                        <i class="las la-arrow-left"></i>
+                    </a>
+                    <div class="account-form">
+                        <div class="account-form__content mb-4">
+                            <h3 class="account-form__title mb-2">{{ __(@$codeVerifyContent->data_info->form_heading) }}</h3>
                         </div>
-                        <form method="POST" action="" class="verification-code-form">
+                        <form action="" method="POST" class="verification-code-form">
                             @csrf
                             <input type="hidden" name="email" value="{{ $email }}">
-                            @include('partials.verificationCode')
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn--base w-100">@lang('Submit')</button>
-                            </div>
-
-                            <div class="form-group">
-                                @lang('Please check including your Junk/Spam Folder. if not found, you can')
-                                <a href="{{ route('user.password.request.form') }}">@lang('Try to send again')</a>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <div class="have-account text-left">
+                                        <p class="have-account__text">
+                                            @lang('A six-digit verification code has been sent to') <b>{{ showEmailAddress($email) }}</b>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    @include('partials.verificationCode')
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    <button type="submit" class="btn btn--base w-100">
+                                        {{ __(@$codeVerifyContent->data_info->submit_button_text) }}
+                                    </button>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="have-account text-left">
+                                        <p class="have-account__text">@lang('Please check including your') <b>@lang('spam')</b> @lang('folder. If not found, then you can') <a href="{{ route('user.password.request.form') }}" class="have-account__link text--base">@lang('Try Again')</a></p>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection
 
 @push('page-style-lib')
@@ -42,4 +58,3 @@
 @push('page-script-lib')
     <script src="{{ asset('assets/universal/js/verification-code.js') }}"></script>
 @endpush
-
