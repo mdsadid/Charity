@@ -100,7 +100,7 @@ class UserController extends Controller
     }
 
     function password() {
-        $pageTitle = 'Password Change';
+        $pageTitle = 'Change Password';
 
         return view($this->activeTheme . 'user.page.password', compact('pageTitle'));
     }
@@ -128,7 +128,7 @@ class UserController extends Controller
         $user->password = Hash::make(request('password'));
         $user->save();
 
-        $toast[] = ['success', 'Password change success'];
+        $toast[] = ['success', 'Your password has changed'];
 
         return back()->withToasts($toast);
     }

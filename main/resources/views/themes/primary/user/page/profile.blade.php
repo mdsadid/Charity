@@ -47,7 +47,7 @@
                                             <input type="text" class="form--control" name="address" value="{{ @$user->address->address }}">
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn--base w-100 mt-2">@lang('Submit')</button>
+                                            <button type="submit" class="btn btn--base w-100 mt-2">@lang('Submit')</button>
                                         </div>
                                     </form>
                                 </div>

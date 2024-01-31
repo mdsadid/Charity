@@ -61,6 +61,9 @@
                                     <li class="dropdown-menu__list">
                                         <a href="{{ route('user.profile') }}" class="dropdown-menu__link">@lang('Profile Settings')</a>
                                     </li>
+                                    <li class="dropdown-menu__list">
+                                        <a href="{{ route('user.change.password') }}" class="dropdown-menu__link">@lang('Change Password')</a>
+                                    </li>
                                     <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
                                     <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="received-donation.html">Received Donation</a></li>
                                     <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="my-donation.html">My Donations</a></li>
