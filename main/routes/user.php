@@ -57,8 +57,8 @@ Route::middleware('auth')->name('user.')->group(function () {
                 });
 
                 // Profile Update
-                Route::get('profile/update', 'profile')->name('profile');
-                Route::post('profile/update', 'profileUpdate');
+                Route::get('profile', 'profile')->name('profile');
+                Route::post('profile', 'profileUpdate');
 
                 // Password Change
                 Route::get('change/password', 'password')->name('change.password');

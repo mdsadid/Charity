@@ -58,7 +58,9 @@
                                     <li class="dropdown-menu__list">
                                         <a href="{{ route('user.home') }}" class="dropdown-menu__link">@lang('Dashboard')</a>
                                     </li>
-                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="profile-settings.html">Profile Settings</a></li>
+                                    <li class="dropdown-menu__list">
+                                        <a href="{{ route('user.profile') }}" class="dropdown-menu__link">@lang('Profile Settings')</a>
+                                    </li>
                                     <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
                                     <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="received-donation.html">Received Donation</a></li>
                                     <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="my-donation.html">My Donations</a></li>
@@ -137,7 +139,7 @@
                             <ul class="social-list">
                                 @foreach ($footerElements as $socialInfo)
                                     <li class="social-list__item">
-                                        <a href="{{ @$socialInfo->data_info->url }}" class="social-list__link flex-center">
+                                        <a href="{{ @$socialInfo->data_info->url }}" class="social-list__link flex-center" target="_blank">
                                             @php echo @$socialInfo->data_info->social_icon @endphp
                                         </a>
                                     </li>

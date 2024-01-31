@@ -66,7 +66,7 @@ class UserController extends Controller
     }
 
     function profile() {
-        $pageTitle = 'Profile Update';
+        $pageTitle = 'Profile Settings';
         $user      = auth()->user();
 
         return view($this->activeTheme . 'user.page.profile', compact('pageTitle', 'user'));
@@ -94,7 +94,7 @@ class UserController extends Controller
 
         $user->save();
 
-        $toast[] = ['success', 'Profile updated success'];
+        $toast[] = ['success', 'Your profile has updated'];
 
         return back()->withToasts($toast);
     }
