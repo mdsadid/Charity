@@ -18,20 +18,20 @@ trait UniversalStatus
         }
 
         $query->save();
-        $message = keyToTitle($column). ' change successful';
+        $message = keyToTitle($column) . ' change successful';
 
         $toast[] = ['success', $message];
         return back()->withToasts($toast);
     }
 
     public function statusBadge(): Attribute {
-        return new Attribute(function() {
+        return new Attribute(function () {
             $html = '';
 
             if ($this->status == ManageStatus::ACTIVE) {
                 $html = '<span class="badge bg-label-success">' . trans('Active') . '</span>';
             } else {
-                $html = '<span class="badge bg-label-warning">' . trans('Inactive') . '</span>';
+                $html = '<span class="badge bg-label-danger">' . trans('Inactive') . '</span>';
             }
 
             return $html;

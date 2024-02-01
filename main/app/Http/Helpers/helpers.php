@@ -13,9 +13,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 function systemDetails() {
-    $system['name']          = 'Charity Admin';
+    $system['name']          = 'Charity';
     $system['version']       = '1.0';
     $system['build_version'] = '0.0.1';
+
     return $system;
 }
 
@@ -60,12 +61,13 @@ function bs($fieldName = null) {
 }
 
 function fileUploader($file, $location, $size = null, $old = null, $thumb = null) {
-    $fileManager = new FileManager($file);
-    $fileManager->path = $location;
-    $fileManager->size = $size;
-    $fileManager->old = $old;
+    $fileManager        = new FileManager($file);
+    $fileManager->path  = $location;
+    $fileManager->size  = $size;
+    $fileManager->old   = $old;
     $fileManager->thumb = $thumb;
     $fileManager->upload();
+
     return $fileManager->filename;
 }
 
@@ -83,12 +85,15 @@ function getFileSize($key) {
 
 function getImage($image, $size = null) {
     $clean = '';
+
     if (file_exists($image) && is_file($image)) {
         return asset($image) . $clean;
     }
+
     if ($size) {
         return route('placeholder.image', $size);
     }
+
     return asset('assets/universal/images/default.png');
 }
 

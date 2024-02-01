@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+
 @section('content')
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -27,7 +28,10 @@
                     <footer class="content-footer footer bg-footer-theme border-top">
                         <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                             <div class="mb-2 mb-md-0">
-                                <b class="text-primary">{{ __(systemDetails()['name']) }}</b>, @lang('Version') <b class="text-primary">{{ systemDetails()['version'] }}</b>, © <script>document.write(new Date().getFullYear())</script>
+                                <b class="text-primary">{{ __(systemDetails()['name']) }}</b>, @lang('Version') <b class="text-primary">{{ systemDetails()['version'] }}</b>, ©
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script>
                             </div>
                         </div>
                     </footer>

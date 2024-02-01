@@ -1,17 +1,17 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo ">
-      <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
-        <span class="app-brand-text demo menu-text fw-bolder ms-2 logo-big">
-            <img src="{{ getImage(getFilePath('logoFavicon').'/logo_dark.png') }}" alt="logo">
-        </span>
-        <span class="app-brand-text demo menu-text fw-bolder logo-small">
-            <img src="{{ getImage(getFilePath('logoFavicon').'/favicon.png') }}" alt="logo">
-        </span>
-      </a>
+        <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
+            <span class="app-brand-text demo menu-text fw-bolder ms-2 logo-big">
+                <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_dark.png') }}" alt="logo">
+            </span>
+            <span class="app-brand-text demo menu-text fw-bolder logo-small">
+                <img src="{{ getImage(getFilePath('logoFavicon') . '/favicon.png') }}" alt="logo">
+            </span>
+        </a>
 
-      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-        <i class="las la-chevron-left align-middle"></i>
-      </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+            <i class="las la-chevron-left align-middle"></i>
+        </a>
     </div>
 
     <div class="menu-inner-shadow"></div>
@@ -43,11 +43,30 @@
             </ul>
         </li>
 
+        <li class="menu-item {{ navigationActive('admin.campaign*', 2) }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons las la-bullhorn text-success"></i>
+                <div class="text-truncate">@lang('Campaign Management')</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ navigationActive('admin.campaign.category', 1) }}">
+                    <a href="{{ route('admin.campaign.category') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Category')</div>
+                    </a>
+                </li>
+                {{-- <li class="menu-item {{ navigationActive('admin.gateway.manual*', 1) }}">
+                    <a href="{{ route('admin.gateway.manual.index') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Manual')</div>
+                    </a>
+                </li> --}}
+            </ul>
+        </li>
+
         <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-user-tie text-purple"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Users')</div>
-                @if($bannedUsersCount > 0 || $emailUnconfirmedUsersCount > 0 || $mobileUnconfirmedUsersCount > 0 || $kycUnconfirmedUsersCount > 0 || $kycPendingUsersCount > 0)
+                @if ($bannedUsersCount > 0 || $emailUnconfirmedUsersCount > 0 || $mobileUnconfirmedUsersCount > 0 || $kycUnconfirmedUsersCount > 0 || $kycPendingUsersCount > 0)
                     <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
                 @endif
             </a>
@@ -109,7 +128,7 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-wallet text-cyan"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Deposits')</div>
-                @if($pendingDepositsCount)
+                @if ($pendingDepositsCount)
                     <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
                 @endif
             </a>
@@ -290,10 +309,10 @@
                 <div class="text-truncate">@lang('Site Content')</div>
             </a>
             <ul class="menu-sub">
-                @php $lastSegment =  collect(request()->segments())->last(); @endphp
+                @php $lastSegment = collect(request()->segments())->last(); @endphp
 
-                @foreach(getPageSections(true) as $key => $section)
-                    <li class="menu-item @if($lastSegment == $key) active @endif">
+                @foreach (getPageSections(true) as $key => $section)
+                    <li class="menu-item @if ($lastSegment == $key) active @endif">
                         <a href="{{ route('admin.site.sections', $key) }}" class="menu-link">
                             <div class="text-truncate">{{ __($section['name']) }}</div>
                         </a>
@@ -411,7 +430,7 @@
                                             <span>{{ systemDetails()['version'] }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <b>@lang('Phinix Admin Version')</b>
+                                            <b>@lang('Charity Admin Version')</b>
                                             <span>{{ systemDetails()['build_version'] }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -460,4 +479,3 @@
         </div>
     </div>
 </div>
-

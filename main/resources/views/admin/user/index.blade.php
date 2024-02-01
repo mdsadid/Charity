@@ -108,7 +108,7 @@
 @endsection
 
 @push('breadcrumb')
-    <x-searchForm placeholder="Username / Email" dateSearch="yes" />
+    <x-searchForm placeholder="Username/Email" dateSearch="yes" />
 @endpush
 
 @push('page-script')

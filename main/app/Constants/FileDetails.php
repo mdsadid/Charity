@@ -2,8 +2,10 @@
 
 namespace App\Constants;
 
-class FileDetails {
-    function fileDetails() {
+class FileDetails
+{
+    function fileDetails()
+    {
         $data['logoFavicon'] = [
             'path' => 'assets/universal/images/logoFavicon',
         ];
@@ -34,9 +36,14 @@ class FileDetails {
         $data['setting'] = [
             'path' => 'assets/admin/images/setting'
         ];
-        
+
         $data['verify'] = [
-            'path' =>'assets/verify'
+            'path' => 'assets/verify'
+        ];
+
+        $data['campaignCategory'] = [
+            'path' => 'assets/admin/images/campaign',
+            'size' => '300x300',
         ];
 
         return $data;

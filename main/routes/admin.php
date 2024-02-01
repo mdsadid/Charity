@@ -11,7 +11,7 @@ Route::namespace('Auth')->group(function () {
     });
 
     // Admin Forgot Password and Verification Process
-    Route::controller('ForgotPasswordController')->prefix('password')->name('password.')->group(function() {
+    Route::controller('ForgotPasswordController')->prefix('password')->name('password.')->group(function () {
         Route::get('forgot', 'requestForm')->name('request.form');
         Route::post('forgot', 'sendResetCode');
         Route::get('verification/form', 'verificationForm')->name('code.verification.form');
@@ -19,7 +19,7 @@ Route::namespace('Auth')->group(function () {
     });
 
     // Admin Reset Password
-    Route::controller('ResetPasswordController')->prefix('password')->name('password.')->group(function() {
+    Route::controller('ResetPasswordController')->prefix('password')->name('password.')->group(function () {
         Route::get('reset/form/{email}/{code}', 'resetForm')->name('reset.form');
         Route::post('reset', 'resetPassword')->name('reset');
     });
@@ -27,7 +27,7 @@ Route::namespace('Auth')->group(function () {
 
 // Operations for Admin
 Route::middleware('admin')->group(function () {
-    Route::controller('AdminController')->group(function() {
+    Route::controller('AdminController')->group(function () {
         Route::get('dashboard', 'dashboard')->name('dashboard');
         Route::get('profile', 'profile')->name('profile');
         Route::post('profile', 'profileUpdate');
@@ -35,12 +35,12 @@ Route::middleware('admin')->group(function () {
         Route::post('password', 'passwordChange');
 
         // Notification
-        Route::name('system.notification.')->prefix('notification')->group(function() {
-            Route::get('all','notificationAll')->name('all');
-            Route::get('read/{id}','notificationRead')->name('read');
-            Route::get('read-all','notificationReadAll')->name('read.all');
-            Route::post('remove/{id}','notificationRemove')->name('remove');
-            Route::post('remove-all','notificationRemoveAll')->name('remove.all');
+        Route::name('system.notification.')->prefix('notification')->group(function () {
+            Route::get('all', 'notificationAll')->name('all');
+            Route::get('read/{id}', 'notificationRead')->name('read');
+            Route::get('read-all', 'notificationReadAll')->name('read.all');
+            Route::post('remove/{id}', 'notificationRemove')->name('remove');
+            Route::post('remove-all', 'notificationRemoveAll')->name('remove.all');
         });
 
         // Transactions
@@ -50,8 +50,13 @@ Route::middleware('admin')->group(function () {
         Route::get('file-download', 'fileDownload')->name('file.download');
     });
 
+    Route::controller('Campaign\CategoryController')->prefix('campaign')->name('campaign.')->group(function () {
+        Route::get('category', 'index')->name('category');
+        Route::post('category', 'store')->name('category.store');
+    });
+
     // User Management
-    Route::controller('UserController')->name('user.')->prefix('user')->group(function() {
+    Route::controller('UserController')->name('user.')->prefix('user')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::get('active', 'active')->name('active');
         Route::get('banned', 'banned')->name('banned');
@@ -73,9 +78,9 @@ Route::middleware('admin')->group(function () {
     });
 
     // Deposit Gateway
-    Route::name('gateway.')->prefix('gateway')->group(function() {
+    Route::name('gateway.')->prefix('gateway')->group(function () {
         // Automated Gateway
-        Route::controller('AutomatedGatewayController')->prefix('automated')->name('automated.')->group(function() {
+        Route::controller('AutomatedGatewayController')->prefix('automated')->name('automated.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('edit/{alias}', 'edit')->name('edit');
             Route::post('update/{code}', 'update')->name('update');
@@ -84,7 +89,7 @@ Route::middleware('admin')->group(function () {
         });
 
         // Manual Gateway
-        Route::controller('ManualGatewayController')->prefix('manual')->name('manual.')->group(function() {
+        Route::controller('ManualGatewayController')->prefix('manual')->name('manual.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('new', 'new')->name('new');
             Route::post('store/{id?}', 'store')->name('store');
@@ -94,7 +99,7 @@ Route::middleware('admin')->group(function () {
     });
 
     // Deposit Management
-    Route::controller('DepositController')->prefix('deposit')->name('deposit.')->group(function() {
+    Route::controller('DepositController')->prefix('deposit')->name('deposit.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::get('pending', 'pending')->name('pending');
         Route::get('done', 'done')->name('done');
@@ -104,9 +109,9 @@ Route::middleware('admin')->group(function () {
     });
 
     // Withdrawal Management
-    Route::name('withdraw.')->prefix('withdraw')->group(function() {
+    Route::name('withdraw.')->prefix('withdraw')->group(function () {
         // Withdraw Method
-        Route::controller('WithdrawMethodController')->prefix('method')->name('method.')->group(function(){
+        Route::controller('WithdrawMethodController')->prefix('method')->name('method.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('new', 'new')->name('new');
             Route::post('store/{id?}', 'store')->name('store');
@@ -115,7 +120,7 @@ Route::middleware('admin')->group(function () {
         });
 
         // Withdrawal Management
-        Route::controller('WithdrawController')->group(function() {
+        Route::controller('WithdrawController')->group(function () {
             Route::get('index', 'index')->name('index');
             Route::get('pending', 'pending')->name('pending');
             Route::get('done', 'done')->name('done');
@@ -126,23 +131,23 @@ Route::middleware('admin')->group(function () {
     });
 
     // Subscriber
-    Route::controller('ContactController')->group(function(){
-        Route::prefix('subscriber')->name('subscriber.')->group(function(){
+    Route::controller('ContactController')->group(function () {
+        Route::prefix('subscriber')->name('subscriber.')->group(function () {
             Route::get('/', 'subscriberIndex')->name('index');
             Route::post('remove/{id}', 'subscriberRemove')->name('remove');
             Route::post('send-email', 'sendEmailSubscriber')->name('send.email');
         });
 
-        Route::prefix('contact')->name('contact.')->group(function(){
+        Route::prefix('contact')->name('contact.')->group(function () {
             Route::get('/', 'contactIndex')->name('index');
             Route::post('remove/{id}', 'contactRemove')->name('remove');
             Route::post('status/{id}', 'contactStatus')->name('status');
         });
     });
-    
+
     // Setting
-    Route::controller('SettingController')->group(function() {
-        Route::prefix('setting')->group(function() {
+    Route::controller('SettingController')->group(function () {
+        Route::prefix('setting')->group(function () {
             // Basic Setting
             Route::get('basic', 'basic')->name('basic.setting');
             Route::post('basic', 'basicUpdate');
@@ -174,27 +179,27 @@ Route::middleware('admin')->group(function () {
     });
 
     // Email & SMS Setting
-    Route::controller('NotificationController')->prefix('notification')->name('notification.')->group(function() {
+    Route::controller('NotificationController')->prefix('notification')->name('notification.')->group(function () {
         // Template Setting
         Route::get('universal', 'universal')->name('universal');
         Route::post('universal', 'universalUpdate');
-        Route::get('templates','templates')->name('templates');
-        Route::get('template/edit/{id}','templateEdit')->name('template.edit');
-        Route::post('template/update/{id}','templateUpdate')->name('template.update');
+        Route::get('templates', 'templates')->name('templates');
+        Route::get('template/edit/{id}', 'templateEdit')->name('template.edit');
+        Route::post('template/update/{id}', 'templateUpdate')->name('template.update');
 
         // Email Setting
         Route::get('email/setting', 'email')->name('email');
         Route::post('email/setting', 'emailUpdate');
-        Route::post('email/test','testEmail')->name('email.test');
+        Route::post('email/test', 'testEmail')->name('email.test');
 
         // SMS Setting
         Route::get('sms/setting', 'sms')->name('sms');
         Route::post('sms/setting', 'smsUpdate');
-        Route::post('sms/test','testSMS')->name('sms.test');
+        Route::post('sms/test', 'testSMS')->name('sms.test');
     });
 
     // Language Setting
-    Route::controller('LanguageController')->prefix('language')->name('language.')->group(function() {
+    Route::controller('LanguageController')->prefix('language')->name('language.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('keywords', 'keywords')->name('keywords');
         Route::post('store/{id?}', 'store')->name('store');
@@ -206,8 +211,8 @@ Route::middleware('admin')->group(function () {
         Route::post('delete/key/{id}', 'languageKeyDelete')->name('delete.key');
     });
 
-     // Manage Frontend
-     Route::controller('SiteController')->prefix('site')->name('site.')->group(function () {
+    // Manage Frontend
+    Route::controller('SiteController')->prefix('site')->name('site.')->group(function () {
         Route::get('themes', 'themes')->name('themes');
         Route::post('themes', 'makeActive');
         Route::get('sections/{key}', 'sections')->name('sections');
