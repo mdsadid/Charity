@@ -282,6 +282,14 @@
             "description": "textarea"
         }
     },
+    "campaign_category": {
+        "builder": true,
+        "name": "Campaign Category Section",
+        "content": {
+            "section_heading": "text",
+            "description": "textarea"
+        }
+    },
     "volunteer": {
         "builder": true,
         "name": "Volunteer Section",

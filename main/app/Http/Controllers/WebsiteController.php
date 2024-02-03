@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\ManageStatus;
+use App\Models\CampaignCategory;
 use App\Models\Contact;
 use App\Models\Language;
 use App\Models\SiteData;
@@ -15,11 +16,13 @@ class WebsiteController extends Controller
         $bannerElements          = getSiteData('banner.element', false, null, true);
         $aboutUsContent          = getSiteData('about.content', true);
         $featuredCampaignContent = getSiteData('featured_campaign.content', true);
+        $campaignCategoryContent = getSiteData('campaign_category.content', true);
+        $campaignCategories      = CampaignCategory::active()->get();
         $volunteerContent        = getSiteData('volunteer.content', true);
         $volunteerElements       = getSiteData('volunteer.element', false, null, true);
         $counterElements         = getSiteData('counter.element', false, null, true);
 
-        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements'));
+        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories'));
     }
 
     function aboutUs() {

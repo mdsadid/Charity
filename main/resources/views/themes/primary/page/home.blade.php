@@ -151,48 +151,24 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">Cause Category</h2>
-                        <p class="section-heading__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.</p>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$campaignCategoryContent->data_info->section_heading) }}</h2>
+                        <p class="section-heading__desc">{{ __(@$campaignCategoryContent->data_info->description) }}</p>
                     </div>
                 </div>
             </div>
             <div class="cause-category__slider" data-aos="fade-up" data-aos-duration="1500">
-                <div class="cause-category__slide">
-                    <div class="cause-category__img">
-                        <a href="#"><img src="assets/images/thumbs/category-1.jpg" alt="Medical"></a>
+                @foreach ($campaignCategories as $category)
+                    <div class="cause-category__slide">
+                        <div class="cause-category__img">
+                            <a href="#">
+                                <img src="{{ getImage(getFilePath('category') . '/' . $category->image, getFileSize('category')) }}" alt="{{ $category->name }}">
+                            </a>
+                        </div>
+                        <h3 class="cause-category__title">
+                            <a href="#">{{ __($category->name) }}</a>
+                        </h3>
                     </div>
-                    <h3 class="cause-category__title"><a href="#">Treatment</a></h3>
-                </div>
-                <div class="cause-category__slide">
-                    <div class="cause-category__img">
-                        <a href="#"><img src="assets/images/thumbs/category-2.jpg" alt="Medical"></a>
-                    </div>
-                    <h3 class="cause-category__title"><a href="#">Medical</a></h3>
-                </div>
-                <div class="cause-category__slide">
-                    <div class="cause-category__img">
-                        <a href="#"><img src="assets/images/thumbs/category-3.jpg" alt="Medical"></a>
-                    </div>
-                    <h3 class="cause-category__title"><a href="#">Emergency</a></h3>
-                </div>
-                <div class="cause-category__slide">
-                    <div class="cause-category__img">
-                        <a href="#"><img src="assets/images/thumbs/category-4.jpg" alt="Medical"></a>
-                    </div>
-                    <h3 class="cause-category__title"><a href="#">Non Profit</a></h3>
-                </div>
-                <div class="cause-category__slide">
-                    <div class="cause-category__img">
-                        <a href="#"><img src="assets/images/thumbs/category-5.jpg" alt="Medical"></a>
-                    </div>
-                    <h3 class="cause-category__title"><a href="#">Financial Emergency</a></h3>
-                </div>
-                <div class="cause-category__slide">
-                    <div class="cause-category__img">
-                        <a href="#"><img src="assets/images/thumbs/category-6.jpg" alt="Medical"></a>
-                    </div>
-                    <h3 class="cause-category__title"><a href="#">Environment</a></h3>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -720,6 +696,12 @@
             opacity: 0.2;
             animation: bounceNormal 5s linear infinite;
             z-index: -1;
+        }
+
+        .cause-category__img img {
+            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/mask-shape-1.png') }}");
+            background: url("{{ asset($activeThemeTrue . 'images/mask-shape-1.png') }}");
+            mask-image: url("{{ asset($activeThemeTrue . 'images/mask-shape-1.png') }}");
         }
 
         .counter-section__card {

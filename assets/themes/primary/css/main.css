@@ -4853,9 +4853,6 @@ input[type=number] {
 }
 
 .cause-category__img img {
-    -webkit-mask-image: url("../images/shapes/mask-shape-1.png");
-    background: url("../images/shapes/mask-shape-1.png");
-    mask-image: url("../images/shapes/mask-shape-1.png");
     mask-mode: match-source;
     -webkit-mask-mode: match-source;
     -webkit-mask-size: contain;
