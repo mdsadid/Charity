@@ -43,23 +43,11 @@
             </ul>
         </li>
 
-        <li class="menu-item {{ navigationActive('admin.campaign*', 2) }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons las la-bullhorn text-success"></i>
-                <div class="text-truncate">@lang('Campaign Management')</div>
+        <li class="menu-item {{ navigationActive('admin.categories*', 1) }}">
+            <a href="{{ route('admin.categories.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons las la-stream text-warning"></i>
+                <div class="text-truncate">@lang('Categories')</div>
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ navigationActive('admin.campaign.category', 1) }}">
-                    <a href="{{ route('admin.campaign.category') }}" class="menu-link">
-                        <div class="text-truncate">@lang('Category')</div>
-                    </a>
-                </li>
-                {{-- <li class="menu-item {{ navigationActive('admin.gateway.manual*', 1) }}">
-                    <a href="{{ route('admin.gateway.manual.index') }}" class="menu-link">
-                        <div class="text-truncate">@lang('Manual')</div>
-                    </a>
-                </li> --}}
-            </ul>
         </li>
 
         <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
@@ -396,8 +384,8 @@
                 </div>
                 <hr>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     <button type="submit" class="btn btn-primary">@lang('Clear')</button>
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                 </div>
             </form>
         </div>

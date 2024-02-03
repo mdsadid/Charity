@@ -31,7 +31,7 @@ trait UniversalStatus
             if ($this->status == ManageStatus::ACTIVE) {
                 $html = '<span class="badge bg-label-success">' . trans('Active') . '</span>';
             } else {
-                $html = '<span class="badge bg-label-danger">' . trans('Inactive') . '</span>';
+                $html = '<span class="badge bg-label-warning">' . trans('Inactive') . '</span>';
             }
 
             return $html;

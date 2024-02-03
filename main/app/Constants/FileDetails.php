@@ -41,8 +41,8 @@ class FileDetails
             'path' => 'assets/verify'
         ];
 
-        $data['campaignCategory'] = [
-            'path' => 'assets/admin/images/campaign',
+        $data['category'] = [
+            'path' => 'assets/universal/images/category',
             'size' => '300x300',
         ];
 

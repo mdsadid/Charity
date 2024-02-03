@@ -19,7 +19,7 @@
                                 <tr>
                                     <td>
                                         <div class="avatar me-2">
-                                            <img src="{{ getImage(getFilePath('campaignCategory') . '/' . $category->image, getFileSize('campaignCategory')) }}" alt="image" class="rounded">
+                                            <img src="{{ getImage(getFilePath('category') . '/' . $category->image, getFileSize('category')) }}" alt="image" class="rounded">
                                         </div>
                                     </td>
                                     <td>{{ __($category->name) }}</td>
@@ -27,32 +27,19 @@
                                         @php echo $category->statusBadge @endphp
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-label-primary editBtn" data-id="{{ $category->id }}" data-image="{{ getImage(getFilePath('campaignCategory') . '/' . $category->image, getFileSize('campaignCategory')) }}" data-name="{{ $category->name }}">
+                                        <button type="button" class="btn btn-sm btn-label-primary editBtn" data-resource="{{ $category }}" data-image="{{ getImage(getFilePath('category') . '/' . $category->image, getFileSize('category')) }}" data-action="{{ route('admin.categories.store', $category->id) }}">
                                             <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
                                         </button>
 
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-label-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">@lang('KYC Action')</button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <button type="button" class="dropdown-item detailBtn" data-bs-toggle      = "offcanvas" data-bs-target      = "#offcanvasBoth" aria-controls       = "offcanvasBoth" data-kyc_data = "{{ json_encode($user->kyc_data) }}">
-                                                        <i class="las la-info-circle fs-6 link-info"></i> @lang('KYC Details')
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you confirm the approval of these documents?')" data-action="{{ route('admin.user.kyc.approve', $user->id) }}">
-                                                        <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you confirm the cancelation of these documents?')" data-action="{{ route('admin.user.kyc.cancel', $user->id) }}">
-                                                        <i class="lar la-times-circle fs-6 link-warning"></i> @lang('Cancel')
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        @if ($category->status)
+                                            <button type="button" class="btn btn-sm btn-label-warning decisionBtn" data-question="@lang('Are you sure to inactive this category?')" data-action="{{ route('admin.categories.status', $category->id) }}">
+                                                <span class="tf-icons las la-ban me-1"></span> @lang('Make Inactive')
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-sm btn-label-success decisionBtn" data-question="@lang('Are you sure to active this category?')" data-action="{{ route('admin.categories.status', $category->id) }}">
+                                                <span class="tf-icons las la-check-circle me-1"></span> @lang('Make Active')
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -82,7 +69,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
-                <form action="{{ route('admin.campaign.category.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row mb-3">
@@ -91,7 +78,7 @@
                                 <div class="image-upload">
                                     <div class="thumb">
                                         <div class="avatar-preview">
-                                            <div class="profilePicPreview" style="background-image: url({{ getImage('/', getFileSize('campaignCategory')) }})">
+                                            <div class="profilePicPreview" style="background-image: url({{ getImage('/', getFileSize('category')) }})">
                                                 <button type="button" class="remove-image">
                                                     <i class="las la-times"></i>
                                                 </button>
@@ -103,7 +90,7 @@
                                                 <i class="las la-upload"></i>
                                             </label>
                                             <p class="pt-2">
-                                                @lang('Supported files'): <mark>@lang('jpeg'), @lang('jpg'), @lang('png').</mark> @lang('Image size') <mark>{{ getFileSize('campaignCategory') }}@lang('px').</mark>
+                                                @lang('Supported files'): <mark>@lang('jpeg'), @lang('jpg'), @lang('png').</mark> @lang('Image size') <mark>{{ getFileSize('category') }}@lang('px').</mark>
                                             </p>
                                         </div>
                                     </div>
@@ -136,9 +123,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
-                <form action="{{ route('admin.campaign.category.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">@lang('Image')</label>
@@ -146,7 +132,7 @@
                                 <div class="image-upload">
                                     <div class="thumb">
                                         <div class="avatar-preview">
-                                            <div class="profilePicPreview imageModalUpdate">
+                                            <div class="profilePicPreview">
                                                 <button type="button" class="remove-image">
                                                     <i class="las la-times"></i>
                                                 </button>
@@ -158,7 +144,7 @@
                                                 <i class="las la-upload"></i>
                                             </label>
                                             <p class="pt-2">
-                                                @lang('Supported files'): <mark>@lang('jpeg'), @lang('jpg'), @lang('png').</mark> @lang('Image size') <mark>{{ getFileSize('campaignCategory') }}@lang('px').</mark>
+                                                @lang('Supported files'): <mark>@lang('jpeg'), @lang('jpg'), @lang('png').</mark> @lang('Image size') <mark>{{ getFileSize('category') }}@lang('px').</mark>
                                             </p>
                                         </div>
                                     </div>
@@ -181,9 +167,13 @@
             </div>
         </div>
     </div>
+
+    <x-decisionModal />
 @endsection
 
 @push('breadcrumb')
+    <x-searchForm placeholder="Name" />
+
     <button type="button" class="btn btn-label-primary addBtn">
         <span class="tf-icons las la-plus-circle me-1"></span> @lang('Add New')
     </button>
@@ -194,20 +184,22 @@
         (function($) {
             "use strict"
 
+            let addModal = $('#addModal')
+            let editModal = $('#editModal')
+
             $('.addBtn').on('click', function() {
-                $('#addModal').modal('show')
+                addModal.modal('show')
             })
 
             $('.editBtn').on('click', function() {
-                let modal = $('#editModal')
-                let id = $(this).data('id')
+                let resource = $(this).data('resource')
                 let image = $(this).data('image')
-                let name = $(this).data('name')
+                let formAction = $(this).data('action')
 
-                $('.imageModalUpdate').css("background-image", `url(${image})`)
-                modal.find('[name=name]').val(name)
-                modal.find('[name=id]').val(id)
-                modal.modal('show')
+                editModal.find('.profilePicPreview').css("background-image", `url(${image})`)
+                editModal.find('[name=name]').val(resource.name)
+                editModal.find('form').attr('action', formAction)
+                editModal.modal('show')
             })
         })(jQuery)
     </script>
