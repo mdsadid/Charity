@@ -7,7 +7,20 @@
                 <div class="col-lg-8">
                     <div class="custom--card">
                         <div class="card-body">
-                            <form class="row g-4">
+                            {{-- dropzone start --}}
+                            <div class="col-12">
+                                <label class="form--label required">@lang('Gallery')</label>
+                            </div>
+                            <form action="#" method="POST" class="dropzone" enctype="multipart/form-data">
+                                @csrf
+                            </form>
+                            <div class="col-12 mt-1 mb-4">
+                                <span><em><small>*@lang('Supported files'): @lang('jpeg'), @lang('jpg'), @lang('png'). @lang('Image size'): {{ getFileSize('campaign') }}@lang('px'). @lang('Maximum 4 files'). @lang('Max file size'): {{ ini_get('post_max_size') }}.</small></em></span>
+                            </div>
+                            {{-- dropzone end --}}
+
+                            <form action="#" method="POST" class="row g-4" enctype="multipart/form-data">
+                                @csrf
                                 <div class="col-12">
                                     <div class="upload__img mb-2">
                                         <label for="imageUpload" class="form--label required">@lang('Image')</label>
@@ -63,7 +76,7 @@
                                     <textarea class="form--control ck-editor" name="description" rows="10" required></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form--label required">@lang('Document')</label>
+                                    <label class="form--label">@lang('Document')</label>
                                     <div class="d-flex mb-1">
                                         <input type="file" class="form--control" name="document" accept=".pdf" required>
                                     </div>
@@ -80,3 +93,21 @@
         </div>
     </div>
 @endsection
+
+@push('page-style')
+    <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/dropzone.min.css') }}">
+@endpush
+
+@push('page-script')
+    <script src="{{ asset($activeThemeTrue . 'js/dropzone.min.js') }}"></script>
+
+    <script type="text/javascript">
+        new Dropzone('.dropzone', {
+            thumbnailWidth: 200,
+            maxFilesiize: 2,
+            maxFiles: 2,
+            acceptedFiles: '.jpg, .jpeg, .png',
+            addRemoveLinks: true,
+        })
+    </script>
+@endpush
