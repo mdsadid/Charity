@@ -48,6 +48,8 @@ Route::middleware('auth')->name('user.')->group(function () {
             // Campaign
             Route::controller('CampaignController')->group(function () {
                 Route::get('campaign', 'create')->name('create.campaign');
+                Route::post('file-upload', 'upload')->name('file.upload');
+                Route::post('file-remove', 'remove')->name('file.remove');
             });
 
             Route::controller('UserController')->group(function () {

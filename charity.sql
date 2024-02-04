@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 03, 2024 at 06:15 AM
+-- Generation Time: Feb 04, 2024 at 11:56 AM
 -- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- PHP Version: 8.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -120,6 +120,31 @@ INSERT INTO `admin_password_resets` (`id`, `email`, `code`, `status`, `created_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `campaigns`
+--
+
+CREATE TABLE `campaigns` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `campaign_category_id` bigint UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gallery` json NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `document` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `goal_amount` decimal(28,8) UNSIGNED NOT NULL,
+  `raised_amount` decimal(28,8) UNSIGNED NOT NULL,
+  `start_time` timestamp NOT NULL,
+  `end_time` timestamp NOT NULL,
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '2' COMMENT '0 -> campaign rejected, 1 -> campaign approved, 2 -> campaign pending',
+  `update_status` tinyint UNSIGNED DEFAULT NULL COMMENT '0 -> campaign update rejected, 1 -> campaign update approved, 2 -> campaign update pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `campaign_categories`
 --
 
@@ -144,6 +169,21 @@ INSERT INTO `campaign_categories` (`id`, `image`, `name`, `slug`, `status`, `cre
 (4, '65bdd685593011706940037.jpg', 'Non Profit', 'non-profit', 1, '2024-02-03 06:00:37', '2024-02-03 06:00:37'),
 (5, '65bdd6ab6e2521706940075.jpg', 'Financial Emergency', 'financial-emergency', 1, '2024-02-03 06:01:15', '2024-02-03 06:01:15'),
 (6, '65bdd6d2f1b6b1706940114.jpg', 'Environment', 'environment', 1, '2024-02-03 06:01:55', '2024-02-03 06:15:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `campaign_images`
+--
+
+CREATE TABLE `campaign_images` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` tinyint UNSIGNED NOT NULL COMMENT '1 -> new image when create a campaign, 2 -> existing image of a existing campaign',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -410,7 +450,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2023_11_20_150839_create_withdraw_methods_table', 16),
 (23, '2023_11_20_150907_create_withdrawals_table', 16),
 (24, '2023_12_06_154325_create_contacts_table', 17),
-(28, '2024_01_31_140216_create_campaign_categories_table', 18);
+(28, '2024_01_31_140216_create_campaign_categories_table', 18),
+(29, '2024_02_03_151844_create_campaigns_table', 19),
+(31, '2024_02_04_152936_create_campaign_images_table', 20);
 
 -- --------------------------------------------------------
 
@@ -644,7 +686,8 @@ INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_a
 (62, 'email_confirm.content', '{\"has_image\":\"1\",\"form_heading\":\"Verify your email address\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8c50552abc1706607877.png\",\"image\":\"65b8c505e4e881706607877.png\"}', '2024-01-30 09:44:37', '2024-01-30 09:44:38'),
 (63, 'mobile_confirm.content', '{\"has_image\":\"1\",\"form_heading\":\"Verify your phone number\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8cad7221bf1706609367.png\",\"image\":\"65b8cad77c5201706609367.png\"}', '2024-01-30 10:09:27', '2024-01-30 10:09:27'),
 (64, 'user_ban.content', '{\"has_image\":\"1\",\"form_heading\":\"You are banned\",\"background_image\":\"65b8d184a65391706611076.png\",\"image\":\"65b8d1850888c1706611077.png\"}', '2024-01-30 10:37:56', '2024-01-30 10:37:57'),
-(65, '2fa_confirm.content', '{\"has_image\":\"1\",\"form_heading\":\"Verify two factor authentication\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8e90fe5ee11706617103.png\",\"image\":\"65b8e9104af471706617104.png\"}', '2024-01-30 12:18:23', '2024-01-30 12:29:35');
+(65, '2fa_confirm.content', '{\"has_image\":\"1\",\"form_heading\":\"Verify two factor authentication\",\"submit_button_text\":\"Submit\",\"background_image\":\"65b8e90fe5ee11706617103.png\",\"image\":\"65b8e9104af471706617104.png\"}', '2024-01-30 12:18:23', '2024-01-30 12:29:35'),
+(66, 'campaign_category.content', '{\"section_heading\":\"Campaign Category\",\"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-02-03 06:31:04', '2024-02-03 06:31:04');
 
 -- --------------------------------------------------------
 
@@ -839,11 +882,26 @@ ALTER TABLE `admin_password_resets`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `campaigns_user_id_foreign` (`user_id`),
+  ADD KEY `campaigns_campaign_category_id_foreign` (`campaign_category_id`);
+
+--
 -- Indexes for table `campaign_categories`
 --
 ALTER TABLE `campaign_categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `campaign_categories_name_unique` (`name`);
+
+--
+-- Indexes for table `campaign_images`
+--
+ALTER TABLE `campaign_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `campaign_images_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `contacts`
@@ -987,10 +1045,22 @@ ALTER TABLE `admin_password_resets`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `campaign_categories`
 --
 ALTER TABLE `campaign_categories`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `campaign_images`
+--
+ALTER TABLE `campaign_images`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -1038,7 +1108,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1068,7 +1138,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `site_data`
 --
 ALTER TABLE `site_data`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
@@ -1099,6 +1169,23 @@ ALTER TABLE `withdrawals`
 --
 ALTER TABLE `withdraw_methods`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  ADD CONSTRAINT `campaigns_campaign_category_id_foreign` FOREIGN KEY (`campaign_category_id`) REFERENCES `campaign_categories` (`id`),
+  ADD CONSTRAINT `campaigns_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `campaign_images`
+--
+ALTER TABLE `campaign_images`
+  ADD CONSTRAINT `campaign_images_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

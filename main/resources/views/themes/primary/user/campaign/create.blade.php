@@ -11,11 +11,11 @@
                             <div class="col-12">
                                 <label class="form--label required">@lang('Gallery')</label>
                             </div>
-                            <form action="#" method="POST" class="dropzone" enctype="multipart/form-data">
+                            <form action="{{ route('user.file.upload') }}" method="POST" class="dropzone" enctype="multipart/form-data">
                                 @csrf
                             </form>
                             <div class="col-12 mt-1 mb-4">
-                                <span><em><small>*@lang('Supported files'): @lang('jpeg'), @lang('jpg'), @lang('png'). @lang('Image size'): {{ getFileSize('campaign') }}@lang('px'). @lang('Maximum 4 files'). @lang('Max file size'): {{ ini_get('post_max_size') }}.</small></em></span>
+                                <span><em><small>*@lang('Supported files'): <span class="text--base fw-bold">@lang('jpeg'), @lang('jpg'), @lang('png')</span>. @lang('Image size'): <span class="text--base fw-bold">{{ getFileSize('campaign') }}@lang('px')</span>.</small></em></span>
                             </div>
                             {{-- dropzone end --}}
 
@@ -28,7 +28,7 @@
                                         <input type="file" id="imageUpload" name="image" required accept=".jpeg, .jpg, .png">
                                         <div class="upload__img-preview image-preview">+</div>
                                     </div>
-                                    <span><em><small>*@lang('Supported files'): @lang('jpeg'), @lang('jpg'), @lang('png'). @lang('Image size'): {{ getFileSize('campaign') }}@lang('px'). @lang('Thumbnail size'): {{ getThumbSize('campaign') }}@lang('px').</small></em></span>
+                                    <span><em><small>*@lang('Supported files'): <span class="text--base fw-bold">@lang('jpeg'), @lang('jpg'), @lang('png')</span>. @lang('Image size'): <span class="text--base fw-bold">{{ getFileSize('campaign') }}@lang('px')</span>. @lang('Thumbnail size'): <span class="text--base fw-bold">{{ getThumbSize('campaign') }}@lang('px')</span>.</small></em></span>
                                 </div>
                                 <div class="col-12">
                                     <label class="form--label required">@lang('Name')</label>
@@ -80,7 +80,7 @@
                                     <div class="d-flex mb-1">
                                         <input type="file" class="form--control" name="document" accept=".pdf" required>
                                     </div>
-                                    <span><em><small>@lang('Supported file'): .@lang('pdf')</small></em></span>
+                                    <span><em><small>@lang('Supported file'): <span class="text--base fw-bold">.@lang('pdf')</span>.</small></em></span>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn--base w-100">@lang('Create Campaign')</button>
@@ -104,10 +104,35 @@
     <script type="text/javascript">
         new Dropzone('.dropzone', {
             thumbnailWidth: 200,
-            maxFilesiize: 2,
-            maxFiles: 2,
             acceptedFiles: '.jpg, .jpeg, .png',
             addRemoveLinks: true,
+            success: function(file, response) {
+                file.original_name = response.image
+
+                showToasts('success', response.message)
+            },
+            error: function(file, response) {
+                showToasts('error', response.error.file[0])
+            },
+            removedfile: function(file) {
+                let url  = "{{ route('user.file.remove') }}"
+                let data = {
+                    file: file.original_name,
+                    _token: "{{ csrf_token() }}",
+                }
+
+                $.post(url, data, function(response) {
+                    if (response.status === 'success') {
+                        showToasts('success', response.message)
+                    } else {
+                        console.error(response)
+                    }
+                })
+
+                let fileRef = file.previewElement
+
+                return fileRef != null ? fileRef.parentNode.removeChild(fileRef) : void 0
+            }
         })
     </script>
 @endpush
