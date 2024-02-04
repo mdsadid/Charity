@@ -51,7 +51,7 @@ class CategoryController extends Controller
         return back()->withToasts($toast);
     }
 
-    function updateStatus($id) {
+    function status($id) {
         return CampaignCategory::changeStatus($id);
     }
 }

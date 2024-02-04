@@ -574,20 +574,6 @@
     }
     // ========================= Apexcharts End ==========
 
-    // ========================= Add More Documents On Campaign Create Start ==========
-    $('#addMoreDocs').on('click', function(){
-      $('.add-more-docs').append(`
-      <div class="extra-doc d-flex gap-2 pt-2">
-        <input type="file" class="form--control" accept=".jpg, .jpeg, .png, .pdf" required>
-        <a role="button" class="btn btn--danger px-3 d-flex align-items-center close-extra-doc"><i class="fa-solid fa-trash"></i></a>
-      </div>
-      `)
-    });
-    $(document).on('click', '.close-extra-doc', function(){
-      $(this).closest('.extra-doc').remove();
-    });
-    // ========================= Add More Documents On Campaign Create End ==========
-
     // ========================= CK Editor Start ==========
     if ($('.ck-editor').length) {
       window.editors = {};

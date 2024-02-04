@@ -2,13 +2,14 @@
 
 namespace App\Constants;
 
-class ManageStatus {
+class ManageStatus
+{
     const ACTIVE   = 1;
     const INACTIVE = 0;
 
     const YES = 1;
     const NO  = 0;
-    
+
     const UNVERIFIED = 0;
     const VERIFIED   = 1;
     const PENDING    = 2;
@@ -17,4 +18,12 @@ class ManageStatus {
     const PAYMENT_SUCCESS  = 1;
     const PAYMENT_PENDING  = 2;
     const PAYMENT_CANCEL   = 3;
+
+    const CAMPAIGN_REJECTED = 0;
+    const CAMPAIGN_APPROVED = 1;
+    const CAMPAIGN_PENDING  = 2;
+
+    const CAMPAIGN_UPDATE_REJECTED = 0;
+    const CAMPAIGN_UPDATE_APPROVED = 1;
+    const CAMPAIGN_UPDATE_PENDING  = 2;
 }

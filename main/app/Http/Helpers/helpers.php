@@ -83,6 +83,10 @@ function getFileSize($key) {
     return fileManager()->$key()->size;
 }
 
+function getThumbSize($key) {
+    return fileManager()->$key()->thumb;
+}
+
 function getImage($image, $size = null) {
     $clean = '';
 

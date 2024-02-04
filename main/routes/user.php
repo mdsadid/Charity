@@ -45,6 +45,11 @@ Route::middleware('auth')->name('user.')->group(function () {
 
         // User Operation
         Route::middleware('authorize.status')->group(function () {
+            // Campaign
+            Route::controller('CampaignController')->group(function () {
+                Route::get('campaign', 'create')->name('create.campaign');
+            });
+
             Route::controller('UserController')->group(function () {
                 // KYC Dashboard
                 Route::get('dashboard', 'home')->name('home');
@@ -75,20 +80,20 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('deposit/history', 'depositHistory')->name('deposit.history');
                 Route::get('transactions', 'transactions')->name('transactions');
 
-                // Withdraw
-                Route::controller('WithdrawController')->prefix('withdraw')->name('withdraw.')->group(function () {
-                    Route::middleware('kyc.status')->group(function () {
-                        Route::get('/', 'methods')->name('methods');
-                        Route::post('/', 'store');
-                        Route::get('preview', 'preview')->name('preview');
-                        Route::post('preview', 'submit');
-                    });
-
-                    Route::get('index', 'index')->name('index');
-                });
-
                 // File Download
                 Route::get('file-download', 'fileDownload')->name('file.download');
+            });
+
+            // Withdraw
+            Route::controller('WithdrawController')->prefix('withdraw')->name('withdraw.')->group(function () {
+                Route::middleware('kyc.status')->group(function () {
+                    Route::get('/', 'methods')->name('methods');
+                    Route::post('/', 'store');
+                    Route::get('preview', 'preview')->name('preview');
+                    Route::post('preview', 'submit');
+                });
+
+                Route::get('index', 'index')->name('index');
             });
         });
     });

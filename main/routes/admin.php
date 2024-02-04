@@ -51,9 +51,9 @@ Route::middleware('admin')->group(function () {
     });
 
     Route::controller('CategoryController')->prefix('categories')->name('categories.')->group(function () {
-        Route::get('', 'index')->name('index');
-        Route::post('/{id?}', 'store')->name('store');
-        Route::post('/status/{id}', 'updateStatus')->name('status');
+        Route::get('index', 'index')->name('index');
+        Route::post('store/{id?}', 'store')->name('store');
+        Route::post('status/{id}', 'status')->name('status');
     });
 
     // User Management

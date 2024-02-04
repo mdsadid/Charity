@@ -46,6 +46,12 @@ class FileDetails
             'size' => '300x300',
         ];
 
+        $data['campaign'] = [
+            'path'  => 'assets/universal/images/campaign',
+            'size'  => '855x475',
+            'thumb' => '415x230',
+        ];
+
         return $data;
     }
 }

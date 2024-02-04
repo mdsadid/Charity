@@ -17,65 +17,93 @@
                             <div class="top-button d-flex flex-wrap justify-content-between align-items-center">
                                 <div class="language-box">
                                     <select class="select form--control form-select">
-                                        <option selected>English</option>
-                                        <option value="1">Bangla</option>
-                                        <option value="2">French</option>
-                                        <option value="3">Spanish</option>
+                                        <option selected value="en">English</option>
+                                        <option value="bn">Bangla</option>
                                     </select>
                                 </div>
+
                                 <ul class="login-registration-list d-flex flex-wrap align-items-center">
                                     <li class="login-registration-list__item">
-                                        <a href="dashboard.html" class="btn btn--sm btn--base">Dashboard</a>
+                                        @guest
+                                            <a href="{{ route('user.login.form') }}" class="btn btn--sm btn--base">@lang('Log In')</a>
+                                        @endguest
+
+                                        @auth
+                                            @if (request()->routeIs('user.*'))
+                                                <a href="{{ route('home') }}" class="btn btn--sm btn--base">@lang('Home')</a>
+                                            @else
+                                                <a href="{{ route('user.home') }}" class="btn btn--sm btn--base">@lang('Dashboard')</a>
+                                            @endif
+                                        @endauth
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">@lang('Home')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('about.us') }}">@lang('About Us')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('faq') }}">@lang('FAQ')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('campaign') }}">@lang('Campaigns')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('event') }}">@lang('Events')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contact') }}">@lang('Contact')</a>
-                        </li>
 
-                        @auth
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ auth()->user()->fullname }}
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-menu__list">
-                                        <a href="{{ route('user.home') }}" class="dropdown-menu__link">@lang('Dashboard')</a>
-                                    </li>
-                                    <li class="dropdown-menu__list">
-                                        <a href="{{ route('user.profile') }}" class="dropdown-menu__link">@lang('Profile Settings')</a>
-                                    </li>
-                                    <li class="dropdown-menu__list">
-                                        <a href="{{ route('user.change.password') }}" class="dropdown-menu__link">@lang('Change Password')</a>
-                                    </li>
-                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
-                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="received-donation.html">Received Donation</a></li>
-                                    <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="my-donation.html">My Donations</a></li>
-                                    <li class="dropdown-menu__list">
-                                        <a href="{{ route('user.twofactor.form') }}" class="dropdown-menu__link">@lang('2FA Settings')</a>
-                                    </li>
-                                    <li class="dropdown-menu__list">
-                                        <a href="{{ route('user.logout') }}" class="dropdown-menu__link">@lang('Log Out')</a>
-                                    </li>
-                                </ul>
+                        @if (!request()->routeIs('user.*'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">@lang('Home')</a>
                             </li>
-                        @endauth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('about.us') }}">@lang('About Us')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('faq') }}">@lang('FAQ')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('campaign') }}">@lang('Campaigns')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('event') }}">@lang('Events')</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('contact') }}">@lang('Contact')</a>
+                            </li>
+                        @else
+                            @auth
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @lang('My Campaign')
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.create.campaign') }}" class="dropdown-menu__link">@lang('Create Campaign')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="approved-campaign.html">Approved Campaigns</a></li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="pending-campaign.html">Pending Campaigns</a></li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="rejected-campaign.html">Rejected Campaigns</a></li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="successful-campaign.html">Successful Campaigns</a></li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="all-campaign.html">All Campaigns</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ auth()->user()->fullname }}
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.home') }}" class="dropdown-menu__link">@lang('Dashboard')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.profile') }}" class="dropdown-menu__link">@lang('Profile Settings')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.change.password') }}" class="dropdown-menu__link">@lang('Change Password')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="received-donation.html">Received Donation</a></li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="my-donation.html">My Donations</a></li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.twofactor.form') }}" class="dropdown-menu__link">@lang('2FA Settings')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.logout') }}" class="dropdown-menu__link">@lang('Log Out')</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endauth
+                        @endif
 
                         <li class="nav-item d-lg-block d-none">
                             <div class="d-flex gap-2">
@@ -83,12 +111,18 @@
                                     <a href="{{ route('user.login.form') }}" class="btn btn--sm btn--base">@lang('Log In')</a>
                                 @endguest
 
+                                @auth
+                                    @if (request()->routeIs('user.*'))
+                                        <a href="{{ route('home') }}" class="btn btn--sm btn--base">@lang('Home')</a>
+                                    @else
+                                        <a href="{{ route('user.home') }}" class="btn btn--sm btn--base">@lang('Dashboard')</a>
+                                    @endif
+                                @endauth
+
                                 <div class="language-box language-box-web">
                                     <select class="select form--control form-select">
-                                        <option selected>English</option>
-                                        <option value="1">Bangla</option>
-                                        <option value="2">French</option>
-                                        <option value="3">Spanish</option>
+                                        <option selected value="en">English</option>
+                                        <option value="bn">Bangla</option>
                                     </select>
                                 </div>
                             </div>
