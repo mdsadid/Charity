@@ -52,6 +52,10 @@ class FileDetails
             'thumb' => '415x230',
         ];
 
+        $data['document'] = [
+            'path'  => 'assets/universal/documents/campaign',
+        ];
+
         return $data;
     }
 }

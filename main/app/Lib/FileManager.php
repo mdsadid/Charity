@@ -58,7 +58,6 @@ class FileManager
      */
     public $filename;
 
-
     /**
      * Set the file and file type to properties if exist
      *
@@ -71,6 +70,7 @@ class FileManager
 
         if ($file) {
             $imageExtensions = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
+
             if (in_array($file->getClientOriginalExtension(), $imageExtensions)) {
                 $this->isImage = true;
             } else {

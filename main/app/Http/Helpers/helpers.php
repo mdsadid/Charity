@@ -104,6 +104,7 @@ function getImage($image, $size = null) {
 function isImage($string) {
     $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
     $fileExtension = pathinfo($string, PATHINFO_EXTENSION);
+
     if (in_array($fileExtension, $allowedExtensions)) {
         return true;
     } else {

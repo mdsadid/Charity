@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 04, 2024 at 11:56 AM
+-- Generation Time: Feb 05, 2024 at 11:29 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -91,7 +91,8 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (21, 5, 'New member registered', 0, '/admin/user/index', '2023-12-05 16:09:35', '2023-12-06 17:13:01'),
 (22, 10, 'New member registered', 1, '/admin/user/index', '2023-12-05 17:19:44', '2023-12-06 17:13:01'),
 (23, 11, 'New member registered', 1, '/admin/user/index', '2023-12-05 17:20:42', '2023-12-06 17:16:45'),
-(24, 12, 'New member registered', 0, '/admin/user/index', '2024-01-29 10:18:43', '2024-01-29 10:18:43');
+(24, 12, 'New member registered', 0, '/admin/user/index', '2024-01-29 10:18:43', '2024-01-29 10:18:43'),
+(27, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-05 11:28:35', '2024-02-05 11:28:35');
 
 -- --------------------------------------------------------
 
@@ -134,13 +135,20 @@ CREATE TABLE `campaigns` (
   `document` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `goal_amount` decimal(28,8) UNSIGNED NOT NULL,
   `raised_amount` decimal(28,8) UNSIGNED NOT NULL,
-  `start_time` timestamp NOT NULL,
-  `end_time` timestamp NOT NULL,
+  `start_date` timestamp NOT NULL,
+  `end_date` timestamp NOT NULL,
   `status` tinyint UNSIGNED NOT NULL DEFAULT '2' COMMENT '0 -> campaign rejected, 1 -> campaign approved, 2 -> campaign pending',
   `update_status` tinyint UNSIGNED DEFAULT NULL COMMENT '0 -> campaign update rejected, 1 -> campaign update approved, 2 -> campaign update pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `campaigns`
+--
+
+INSERT INTO `campaigns` (`id`, `user_id`, `campaign_category_id`, `image`, `gallery`, `name`, `description`, `document`, `goal_amount`, `raised_amount`, `start_date`, `end_date`, `status`, `update_status`, `created_at`, `updated_at`) VALUES
+(4, 12, 5, '65c0c662ef5a01707132514.jpg', '[\"65c0c5d8394281707132376.jpg\", \"65c0c5d843e4f1707132376.jpg\", \"65c0c5d8b2dc61707132376.jpg\"]', 'Education for Every Child: Donate to Break the Cycle of Poverty', '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, cum adipisci? Quia in officiis quos vitae consequuntur, nostrum laboriosam ex perspiciatis. Voluptas consectetur eaque labore aliquid, tempore eligendi nemo architecto?</p><p> </p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut nam earum reprehenderit minus rerum cupiditate dolores at velit nobis tenetur, dolorum eius, nostrum ea voluptate. Magni quis suscipit necessitatibus assumenda!</p><p> </p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint vero obcaecati ducimus iure eos magnam dicta illo nulla reiciendis voluptatibus, quam corrupti nobis laboriosam quibusdam sit, dolorum voluptatum quos aperiam.</p><p> </p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium pariatur illum possimus in odio voluptas officiis laboriosam excepturi delectus nam quisquam, dolores vel hic reprehenderit assumenda soluta sit quasi unde.</p>', '65c0c66312e291707132515.pdf', 200.00000000, 0.00000000, '2024-02-09 18:00:00', '2024-02-19 18:00:00', 2, NULL, '2024-02-05 11:28:35', '2024-02-05 11:28:35');
 
 -- --------------------------------------------------------
 
@@ -180,7 +188,6 @@ CREATE TABLE `campaign_images` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` tinyint UNSIGNED NOT NULL COMMENT '1 -> new image when create a campaign, 2 -> existing image of a existing campaign',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -451,8 +458,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (23, '2023_11_20_150907_create_withdrawals_table', 16),
 (24, '2023_12_06_154325_create_contacts_table', 17),
 (28, '2024_01_31_140216_create_campaign_categories_table', 18),
-(29, '2024_02_03_151844_create_campaigns_table', 19),
-(31, '2024_02_04_152936_create_campaign_images_table', 20);
+(33, '2024_02_03_151844_create_campaigns_table', 19),
+(34, '2024_02_04_152936_create_campaign_images_table', 19);
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1043,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1048,7 +1055,7 @@ ALTER TABLE `admin_password_resets`
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `campaign_categories`
@@ -1060,7 +1067,7 @@ ALTER TABLE `campaign_categories`
 -- AUTO_INCREMENT for table `campaign_images`
 --
 ALTER TABLE `campaign_images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -1108,7 +1115,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`

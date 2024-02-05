@@ -50,10 +50,16 @@ Route::middleware('admin')->group(function () {
         Route::get('file-download', 'fileDownload')->name('file.download');
     });
 
+    // Campaign category
     Route::controller('CategoryController')->prefix('categories')->name('categories.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::post('store/{id?}', 'store')->name('store');
         Route::post('status/{id}', 'status')->name('status');
+    });
+
+    // Campaign
+    Route::controller('CampaignController')->prefix('campaigns')->name('campaigns.')->group(function () {
+        Route::get('index', 'index')->name('index');
     });
 
     // User Management

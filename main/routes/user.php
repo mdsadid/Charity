@@ -47,6 +47,7 @@ Route::middleware('auth')->name('user.')->group(function () {
         Route::middleware('authorize.status')->group(function () {
             // Campaign
             Route::controller('CampaignController')->prefix('campaign')->name('campaign.')->group(function () {
+                Route::get('index', 'index')->name('index');
                 Route::get('new', 'new')->name('create');
                 Route::post('store', 'store')->name('store');
 
