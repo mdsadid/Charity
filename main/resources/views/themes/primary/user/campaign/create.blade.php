@@ -11,7 +11,7 @@
                             <div class="col-12">
                                 <label class="form--label required">@lang('Gallery')</label>
                             </div>
-                            <form action="{{ route('user.file.upload') }}" method="POST" class="dropzone" enctype="multipart/form-data">
+                            <form action="{{ route('user.campaign.file.upload') }}" method="POST" class="dropzone" enctype="multipart/form-data">
                                 @csrf
                             </form>
                             <div class="col-12 mt-1 mb-4">
@@ -19,7 +19,7 @@
                             </div>
                             {{-- dropzone end --}}
 
-                            <form action="#" method="POST" class="row g-4" enctype="multipart/form-data">
+                            <form action="{{ route('user.campaign.store') }}" method="POST" class="row g-4" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-12">
                                     <div class="upload__img mb-2">
@@ -58,32 +58,32 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form--label required">@lang('Start Time')</label>
+                                    <label class="form--label required">@lang('Start Date')</label>
                                     <div class="input--group">
                                         <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
-                                        <input type="text" class="form--control datepicker" name="start_time" required>
+                                        <input type="text" class="form--control datepicker" name="start_date" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form--label required">@lang('End Time')</label>
+                                    <label class="form--label required">@lang('End Date')</label>
                                     <div class="input--group">
                                         <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
-                                        <input type="text" class="form--control datepicker" name="end_time" required>
+                                        <input type="text" class="form--control datepicker" name="end_date" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label class="form--label required">@lang('Description')</label>
-                                    <textarea class="form--control ck-editor" name="description" rows="10" required></textarea>
+                                    <textarea class="form--control ck-editor" name="description" rows="10"></textarea>
                                 </div>
                                 <div class="col-12">
                                     <label class="form--label">@lang('Document')</label>
                                     <div class="d-flex mb-1">
-                                        <input type="file" class="form--control" name="document" accept=".pdf" required>
+                                        <input type="file" class="form--control" name="document" accept=".pdf">
                                     </div>
                                     <span><em><small>@lang('Supported file'): <span class="text--base fw-bold">.@lang('pdf')</span>.</small></em></span>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn--base w-100">@lang('Create Campaign')</button>
+                                    <button type="submit" class="btn btn--base w-100">@lang('Create Campaign')</button>
                                 </div>
                             </form>
                         </div>
@@ -94,45 +94,51 @@
     </div>
 @endsection
 
-@push('page-style')
+@push('page-style-lib')
     <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/dropzone.min.css') }}">
 @endpush
 
-@push('page-script')
+@push('page-script-lib')
     <script src="{{ asset($activeThemeTrue . 'js/dropzone.min.js') }}"></script>
+@endpush
 
+@push('page-script')
     <script type="text/javascript">
-        new Dropzone('.dropzone', {
-            thumbnailWidth: 200,
-            acceptedFiles: '.jpg, .jpeg, .png',
-            addRemoveLinks: true,
-            success: function(file, response) {
-                file.original_name = response.image
+        (function ($) {
+            "use strict"
 
-                showToasts('success', response.message)
-            },
-            error: function(file, response) {
-                showToasts('error', response.error.file[0])
-            },
-            removedfile: function(file) {
-                let url  = "{{ route('user.file.remove') }}"
-                let data = {
-                    file: file.original_name,
-                    _token: "{{ csrf_token() }}",
-                }
+            new Dropzone('.dropzone', {
+                thumbnailWidth: 200,
+                acceptedFiles: '.jpg, .jpeg, .png',
+                addRemoveLinks: true,
+                success: function(file, response) {
+                    file.original_name = response.image
 
-                $.post(url, data, function(response) {
-                    if (response.status === 'success') {
-                        showToasts('success', response.message)
-                    } else {
-                        console.error(response)
+                    showToasts('success', response.message)
+                },
+                error: function(file, response) {
+                    showToasts('error', response.error.file[0])
+                },
+                removedfile: function(file) {
+                    let url  = "{{ route('user.campaign.file.remove') }}"
+                    let data = {
+                        file: file.original_name,
+                        _token: "{{ csrf_token() }}",
                     }
-                })
 
-                let fileRef = file.previewElement
+                    $.post(url, data, function(response) {
+                        if (response.status === 'success') {
+                            showToasts('success', response.message)
+                        } else {
+                            console.error(response)
+                        }
+                    })
 
-                return fileRef != null ? fileRef.parentNode.removeChild(fileRef) : void 0
-            }
-        })
+                    let fileRef = file.previewElement
+
+                    return fileRef != null ? fileRef.parentNode.removeChild(fileRef) : void 0
+                }
+            })
+        })(jQuery)
     </script>
 @endpush

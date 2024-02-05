@@ -136,7 +136,7 @@
       ]
     });
     // ========================= New Campaign Slider Js End ===================
-    
+
     // ========================= Slick Slider Js Start ==============
     $(".testimonial-img-slider").slick({
       slidesToShow: 1,
@@ -270,8 +270,8 @@
     // ========================= Odometer Counter Up Js End ==========
     $(".odometer").isInViewport(function (status) {
       if (status === "entered") {
-        setTimeout(function(){
-          $(".odometer").each(function(){
+        setTimeout(function () {
+          $(".odometer").each(function () {
             $(this).html($(this).attr("data-count"));
           });
         }, 0);
@@ -289,7 +289,7 @@
     // ========================= Share Link Copy Start ==========
     var pageUrl = window.location.href;
     $('#shareLink').val(pageUrl);
-    $('.share-link__copy').on('click', function(){
+    $('.share-link__copy').on('click', function () {
       var inputElement = $('#shareLink');
       inputElement.select();
       document.execCommand('copy');
@@ -298,7 +298,7 @@
     // ========================= Share Link Copy End ==========
 
     // ========================= Account Setup Key Copy Start ==========
-    $('.account-setup-key__copy').on('click', function(){
+    $('.account-setup-key__copy').on('click', function () {
       var inputElement = $('#accountSetupKey');
       inputElement.select();
       document.execCommand('copy');
@@ -310,11 +310,11 @@
     // ========================= Account Setup Key Copy End ==========
 
     // ========================= Withdraw Table Search Start ==========
-    $('#searchInput').on('keyup', function() {
+    $('#searchInput').on('keyup', function () {
       const searchValue = $(this).val().toLowerCase();
       let found = false;
 
-      $('table#searchTable tbody tr').each(function() {
+      $('table#searchTable tbody tr').each(function () {
         const cell = $(this).find('td:nth-child(2)');
         const cellValue = cell.text().toLowerCase();
 
@@ -359,7 +359,7 @@
     // ========================= Campaign Countdown End ==========
 
     // ========================= Campagin Donation Form Start ==========
-    $('input[name=donationAmount]').on('change', function(){
+    $('input[name=donationAmount]').on('change', function () {
       if ($(this).is('[id=customDonationAmount]:checked')) {
         $('#donationAmount').prop('readonly', false).focus().val('');
       } else {
@@ -367,8 +367,8 @@
         $('#donationAmount').prop('readonly', true).val(donationAmount);
       }
     });
-    $('#anonymousDonation').on('change', function(){
-      if($(this).is(':checked')) {
+    $('#anonymousDonation').on('change', function () {
+      if ($(this).is(':checked')) {
         $('#donorName, #donorEmail, #donorPhone, #donorCountry').prop('disabled', true);
       } else {
         $('#donorName, #donorEmail, #donorPhone, #donorCountry').prop('disabled', false);
@@ -379,7 +379,7 @@
     // ========================= Simple jQuery Datepicker Start ==========
     $('.form--control.datepicker').datepicker({
       autoHide: true,
-      format:'dd/mm/yyyy',
+      format: 'dd-mm-yyyy',
     });
     // ========================= Simple jQuery Datepicker End ==========
 
@@ -408,7 +408,7 @@
     // ========================= Image Upload With Preview End ==========
 
     // ========================= Apexcharts Start ==========
-    if($('#donationReport').length) {
+    if ($('#donationReport').length) {
       var baseColorForChart = $('html').css('--danger');
       var donationReportoptions = {
         series: [{
@@ -428,7 +428,7 @@
             opacityTo: 1,
             stops: [0, 100]
           }
-        },        
+        },
         chart: {
           height: 400,
           type: 'area',
@@ -464,21 +464,21 @@
               height: 300,
             },
           },
-        },{
+        }, {
           breakpoint: 991,
           options: {
             chart: {
               height: 350,
             },
           },
-        },{
+        }, {
           breakpoint: 767,
           options: {
             chart: {
               height: 300,
             },
           },
-        },{
+        }, {
           breakpoint: 575,
           options: {
             chart: {
@@ -490,7 +490,7 @@
       var donationReport = new ApexCharts(document.querySelector("#donationReport"), donationReportoptions);
       donationReport.render();
     }
-    if($('#withdrawReport').length) {
+    if ($('#withdrawReport').length) {
       var baseColorForChart = $('html').css('--warning');
       var withdrawReportoptions = {
         series: [{
@@ -510,7 +510,7 @@
             opacityTo: 1,
             stops: [0, 100]
           }
-        },        
+        },
         chart: {
           height: 400,
           type: 'area',
@@ -546,21 +546,21 @@
               height: 300,
             },
           },
-        },{
+        }, {
           breakpoint: 991,
           options: {
             chart: {
               height: 350,
             },
           },
-        },{
+        }, {
           breakpoint: 767,
           options: {
             chart: {
               height: 300,
             },
           },
-        },{
+        }, {
           breakpoint: 575,
           options: {
             chart: {
@@ -579,10 +579,10 @@
       window.editors = {};
       document.querySelectorAll('.ck-editor').forEach((node, index) => {
         ClassicEditor
-        .create(node, {})
-        .then(newEditor => {
+          .create(node, {})
+          .then(newEditor => {
             window.editors[index] = newEditor
-        });
+          });
       });
     }
     // ========================= CK Editor End ==========

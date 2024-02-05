@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Constants\ManageStatus;
 use App\Models\CampaignCategory;
 use App\Http\Controllers\Controller;
 use App\Models\CampaignImage;
@@ -11,7 +10,7 @@ use Illuminate\Validation\Rules\File;
 
 class CampaignController extends Controller
 {
-    function create() {
+    function new() {
         $pageTitle  = 'Create New Campaign';
         $categories = CampaignCategory::active()->get();
 
@@ -32,7 +31,6 @@ class CampaignController extends Controller
         $campaignImage          = new CampaignImage();
         $campaignImage->user_id = auth()->user()->id;
         $campaignImage->image   = fileUploader(request('file'), getFilePath('campaign'), getFileSize('campaign'));
-        $campaignImage->type    = ManageStatus::CAMPAIGN_IMAGE_TYPE_NEW;
         $campaignImage->save();
 
         return response()->json([
@@ -51,5 +49,20 @@ class CampaignController extends Controller
             'status'  => 'success',
             'message' => 'File successfully removed',
         ]);
+    }
+
+    function store() {
+        $this->validate(request(), [
+            'category_id' => 'required|integer|exists:campaign_categories,id',
+            'image'       => ['required', File::types(['png', 'jpg', 'jpeg'])],
+            'name'        => 'required|string|max:255',
+            'description' => 'required|min:30',
+            'document'    => ['nullable', File::types('pdf')],
+            'goal_amount' => 'required|numeric|gt:0',
+            'start_date'  => 'required|date_format:d-m-Y',
+            'end_date'    => 'required|date_format:d-m-Y|after:start_date',
+        ]);
+
+        
     }
 }

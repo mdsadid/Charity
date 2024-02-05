@@ -111,9 +111,9 @@
 
 @push('page-script')
     <script>
-        "use strict";
-
         (function($) {
+            "use strict";
+
             @if ($mobileCode)
                 $(`option[data-code={{ $mobileCode }}]`).attr('selected', '');
             @endif

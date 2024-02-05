@@ -46,10 +46,14 @@ Route::middleware('auth')->name('user.')->group(function () {
         // User Operation
         Route::middleware('authorize.status')->group(function () {
             // Campaign
-            Route::controller('CampaignController')->group(function () {
-                Route::get('campaign', 'create')->name('create.campaign');
-                Route::post('file-upload', 'upload')->name('file.upload');
-                Route::post('file-remove', 'remove')->name('file.remove');
+            Route::controller('CampaignController')->prefix('campaign')->name('campaign.')->group(function () {
+                Route::get('new', 'new')->name('create');
+                Route::post('store', 'store')->name('store');
+
+                Route::name('file.')->group(function () {
+                    Route::post('file-upload', 'upload')->name('upload');
+                    Route::post('file-remove', 'remove')->name('remove');
+                });
             });
 
             Route::controller('UserController')->group(function () {

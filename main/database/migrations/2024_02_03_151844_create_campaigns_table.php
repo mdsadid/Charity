@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('document', 255)->nullable();
             $table->unsignedDecimal('goal_amount', 28, 8);
             $table->unsignedDecimal('raised_amount', 28, 8);
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->unsignedTinyInteger('status')
                 ->default(2)
                 ->comment('0 -> campaign rejected, 1 -> campaign approved, 2 -> campaign pending');

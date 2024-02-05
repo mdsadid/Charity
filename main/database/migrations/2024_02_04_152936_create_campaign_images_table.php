@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('image', 255);
-            $table->unsignedTinyInteger('type')
-                ->comment('1 -> new image when create a campaign, 2 -> existing image of a existing campaign');
             $table->timestamps();
         });
     }
