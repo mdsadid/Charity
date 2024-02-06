@@ -17,8 +17,9 @@ class CampaignController extends Controller
 {
     function index() {
         $pageTitle = 'All Campaigns';
+        $campaigns = Campaign::where('user_id', auth()->id())->searchable(['name'])->latest()->paginate(getPaginate());
 
-        return view($this->activeTheme . 'user.campaign.index', compact('pageTitle'));
+        return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function new() {
@@ -60,6 +61,9 @@ class CampaignController extends Controller
         ]);
     }
 
+    /**
+     * Remove image while using dropzone
+     */
     function remove() {
         $image = request('file');
 
@@ -76,7 +80,7 @@ class CampaignController extends Controller
         $this->validate(request(), [
             'category_id' => 'required|integer|exists:categories,id',
             'image'       => ['required', File::types(['png', 'jpg', 'jpeg'])],
-            'name'        => 'required|string|max:255',
+            'name'        => 'required|string|max:190',
             'description' => 'required|min:30',
             'document'    => ['nullable', File::types('pdf')],
             'goal_amount' => 'required|numeric|gt:0',
@@ -90,7 +94,7 @@ class CampaignController extends Controller
 
         $category = Category::where('id', request('category_id'))->active()->first();
 
-        if (is_null($category)) {
+        if (!$category) {
             $toast[] = ['error', 'Selected category not found or inactive'];
 
             return back()->withToasts($toast);
@@ -123,8 +127,9 @@ class CampaignController extends Controller
             return back()->withToasts($toast);
         }
 
-        $campaign->gallery     = json_encode($gallery);
+        $campaign->gallery     = $gallery;
         $campaign->name        = request('name');
+        $campaign->slug        = slug(request('name'));
         $purifier              = new HTMLPurifier();
         $campaign->description = $purifier->purify(request('description'));
 
@@ -157,5 +162,20 @@ class CampaignController extends Controller
         $toast[] = ['success', 'Campaign successfully created'];
 
         return to_route('user.campaign.index')->withToasts($toast);
+    }
+
+    function edit($id) {
+        $pageTitle  = 'Edit Campaign';
+        $categories = Category::get();
+        $campaign   = Campaign::where('id', $id)->where('user_id', auth()->id())->select('image', 'gallery')->firstOrFail();
+
+        return view($this->activeTheme . 'user.campaign.edit', compact('pageTitle', 'categories', 'campaign'));
+    }
+
+    /**
+     * Remove image while editing a campaign
+     */
+    function removeImage() {
+        dd();
     }
 }

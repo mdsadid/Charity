@@ -146,7 +146,6 @@
                             <h1 class="breadcrumb__title">{{ $pageTitle }}</h1>
                             <ul class="breadcrumb__list">
                                 <li><a href="{{ route('home') }}">@lang('Home')</a></li>
-                                <li>{{ $pageTitle }}</li>
                             </ul>
                         </div>
                     </div>
@@ -158,8 +157,8 @@
     @yield('page_content')
 
     @php
-        $footerContent         = getSiteData('footer.content', true);
-        $footerElements        = getSiteData('footer.element', false, null, true);
+        $footerContent = getSiteData('footer.content', true);
+        $footerElements = getSiteData('footer.element', false, null, true);
         $footerContactElements = getSiteData('contact_us.element', false, null, true);
     @endphp
 

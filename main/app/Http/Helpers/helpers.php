@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 function systemDetails() {
-    $system['name']          = 'Charity';
+    $system['name']          = 'Phinix Admin';
     $system['version']       = '1.0';
     $system['build_version'] = '0.0.1';
 
@@ -346,6 +346,7 @@ function cryptoQR($wallet) {
 
 function diffForHumans($date) {
     $lang = session()->get('lang');
+
     Carbon::setlocale($lang);
     return Carbon::parse($date)->diffForHumans();
 }

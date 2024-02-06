@@ -100,12 +100,10 @@
 
 @push('page-style-lib')
     <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/dropzone.min.css') }}">
-    <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/datepicker.min.css') }}">
 @endpush
 
 @push('page-script-lib')
     <script src="{{ asset($activeThemeTrue . 'js/dropzone.min.js') }}"></script>
-    <script src="{{ asset($activeThemeTrue . 'js/datepicker.min.js') }}"></script>
     <script src="{{ asset($activeThemeTrue . 'js/ckeditor.js') }}"></script>
 @endpush
 

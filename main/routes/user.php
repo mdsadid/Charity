@@ -50,6 +50,8 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('index', 'index')->name('index');
                 Route::get('new', 'new')->name('create');
                 Route::post('store', 'store')->name('store');
+                Route::get('edit/{id}', 'edit')->name('edit');
+                Route::post('image-remove', 'removeImage')->name('image.remove');
 
                 Route::name('file.')->group(function () {
                     Route::post('file-upload', 'upload')->name('upload');

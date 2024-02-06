@@ -9,4 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use UniversalStatus, Searchable;
+
+    /**
+     * Get the campaigns for the category.
+     */
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
+    }
 }

@@ -22,8 +22,4 @@ class ManageStatus
     const CAMPAIGN_REJECTED = 0;
     const CAMPAIGN_APPROVED = 1;
     const CAMPAIGN_PENDING  = 2;
-
-    const CAMPAIGN_UPDATE_REJECTED = 0;
-    const CAMPAIGN_UPDATE_APPROVED = 1;
-    const CAMPAIGN_UPDATE_PENDING  = 2;
 }

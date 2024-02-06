@@ -33,11 +33,11 @@
 
                                         @if ($category->status)
                                             <button type="button" class="btn btn-sm btn-label-warning decisionBtn" data-question="@lang('Are you sure to inactive this category?')" data-action="{{ route('admin.categories.status', $category->id) }}">
-                                                <span class="tf-icons las la-ban me-1"></span> @lang('Make Inactive')
+                                                <span class="tf-icons las la-ban me-1"></span> @lang('Inactive')
                                             </button>
                                         @else
                                             <button type="button" class="btn btn-sm btn-label-success decisionBtn" data-question="@lang('Are you sure to active this category?')" data-action="{{ route('admin.categories.status', $category->id) }}">
-                                                <span class="tf-icons las la-check-circle me-1"></span> @lang('Make Active')
+                                                <span class="tf-icons las la-check-circle me-1"></span> @lang('Active')
                                             </button>
                                         @endif
                                     </td>
