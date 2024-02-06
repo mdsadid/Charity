@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\CampaignCategory;
+use App\Models\Category;
 use Exception;
 use Illuminate\Validation\Rules\File;
 
@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     function index() {
         $pageTitle  = 'Campaign Categories';
-        $categories = CampaignCategory::searchable(['name'])->latest()->paginate(getPaginate());
+        $categories = Category::searchable(['name'])->latest()->paginate(getPaginate());
 
         return view('admin.page.categories', compact('pageTitle', 'categories'));
     }
@@ -21,14 +21,14 @@ class CategoryController extends Controller
 
         $this->validate(request(), [
             'image' => [$imageValidation, File::types(['png', 'jpg', 'jpeg'])],
-            'name'  => 'required|string|max:40|unique:campaign_categories,name,' . $id,
+            'name'  => 'required|string|max:40|unique:categories,name,' . $id,
         ]);
 
         if ($id) {
-            $category = CampaignCategory::findOrFail($id);
+            $category = Category::findOrFail($id);
             $message  = 'Category successfully updated';
         } else {
-            $category = new CampaignCategory();
+            $category = new Category();
             $message  = 'Category successfully added';
         }
 
@@ -52,6 +52,6 @@ class CategoryController extends Controller
     }
 
     function status($id) {
-        return CampaignCategory::changeStatus($id);
+        return Category::changeStatus($id);
     }
 }

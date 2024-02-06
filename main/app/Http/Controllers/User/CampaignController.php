@@ -4,10 +4,10 @@ namespace App\Http\Controllers\User;
 
 use Exception;
 use App\Models\Campaign;
-use App\Models\CampaignImage;
-use App\Models\CampaignCategory;
 use App\Http\Controllers\Controller;
 use App\Models\AdminNotification;
+use App\Models\Category;
+use App\Models\Gallery;
 use Carbon\Carbon;
 use HTMLPurifier;
 use Illuminate\Validation\Rules\File;
@@ -22,10 +22,20 @@ class CampaignController extends Controller
     }
 
     function new() {
-        $pageTitle  = 'Create New Campaign';
-        $categories = CampaignCategory::active()->get();
+        // Delete previous gallery images if exist
+        $images = Gallery::where('user_id', auth()->id())->get();
 
-        return view($this->activeTheme . 'user.campaign.create', compact('pageTitle', 'categories'));
+        if ($images) {
+            foreach ($images as $image) {
+                fileManager()->removeFile(getFilePath('campaign') . '/' . $image->image);
+                $image->delete();
+            }
+        }
+
+        $pageTitle  = 'Create New Campaign';
+        $categories = Category::active()->get();
+
+        return view($this->activeTheme . 'user.campaign.new', compact('pageTitle', 'categories'));
     }
 
     function upload() {
@@ -39,14 +49,14 @@ class CampaignController extends Controller
             ], 400);
         }
 
-        $campaignImage          = new CampaignImage();
-        $campaignImage->user_id = auth()->user()->id;
-        $campaignImage->image   = fileUploader(request('file'), getFilePath('campaign'), getFileSize('campaign'));
-        $campaignImage->save();
+        $gallery          = new Gallery();
+        $gallery->user_id = auth()->id();
+        $gallery->image   = fileUploader(request('file'), getFilePath('campaign'), getFileSize('campaign'));
+        $gallery->save();
 
         return response()->json([
             'message' => 'File successfully uploaded',
-            'image'   => $campaignImage->image,
+            'image'   => $gallery->image,
         ]);
     }
 
@@ -54,7 +64,7 @@ class CampaignController extends Controller
         $image = request('file');
 
         fileManager()->removeFile(getFilePath('campaign') . '/' . $image);
-        CampaignImage::where('image', $image)->delete();
+        Gallery::where('image', $image)->delete();
 
         return response()->json([
             'status'  => 'success',
@@ -64,7 +74,7 @@ class CampaignController extends Controller
 
     function store() {
         $this->validate(request(), [
-            'category_id' => 'required|integer|exists:campaign_categories,id',
+            'category_id' => 'required|integer|exists:categories,id',
             'image'       => ['required', File::types(['png', 'jpg', 'jpeg'])],
             'name'        => 'required|string|max:255',
             'description' => 'required|min:30',
@@ -78,9 +88,17 @@ class CampaignController extends Controller
             'category_id.exists'   => 'The selected category is invalid.',
         ]);
 
-        $campaignImages = CampaignImage::where('user_id', auth()->id())->get();
+        $category = Category::where('id', request('category_id'))->active()->first();
 
-        if (count($campaignImages) < 1) {
+        if (is_null($category)) {
+            $toast[] = ['error', 'Selected category not found or inactive'];
+
+            return back()->withToasts($toast);
+        }
+
+        $images = Gallery::where('user_id', auth()->id())->get();
+
+        if (!$images) {
             $toast[] = ['error', 'Minimum one gallery image is required'];
 
             return back()->withToasts($toast);
@@ -89,12 +107,12 @@ class CampaignController extends Controller
         // Gallery images
         $gallery = [];
 
-        foreach ($campaignImages as $image) array_push($gallery, $image->image);
+        foreach ($images as $image) array_push($gallery, $image->image);
 
         // Store campaign data
-        $campaign                       = new Campaign();
-        $campaign->user_id              = auth()->id();
-        $campaign->campaign_category_id = request('category_id');
+        $campaign              = new Campaign();
+        $campaign->user_id     = auth()->id();
+        $campaign->category_id = request('category_id');
 
         // Upload main image
         try {
@@ -110,8 +128,8 @@ class CampaignController extends Controller
         $purifier              = new HTMLPurifier();
         $campaign->description = $purifier->purify(request('description'));
 
+        // Upload document
         if (request()->has('document')) {
-            // Upload document
             try {
                 $campaign->document = fileUploader(request('document'), getFilePath('document'));
             } catch (Exception) {
@@ -127,7 +145,7 @@ class CampaignController extends Controller
         $campaign->save();
 
         // Delete gallery images
-        foreach ($campaignImages as $image) $image->delete();
+        foreach ($images as $image) $image->delete();
 
         // Create admin notification
         $adminNotification            = new AdminNotification();

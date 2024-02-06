@@ -12,9 +12,7 @@
         <link rel="stylesheet" href="{{ asset('assets/universal/css/font-awesome.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/slick.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/universal/css/line-awesome.css') }}">
-        <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/odometer.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/lightbox.min.css') }}">
-        <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/datepicker.min.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/aos.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/main.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/custom.css') }}">
@@ -40,12 +38,8 @@
         <script src="{{ asset('assets/universal/js/jquery-3.7.0.min.js') }}"></script>
         <script src="{{ asset('assets/universal/js/bootstrap.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/slick.min.js') }}"></script>
-        <script src="{{ asset($activeThemeTrue . 'js/odometer.min.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/viewport.jquery.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/lightbox.min.js') }}"></script>
-        <script src="{{ asset($activeThemeTrue . 'js/datepicker.min.js') }}"></script>
-        <script src="{{ asset($activeThemeTrue . 'js/apexcharts.js') }}"></script>
-        <script src="{{ asset($activeThemeTrue . 'js/ckeditor.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/aos.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/main.js') }}"></script>
 

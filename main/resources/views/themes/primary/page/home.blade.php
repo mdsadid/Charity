@@ -666,6 +666,10 @@
     </div>
 @endsection
 
+@push('page-style-lib')
+    <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/odometer.css') }}">
+@endpush
+
 @push('page-style')
     <style>
         .banner-img::after {
@@ -709,4 +713,8 @@
             mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
         }
     </style>
+@endpush
+
+@push('page-script-lib')
+    <script src="{{ asset($activeThemeTrue . 'js/odometer.min.js') }}"></script>
 @endpush

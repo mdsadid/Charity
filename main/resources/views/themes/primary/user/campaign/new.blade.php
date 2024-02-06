@@ -34,7 +34,7 @@
                                     <label class="form--label required">@lang('Name')</label>
                                     <div class="input--group">
                                         <span class="input-group-text"><i class="fa-solid fa-h"></i></span>
-                                        <input type="text" class="form--control" name="name" required>
+                                        <input type="text" class="form--control" name="name" value="{{ old('name') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -45,7 +45,9 @@
                                             <option value="" selected>@lang('Select Category')</option>
 
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ __(@$category->name) }}</option>
+                                                <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
+                                                    {{ __(@$category->name) }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -54,26 +56,28 @@
                                     <label class="form--label required">@lang('Goal Amount')</label>
                                     <div class="input--group">
                                         <span class="input-group-text">{{ @$setting->cur_sym }}</span>
-                                        <input type="number" step="0.01" class="form--control" name="goal_amount" required>
+                                        <input type="number" step="any" class="form--control" name="goal_amount" value="{{ old('goal_amount') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Start Date')</label>
                                     <div class="input--group">
-                                        <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
-                                        <input type="text" class="form--control datepicker" name="start_date" required>
+                                        <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                                        <input type="text" class="form--control datepicker" name="start_date" value="{{ old('start_date') }}" required autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('End Date')</label>
                                     <div class="input--group">
-                                        <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
-                                        <input type="text" class="form--control datepicker" name="end_date" required>
+                                        <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                                        <input type="text" class="form--control datepicker" name="end_date" value="{{ old('end_date') }}" required autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label class="form--label required">@lang('Description')</label>
-                                    <textarea class="form--control ck-editor" name="description" rows="10"></textarea>
+                                    <textarea class="form--control ck-editor" name="description" rows="10">
+                                        @php echo old('description') @endphp
+                                    </textarea>
                                 </div>
                                 <div class="col-12">
                                     <label class="form--label">@lang('Document')</label>
@@ -96,10 +100,13 @@
 
 @push('page-style-lib')
     <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/datepicker.min.css') }}">
 @endpush
 
 @push('page-script-lib')
     <script src="{{ asset($activeThemeTrue . 'js/dropzone.min.js') }}"></script>
+    <script src="{{ asset($activeThemeTrue . 'js/datepicker.min.js') }}"></script>
+    <script src="{{ asset($activeThemeTrue . 'js/ckeditor.js') }}"></script>
 @endpush
 
 @push('page-script')
@@ -112,7 +119,7 @@
                 acceptedFiles: '.jpg, .jpeg, .png',
                 addRemoveLinks: true,
                 success: function(file, response) {
-                    file.original_name = response.image
+                    file.unique_name = response.image
 
                     showToasts('success', response.message)
                 },
@@ -122,7 +129,7 @@
                 removedfile: function(file) {
                     let url  = "{{ route('user.campaign.file.remove') }}"
                     let data = {
-                        file: file.original_name,
+                        file: file.unique_name,
                         _token: "{{ csrf_token() }}",
                     }
 

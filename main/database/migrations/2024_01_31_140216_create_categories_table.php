@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campaign_images', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
             $table->string('image', 255);
+            $table->string('name', 40)->unique();
+            $table->string('slug', 255);
+            $table->unsignedTinyInteger('status')
+                ->default(1)
+                ->comment('0 -> category is inactive, 1 -> category is active');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('campaign_images');
+        Schema::dropIfExists('categories');
     }
 };

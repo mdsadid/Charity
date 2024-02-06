@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\ManageStatus;
-use App\Models\CampaignCategory;
+use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Language;
 use App\Models\SiteData;
@@ -17,7 +17,7 @@ class WebsiteController extends Controller
         $aboutUsContent          = getSiteData('about.content', true);
         $featuredCampaignContent = getSiteData('featured_campaign.content', true);
         $campaignCategoryContent = getSiteData('campaign_category.content', true);
-        $campaignCategories      = CampaignCategory::active()->get();
+        $campaignCategories      = Category::active()->get();
         $volunteerContent        = getSiteData('volunteer.content', true);
         $volunteerElements       = getSiteData('volunteer.element', false, null, true);
         $counterElements         = getSiteData('counter.element', false, null, true);
