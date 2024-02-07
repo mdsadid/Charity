@@ -154,7 +154,7 @@
         </section>
     @endif
 
-    @yield('page_content')
+    @yield('front_end')
 
     @php
         $footerContent = getSiteData('footer.content', true);

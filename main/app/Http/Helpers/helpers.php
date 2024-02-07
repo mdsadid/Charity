@@ -367,3 +367,9 @@ function ordinal($number) {
     else
         return $number . $ends[$number % 10];
 }
+
+function donationPercentage($goalAmount, $raisedAmount) {
+    $percentage = (int) (($raisedAmount / $goalAmount) * 100);
+
+    return $percentage;
+}

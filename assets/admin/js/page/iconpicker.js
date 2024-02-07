@@ -939,7 +939,7 @@
                 var i = [];
                 this.iconpicker.find(".iconpicker-item").each(function() {
                     var e = c(this);
-                    var a = e.attr("title").toLowerCase();
+                    var a = e.attr("title");
                     var t = e.attr("data-search-terms") ? e.attr("data-search-terms").toLowerCase() : "";
                     a = a + " " + t;
                     var s = false;

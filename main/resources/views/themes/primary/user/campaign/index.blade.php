@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <div class="dashboard py-60">
         <div class="container">
             <div class="card custom--card">
@@ -55,7 +55,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#" class="dropdown-item">
+                                                    <a href="{{ route('user.campaign.show', $campaign->slug) }}" class="dropdown-item">
                                                         <i class="fa-regular fa-eye text--info"></i> @lang('Details')
                                                     </a>
                                                 </li>

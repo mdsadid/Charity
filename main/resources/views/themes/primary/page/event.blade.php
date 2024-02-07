@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <div class="event py-120">
         <div class="container">
             <div class="row">

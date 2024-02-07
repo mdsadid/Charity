@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 06, 2024 at 06:49 AM
+-- Generation Time: Feb 07, 2024 at 11:55 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -94,7 +94,14 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (24, 12, 'New member registered', 0, '/admin/user/index', '2024-01-29 10:18:43', '2024-01-29 10:18:43'),
 (27, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-05 11:28:35', '2024-02-05 11:28:35'),
 (28, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 06:45:07', '2024-02-06 06:45:07'),
-(29, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 06:48:39', '2024-02-06 06:48:39');
+(29, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 06:48:39', '2024-02-06 06:48:39'),
+(30, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 12:24:13', '2024-02-06 12:24:13'),
+(31, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 12:26:43', '2024-02-06 12:26:43'),
+(32, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 12:28:40', '2024-02-06 12:28:40'),
+(33, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 12:33:28', '2024-02-06 12:33:28'),
+(34, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 12:34:59', '2024-02-06 12:34:59'),
+(35, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-06 12:36:23', '2024-02-06 12:36:23'),
+(36, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-07 07:10:04', '2024-02-07 07:10:04');
 
 -- --------------------------------------------------------
 
@@ -132,15 +139,15 @@ CREATE TABLE `campaigns` (
   `category_id` bigint UNSIGNED NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gallery` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `document` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `goal_amount` decimal(28,8) UNSIGNED NOT NULL,
-  `raised_amount` decimal(28,8) UNSIGNED NOT NULL,
+  `raised_amount` decimal(28,8) UNSIGNED NOT NULL DEFAULT '0.00000000',
   `start_date` timestamp NOT NULL,
   `end_date` timestamp NOT NULL,
   `status` tinyint UNSIGNED NOT NULL DEFAULT '2' COMMENT '0 -> campaign rejected, 1 -> campaign approved, 2 -> campaign pending',
-  `update_status` tinyint UNSIGNED DEFAULT NULL COMMENT '0 -> campaign update rejected, 1 -> campaign update approved, 2 -> campaign update pending',
   `is_featured` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT '0 -> campaign not featured, 1 -> campaign is featured',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -150,9 +157,10 @@ CREATE TABLE `campaigns` (
 -- Dumping data for table `campaigns`
 --
 
-INSERT INTO `campaigns` (`id`, `user_id`, `category_id`, `image`, `gallery`, `name`, `description`, `document`, `goal_amount`, `raised_amount`, `start_date`, `end_date`, `status`, `update_status`, `is_featured`, `created_at`, `updated_at`) VALUES
-(1, 12, 6, '65c1d573879811707201907.jpg', '[\"65c1d52bb57701707201835.jpg\",\"65c1d52bb7f101707201835.jpg\",\"65c1d52c335ba1707201836.jpg\"]', 'Education for Every Child: Donate to Break the Cycle of Poverty', '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, cum adipisci? Quia in officiis quos vitae consequuntur, nostrum laboriosam ex perspiciatis. Voluptas consectetur eaque labore aliquid, tempore eligendi nemo architecto?</p><p> </p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut nam earum reprehenderit minus rerum cupiditate dolores at velit nobis tenetur, dolorum eius, nostrum ea voluptate. Magni quis suscipit necessitatibus assumenda!</p><p> </p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint vero obcaecati ducimus iure eos magnam dicta illo nulla reiciendis voluptatibus, quam corrupti nobis laboriosam quibusdam sit, dolorum voluptatum quos aperiam.</p>', '65c1d573a0bc51707201907.pdf', 130.00000000, 0.00000000, '2024-02-09 18:00:00', '2024-02-14 18:00:00', 2, NULL, 0, '2024-02-06 06:45:07', '2024-02-06 06:45:07'),
-(2, 12, 5, '65c1d64785f0e1707202119.jpg', '[\"65c1d5d4b7a3d1707202004.jpg\",\"65c1d5d4b81c11707202004.jpg\",\"65c1d5d5203cc1707202005.jpg\"]', 'The Menopause Charity Crowdfund', '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, cum adipisci? Quia in officiis quos vitae consequuntur, nostrum laboriosam ex perspiciatis. Voluptas consectetur eaque labore aliquid, tempore eligendi nemo architecto?</p><p> </p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut nam earum reprehenderit minus rerum cupiditate dolores at velit nobis tenetur, dolorum eius, nostrum ea voluptate. Magni quis suscipit necessitatibus assumenda!</p><p> </p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint vero obcaecati ducimus iure eos magnam dicta illo nulla reiciendis voluptatibus, quam corrupti nobis laboriosam quibusdam sit, dolorum voluptatum quos aperiam.</p>', NULL, 150.00000000, 0.00000000, '2024-02-19 18:00:00', '2024-02-22 18:00:00', 2, NULL, 0, '2024-02-06 06:48:39', '2024-02-06 06:48:39');
+INSERT INTO `campaigns` (`id`, `user_id`, `category_id`, `image`, `gallery`, `name`, `slug`, `description`, `document`, `goal_amount`, `raised_amount`, `start_date`, `end_date`, `status`, `is_featured`, `created_at`, `updated_at`) VALUES
+(1, 12, 6, '65c351b617f051707299254.jpg', '[\"65c34880dd40f1707296896.jpg\",\"65c351aab74ee1707299242.jpg\",\"65c351aab90771707299242.jpg\"]', 'Education for Every Child: Donate to Break the Cycle of Poverty', 'education-for-every-child-donate-to-break-the-cycle-of-poverty', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', '65c224ed6b9f91707222253.pdf', 1000.00000000, 750.00000000, '2024-02-06 12:40:44', '2024-02-20 17:00:00', 1, 0, '2024-02-06 12:24:13', '2024-02-07 09:47:34'),
+(2, 12, 7, '65c225832cb601707222403.jpg', '[\"65c225268e5771707222310.jpg\",\"65c22527067091707222311.jpg\"]', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.', 'it-is-a-long-established-fact-that-a-reader-will-be-distracted-by-the-readable-content-of-a-page-when-looking-at-its-layout', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', NULL, 200.00000000, 0.00000000, '2024-02-06 12:41:33', '2024-02-22 17:00:00', 2, 0, '2024-02-06 12:26:43', '2024-02-07 06:51:30'),
+(3, 12, 3, '65c225f81d6ce1707222520.jpg', '[\"65c2259a714961707222426.jpg\"]', 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.', 'the-standard-chunk-of-lorem-ipsum-used-since-the-1500s-is-reproduced-below-for-those-interested', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>', '65c225f8338051707222520.pdf', 95.00000000, 0.00000000, '2024-02-06 12:41:57', '2024-02-28 17:00:00', 2, 0, '2024-02-06 12:28:40', '2024-02-07 06:46:27');
 
 -- --------------------------------------------------------
 
@@ -178,7 +186,7 @@ INSERT INTO `categories` (`id`, `image`, `name`, `slug`, `status`, `created_at`,
 (2, '65c1c02a328661707196458.jpg', 'Treatment', 'treatment', 1, '2024-02-06 05:14:18', '2024-02-06 05:14:18'),
 (3, '65c1c04e96b741707196494.jpg', 'Medical', 'medical', 1, '2024-02-06 05:14:54', '2024-02-06 05:14:54'),
 (4, '65c1c061052f01707196513.jpg', 'Emergency', 'emergency', 1, '2024-02-06 05:15:13', '2024-02-06 05:15:13'),
-(5, '65c1c084a74ef1707196548.jpg', 'Non Profit', 'non-profit', 1, '2024-02-06 05:15:48', '2024-02-06 05:15:48'),
+(5, '65c1c084a74ef1707196548.jpg', 'Non Profit', 'non-profit', 1, '2024-02-06 05:15:48', '2024-02-07 04:46:30'),
 (6, '65c1c09f2cf7c1707196575.jpg', 'Financial Emergency', 'financial-emergency', 1, '2024-02-06 05:16:15', '2024-02-06 05:16:15'),
 (7, '65c1c0b8815be1707196600.jpg', 'Environment', 'environment', 1, '2024-02-06 05:16:40', '2024-02-06 05:16:40');
 
@@ -462,8 +470,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (23, '2023_11_20_150907_create_withdrawals_table', 16),
 (24, '2023_12_06_154325_create_contacts_table', 17),
 (35, '2024_01_31_140216_create_categories_table', 18),
-(36, '2024_02_03_151844_create_campaigns_table', 18),
-(37, '2024_02_04_152936_create_galleries_table', 18);
+(38, '2024_02_03_151844_create_campaigns_table', 19),
+(39, '2024_02_04_152936_create_galleries_table', 19);
 
 -- --------------------------------------------------------
 
@@ -1047,7 +1055,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1059,7 +1067,7 @@ ALTER TABLE `admin_password_resets`
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1095,7 +1103,7 @@ ALTER TABLE `forms`
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `gateways`
@@ -1119,7 +1127,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`

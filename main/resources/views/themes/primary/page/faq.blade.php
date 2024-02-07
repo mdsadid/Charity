@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <div class="faq py-120">
         <div class="container">
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">

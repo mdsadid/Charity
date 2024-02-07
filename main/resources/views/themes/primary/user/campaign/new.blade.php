@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <div class="create-campaign py-60">
         <div class="container">
             <div class="row justify-content-center">

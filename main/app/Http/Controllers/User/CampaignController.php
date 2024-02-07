@@ -276,4 +276,11 @@ class CampaignController extends Controller
 
         return back()->withToasts($toast);
     }
+
+    function show($slug) {
+        $pageTitle  = 'Campaign Details';
+        $campaign   = Campaign::where('slug', $slug)->where('user_id', auth()->id())->first();
+
+        return view($this->activeTheme . 'user.campaign.show', compact('pageTitle', 'campaign'));
+    }
 }

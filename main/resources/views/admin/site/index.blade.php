@@ -537,7 +537,6 @@
             });
 
             $('.iconPicker').iconpicker().on('iconpickerSelected', function (e) {
-                console.log('sdsdsd');
                 $(this).closest('.input-group').find('.iconpicker-input').val(`<i class="${e.iconpickerValue}"></i>`);
             });
         })(jQuery);

@@ -53,6 +53,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('edit/{slug}', 'edit')->name('edit');
                 Route::post('image-remove/{id}', 'removeImage')->name('image.remove');
                 Route::post('update/{id}', 'update')->name('update');
+                Route::get('details/{slug}', 'show')->name('show');
 
                 Route::name('file.')->group(function () {
                     Route::post('file-upload', 'upload')->name('upload');

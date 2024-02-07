@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <section class="banner-section">
         <div class="banner-slider">
             @foreach ($bannerElements as $banner)

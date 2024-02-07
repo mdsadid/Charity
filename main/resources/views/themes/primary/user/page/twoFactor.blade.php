@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <div class="dashboard py-60">
         <div class="container">
             <div class="row @if ($user->ts) justify-content-center @else g-4 @endif">

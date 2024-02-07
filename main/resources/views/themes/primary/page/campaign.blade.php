@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <div class="donation pt-120 pb-60">
         <div class="container">
             <div class="row g-4">

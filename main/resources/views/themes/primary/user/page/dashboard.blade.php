@@ -1,6 +1,6 @@
 @extends($activeTheme . 'layouts.frontend')
 
-@section('page_content')
+@section('front_end')
     <div class="dashboard py-60">
         <div class="container">
             @if (auth()->user()->kc == ManageStatus::UNVERIFIED || auth()->user()->kc == ManageStatus::PENDING)
