@@ -204,7 +204,7 @@ class CampaignController extends Controller
 
         $index = array_search($image, $gallery);
 
-        if (!$index) {
+        if ($index === false) {
             return response()->json([
                 'status'  => 'error',
                 'message' => 'Image not found',

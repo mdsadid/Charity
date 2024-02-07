@@ -12,7 +12,7 @@
                                 <label class="form--label required">@lang('Gallery')</label>
                                 <div class="row">
                                     @foreach ($campaign->gallery as $image)
-                                        <div class="col-3">
+                                        <div class="col-3 gallery-image">
                                             <div class="image-container">
                                                 @if (count($campaign->gallery) > 1)
                                                     <div class="remove-button" data-image="{{ json_encode($image) }}" data-action="{{ route('user.campaign.image.remove', $campaign->id) }}">
@@ -135,6 +135,8 @@
                     _token: "{{ csrf_token() }}",
                 }
 
+                let _this = $(this)
+
                 Swal.fire({
                     title: "Are you sure?",
                     text: "This will delete the gallery image permanently!",
@@ -146,6 +148,7 @@
                 }).then((result) => {
                     $.post(url, data, function(response) {
                         if (response.status === 'success') {
+                            _this.parent().closest('.gallery-image').remove()
                             showToasts('success', response.message)
                         } else {
                             showToasts('error', response.message)
