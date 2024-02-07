@@ -15,16 +15,14 @@ use Illuminate\Support\Facades\Validator;
 
 class CampaignController extends Controller
 {
-    function index()
-    {
+    function index() {
         $pageTitle = 'All Campaigns';
         $campaigns = Campaign::where('user_id', auth()->id())->searchable(['name'])->latest()->paginate(getPaginate());
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
-    function new()
-    {
+    function new() {
         // Delete previous gallery images if exist
         $images = Gallery::where('user_id', auth()->id())->get();
 
@@ -41,8 +39,7 @@ class CampaignController extends Controller
         return view($this->activeTheme . 'user.campaign.new', compact('pageTitle', 'categories'));
     }
 
-    function upload()
-    {
+    function upload() {
         $validator = Validator::make(request()->all(), [
             'file' => ['required', File::types(['png', 'jpg', 'jpeg'])],
         ]);
@@ -67,8 +64,7 @@ class CampaignController extends Controller
     /**
      * Remove image while using dropzone
      */
-    function remove()
-    {
+    function remove() {
         $image = request('file');
 
         fileManager()->removeFile(getFilePath('campaign') . '/' . $image);
@@ -80,8 +76,7 @@ class CampaignController extends Controller
         ]);
     }
 
-    function store()
-    {
+    function store() {
         $this->validate(request(), [
             'category_id' => 'required|integer|exists:categories,id',
             'image'       => ['required', File::types(['png', 'jpg', 'jpeg'])],
@@ -169,8 +164,17 @@ class CampaignController extends Controller
         return to_route('user.campaign.index')->withToasts($toast);
     }
 
-    function edit($slug)
-    {
+    function edit($slug) {
+        // Delete previous gallery images if exist
+        $images = Gallery::where('user_id', auth()->id())->get();
+
+        if ($images) {
+            foreach ($images as $image) {
+                fileManager()->removeFile(getFilePath('campaign') . '/' . $image->image);
+                $image->delete();
+            }
+        }
+
         $pageTitle  = 'Edit Campaign';
         $categories = Category::get();
         $campaign   = Campaign::where('slug', $slug)->where('user_id', auth()->id())->select('id', 'image', 'gallery')->firstOrFail();
@@ -181,8 +185,7 @@ class CampaignController extends Controller
     /**
      * Remove image while editing a campaign
      */
-    function removeImage($id)
-    {
+    function removeImage($id) {
         $campaign = Campaign::where('id', $id)->where('user_id', auth()->id())->first();
 
         if (!$campaign) {
@@ -225,5 +228,52 @@ class CampaignController extends Controller
             'status'  => 'success',
             'message' => 'Image successfully removed',
         ]);
+    }
+
+    function update($id) {
+        $this->validate(request(), [
+            'image' => ['nullable', File::types(['png', 'jpg', 'jpeg'])],
+        ]);
+
+        $campaign = Campaign::where('id', $id)->where('user_id', auth()->id())->approve()->first();
+
+        if (!$campaign) {
+            $toast[] = ['error', 'Campaign not found'];
+
+            return back()->withToasts($toast);
+        }
+
+        // Upload new main image
+        if (request()->hasFile('image')) {
+            try {
+                $campaign->image = fileUploader(request('image'), getFilePath('campaign'), getFileSize('campaign'), $campaign->image, getThumbSize('campaign'));
+            } catch (Exception) {
+                $toast[] = ['error', 'Image uploading process has failed'];
+
+                return back()->withToasts($toast);
+            }
+        }
+
+        // Update gallery images
+        $images = Gallery::where('user_id', auth()->id())->get();
+
+        if ($images) {
+            $gallery = [];
+
+            foreach ($images as $image) array_push($gallery, $image->image);
+
+            $campaign->gallery = array_merge($campaign->gallery, $gallery);
+        }
+
+        $campaign->save();
+
+        // Delete gallery images
+        if ($images) {
+            foreach ($images as $image) $image->delete();
+        }
+
+        $toast[] = ['success', 'Campaign successfully updated'];
+
+        return back()->withToasts($toast);
     }
 }

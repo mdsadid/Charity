@@ -34,13 +34,13 @@
                             </div>
                             {{-- dropzone end --}}
 
-                            <form action="{{ route('user.campaign.store') }}" method="POST" class="row g-4" enctype="multipart/form-data">
+                            <form action="{{ route('user.campaign.update', $campaign->id) }}" method="POST" class="row g-4" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-12">
                                     <div class="upload__img mb-2">
-                                        <label for="imageUpload" class="form--label required">@lang('Image')</label>
+                                        <label for="imageUpload" class="form--label">@lang('Image')</label>
                                         <label for="imageUpload" class="upload__img__btn"><i class="las la-camera"></i></label>
-                                        <input type="file" id="imageUpload" name="image" required accept=".jpeg, .jpg, .png">
+                                        <input type="file" id="imageUpload" name="image" accept=".jpeg, .jpg, .png">
                                         <div class="upload__img-preview image-preview">
                                             <img src="{{ getImage(getFilePath('campaign') . '/' . $campaign->image, getFileSize('campaign')) }}" alt="">
                                         </div>

@@ -59,16 +59,14 @@
                                                         <i class="fa-regular fa-eye text--info"></i> @lang('Details')
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a href="{{ route('user.campaign.edit', $campaign->slug) }}" class="dropdown-item">
-                                                        <i class="fa-regular fa-pen-to-square text--success"></i> @lang('Edit Image')
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="dropdown-item">
-                                                        <i class="fa-regular fa-trash-can text--danger"></i> @lang('Delete')
-                                                    </a>
-                                                </li>
+
+                                                @if (@$campaign->status == ManageStatus::CAMPAIGN_APPROVED)
+                                                    <li>
+                                                        <a href="{{ route('user.campaign.edit', $campaign->slug) }}" class="dropdown-item">
+                                                            <i class="fa-regular fa-pen-to-square text--success"></i> @lang('Edit Image')
+                                                        </a>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\ManageStatus;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,5 +27,13 @@ class Campaign extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Scope a query to only include approved campaigns.
+     */
+    public function scopeApprove($query) 
+    {
+        $query->where('status', ManageStatus::CAMPAIGN_APPROVED);
     }
 }
