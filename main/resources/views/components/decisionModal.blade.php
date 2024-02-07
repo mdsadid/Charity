@@ -29,10 +29,10 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $(document).on('click','.decisionBtn', function () {
+            $(document).on('click', '.decisionBtn', function() {
                 let modal = $('#decisionModal');
                 let data  = $(this).data();
 

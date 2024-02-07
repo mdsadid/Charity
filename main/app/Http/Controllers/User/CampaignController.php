@@ -15,14 +15,16 @@ use Illuminate\Support\Facades\Validator;
 
 class CampaignController extends Controller
 {
-    function index() {
+    function index()
+    {
         $pageTitle = 'All Campaigns';
         $campaigns = Campaign::where('user_id', auth()->id())->searchable(['name'])->latest()->paginate(getPaginate());
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
-    function new() {
+    function new()
+    {
         // Delete previous gallery images if exist
         $images = Gallery::where('user_id', auth()->id())->get();
 
@@ -39,7 +41,8 @@ class CampaignController extends Controller
         return view($this->activeTheme . 'user.campaign.new', compact('pageTitle', 'categories'));
     }
 
-    function upload() {
+    function upload()
+    {
         $validator = Validator::make(request()->all(), [
             'file' => ['required', File::types(['png', 'jpg', 'jpeg'])],
         ]);
@@ -64,7 +67,8 @@ class CampaignController extends Controller
     /**
      * Remove image while using dropzone
      */
-    function remove() {
+    function remove()
+    {
         $image = request('file');
 
         fileManager()->removeFile(getFilePath('campaign') . '/' . $image);
@@ -76,7 +80,8 @@ class CampaignController extends Controller
         ]);
     }
 
-    function store() {
+    function store()
+    {
         $this->validate(request(), [
             'category_id' => 'required|integer|exists:categories,id',
             'image'       => ['required', File::types(['png', 'jpg', 'jpeg'])],
@@ -164,10 +169,11 @@ class CampaignController extends Controller
         return to_route('user.campaign.index')->withToasts($toast);
     }
 
-    function edit($id) {
+    function edit($slug)
+    {
         $pageTitle  = 'Edit Campaign';
         $categories = Category::get();
-        $campaign   = Campaign::where('id', $id)->where('user_id', auth()->id())->select('image', 'gallery')->firstOrFail();
+        $campaign   = Campaign::where('slug', $slug)->where('user_id', auth()->id())->select('id', 'image', 'gallery')->firstOrFail();
 
         return view($this->activeTheme . 'user.campaign.edit', compact('pageTitle', 'categories', 'campaign'));
     }
@@ -175,7 +181,49 @@ class CampaignController extends Controller
     /**
      * Remove image while editing a campaign
      */
-    function removeImage() {
-        dd();
+    function removeImage($id)
+    {
+        $campaign = Campaign::where('id', $id)->where('user_id', auth()->id())->first();
+
+        if (!$campaign) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Campaign not found',
+            ]);
+        }
+
+        $image   = json_decode(request('image'));
+        $gallery = $campaign->gallery;
+
+        if (count($gallery) == 1) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Minimum one gallery image is required',
+            ]);
+        }
+
+        $index = array_search($image, $gallery);
+
+        if (!$index) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Image not found',
+            ]);
+        }
+
+        // Remove image from storage
+        fileManager()->removeFile(getFilePath('campaign') . '/' . $image);
+
+        // Delete image from database
+        unset($gallery[$index]);
+        $updatedGallery = array_values($gallery);
+
+        $campaign->gallery = $updatedGallery;
+        $campaign->save();
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Image successfully removed',
+        ]);
     }
 }

@@ -15,7 +15,7 @@
                                         <div class="col-3">
                                             <div class="image-container">
                                                 @if (count($campaign->gallery) > 1)
-                                                    <div class="remove-button" data-image="{{ json_encode($image) }}">
+                                                    <div class="remove-button" data-image="{{ json_encode($image) }}" data-action="{{ route('user.campaign.image.remove', $campaign->id) }}">
                                                         <button type="button" class="text-light">x</button>
                                                     </div>
                                                 @endif
@@ -61,6 +61,7 @@
 
 @push('page-style-lib')
     <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/sweetalert2.min.css') }}">
 @endpush
 
 @push('page-style')
@@ -85,6 +86,7 @@
 
 @push('page-script-lib')
     <script src="{{ asset($activeThemeTrue . 'js/dropzone.min.js') }}"></script>
+    <script src="{{ asset($activeThemeTrue . 'js/sweetalert2.min.js') }}"></script>
 @endpush
 
 @push('page-script')
@@ -105,7 +107,7 @@
                     showToasts('error', response.error.file[0])
                 },
                 removedfile: function(file) {
-                    let url  = "{{ route('user.campaign.file.remove') }}"
+                    let url = "{{ route('user.campaign.file.remove') }}"
                     let data = {
                         file: file.unique_name,
                         _token: "{{ csrf_token() }}",
@@ -125,20 +127,30 @@
                 }
             })
 
-            $('.remove-button').on('click', function () {
+            $('.remove-button').on('click', function() {
                 let image = $(this).data('image')
-                let url   = "{{ route('user.campaign.image.remove') }}"
+                let url   = $(this).data('action')
                 let data  = {
                     image,
                     _token: "{{ csrf_token() }}",
                 }
 
-                $.post(url, data, function(response) {
-                    if (response.status === 'success') {
-                        showToasts('success', response.message)
-                    } else {
-                        console.error(response)
-                    }
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This will delete the gallery image permanently!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    $.post(url, data, function(response) {
+                        if (response.status === 'success') {
+                            showToasts('success', response.message)
+                        } else {
+                            showToasts('error', response.message)
+                        }
+                    })
                 })
             })
         })(jQuery)

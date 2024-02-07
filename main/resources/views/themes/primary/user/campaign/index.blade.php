@@ -26,20 +26,20 @@
                         <tbody>
                             @forelse ($campaigns as $campaign)
                                 <tr>
-                                    <td data-label="S.N">
+                                    <td>
                                         {{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}
                                     </td>
-                                    <td data-label="Title">
+                                    <td>
                                         <span class="text-overflow-1 text--base">{{ __(@$campaign->name) }}</span>
                                     </td>
-                                    <td data-label="Goal">{{ $setting->cur_sym . showAmount(@$campaign->goal_amount) }}</td>
-                                    <td data-label="Fund Raised">{{ $setting->cur_sym . showAmount(@$campaign->raised_amount) }}</td>
-                                    <td data-label="Deadline">
+                                    <td>{{ $setting->cur_sym . showAmount(@$campaign->goal_amount) }}</td>
+                                    <td>{{ $setting->cur_sym . showAmount(@$campaign->raised_amount) }}</td>
+                                    <td>
                                         <span>
                                             <span class="d-block">{{ showDateTime(@$campaign->end_date, 'd-M-Y') }}</span>
                                         </span>
                                     </td>
-                                    <td data-label="Status">
+                                    <td>
                                         @if (@$campaign->status == ManageStatus::CAMPAIGN_PENDING)
                                             <span class="badge badge--warning">@lang('Pending')</span>
                                         @elseif (@$campaign->status == ManageStatus::CAMPAIGN_REJECTED)
@@ -48,7 +48,7 @@
                                             <span class="badge badge--success">@lang('Approved')</span>
                                         @endif
                                     </td>
-                                    <td data-label="Action">
+                                    <td>
                                         <div class="custom--dropdown dropdown-sm">
                                             <button class="btn btn--sm btn-outline--base dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 @lang('Action')
@@ -60,7 +60,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ route('user.campaign.edit', $campaign->id) }}" class="dropdown-item">
+                                                    <a href="{{ route('user.campaign.edit', $campaign->slug) }}" class="dropdown-item">
                                                         <i class="fa-regular fa-pen-to-square text--success"></i> @lang('Edit Image')
                                                     </a>
                                                 </li>
@@ -104,6 +104,10 @@
                             </tr> --}}
                         </tbody>
                     </table>
+
+                    @if ($campaigns->hasPages())
+                        {{ $campaigns->links() }}
+                    @endif
                 </div>
             </div>
         </div>
