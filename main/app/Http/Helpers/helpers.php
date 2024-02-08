@@ -145,7 +145,7 @@ function activeTheme($asset = false) {
 }
 
 function getPageSections($arr = false) {
-    $jsonUrl = resource_path('views/') . str_replace('.', '/', activeTheme()) . 'site.json';
+    $jsonUrl  = resource_path('views/') . str_replace('.', '/', activeTheme()) . 'site.json';
     $sections = json_decode(file_get_contents($jsonUrl));
 
     if ($arr) {
@@ -246,6 +246,7 @@ function urlPath($routeName, $routeParam = null) {
     } else {
         $url = route($routeName, $routeParam);
     }
+
     $basePath = route('home');
     $path     = str_replace($basePath, '', $url);
 
@@ -266,6 +267,7 @@ function getSiteData($dataKeys, $singleQuery = false, $limit = null, $orderById 
             $siteData = $article->where('data_key', $dataKeys)->orderBy('id', 'desc')->get();
         }
     }
+
     return $siteData;
 }
 

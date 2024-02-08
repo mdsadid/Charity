@@ -18,7 +18,7 @@
                         document.getElementById('g-recaptcha-error').innerHTML = '<span class="text-danger">@lang('Captcha field is required.')</span>';
                         return false;
                     }
-                    
+
                     return true;
                 });
             })(jQuery);

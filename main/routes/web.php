@@ -7,6 +7,7 @@ Route::controller('WebsiteController')->group(function () {
     Route::get('about-us', 'aboutUs')->name('about.us');
     Route::get('faq', 'faq')->name('faq');
     Route::get('campaign', 'campaigns')->name('campaign');
+    Route::get('campaign/{slug}', 'campaignShow')->name('campaign.show');
     Route::get('event', 'events')->name('event');
     Route::get('contact', 'contact')->name('contact');
 

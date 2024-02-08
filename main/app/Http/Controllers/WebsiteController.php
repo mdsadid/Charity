@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\ManageStatus;
+use App\Models\Campaign;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Language;
@@ -18,11 +19,13 @@ class WebsiteController extends Controller
         $featuredCampaignContent = getSiteData('featured_campaign.content', true);
         $campaignCategoryContent = getSiteData('campaign_category.content', true);
         $campaignCategories      = Category::active()->get();
+        $recentCampaignContent   = getSiteData('recent_campaign.content', true);
+        $recentCampaigns         = Campaign::approve()->latest()->limit(10)->get();
         $volunteerContent        = getSiteData('volunteer.content', true);
         $volunteerElements       = getSiteData('volunteer.element', false, null, true);
         $counterElements         = getSiteData('counter.element', false, null, true);
 
-        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories'));
+        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns'));
     }
 
     function aboutUs() {
@@ -44,8 +47,16 @@ class WebsiteController extends Controller
 
     function campaigns() {
         $pageTitle = 'Campaigns';
+        $campaigns = Campaign::approve()->latest()->paginate(getPaginate(10));
 
-        return view($this->activeTheme . 'page.campaign', compact('pageTitle'));
+        return view($this->activeTheme . 'page.campaign', compact('pageTitle', 'campaigns'));
+    }
+
+    function campaignShow($slug) {
+        $pageTitle = 'Campaign Details';
+        $campaign  = Campaign::where('slug', $slug)->approve()->first();
+
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign'));
     }
 
     function events() {

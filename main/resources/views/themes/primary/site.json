@@ -290,6 +290,14 @@
             "description": "textarea"
         }
     },
+    "recent_campaign": {
+        "builder": true,
+        "name": "Recent Campaign Section",
+        "content": {
+            "section_heading": "text",
+            "description": "textarea"
+        }
+    },
     "volunteer": {
         "builder": true,
         "name": "Volunteer Section",
@@ -322,34 +330,6 @@
             "modal": true
         }
     },
-    "service": {
-        "builder": true,
-        "name": "Service Section",
-        "content": {
-            "select": {
-                "name": "trx_type",
-                "options": {
-                    "deposit": "Deposit",
-                    "withdraw": "Withdraw"
-                }
-            },
-            "heading": "text",
-            "subheading": "text"
-        },
-        "element": {
-            "select": {
-                "name": "trx_type",
-                "options": {
-                    "deposit": "Deposit",
-                    "withdraw": "Withdraw"
-                }
-            },
-            "service_icon": "icon",
-            "title": "text",
-            "description": "textarea",
-            "modal": true
-        }
-    },
     "policy_pages": {
         "builder": true,
         "no_selection": true,
@@ -358,31 +338,6 @@
             "title": "text",
             "details": "textarea-editor",
             "modal": false
-        }
-    },
-    "blog": {
-        "builder": true,
-        "name": "Blog Section",
-        "content": {
-            "heading": "text",
-            "subheading": "text"
-        },
-        "element": {
-            "images": {
-                "blog_image_1": {
-                    "size": "728x465",
-                    "thumb": "120x80"
-                },
-                "blog_image_2": {
-                    "size": "728x465",
-                    "thumb": "120x80"
-                }
-            },
-            "title": "text",
-            "description": "textarea",
-            "description_nic": "textarea-editor",
-            "blog_icon": "icon",
-            "modal": true
         }
     },
     "subscribe": {

@@ -77,213 +77,38 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="row g-4">
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-1.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">The Entrepreneur Ship - Atlantic rowing challenge</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2023-12-31T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
+                        @forelse ($campaigns as $campaign)
+                            <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
+                                @include($activeTheme . 'partials.basicCampaign')
+                            </div>
+                        @empty
+                            <div class="col-12" data-aos="fade-up" data-aos-duration="1500">
+                                <div class="pt-5">
+                                    <p class="text-center">{{ __($emptyMessage) }}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-3.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">Turn 30% of our ocean into no take zones by 2030</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2024-01-30T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
-                                </div>
+                        @endforelse
+
+                        @if ($campaigns->hasPages())
+                            <div class="col-12" data-aos="fade-up" data-aos-duration="1500">
+                                {{ $campaigns->links() }}
                             </div>
-                        </div>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-5.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">The Menopause Charity Crowdfund</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2024-03-30T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-1.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">The Entrepreneur Ship - Atlantic rowing challenge</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2023-12-31T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-3.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">Turn 30% of our ocean into no take zones by 2030</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2024-01-30T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-5.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">The Menopause Charity Crowdfund</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2024-03-30T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-1.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">The Entrepreneur Ship - Atlantic rowing challenge</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2023-12-31T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="campaign-card">
-                                <div class="campaign-card__img">
-                                    <a href="donation-details.html"><img src="assets/images/thumbs/campaign-3.jpg" alt="image"></a>
-                                </div>
-                                <div class="campaign-card__txt">
-                                    <h3 class="campaign-card__title"><a href="donation-details.html">Turn 30% of our ocean into no take zones by 2030</a></h3>
-                                    <div class="campaign__countdown" data-target-date="2024-01-30T23:59:59"></div>
-                                    <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                    </div>
-                                    <div class="campaign-card__bottom">
-                                        <ul class="campaign-card__list">
-                                            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                            <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                        </ul>
-                                        <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12" data-aos="fade-up" data-aos-duration="1500">
-                            <ul class="pagination">
-                                <li class="page-item"><a href="#" class="page-link"><i class="fa-solid fa-arrow-left"></i></a></li>
-                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                <li class="page-item"><a href="#" class="page-link">...</a></li>
-                                <li class="page-item"><a href="#" class="page-link">111</a></li>
-                                <li class="page-item"><a href="#" class="page-link"><i class="fa-solid fa-arrow-right"></i></a></li>
-                            </ul>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="payment-gateway pt-60 pb-120">
-        <div class="container">
-            <div class="payment-gateway__slider" data-aos="fade-up" data-aos-duration="1500">
-                <div class="payment-gateway__card">
-                    <img src="assets/images/2__brands/donor1.png" alt="image">
-                </div>
-                <div class="payment-gateway__card">
-                    <img src="assets/images/2__brands/donor2.png" alt="image">
-                </div>
-                <div class="payment-gateway__card">
-                    <img src="assets/images/2__brands/donor3.png" alt="image">
-                </div>
-                <div class="payment-gateway__card">
-                    <img src="assets/images/2__brands/donor4.png" alt="image">
-                </div>
-                <div class="payment-gateway__card">
-                    <img src="assets/images/2__brands/donor5.png" alt="image">
-                </div>
-                <div class="payment-gateway__card">
-                    <img src="assets/images/2__brands/donor6.png" alt="image">
-                </div>
-            </div>
-        </div>
-    </div>
+
+    @include($activeTheme . 'partials.basicPartner')
 @endsection
+
+@push('page-style')
+    <style>
+        .campaign-card__img {
+            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
+            background: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
+            mask-image: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
+        }
+    </style>
+@endpush

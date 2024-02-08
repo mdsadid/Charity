@@ -32,7 +32,7 @@ class Campaign extends Model
     /**
      * Scope a query to only include approved campaigns.
      */
-    public function scopeApprove($query) 
+    public function scopeApprove($query)
     {
         $query->where('status', ManageStatus::CAMPAIGN_APPROVED);
     }
