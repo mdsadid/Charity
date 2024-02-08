@@ -8,68 +8,24 @@
                     @include($activeTheme . 'partials.basicCampaignShow')
 
                     <div class="related-campaign">
-                        <h2 class="donation-details__title" data-aos="fade-up" data-aos-duration="1500">Related Campaigns</h2>
+                        <h2 class="donation-details__title" data-aos="fade-up" data-aos-duration="1500">@lang('Related Campaigns')</h2>
                         <div class="row g-4">
-                            <div class="col-md-6" data-aos="fade-up" data-aos-duration="1500">
-                                <div class="campaign-card">
-                                    <div class="campaign-card__img">
-                                        <a href="#"><img src="assets/images/thumbs/campaign-2.jpg" alt="image"></a>
-                                    </div>
-                                    <div class="campaign-card__txt">
-                                        <h3 class="campaign-card__title"><a href="#">The Menopause Charity Crowdfund</a></h3>
-                                        <div class="campaign__countdown" data-target-date="2023-12-31T23:59:59"></div>
-                                        <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                        </div>
-                                        <div class="campaign-card__bottom">
-                                            <ul class="campaign-card__list">
-                                                <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                                <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                            </ul>
-                                            <a href="#" class="btn btn--sm btn--base">Make A Donation</a>
-                                        </div>
-                                    </div>
+                            @forelse ($relatedCampaigns as $campaign)
+                                <div class="col-md-6" data-aos="fade-up" data-aos-duration="1500">
+                                    @include($activeTheme . 'partials.basicCampaign')
                                 </div>
-                            </div>
-                            <div class="col-md-6" data-aos="fade-up" data-aos-duration="1500">
-                                <div class="campaign-card">
-                                    <div class="campaign-card__img">
-                                        <a href="#"><img src="assets/images/thumbs/campaign-3.jpg" alt="image"></a>
-                                    </div>
-                                    <div class="campaign-card__txt">
-                                        <h3 class="campaign-card__title"><a href="#">Turn 30% of our ocean into no take zones by 2030</a></h3>
-                                        <div class="campaign__countdown" data-target-date="2023-12-31T23:59:59"></div>
-                                        <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                        </div>
-                                        <div class="campaign-card__bottom">
-                                            <ul class="campaign-card__list">
-                                                <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                                <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                            </ul>
-                                            <a href="#" class="btn btn--sm btn--base">Make A Donation</a>
-                                        </div>
-                                    </div>
+                            @empty
+                                <div class="col-12" data-aos="fade-up" data-aos-duration="1500">
+                                    <p class="text-center">{{ __($emptyMessage) }}</p>
                                 </div>
-                            </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="post-sidebar">
-                        <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Time Left</h3>
-                            <div class="post-sidebar__card__body">
-                                <div class="campaign__countdown" data-target-date="2023-12-31T23:59:59"></div>
-                                <div class="progress custom--progress my-4" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                                </div>
-                                <ul class="campaign-status">
-                                    <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                    <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                </ul>
-                            </div>
-                        </div>
+                        @include($activeTheme . 'partials.basicCampaignTime')
+
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
                             <h3 class="post-sidebar__card__header">Make a Donation</h3>
                             <div class="post-sidebar__card__body">
@@ -251,23 +207,3 @@
 
     @include($activeTheme . 'partials.basicPartner')
 @endsection
-
-@push('post-comment')
-    <div class="donation-details__post__comment">
-        <h3 class="donation-details__subtitle">Post a comment</h3>
-        <form class="row g-4">
-            <div class="col-sm-6">
-                <input type="text" class="form--control" placeholder="Your Name*" required>
-            </div>
-            <div class="col-sm-6">
-                <input type="email" class="form--control" placeholder="Your Email*" required>
-            </div>
-            <div class="col-12">
-                <textarea class="form--control" rows="10" placeholder="Your Message*" required></textarea>
-            </div>
-            <div class="col-12 d-flex justify-content-center">
-                <button class="btn btn--base">Submit Comment</button>
-            </div>
-        </form>
-    </div>
-@endpush

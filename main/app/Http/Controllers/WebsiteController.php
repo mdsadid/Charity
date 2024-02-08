@@ -53,10 +53,16 @@ class WebsiteController extends Controller
     }
 
     function campaignShow($slug) {
-        $pageTitle = 'Campaign Details';
-        $campaign  = Campaign::where('slug', $slug)->approve()->first();
+        $pageTitle        = 'Campaign Details';
+        $campaign         = Campaign::where('slug', $slug)->approve()->first();
+        $relatedCampaigns = Campaign::where('category_id', $campaign->category_id)
+            ->where('slug', '!=', $campaign->slug)
+            ->approve()
+            ->latest()
+            ->limit(4)
+            ->get();
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign'));
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns'));
     }
 
     function events() {

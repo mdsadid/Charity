@@ -79,6 +79,24 @@
             </div>
         </div>
 
-        @stack('post-comment')
+        @if (request()->routeIs('campaign.show'))
+            <div class="donation-details__post__comment">
+                <h3 class="donation-details__subtitle">Post a comment</h3>
+                <form class="row g-4">
+                    <div class="col-sm-6">
+                        <input type="text" class="form--control" placeholder="Your Name*" required>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="email" class="form--control" placeholder="Your Email*" required>
+                    </div>
+                    <div class="col-12">
+                        <textarea class="form--control" rows="10" placeholder="Your Message*" required></textarea>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <button class="btn btn--base">Submit Comment</button>
+                    </div>
+                </form>
+            </div>
+        @endif
     </div>
 </div>
