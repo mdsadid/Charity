@@ -146,6 +146,10 @@ class SettingController extends Controller
         return back()->withToasts($toast);
     }
 
+    function pluginStatus($id) {
+        return Plugin::changeStatus($id);
+    }
+
     function seo() {
         $pageTitle = 'SEO Setting';
         $seo       = SiteData::where('data_key', 'seo.data')->first();

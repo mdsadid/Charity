@@ -146,69 +146,69 @@
     <div class="row">
         <a href="{{ route('admin.withdraw.done') }}" class="col-sm-6 col-lg-3 mb-4">
             <div class="card card-border-shadow-primary h-100">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-2 pb-1">
-                            <div class="avatar me-2">
-                                <span class="avatar-initial rounded bg-label-primary">
-                                    <i class="las la-hand-holding-usd fs-3"></i>
-                                </span>
-                            </div>
-                            <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawDone']) }}</h4>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2 pb-1">
+                        <div class="avatar me-2">
+                            <span class="avatar-initial rounded bg-label-primary">
+                                <i class="las la-hand-holding-usd fs-3"></i>
+                            </span>
                         </div>
-                        <p class="mb-1 text-primary">@lang('Withdrawn')</p>
-                        <p class="mb-0">
-                            <small>@lang('Total withdrawn amount')</small>
-                        </p>
+                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawDone']) }}</h4>
                     </div>
+                    <p class="mb-1 text-primary">@lang('Withdrawn')</p>
+                    <p class="mb-0">
+                        <small>@lang('Total withdrawn amount')</small>
+                    </p>
+                </div>
             </div>
         </a>
         <a href="{{ route('admin.withdraw.index') }}" class="col-sm-6 col-lg-3 mb-4">
-          <div class="card card-border-shadow-info h-100">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-2 pb-1">
-                <div class="avatar me-2">
-                  <span class="avatar-initial rounded bg-label-info"><i class='las la-percent fs-3'></i></span>
+            <div class="card card-border-shadow-info h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2 pb-1">
+                        <div class="avatar me-2">
+                            <span class="avatar-initial rounded bg-label-info"><i class='las la-percent fs-3'></i></span>
+                        </div>
+                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawCharge']) }}</h4>
+                    </div>
+                    <p class="mb-1 text-info">@lang('Charge')</p>
+                    <p class="mb-0">
+                        <small>@lang('Total charge for withdrawn amount')</small>
+                    </p>
                 </div>
-                <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawCharge']) }}</h4>
-              </div>
-              <p class="mb-1 text-info">@lang('Charge')</p>
-              <p class="mb-0">
-                <small>@lang('Total charge for withdrawn amount')</small>
-              </p>
             </div>
-          </div>
         </a>
         <a href="{{ route('admin.withdraw.pending') }}" class="col-sm-6 col-lg-3 mb-4">
-          <div class="card card-border-shadow-warning h-100">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-2 pb-1">
-                <div class="avatar me-2">
-                  <span class="avatar-initial rounded bg-label-warning"><i class='las la-circle-notch fs-3'></i></span>
+            <div class="card card-border-shadow-warning h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2 pb-1">
+                        <div class="avatar me-2">
+                            <span class="avatar-initial rounded bg-label-warning"><i class='las la-circle-notch fs-3'></i></span>
+                        </div>
+                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawPending']) }}</h4>
+                    </div>
+                    <p class="mb-1 text-warning">@lang('Pending')</p>
+                    <p class="mb-0">
+                        <small>@lang('Total pending withdrawal count')</small>
+                    </p>
                 </div>
-                <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawPending']) }}</h4>
-              </div>
-              <p class="mb-1 text-warning">@lang('Pending')</p>
-              <p class="mb-0">
-                <small>@lang('Total pending withdrawal count')</small>
-              </p>
             </div>
-          </div>
         </a>
         <a href="{{ route('admin.withdraw.canceled') }}" class="col-sm-6 col-lg-3 mb-4">
-          <div class="card card-border-shadow-danger h-100">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-2 pb-1">
-                <div class="avatar me-2">
-                  <span class="avatar-initial rounded bg-label-danger"><i class='las la-ban fs-3'></i></span>
+            <div class="card card-border-shadow-danger h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2 pb-1">
+                        <div class="avatar me-2">
+                            <span class="avatar-initial rounded bg-label-danger"><i class='las la-ban fs-3'></i></span>
+                        </div>
+                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawCanceled']) }}</h4>
+                    </div>
+                    <p class="mb-1 text-danger">@lang('Canceled')</p>
+                    <p class="mb-0">
+                        <small>@lang('Total canceled withdrawal count')</small>
+                    </p>
                 </div>
-                <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawCanceled']) }}</h4>
-              </div>
-              <p class="mb-1 text-danger">@lang('Canceled')</p>
-              <p class="mb-0">
-                <small>@lang('Total canceled withdrawal count')</small>
-              </p>
             </div>
-          </div>
         </a>
     </div>
 
@@ -229,43 +229,82 @@
 
         <div class="col-lg-6 mb-4 mb-md-0t">
             <div class="card">
-              <div class="table-responsive text-nowrap">
-                <table class="table text-nowrap">
-                  <thead>
-                    <tr>
-                        <th>@lang('User')</th>
-                        <th>@lang('Email-Phone')</th>
-                        <th>@lang('Country | Joined')</th>
-                        <th>@lang('Balance')</th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-border-bottom-0">
-                        @foreach ($latestUsers as $user)
+                <div class="table-responsive text-nowrap">
+                    <table class="table text-nowrap">
+                        <thead>
                             <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img style="border-radius: 20%" src="{{ getImage(getFilePath('userProfile').'/'. @$user->image, getFileSize('userProfile')) }}" alt="user-image" height="32" width="32" class="me-2">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-medium lh-1">{{ $user->fullname }}</span>
-                                            <small class="text-muted"><a href="{{ route('admin.user.details', $user->id) }}"><span>@</span>{{ $user->username }}</a></small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{ $user->email }}<br>{{ $user->mobile }}</td>
-                                <td>
-                                    <span class="fw-bold" title="{{ @$user->country_name }}">{{ $user->country_code }}</span><br>
-                                    {{ diffForHumans($user->created_at) }}
-                                </td>
-                                <td>
-                                    <span class="fw-bold">
-                                        {{ $setting->cur_sym }}{{ showAmount($user->balance) }}
-                                    </span>
-                                </td>
+                                <th>@lang('User')</th>
+                                <th>@lang('Email-Phone')</th>
+                                <th>@lang('Country | Joined')</th>
+                                <th>@lang('Balance')</th>
                             </tr>
-                        @endforeach
-                  </tbody>
-                </table>
-              </div>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @forelse ($latestUsers as $user)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-medium lh-1">{{ $user->fullname }}</span>
+                                                <small class="text-muted"><a href="{{ route('admin.user.details', $user->id) }}"><span>@</span>{{ $user->username }}</a></small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            {{ $user->email }}<br>{{ $user->mobile }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <span class="fw-bold" title="{{ @$user->country_name }}">{{ $user->country_code }}</span><br>
+                                            {{ diffForHumans($user->created_at) }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold">
+                                            {{ $setting->cur_sym }}{{ showAmount($user->balance) }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="100%" class="text-center">{{ __($emptyMessage) }}</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-onboarding modal fade animate__animated" id="passwordAletModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="onboarding-media">
+                        <div class="mx-2">
+                            <img src="{{ asset('assets/admin/images/light.png') }}" alt="light" width="100" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="onboarding-content mb-0">
+                        <h4 class="onboarding-title text-body">@lang('Security Advisory')</h4>
+                        <div class="onboarding-info">
+                            <b>@lang('Immediate Default Password and Username Change Required')</b>
+                        </div>
+                    </div>
+                </div>
+                <form action="" method="POST">
+                    @csrf
+                    <div class="modal-footer border-0 justify-content-center">
+                        <a href="{{ route('admin.profile') }}" class="btn btn-outline-primary">@lang('Change Username')</a>
+                        <a href="{{ route('admin.password') }}" class="btn btn-primary">@lang('Change Password')</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -278,20 +317,29 @@
 
 @push('page-script')
     <script>
+        "use strict";
+
+        @if ($passwordAlert)
+            (function($) {
+                let passwordAletModal = new bootstrap.Modal(document.getElementById('passwordAletModal'));
+                passwordAletModal.show();
+            })(jQuery);
+        @endif
+
         var options = {
             series: [{
                 name: 'Total Deposit',
                 data: [
-                  @foreach($months as $month)
-                    {{ getAmount(@$depositsMonth->where('months',$month)->first()->depositAmount) }},
-                  @endforeach
+                    @foreach ($months as $month)
+                        {{ getAmount(@$depositsMonth->where('months', $month)->first()->depositAmount) }},
+                    @endforeach
                 ]
             }, {
                 name: 'Total Withdraw',
                 data: [
-                  @foreach($months as $month)
-                    {{ getAmount(@$withdrawalMonth->where('months',$month)->first()->withdrawAmount) }},
-                  @endforeach
+                    @foreach ($months as $month)
+                        {{ getAmount(@$withdrawalMonth->where('months', $month)->first()->withdrawAmount) }},
+                    @endforeach
                 ]
             }],
             chart: {
@@ -321,7 +369,7 @@
             },
             yaxis: {
                 title: {
-                    text: "{{__($setting->cur_sym)}}",
+                    text: "{{ __($setting->cur_sym) }}",
                     style: {
                         color: '#7c97bb'
                     }
@@ -344,8 +392,8 @@
             },
             tooltip: {
                 y: {
-                    formatter: function (val) {
-                        return "{{__($setting->cur_sym)}}" + val + " "
+                    formatter: function(val) {
+                        return "{{ __($setting->cur_sym) }}" + val + " "
                     }
                 }
             }
@@ -353,6 +401,5 @@
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
-      
     </script>
 @endpush

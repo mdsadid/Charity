@@ -111,7 +111,7 @@
 
         <div class="row pt-4">
             <div class="col-12 text-center">
-                <button type="submit" class="btn btn-primary">@lang('Submit')</button>
+                <button type="submit" class="btn btn-primary me-sm-2 me-1">@lang('Submit')</button>
                 <button type="reset" class="btn btn-label-secondary">@lang('Cancel')</button>
             </div>
         </div>

@@ -52,7 +52,7 @@
 
         <div class="col-xxl">
             <div class="card">
-                <div class="card-body table-responsive text-nowrap">
+                <div class="card-body table-responsive text-nowrap fixed-min-height-table">
                     <table class="table table-hover">
                         <thead>
                             <tr>

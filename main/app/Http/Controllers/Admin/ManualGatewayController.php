@@ -37,13 +37,14 @@ class ManualGatewayController extends Controller
             $gatewayCurrency = $method->singleCurrency;
             $generate        = $formProcessor->generate('manual_deposit', true, 'id', $method->form_id);
             $message         = ' manual gateway update success';
+
         } else {
             $method          = new Gateway();
             $gatewayCurrency = new GatewayCurrency();
             $generate        = $formProcessor->generate('manual_deposit');
             $lastMethod      = Gateway::manual()->orderBy('id', 'desc')->first();
             $methodCode      = 1000;
-
+    
             if ($lastMethod) {
                 $methodCode = $lastMethod->code + 1;
             }

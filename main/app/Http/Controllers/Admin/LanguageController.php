@@ -70,11 +70,14 @@ class LanguageController extends Controller
         }
 
         $language->name   = request('name');
-        $language->status = request('status') ? ManageStatus::ACTIVE : ManageStatus::INACTIVE;
         $language->save();
 
         $toast[] = ['success', $notification];
         return back()->withToasts($toast);
+    }
+
+    function status($id) {
+        return Language::changeStatus($id);
     }
 
     function delete($id) {
@@ -87,18 +90,30 @@ class LanguageController extends Controller
         return back()->withToasts($toast);
     }
 
-    function editKeyword($id) {
+    function translateKeyword($id) {
         $language  = Language::findOrFail($id);
         $pageTitle = "Update " . $language->name . " Keywords";
         $json      = file_get_contents(resource_path('lang/') . $language->code . '.json');
         $allLang   = Language::all();
+        $searchKey = trim(request('search'));
 
         if (empty($json)) {
             $toast[] = ['error', 'File doesn\'t exist'];
             return back()->withToasts($toast);
         }
 
-        $json        = json_decode($json, true);
+        $json = json_decode($json, true);
+
+        if ($searchKey) {
+            if (array_key_exists($searchKey, $json)) {
+                $json = [
+                    $searchKey => $json[$searchKey]
+                ];
+            } else {
+                $json = [];
+            }
+        }
+        
         $perPage     = getPaginate();
         $currentPage = request()->get('page', 1);
         $offset      = ($currentPage - 1) * $perPage;

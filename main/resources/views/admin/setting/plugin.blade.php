@@ -11,11 +11,11 @@
                                 <div class="card-body">
                                     <div class="row gy-3">
                                         <div class="col-sm-8">
-                                            <span class="d-flex flex-wrap align-items-center">
+                                            <span class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <img src="{{ getImage(getFilePath('plugin').'/'.@$plugin->image) }}" alt="signup" class="me-3" height="40">
                                                 </div>
-                                                <div>
+                                                <div class="d-flex gap-2 align-items-center flex-wrap">
                                                     <b>{{ __($plugin->name) }}</b>
                                                     <div class="card-header-elements">@php echo $plugin->statusBadge @endphp</div>
                                                 </div>
@@ -23,9 +23,21 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="d-flex justify-content-sm-end justify-content-center">
-                                                <button type="button" class="btn btn-label-primary editBtn" data-route="{{ route('admin.plugin.setting.update', $plugin->id) }}" data-name="{{ __($plugin->name) }}" data-shortcode="{{ json_encode($plugin->shortcode) }}" data-status="{{ $plugin->status }}">
+                                                <button type="button" class="btn btn-label-primary editBtn me-1" data-route="{{ route('admin.plugin.setting.update', $plugin->id) }}" data-name="{{ __($plugin->name) }}" data-shortcode="{{ json_encode($plugin->shortcode) }}" data-status="{{ $plugin->status }}">
                                                     <i class="las la-pen me-1"></i> @lang('Edit')
                                                 </button>
+
+                                                @if ($plugin->status)
+                                                    <button class="btn btn-label-warning decisionBtn" data-question="@lang('Are you confirming the inactivation of this plugin?')" data-action="{{ route('admin.plugin.status', $plugin->id) }}">
+                                                        <span class="tf-icons las la-ban me-1"></span>
+                                                        @lang('Inactive')
+                                                    </button>
+                                                @else
+                                                    <button class="btn btn-label-success decisionBtn" data-question="@lang('Are you confirming the activation of this plugin?')" data-action="{{ route('admin.plugin.status', $plugin->id) }}">
+                                                        <span class="tf-icons las la-check-circle me-1"></span>
+                                                        @lang('Active')
+                                                    </button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -51,26 +63,18 @@
                     @csrf
                     <div class="modal-body">
                         <div class="plugin-html"></div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label required">@lang('Status')</label>
-                            <div class="col-sm-9">
-                                <label class="switch me-0">
-                                    <input type="checkbox" class="switch-input" name="status">
-                                    @include('admin.partials.switcher')
-                                </label>
-                            </div>
-                        </div>
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         <button type="submit" class="btn btn-primary">@lang('Update')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <x-decisionModal />
 @endsection
 
 @push('page-script')
@@ -86,7 +90,6 @@
 
                 modal.find('.plugin-name').text($(this).data('name'));
                 modal.find('form').attr('action', $(this).data('route'));
-                modal.find('[name=status]').prop('checked', $(this).data('status') ? true : false);
 
                 $.each(shortcode, function (key, item) {
                     html += `<div class="row mb-3">

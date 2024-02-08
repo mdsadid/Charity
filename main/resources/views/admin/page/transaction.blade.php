@@ -69,22 +69,27 @@
                             @forelse ($transactions as $transaction)
                                 <tr>
                                     <td>
-                                        <span class="fw-bold">{{ $transaction->user->fullname }}</span>
-                                        <br>
-                                        <span class="small"> <a href="{{ appendQuery('search', $transaction->user->username) }}"><span>@</span>{{ $transaction->user->username }}</a> </span>
+                                        <div>
+                                            <span class="fw-bold">{{ $transaction->user->fullname }}</span>
+                                            <br>
+                                            <span class="small"> <a href="{{ appendQuery('search', $transaction->user->username) }}"><span>@</span>{{ $transaction->user->username }}</a> </span>
+                                        </div>
                                     </td>
                                     <td><strong>{{ $transaction->trx }}</strong></td>
                                     <td>
-                                        {{ showDateTime($transaction->created_at) }}<br>
-                                        {{ diffForHumans($transaction->created_at) }}
+                                        <div>
+                                            {{ showDateTime($transaction->created_at) }}<br>
+                                            {{ diffForHumans($transaction->created_at) }}
+                                        </div>
                                     </td>
                                     <td>
                                         <span class=" @if($transaction->trx_type == '+')text-success @else text-danger @endif">
                                             {{ $transaction->trx_type }} {{showAmount($transaction->amount)}} {{ __($setting->site_cur) }}
                                         </span> 
                                     </td>
-                                    <td><span class="text-danger">{{ showAmount($transaction->charge) }} {{ __($setting->site_cur) }}
-                                    </span> </span></td>
+                                    <td>
+                                        <span class="text-danger">{{ showAmount($transaction->charge) }} {{ __($setting->site_cur) }}</span>
+                                    </td>
                                     <td>{{ showAmount($transaction->post_balance) }} {{ __($setting->site_cur) }}</td>
                                     <td>{{ __($transaction->details) }}</td>
                                 </tr>

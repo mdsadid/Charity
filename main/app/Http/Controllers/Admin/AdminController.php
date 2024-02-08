@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\AdminNotification;
 use App\Models\Deposit;
 use App\Models\Transaction;
@@ -17,8 +18,14 @@ use Illuminate\Validation\Rules\Password;
 class AdminController extends Controller
 {
     function dashboard() {
-        $pageTitle   = 'Dashboard';
-        $latestUsers = User::active()->latest()->limit(6)->get();
+        $pageTitle     = 'Dashboard';
+        $latestUsers   = User::active()->latest()->limit(6)->get();
+        $admin         = Admin::first();
+        $passwordAlert = false;
+
+        if (Hash::check('admin', $admin->password) || $admin->username == 'admin') {
+            $passwordAlert = true;
+        }
 
         // User Info
         $widget['totalUsers']  = User::count();
@@ -83,7 +90,7 @@ class AdminController extends Controller
             }
         }
 
-        return view('admin.page.dashboard', compact('pageTitle', 'widget', 'latestUsers', 'depositsMonth', 'withdrawalMonth', 'months'));
+        return view('admin.page.dashboard', compact('pageTitle', 'widget', 'latestUsers', 'depositsMonth', 'withdrawalMonth', 'months', 'passwordAlert'));
     }
 
     function profile() {

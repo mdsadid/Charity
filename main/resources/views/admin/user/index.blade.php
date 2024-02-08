@@ -4,12 +4,12 @@
     <div class="row">
         <div class="col-xxl">
             <div class="card">
-                <div class="card-body table-responsive text-nowrap">
+                <div class="card-body table-responsive text-nowrap fixed-min-height-table">
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>@lang('User')</th>
-                                <th>@lang('Email-Phone')</th>
+                                <th>@lang('Email | Phone')</th>
                                 <th>@lang('Country')</th>
                                 <th>@lang('Joined')</th>
                                 <th>@lang('Balance')</th>
@@ -28,12 +28,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td>{{ $user->email }}<br>{{ $user->mobile }}</td>
+                                    <td>
+                                        <div>
+                                            {{ $user->email }}<br>{{ $user->mobile }}
+                                        </div>
+                                    </td>
                                     <td>
                                         <span class="fw-bold" title="{{ @$user->country_name }}">{{ $user->country_code }}</span>
                                     </td>
                                     <td>
-                                        {{ showDateTime($user->created_at) }} <br> {{ diffForHumans($user->created_at) }}
+                                        <div>
+                                            {{ showDateTime($user->created_at) }} <br> {{ diffForHumans($user->created_at) }}
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="fw-bold">
@@ -108,7 +114,7 @@
 @endsection
 
 @push('breadcrumb')
-    <x-searchForm placeholder="Username/Email" dateSearch="yes" />
+    <x-searchForm placeholder="Username / Email" dateSearch="yes" />
 @endpush
 
 @push('page-script')
@@ -117,11 +123,12 @@
             "use strict";
 
             $('.detailBtn').on('click', function () {
-                let kycData   = $(this).data('kyc_data');
+                let kycData  = $(this).data('kyc_data');
+                let infoHtml = ``;
 
                 if (kycData) {                    
                     let fileDownloadUrl = '{{ route("admin.file.download",["filePath" => "verify"]) }}';
-                    let infoHtml        = `<div class="mt-3">
+                    infoHtml           += `<div class="mt-3">
                                                 <ul class="list-group">`;
     
                     kycData.forEach(element => {
@@ -144,10 +151,20 @@
                     });
 
                     infoHtml += `</ul>
-                    </div>`;
+                            </div>`;
 
-                    $('.kycData').html(infoHtml);
+                    
+                } else {
+                    infoHtml += `<div class="mt-3">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <b>{{ __($emptyMessage) }}</b>
+                                        </li>
+                                    </ul>
+                                </div>`
                 }
+
+                $('.kycData').html(infoHtml);
             });
         })(jQuery);
     </script>

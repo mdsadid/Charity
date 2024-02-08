@@ -14,6 +14,7 @@
         </a>
     </div>
 
+    <div id="searchBoxSm"></div>
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
@@ -418,7 +419,7 @@
                                             <span>{{ systemDetails()['version'] }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <b>@lang('Charity Admin Version')</b>
+                                            <b>@lang('Phinix Admin Version')</b>
                                             <span>{{ systemDetails()['build_version'] }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">

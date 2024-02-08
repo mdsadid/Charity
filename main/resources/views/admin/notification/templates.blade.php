@@ -5,32 +5,32 @@
         <div class="col-xxl">
             <div class="card">
                 <div class="card-body table-responsive text-nowrap">
-                  <table class="table table-hover custom-data-table">
-                    <thead>
-                        <tr>
-                            <th>@lang('Name')</th>
-                            <th>@lang('Subject')</th>
-                            <th>@lang('Action')</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        @forelse ($templates as $template)
+                    <table class="table table-hover custom-data-table">
+                        <thead>
                             <tr>
-                                <td>{{ __($template->name) }}</td>
-                                <td>{{ __($template->subj) }}</td>
-                                <td>
-                                    <a href="{{ route('admin.notification.template.edit', $template->id) }}" class="btn btn-sm btn-label-primary">
-                                        <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
-                                    </a>
-                                </td>
+                                <th>@lang('Name')</th>
+                                <th>@lang('Subject')</th>
+                                <th>@lang('Action')</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="100%" class="text-center">{{ __($emptyMessage) }}</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                  </table>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @forelse ($templates as $template)
+                                <tr>
+                                    <td>{{ __($template->name) }}</td>
+                                    <td>{{ __($template->subj) }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.notification.template.edit', $template->id) }}" class="btn btn-sm btn-label-primary">
+                                            <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="100%" class="text-center">{{ __($emptyMessage) }}</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

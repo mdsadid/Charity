@@ -17,7 +17,7 @@
                                     @php $imgCount = collect($item)->count(); @endphp
 
                                     @foreach($item as $imgKey => $image)
-                                        <div class="col-4">
+                                        <div class="col-lg-4 col-md-4 col-sm-6">
                                             <input type="hidden" name="has_image" value="1">
                                             <div class="image-upload">
                                                 <div class="thumb">
@@ -48,7 +48,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="@if($imgCount > 1) col-12 @else col-8 @endif mt-3">
+                                    <div class="@if($imgCount > 1) col-lg-12 col-md-12 @else col-lg-8 col-md-8 @endif mt-3">
                                         @push('divend')
                                     </div>
                                     @endpush
@@ -204,30 +204,32 @@
                                         @endforeach
 
                                         <td>
-                                            @if($section->element->modal)
-                                                @php
-                                                    $images = [];
-
-                                                    if(@$section->element->images){
-                                                        foreach($section->element->images as $imgKey => $imgs){
-                                                            $images[] = getImage('assets/images/site/' . $key .'/'. @$data->data_info->$imgKey,@$section->element->images->$imgKey->size);
+                                            <div>
+                                                @if($section->element->modal)
+                                                    @php
+                                                        $images = [];
+    
+                                                        if(@$section->element->images){
+                                                            foreach($section->element->images as $imgKey => $imgs){
+                                                                $images[] = getImage('assets/images/site/' . $key .'/'. @$data->data_info->$imgKey,@$section->element->images->$imgKey->size);
+                                                            }
                                                         }
-                                                    }
-                                                @endphp
-
-                                                <button class="btn btn-sm btn-label-primary editBtn" data-id="{{$data->id}}"
-                                                    data-all="{{json_encode($data->data_info)}}" @if(@$section->element->images) data-images="{{ json_encode($images) }}" @endif>
-                                                    <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
+                                                    @endphp
+    
+                                                    <button class="btn btn-sm btn-label-primary editBtn" data-id="{{$data->id}}"
+                                                        data-all="{{json_encode($data->data_info)}}" @if(@$section->element->images) data-images="{{ json_encode($images) }}" @endif>
+                                                        <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
+                                                    </button>
+                                                @else
+                                                    <a href="{{ route('admin.site.sections.element', [ $key, $data->id ]) }}" class="btn btn-sm btn-label-primary">
+                                                        <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
+                                                    </a>
+                                                @endif
+    
+                                                <button class="btn btn-sm btn-label-danger decisionBtn" data-question="@lang('Are you confirming the removal of this item?')" data-action="{{ route('admin.site.remove',$data->id) }}">
+                                                    <span class="tf-icons las la-trash me-1"></span> @lang('Delete')
                                                 </button>
-                                            @else
-                                                <a href="{{ route('admin.site.sections.element', [ $key, $data->id ]) }}" class="btn btn-sm btn-label-primary">
-                                                    <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
-                                                </a>
-                                            @endif
-
-                                            <button class="btn btn-sm btn-label-danger decisionBtn" data-question="@lang('Are you confirming the removal of this item?')" data-action="{{ route('admin.site.remove',$data->id) }}">
-                                                <span class="tf-icons las la-trash me-1"></span> @lang('Delete')
-                                            </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -342,8 +344,8 @@
                         </div>
                         <hr>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">@lang('Add')</button>
                             <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
+                            <button type="submit" class="btn btn-primary">@lang('Add')</button>
                         </div>
                     </form>
                 </div>

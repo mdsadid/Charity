@@ -7,11 +7,12 @@
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <div class="navbar-nav align-items-center">
-            <a role="button" class="navbar-search-btn d-sm-none nav-item nav-link px-0 me-xl-4 lh-1"><i class="las la-search fs-4 lh-0"></i></a>
-            <div class="nav-item d-flex align-items-center navbar-search">
-              <i class="las la-search fs-4 lh-0"></i>
-              <input type="text" class="form-control border-0 shadow-none w-100 navbar-search-field" id="searchInput" placeholder="Search..." autocomplete="off">
-              <ul class="search-list d-none"></ul>
+            <div id="searchBoxLg">
+                <div class="nav-item d-flex align-items-center navbar-search">
+                    <i class="las la-search fs-4 lh-0"></i>
+                    <input type="text" class="form-control border-0 shadow-none w-100 navbar-search-field" id="searchInput" placeholder="Search..." autocomplete="off">
+                    <ul class="search-list d-none"></ul>
+                </div>
             </div>
         </div>
 
@@ -57,8 +58,8 @@
                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2 bg-label-danger">
                                     <i class="las la-user-check fs-4"></i>
                                 </span>
-                                <a href="{{ route('admin.user.kyc.pending') }}" class="stretched-link">KYC</a>
-                                <small class="text-muted mb-0">Pending</small>
+                                <a href="{{ route('admin.user.kyc.pending') }}" class="stretched-link">@lang('KYC')</a>
+                                <small class="text-muted mb-0">@lang('Pending')</small>
                             </div>
                             <div class="dropdown-shortcuts-item col">
                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2 bg-label-success">

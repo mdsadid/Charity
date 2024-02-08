@@ -5,35 +5,37 @@
         <div class="col-xxl">
             <div class="card">
                 <div class="card-body table-responsive text-nowrap">
-                  <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>@lang('Key')</th>
-                            <th>{{ __($language->name) }}</th>
-                            <th>@lang('Actions')</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        @forelse ($json as $key => $value)
+                    <table class="table table-hover">
+                        <thead>
                             <tr>
-                                <td>{{ $key }}</td>
-                                <td>{{ $value }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-label-primary editBtn" data-key="{{ $key }}" data-value="{{ $value }}">
-                                        <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-label-danger deleteBtn" data-key="{{ $key }}" data-value="{{ $value }}">
-                                        <span class="tf-icons las la-trash me-1"></span> @lang('Delete')
-                                    </button>
-                                </td>
+                                <th>@lang('Key')</th>
+                                <th>{{ __($language->name) }}</th>
+                                <th>@lang('Actions')</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="100%" class="text-center">{{ __($emptyMessage) }}</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                  </table>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @forelse ($json as $key => $value)
+                                <tr>
+                                    <td>{{ $key }}</td>
+                                    <td>{{ $value }}</td>
+                                    <td>
+                                        <div>
+                                            <button type="button" class="btn btn-sm btn-label-primary editBtn" data-key="{{ $key }}" data-value="{{ $value }}">
+                                                <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-label-danger deleteBtn" data-key="{{ $key }}" data-value="{{ $value }}">
+                                                <span class="tf-icons las la-trash me-1"></span> @lang('Delete')
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="100%" class="text-center">{{ __($emptyMessage) }}</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="card-footer pagination justify-content-center">
@@ -161,7 +163,7 @@
                         <div class="onboarding-info">@lang('Are you confirming the removal of this key from the current language?')</div>
                     </div>
                 </div>
-                <form action="{{route('admin.language.delete.key', $language->id)}}" method="POST">
+                <form action="{{ route('admin.language.delete.key', $language->id) }}" method="POST">
                     @csrf
                     <input type="hidden" name="key">
                     <input type="hidden" name="value">
@@ -177,6 +179,14 @@
 @endsection
 
 @push('breadcrumb')
+    <form action="" method="GET" class="d-flex flex-wrap gap-2">
+        <div class="d-inline">
+            <div class="input-group justify-content-end">
+                <input type="search" name="search" class="form-control" placeholder="@lang('Search by key')" value="{{ request()->search }}">
+                <button class="btn btn-label-primary input-group-text" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>
     <button type="button" class="btn btn-label-primary" data-bs-toggle="modal" data-bs-target="#addModal">
         <span class="tf-icons las la-plus-circle me-1"></span> @lang('Add New')
     </button>
@@ -187,27 +197,27 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('.importLang').on('click', function(e){
+            $('.importLang').on('click', function(e) {
                 var id = $('[name=select_lang]').val();
 
-                if(id ==''){
-                    showToasts('error','Invalide selection');
+                if (id == '') {
+                    showToasts('error', 'Invalide selection');
                     return 0;
-                }else{
+                } else {
                     $.ajax({
-                        type:"post",
-                        url:"{{ route('admin.language.import.lang') }}",
-                        data:{
-                            id : id,
-                            toLangId : "{{ $lang->id }}",
+                        type: "post",
+                        url: "{{ route('admin.language.import.lang') }}",
+                        data: {
+                            id: id,
+                            toLangId: "{{ $language->id }}",
                             _token: "{{ csrf_token() }}"
                         },
-                        success:function(data){
-                            if (data == 'success'){
-                                showToasts('success','Import keywords success');
+                        success: function(data) {
+                            if (data == 'success') {
+                                showToasts('success', 'Import keywords success');
                                 window.location.href = "{{ url()->current() }}"
                             }
                         }
@@ -215,7 +225,7 @@
                 }
             });
 
-            $('.editBtn').on('click', function () {
+            $('.editBtn').on('click', function() {
                 let modal = $('#editModal');
 
                 modal.find('.formHeading').text($(this).data('key'));
@@ -224,7 +234,7 @@
                 modal.modal('show');
             });
 
-            $('.deleteBtn').on('click', function () {
+            $('.deleteBtn').on('click', function() {
                 let modal = $('#deleteModal');
 
                 modal.find('[name=key]').val($(this).data('key'));
@@ -234,4 +244,3 @@
         })(jQuery);
     </script>
 @endpush
-

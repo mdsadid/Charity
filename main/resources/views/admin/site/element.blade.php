@@ -12,7 +12,7 @@
                         <input type="hidden" name="id" value="{{$data->id}}">
                     @endif
 
-                    <div class="row">
+                    <div class="row justify-content-center">
                         @php $imgCount = 0; @endphp
 
                         @foreach($section->element as $k => $content)
@@ -20,7 +20,7 @@
                                 @php $imgCount = collect($content)->count(); @endphp
 
                                 @foreach($content as $imgKey => $image)
-                                    <div class="col-4">
+                                    <div class="col-lg-4 col-md-4 col-sm-6">
                                         <input type="hidden" name="has_image" value="1">
                                         <div class="image-upload">
                                             <div class="thumb">
@@ -51,11 +51,10 @@
                                     </div>
                                 @endforeach
 
-                                <div class="@if($imgCount > 1) col-12 @else col-8 @endif mt-3">
+                                <div class="@if($imgCount > 1) col-lg-12 col-md-12 @else col-lg-8 col-md-8 @endif mt-3">
                                     @push('divend')
                                 </div>
                                 @endpush
-
                             @else
                                 @if($k != 'images')
                                     @if($content == 'icon')
@@ -122,6 +121,18 @@
     </div>
 @endsection
 
+@push('page-style')
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 100px;
+        }
+
+        .iconpicker-popover.fade {
+            opacity: 1;
+        }
+    </style>
+@endpush
+
 @push('page-style-lib')
     <link href="{{ asset('assets/admin/css/page/iconpicker.css') }}" rel="stylesheet">
 @endpush
@@ -149,4 +160,3 @@
         })(jQuery);
     </script>
 @endpush
-

@@ -122,8 +122,8 @@
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         <button type="submit" class="btn btn-primary">@lang('Send')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     </div>
                 </form>
             </div>

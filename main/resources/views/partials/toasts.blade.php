@@ -5,6 +5,7 @@
     @foreach (session('toasts') as $msg)
         <script>
             "use strict";
+
             iziToast.{{ $msg[0] }}({
                 message: "{{ __($msg[1]) }}",
                 position: "topRight"
@@ -21,6 +22,7 @@
 
     <script>
         "use strict";
+
         @foreach ($errors as $error)
             iziToast.error({
                 message: '{{ __($error) }}',

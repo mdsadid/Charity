@@ -164,6 +164,7 @@ Route::middleware('admin')->group(function () {
             // Plugins Setting
             Route::get('plugin', 'plugin')->name('plugin.setting');
             Route::post('plugin/update/{id}', 'pluginUpdate')->name('plugin.setting.update');
+            Route::post('plugin/status/{id}', 'pluginStatus')->name('plugin.status');
 
             // SEO Setting
             Route::get('seo', 'seo')->name('seo.setting');
@@ -210,8 +211,9 @@ Route::middleware('admin')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('keywords', 'keywords')->name('keywords');
         Route::post('store/{id?}', 'store')->name('store');
+        Route::post('status/{id}', 'status')->name('status');
         Route::post('delete/{id}', 'delete')->name('delete');
-        Route::get('edit/keyword/{id}', 'editKeyword')->name('edit.keyword');
+        Route::get('translate/keyword/{id}', 'translateKeyword')->name('translate.keyword');
         Route::post('import', 'languageImport')->name('import.lang');
         Route::post('store/key/{id}', 'languageKeyStore')->name('store.key');
         Route::post('update/key/{id}', 'languageKeyUpdate')->name('update.key');
