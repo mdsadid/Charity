@@ -5,59 +5,79 @@
         <div class="col-12">
             <div class="card g-3">
                 <div class="card-body row g-3">
-                    <div class="col-lg-8">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
-                            <div class="me-1">
-                                <h5 class="mb-1">UI/UX Basic Fundamentals</h5>
-                                <p class="mb-1">Prof. <span class="fw-medium"> Devonne Wallbridge </span></p>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-label-danger">UI/UX</span>
-                                <i class='bx bx-share-alt bx-sm mx-4'></i>
-                                <i class='bx bx-bookmarks bx-sm'></i>
-                            </div>
-                        </div>
+                    <div class="col-lg-7">
                         <div class="card academy-content shadow-none border">
-                            <div class="p-2">
-                                <div class="cursor-pointer"><video class="w-100" poster="../../../../cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" id="plyr-video-player" playsinline controls>
-                                        <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" />
-                                    </video>
-                                </div>
+                            <div class="p-2 text-center">
+                                <img src="{{ getImage(getFilePath('campaign') . '/' . $campaign->image, getFileSize('campaign')) }}" alt="image">
                             </div>
                             <div class="card-body">
-                                <h5 class="mb-2">About this course</h5>
-                                <p class="mb-0 pt-1">Learn web design in 1 hour with 25+ simple-to-use rules and guidelines — tons
-                                    of amazing web design resources included!</p>
+                                <h4 class="mb-2 lh-lg">{{ __($campaign->name) }}</h4>
                                 <hr class="my-4">
-                                <h5>By the numbers</h5>
                                 <div class="d-flex flex-wrap">
                                     <div class="me-5">
-                                        <p class="text-nowrap"><i class='bx bx-check-double bx-sm me-2'></i>Skill level: All Levels</p>
-                                        <p class="text-nowrap"><i class='bx bx-user bx-sm me-2'></i>Students: 38,815</p>
-                                        <p class="text-nowrap"><i class='bx bxs-flag-alt bx-sm me-2'></i>Languages: English</p>
-                                        <p class="text-nowrap "><i class='bx bx-file bx-sm me-2'></i>Captions: Yes</p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-stream me-2"></i><span class="fw-bold">@lang('Category'):</span> {{ __($campaign->category->name) }}
+                                        </p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('Start Date'):</span> {{ showDateTime($campaign->start_date) }}
+                                        </p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('End Date'):</span> {{ showDateTime($campaign->end_date) }}
+                                        </p>
+
+                                        @php
+                                            if ($campaign->status == ManageStatus::CAMPAIGN_PENDING) {
+                                                $badgeClass = 'bg-label-warning';
+                                                $status     = 'Pending';
+                                            } else if ($campaign->status == ManageStatus::CAMPAIGN_APPROVED) {
+                                                $badgeClass = 'bg-label-success';
+                                                $status     = 'Approved';
+                                            } else if ($campaign->status == ManageStatus::CAMPAIGN_REJECTED) {
+                                                $badgeClass = 'bg-label-danger';
+                                                $status     = 'Rejected';
+                                            }
+
+                                            if ($campaign->is_featured) {
+                                                $featuredBadgeClass = 'bg-label-success';
+                                                $featuredStatus     = 'Featured';
+                                            } else {
+                                                $featuredBadgeClass = 'bg-label-danger';
+                                                $featuredStatus     = 'Not Featured';
+                                            }
+                                        @endphp
+
+                                        <p class="text-nowrap">
+                                            <i class="las la-clipboard-check me-2"></i><span class="fw-bold">@lang('Status'):</span> <span class="badge {{ $badgeClass }}">@lang($status)</span>
+                                        </p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-tag me-2"></i><span class="fw-bold">@lang('Featured Status'):</span> <span class="badge {{ $featuredBadgeClass }}">@lang($featuredStatus)</span>
+                                        </p>
                                     </div>
                                     <div>
-                                        <p class="text-nowrap"><i class='bx bx-pencil bx-sm me-2'></i>Lectures: 19</p>
-                                        <p class="text-nowrap "><i class='bx bxs-watch bx-sm me-2'></i>Video: 1.5 total hours</p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-hand-holding-usd me-2"></i><span class="fw-bold">@lang('Goal Amount'):</span> {{ $setting->cur_sym . showAmount($campaign->goal_amount) }}
+                                        </p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-wallet me-2"></i><span class="fw-bold">@lang('Raised Amount'):</span> {{ $setting->cur_sym . showAmount($campaign->raised_amount) }}
+                                        </p>
+
+                                        @php
+                                            $percentage = donationPercentage($campaign->goal_amount, $campaign->raised_amount);
+                                        @endphp
+
+                                        <p class="text-nowrap">
+                                            <i class="las la-percentage me-2"></i><span class="fw-bold">@lang('Donation Percent'):</span> {{ $percentage . '%' }}
+                                        </p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-users me-2"></i><span class="fw-bold">@lang('Total Donor'):</span> 0
+                                        </p>
                                     </div>
                                 </div>
                                 <hr class="mb-4 mt-2">
-                                <h5>Description</h5>
-                                <p class="mb-4">
-                                    The material of this course is also covered in my other course about web design and development
-                                    with HTML5 & CSS3. Scroll to the bottom of this page to check out that course, too!
-                                    If you're already taking my other course, you already have all it takes to start designing beautiful
-                                    websites today!
-                                </p>
-                                <p class="mb-4">
-                                    "Best web design course: If you're interested in web design, but want more than
-                                    just a "how to use WordPress" course,I highly recommend this one." — Florian Giusti
-                                </p>
-                                <p> "Very helpful to us left-brained people: I am familiar with HTML, CSS, JQuery,
-                                    and Twitter Bootstrap, but I needed instruction in web design. This course gave me practical,
-                                    impactful techniques for making websites more beautiful and engaging." — Susan Darlene Cain
-                                </p>
+                                <h5>@lang('Description')</h5>
+                                <div class="mb-4">
+                                    @php echo $campaign->description @endphp
+                                </div>
                                 <hr class="my-4">
                                 <h5>Instructor</h5>
                                 <div class="d-flex justify-content-start align-items-center user-name">
@@ -72,7 +92,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <div class="accordion stick-top accordion-bordered" id="courseContent">
                             <div class="accordion-item shadow-none border border-bottom-0 active mb-0">
                                 <div class="accordion-header" id="headingOne">

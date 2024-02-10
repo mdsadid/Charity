@@ -72,7 +72,7 @@ class WebsiteController extends Controller
             ->limit(4)
             ->get();
 
-        $seoContents['title']              = $campaign->name;
+        $seoContents['keywords']           = $campaign->meta_keywords ?? [];
         $seoContents['social_title']       = $campaign->name;
         $seoContents['description']        = strLimit($campaign->description, 150);
         $seoContents['social_description'] = strLimit($campaign->description, 150);

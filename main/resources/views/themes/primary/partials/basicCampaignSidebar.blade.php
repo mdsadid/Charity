@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li class="social-list__item">
-                <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ urlencode(url()->current()) }}" class="social-list__link flex-center" target="_blank">
+                <a href="http://www.linkedin.com/shareArticle?url={{ urlencode(url()->current()) }}" class="social-list__link flex-center" target="_blank">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
             </li>
