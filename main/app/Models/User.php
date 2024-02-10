@@ -66,6 +66,14 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class)->orderBy('id', 'desc');
     }
 
+    /**
+     * Get the campaigns for the user.
+     */
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
+    }
+
     // SCOPES
     public function scopeActive($query)
     {

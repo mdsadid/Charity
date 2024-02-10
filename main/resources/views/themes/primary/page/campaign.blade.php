@@ -102,13 +102,3 @@
 
     @include($activeTheme . 'partials.basicPartner')
 @endsection
-
-@push('page-style')
-    <style>
-        .campaign-card__img {
-            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
-            background: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
-            mask-image: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
-        }
-    </style>
-@endpush

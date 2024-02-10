@@ -17,7 +17,13 @@ class CampaignController extends Controller
 {
     function index() {
         $pageTitle = 'All Campaigns';
-        $campaigns = Campaign::where('user_id', auth()->id())->searchable(['name'])->latest()->paginate(getPaginate());
+        $campaigns = Campaign::whereHas('category', function ($query) {
+            $query->active();
+        })
+            ->where('user_id', auth()->id())
+            ->searchable(['name'])
+            ->latest()
+            ->paginate(getPaginate());
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
@@ -279,7 +285,12 @@ class CampaignController extends Controller
 
     function show($slug) {
         $pageTitle = 'Campaign Details';
-        $campaign  = Campaign::where('slug', $slug)->where('user_id', auth()->id())->first();
+        $campaign  = Campaign::where('slug', $slug)
+            ->where('user_id', auth()->id())
+            ->whereHas('category', function ($query) {
+                $query->active();
+            })
+            ->firstOrFail();
 
         return view($this->activeTheme . 'user.campaign.show', compact('pageTitle', 'campaign'));
     }

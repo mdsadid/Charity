@@ -22,6 +22,14 @@ class Campaign extends Model
     ];
 
     /**
+     * Get the user that owns the campaign.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Get the category that owns the campaign.
      */
     public function category()

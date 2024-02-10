@@ -63,7 +63,7 @@ class UserController extends Controller
 
     function details($id) {
         $user              = User::findOrFail($id);
-        $pageTitle         = 'Details - ' .$user->username;
+        $pageTitle         = 'Details - ' . $user->username;
         $totalDeposit      = Deposit::where('user_id', $user->id)->done()->sum('amount');
         $totalWithdrawal   = Withdrawal::where('user_id', $user->id)->done()->sum('amount');
         $totalTransactions = Transaction::where('user_id', $user->id)->count();

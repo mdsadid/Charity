@@ -629,12 +629,6 @@
             mask-image: url("{{ asset($activeThemeTrue . 'images/mask-shape-1.png') }}");
         }
 
-        .campaign-card__img {
-            -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
-            background: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
-            mask-image: url("{{ asset($activeThemeTrue . 'images/campaign-image-shape.png') }}");
-        }
-
         .counter-section__card {
             -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");
             mask-image: url("{{ asset($activeThemeTrue . 'images/slider-img-shape-2.png') }}");

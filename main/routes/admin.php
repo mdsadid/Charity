@@ -60,6 +60,7 @@ Route::middleware('admin')->group(function () {
     // Campaign
     Route::controller('CampaignController')->prefix('campaigns')->name('campaigns.')->group(function () {
         Route::get('index', 'index')->name('index');
+        Route::get('details/{id}', 'details')->name('details');
     });
 
     // User Management
