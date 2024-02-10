@@ -694,6 +694,7 @@ i {
 }
 
 @media screen and (max-width: 1199px) {
+
     .fs-16,
     .login-registration-list__icon,
     .alert__title,
@@ -6820,7 +6821,8 @@ input[type=number] {
 }
 
 .account-setup-key__badge,
-.referral-link__badge {
+.referral-link__badge,
+.share-link__badge {
     position: absolute;
     top: 50%;
     right: 60px;
@@ -6830,7 +6832,8 @@ input[type=number] {
 }
 
 .account-setup-key__badge.show,
-.referral-link__badge.show {
+.referral-link__badge.show,
+.share-link__badge.show {
     opacity: 1;
 }
 

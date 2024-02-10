@@ -293,7 +293,10 @@
       var inputElement = $('#shareLink');
       inputElement.select();
       document.execCommand('copy');
-      alert('Link copied');
+      $('.share-link__badge').addClass('show');
+      setTimeout(function () {
+        $('.share-link__badge').removeClass('show');
+      }, 1500);
     });
     // ========================= Share Link Copy End ==========
 

@@ -56,13 +56,21 @@ class WebsiteController extends Controller
         $pageTitle        = 'Campaign Details';
         $campaign         = Campaign::where('slug', $slug)->approve()->first();
         $relatedCampaigns = Campaign::where('category_id', $campaign->category_id)
-            ->where('slug', '!=', $campaign->slug)
+            ->whereNot('slug', $campaign->slug)
             ->approve()
             ->latest()
             ->limit(4)
             ->get();
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns'));
+        $seoContents['title']              = $campaign->name;
+        $seoContents['social_title']       = $campaign->name;
+        $seoContents['description']        = strLimit($campaign->description, 150);
+        $seoContents['social_description'] = strLimit($campaign->description, 150);
+        $imageSize                         = getFileSize('campaign');
+        $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaign->image, $imageSize);
+        $seoContents['image_size']         = $imageSize;
+
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents'));
     }
 
     function events() {
