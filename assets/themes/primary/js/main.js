@@ -9,6 +9,7 @@
     $(".header-button").on("click", function () {
       $(".body-overlay").toggleClass("show");
     });
+
     $(".body-overlay").on("click", function () {
       $(".header-button").trigger("click");
       $(this).removeClass("show");
@@ -19,6 +20,7 @@
     $(".navbar-toggler.header-button").on("click", function () {
       $("body").toggleClass("scroll-hide-sm");
     });
+
     $(".body-overlay").on("click", function () {
       $("body").removeClass("scroll-hide-sm");
     });
@@ -41,6 +43,7 @@
     $(".toggle-password").on("click", function () {
       $(this).toggleClass("fa-eye fa-eye-slash");
       var input = $($(this).attr("id"));
+
       if (input.attr("type") == "password") {
         input.attr("type", "text");
       } else {
@@ -148,6 +151,7 @@
       nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-arrow-right"></i></button>',
       prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-arrow-left"></i></button>',
     });
+
     $(".testimonial-txt-slider").slick({
       slidesToShow: 1,
       slidesToScroll: 1,
@@ -170,10 +174,8 @@
       speed: 2000,
       dots: false,
       arrows: false,
-      prevArrow:
-        '<button type="button" class="slick-prev"><i class="fas fa-long-arrow-alt-left"></i></button>',
-      nextArrow:
-        '<button type="button" class="slick-next"><i class="fas fa-long-arrow-alt-right"></i></button>',
+      prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-long-arrow-alt-left"></i></button>',
+      nextArrow: '<button type="button" class="slick-next"><i class="fas fa-long-arrow-alt-right"></i></button>',
       responsive: [
         {
           breakpoint: 1199,
@@ -207,6 +209,7 @@
     // Sidebar Dropdown Menu Start
     $(".has-dropdown > a").click(function () {
       $(".sidebar-submenu").slideUp(200);
+
       if ($(this).parent().hasClass("active")) {
         $(".has-dropdown").removeClass("active");
         $(this).parent().removeClass("active");
@@ -223,6 +226,7 @@
       $(".sidebar-menu").addClass("show-sidebar");
       $(".sidebar-overlay").addClass("show");
     });
+
     $(".sidebar-menu__close, .sidebar-overlay").on("click", function () {
       $(".sidebar-menu").removeClass("show-sidebar");
       $(".sidebar-overlay").removeClass("show");
@@ -289,11 +293,13 @@
     // ========================= Share Link Copy Start ==========
     var pageUrl = window.location.href;
     $('#shareLink').val(pageUrl);
+
     $('.share-link__copy').on('click', function () {
       var inputElement = $('#shareLink');
       inputElement.select();
       document.execCommand('copy');
       $('.share-link__badge').addClass('show');
+
       setTimeout(function () {
         $('.share-link__badge').removeClass('show');
       }, 1500);
@@ -306,6 +312,7 @@
       inputElement.select();
       document.execCommand('copy');
       $('.account-setup-key__badge').addClass('show');
+
       setTimeout(function () {
         $('.account-setup-key__badge').removeClass('show');
       }, 1500);
@@ -353,6 +360,7 @@
         var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
         $countdownElement.html("<span>" + days + "d</span><span>" + hours + "h</span><span>" + minutes + "m</span><span>" + seconds + "s</span>");
+
         if (remainingTime <= 0) {
           clearInterval(countdownInterval);
           $countdownElement.html("<span>0d</span><span>0h</span><span>0m</span><span>0s</span>");
@@ -361,7 +369,7 @@
     });
     // ========================= Campaign Countdown End ==========
 
-    // ========================= Campagin Donation Form Start ==========
+    // ========================= Campaign Donation Form Start ==========
     $('input[name=donationAmount]').on('change', function () {
       if ($(this).is('[id=customDonationAmount]:checked')) {
         $('#donationAmount').prop('readonly', false).focus().val('');
@@ -370,6 +378,7 @@
         $('#donationAmount').prop('readonly', true).val(donationAmount);
       }
     });
+
     $('#anonymousDonation').on('change', function () {
       if ($(this).is(':checked')) {
         $('#donorName, #donorEmail, #donorPhone, #donorCountry').prop('disabled', true);
@@ -377,7 +386,7 @@
         $('#donorName, #donorEmail, #donorPhone, #donorCountry').prop('disabled', false);
       }
     });
-    // ========================= Campagin Donation Form End ==========
+    // ========================= Campaign Donation Form End ==========
 
     // ========================= Simple jQuery Datepicker Start ==========
     $('.form--control.datepicker').datepicker({
@@ -396,15 +405,18 @@
           $('.image-preview').html(img);
           $('.image-preview').addClass('active');
         }
+
         reader.readAsDataURL(file);
       } else {
         $('.image-preview').html('+');
         $('.image-preview').removeClass('active');
       }
     }
+
     $('#imageUpload').change(function () {
       updatePreviewLogo(this.files[0]);
     });
+
     $('#imageUpload').on('click', '.custom-file-input-clear', function () {
       updatePreviewLogo(null);
     });
@@ -490,9 +502,11 @@
           },
         }]
       };
+
       var donationReport = new ApexCharts(document.querySelector("#donationReport"), donationReportoptions);
       donationReport.render();
     }
+
     if ($('#withdrawReport').length) {
       var baseColorForChart = $('html').css('--warning');
       var withdrawReportoptions = {
@@ -572,6 +586,7 @@
           },
         }]
       };
+
       var withdrawReport = new ApexCharts(document.querySelector("#withdrawReport"), withdrawReportoptions);
       withdrawReport.render();
     }
@@ -580,6 +595,7 @@
     // ========================= CK Editor Start ==========
     if ($('.ck-editor').length) {
       window.editors = {};
+
       document.querySelectorAll('.ck-editor').forEach((node, index) => {
         ClassicEditor
           .create(node, {})
@@ -593,7 +609,6 @@
   // ==========================================
   //      End Document Ready function
   // ==========================================
-
 
   // ========================= Preloader Js Start =====================
   $(window).on("load", function () {
