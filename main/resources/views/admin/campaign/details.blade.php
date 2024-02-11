@@ -8,7 +8,7 @@
                     <div class="col-lg-7">
                         <div class="card academy-content shadow-none border">
                             <div class="p-2 text-center">
-                                <img src="{{ getImage(getFilePath('campaign') . '/' . $campaign->image, getFileSize('campaign')) }}" alt="image">
+                                <img src="{{ getImage(getFilePath('campaign') . '/' . $campaign->image, getFileSize('campaign')) }}" alt="image" class="rounded">
                             </div>
                             <div class="card-body">
                                 <h4 class="mb-2 lh-lg">{{ __($campaign->name) }}</h4>
@@ -19,54 +19,48 @@
                                             <i class="las la-stream me-2"></i><span class="fw-bold">@lang('Category'):</span> {{ __($campaign->category->name) }}
                                         </p>
                                         <p class="text-nowrap">
-                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('Start Date'):</span> {{ showDateTime($campaign->start_date) }}
+                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('Start Date'):</span> {{ showDateTime($campaign->start_date, 'd-M-Y h:i A') }}
                                         </p>
                                         <p class="text-nowrap">
-                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('End Date'):</span> {{ showDateTime($campaign->end_date) }}
+                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('End Date'):</span> {{ showDateTime($campaign->end_date, 'd-M-Y h:i A') }}
                                         </p>
 
                                         @php
                                             if ($campaign->status == ManageStatus::CAMPAIGN_PENDING) {
                                                 $badgeClass = 'bg-label-warning';
-                                                $status     = 'Pending';
-                                            } else if ($campaign->status == ManageStatus::CAMPAIGN_APPROVED) {
+                                                $status = 'Pending';
+                                            } elseif ($campaign->status == ManageStatus::CAMPAIGN_APPROVED) {
                                                 $badgeClass = 'bg-label-success';
-                                                $status     = 'Approved';
-                                            } else if ($campaign->status == ManageStatus::CAMPAIGN_REJECTED) {
+                                                $status = 'Approved';
+                                            } elseif ($campaign->status == ManageStatus::CAMPAIGN_REJECTED) {
                                                 $badgeClass = 'bg-label-danger';
-                                                $status     = 'Rejected';
-                                            }
-
-                                            if ($campaign->is_featured) {
-                                                $featuredBadgeClass = 'bg-label-success';
-                                                $featuredStatus     = 'Featured';
-                                            } else {
-                                                $featuredBadgeClass = 'bg-label-danger';
-                                                $featuredStatus     = 'Not Featured';
+                                                $status = 'Rejected';
                                             }
                                         @endphp
 
                                         <p class="text-nowrap">
                                             <i class="las la-clipboard-check me-2"></i><span class="fw-bold">@lang('Status'):</span> <span class="badge {{ $badgeClass }}">@lang($status)</span>
                                         </p>
+                                    </div>
+                                    <div>
+                                        @php
+                                            if ($campaign->is_featured) {
+                                                $featuredBadgeClass = 'bg-label-success';
+                                                $featuredStatus = 'Featured';
+                                            } else {
+                                                $featuredBadgeClass = 'bg-label-danger';
+                                                $featuredStatus = 'Not Featured';
+                                            }
+                                        @endphp
+
                                         <p class="text-nowrap">
                                             <i class="las la-tag me-2"></i><span class="fw-bold">@lang('Featured Status'):</span> <span class="badge {{ $featuredBadgeClass }}">@lang($featuredStatus)</span>
                                         </p>
-                                    </div>
-                                    <div>
                                         <p class="text-nowrap">
                                             <i class="las la-hand-holding-usd me-2"></i><span class="fw-bold">@lang('Goal Amount'):</span> {{ $setting->cur_sym . showAmount($campaign->goal_amount) }}
                                         </p>
                                         <p class="text-nowrap">
                                             <i class="las la-wallet me-2"></i><span class="fw-bold">@lang('Raised Amount'):</span> {{ $setting->cur_sym . showAmount($campaign->raised_amount) }}
-                                        </p>
-
-                                        @php
-                                            $percentage = donationPercentage($campaign->goal_amount, $campaign->raised_amount);
-                                        @endphp
-
-                                        <p class="text-nowrap">
-                                            <i class="las la-percentage me-2"></i><span class="fw-bold">@lang('Donation Percent'):</span> {{ $percentage . '%' }}
                                         </p>
                                         <p class="text-nowrap">
                                             <i class="las la-users me-2"></i><span class="fw-bold">@lang('Total Donor'):</span> 0
@@ -78,15 +72,44 @@
                                 <div class="mb-4">
                                     @php echo $campaign->description @endphp
                                 </div>
+                                <hr class="mb-4 mt-2">
+                                <h5>@lang('Relevant Images')</h5>
+                                <div class="mb-4">
+                                    <div class="swiper" id="swiper-with-progress">
+                                        <div class="swiper-wrapper">
+                                            @foreach ($campaign->gallery as $image)
+                                                <div class="swiper-slide" style="background-image: url({{ getImage(getFilePath('campaign') . '/' . $image, getFileSize('campaign')) }})"></div>
+                                            @endforeach
+                                        </div>
+                                        <div class="swiper-pagination"></div>
+                                        <div class="swiper-button-next swiper-button-white custom-icon"></div>
+                                        <div class="swiper-button-prev swiper-button-white custom-icon"></div>
+                                    </div>
+                                </div>
+
+                                @if ($campaign->document)
+                                    <hr class="mb-4 mt-2">
+                                    <h5>@lang('Relevant Document')</h5>
+                                    <div class="mb-4">
+                                        <div class="donation-details__document">
+                                            <object data="{{ asset(getFilePath('document') . '/' . $campaign->document) }}" type="application/pdf"></object>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <hr class="my-4">
-                                <h5>Instructor</h5>
+                                <h5>@lang('Author')</h5>
                                 <div class="d-flex justify-content-start align-items-center user-name">
                                     <div class="avatar-wrapper">
-                                        <div class="avatar avatar-sm me-2"><img src="../../assets/img/avatars/11.png" alt="Avatar" class="rounded-circle"></div>
+                                        <div class="avatar avatar-sm me-2">
+                                            <img src="" alt="Avatar" class="rounded-circle">
+                                        </div>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <span class="fw-medium">Devonne Wallbridge</span>
-                                        <small class="text-muted">Web Developer, Designer, and Teacher</small>
+                                        <span class="fw-medium">{{ __($campaign->user->fullname) }}</span>
+                                        <small class="text-muted">
+                                            <a href="{{ route('admin.user.details', $campaign->user->id) }}">{{ '@' . $campaign->user->username }}</a>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -284,3 +307,29 @@
         </div>
     </div>
 @endsection
+
+@push('breadcrumb')
+    <a href="{{ $backRoute }}" class="btn btn-label-primary">
+        <span class="tf-icons las la-arrow-circle-left me-1"></span> @lang('Back')
+    </a>
+@endpush
+
+@push('page-style-lib')
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/swiper.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/ui-carousel.css') }}">
+@endpush
+
+@push('page-style')
+    <style>
+        .donation-details__document object {
+            width: 100%;
+            height: 600px;
+            border-radius: 5px;
+        }
+    </style>
+@endpush
+
+@push('page-script-lib')
+    <script src="{{ asset('assets/admin/js/page/swiper.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/page/ui-carousel.js') }}"></script>
+@endpush

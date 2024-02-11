@@ -43,12 +43,12 @@
                                     </td>
                                     <td>
                                         <div>
-                                            {{ showDateTime($campaign->start_date) }}<br>{{ diffForHumans($campaign->start_date) }}
+                                            {{ showDateTime($campaign->start_date, 'd-M-Y h:i A') }}<br>{{ diffForHumans($campaign->start_date) }}
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            {{ showDateTime($campaign->end_date) }}<br>{{ diffForHumans($campaign->end_date) }}
+                                            {{ showDateTime($campaign->end_date, 'd-M-Y h:i A') }}<br>{{ diffForHumans($campaign->end_date) }}
                                         </div>
                                     </td>
                                     <td>
@@ -65,30 +65,25 @@
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </a>
 
-                                        {{-- @if (request()->routeIs('admin.user.kyc.pending'))
+                                        @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
                                             <div class="btn-group">
-                                                <button class="btn btn-sm btn-label-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">@lang('KYC Action')</button>
+                                                <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    @lang('Action')
+                                                </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <button type="button" class="dropdown-item detailBtn" data-bs-toggle      = "offcanvas" data-bs-target      = "#offcanvasBoth" aria-controls       = "offcanvasBoth" data-kyc_data = "{{ json_encode($user->kyc_data) }}">
-                                                            <i class="las la-info-circle fs-6 link-info"></i> @lang('KYC Details')
-                                                        </button>
-                                                    </li>
-
-                                                    <li>
-                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you confirm the approval of these documents?')" data-action="{{ route('admin.user.kyc.approve', $user->id) }}">
+                                                        <button type="button" class="dropdown-item approveBtn" data-id="{{ $campaign->id }}">
                                                             <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
                                                         </button>
                                                     </li>
-
                                                     <li>
-                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you confirm the cancelation of these documents?')" data-action="{{ route('admin.user.kyc.cancel', $user->id) }}">
-                                                            <i class="lar la-times-circle fs-6 link-warning"></i> @lang('Cancel')
+                                                        <button type="button" class="dropdown-item cancelBtn" data-id="{{ $campaign->id }}">
+                                                            <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject')
                                                         </button>
                                                     </li>
                                                 </ul>
                                             </div>
-                                        @endif --}}
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
