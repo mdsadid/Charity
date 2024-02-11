@@ -89,7 +89,7 @@ class UserController extends Controller
             'country'   => 'required|in:' . $countries,
         ]);
 
-        $user->mobile       = $dialCode.request('mobile');
+        $user->mobile       = $dialCode . request('mobile');
         $user->country_name = $country;
         $user->country_code = $countryCode;
         $user->firstname    = request('firstname');
@@ -104,21 +104,23 @@ class UserController extends Controller
                                 'zip'     => request('zip'),
                                 'country' => @$country,
                             ];
+
         if (!request('kc')) {
             $user->kc = ManageStatus::UNVERIFIED;
 
             if ($user->kyc_data) {
                 foreach ($user->kyc_data as $kycData) {
                     if ($kycData->type == 'file') {
-                        fileManager()->removeFile(getFilePath('verify').'/'.$kycData->value);
+                        fileManager()->removeFile(getFilePath('verify') . '/' . $kycData->value);
                     }
                 }
             }
 
             $user->kyc_data = null;
-        }else{
+        } else {
             $user->kc = ManageStatus::VERIFIED;
         }
+
         $user->save();
 
         $toast[] = ['success', 'User details updated success'];
@@ -130,7 +132,7 @@ class UserController extends Controller
         return to_route('user.home');
     }
 
-    function balanceUpdate( $id) {
+    function balanceUpdate($id) {
         $this->validate(request(), [
             'amount' => 'required|numeric|gt:0',
             'act'    => 'required|in:add,sub',
@@ -150,7 +152,6 @@ class UserController extends Controller
             $notifyTemplate        = 'BAL_ADD';
 
             $toast[] = ['success', bs('cur_sym') . $amount . ' add success'];
-
         } else {
             if ($amount > $user->balance) {
                 $toast[] = ['error', $user->username . ' doesn\'t have sufficient balance.'];
@@ -190,16 +191,16 @@ class UserController extends Controller
 
         if ($user->status == ManageStatus::ACTIVE) {
             $this->validate(request(), [
-                'ban_reason'=>'required|string|max:255'
+                'ban_reason' => 'required|string|max:255'
             ]);
 
-            $user->status = ManageStatus::INACTIVE;
+            $user->status     = ManageStatus::INACTIVE;
             $user->ban_reason = request('ban_reason');
-            $toast[] = ['success','User ban success'];
-        }else{
-            $user->status = ManageStatus::ACTIVE;
+            $toast[]          = ['success', 'User ban success'];
+        } else {
+            $user->status     = ManageStatus::ACTIVE;
             $user->ban_reason = null;
-            $toast[] = ['success','User unbanned success'];
+            $toast[]          = ['success', 'User unbanned success'];
         }
 
         $user->save();
@@ -219,11 +220,11 @@ class UserController extends Controller
     }
 
     function kycCancel($id) {
-        $user           = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
         foreach ($user->kyc_data as $kycData) {
             if ($kycData->type == 'file') {
-                fileManager()->removeFile(getFilePath('verify').'/'.$kycData->value);
+                fileManager()->removeFile(getFilePath('verify') . '/' . $kycData->value);
             }
         }
 
@@ -237,13 +238,13 @@ class UserController extends Controller
         return back()->withToasts($toast);
     }
 
-    protected function userData($scope = null){
+    protected function userData($scope = null) {
         if ($scope) {
             $users = User::$scope();
-        }else{
+        } else {
             $users = User::query();
         }
-        
+
         return $users->searchable(['username', 'email'])->dateFilter()->latest()->paginate(getPaginate());
     }
 }

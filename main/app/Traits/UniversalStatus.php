@@ -18,9 +18,10 @@ trait UniversalStatus
         }
 
         $query->save();
-        $message = keyToTitle($column) . ' change successful';
 
+        $message = keyToTitle($column) . ' change successfully';
         $toast[] = ['success', $message];
+
         return back()->withToasts($toast);
     }
 

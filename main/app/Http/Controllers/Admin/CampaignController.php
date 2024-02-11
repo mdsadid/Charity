@@ -71,4 +71,8 @@ class CampaignController extends Controller
 
         return back()->withToasts($toast);
     }
+
+    function updateFeatured($id) {
+        return Campaign::changeStatus($id, 'featured');
+    }
 }

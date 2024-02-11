@@ -65,6 +65,7 @@ Route::middleware('admin')->group(function () {
         Route::get('rejected', 'rejected')->name('rejected');
         Route::get('details/{id}', 'details')->name('details');
         Route::post('status-update/{id}/{type}', 'updateStatus')->name('status.update');
+        Route::post('featured-update/{id}', 'updateFeatured')->name('featured.update');
     });
 
     // User Management

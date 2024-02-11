@@ -65,11 +65,12 @@
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </a>
 
-                                        @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    @lang('Action')
-                                                </button>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @lang('Action')
+                                            </button>
+
+                                            @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
                                                 <ul class="dropdown-menu">
                                                     <li>
                                                         <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
@@ -82,8 +83,22 @@
                                                         </button>
                                                     </li>
                                                 </ul>
-                                            </div>
-                                        @endif
+                                            @elseif ($campaign->status == ManageStatus::CAMPAIGN_APPROVED)
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        @if ($campaign->featured)
+                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to unfeatured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                                <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Remove Featured')
+                                                            </button>
+                                                        @else
+                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to featured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                                <i class="las la-check-circle fs-6 link-success"></i> @lang('Make Featured')
+                                                            </button>
+                                                        @endif
+                                                    </li>
+                                                </ul>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

@@ -4,11 +4,12 @@ namespace App\Models;
 
 use App\Constants\ManageStatus;
 use App\Traits\Searchable;
+use App\Traits\UniversalStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Campaign extends Model
 {
-    use Searchable;
+    use Searchable, UniversalStatus;
 
     /**
      * The attributes that should be cast to native types.

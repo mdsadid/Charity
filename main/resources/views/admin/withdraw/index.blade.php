@@ -2,7 +2,7 @@
 
 @section('master')
     <div class="row">
-        @if(request()->routeIs('admin.withdraw.index') || request()->routeIs('admin.withdraw.method') || request()->routeIs('admin.user.withdraw') || request()->routeIs('admin.user.withdraw.method'))
+        @if (request()->routeIs('admin.withdraw.index') || request()->routeIs('admin.withdraw.method') || request()->routeIs('admin.user.withdraw') || request()->routeIs('admin.user.withdraw.method'))
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-widget-separator-wrapper">
@@ -84,14 +84,14 @@
                                         </span>
                                     </td>
                                     <td>
-                                        {{ __($setting->cur_sym) }}{{ showAmount($withdraw->amount ) }} + <span class="text-danger" title="@lang('Charge')">{{ showAmount($withdraw->charge) }} </span>
+                                        {{ __($setting->cur_sym) }}{{ showAmount($withdraw->amount) }} + <span class="text-danger" title="@lang('Charge')">{{ showAmount($withdraw->charge) }} </span>
                                         <br>
                                         <strong title="@lang('Amount after charge')">
-                                        {{ showAmount($withdraw->amount - $withdraw->charge) }} {{ __($setting->site_cur) }}
+                                            {{ showAmount($withdraw->amount - $withdraw->charge) }} {{ __($setting->site_cur) }}
                                         </strong>
                                     </td>
                                     <td>
-                                        1 {{ __($setting->site_cur) }} =  {{ showAmount($withdraw->rate) }} {{ __($withdraw->currency) }}
+                                        1 {{ __($setting->site_cur) }} = {{ showAmount($withdraw->rate) }} {{ __($withdraw->currency) }}
                                         <br>
                                         <strong>{{ showAmount($withdraw->final_amount) }} {{ __($withdraw->currency) }}</strong>
                                     </td>
@@ -104,7 +104,7 @@
                                             <span class="badge bg-label-danger">@lang('Canceled')</span>
                                         @endif
                                     </td>
-                                    
+
                                     <td>
                                         <button type="button" class="btn btn-sm btn-label-info detailBtn"
                                             data-bs-toggle      = "offcanvas"
@@ -121,8 +121,8 @@
                                             data-payable        = "{{ showAmount($withdraw->final_amount) }} {{ __($withdraw->currency) }}"
                                             data-status         = "{{ $withdraw->status }}"
                                             data-user_data      = "{{ json_encode($withdraw->withdraw_information) }}"
-                                            data-admin_feedback = "{{ $withdraw->admin_feedback }}">
-                                            
+                                            data-admin_feedback = "{{ $withdraw->admin_feedback }}"
+                                        >
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </button>
 
@@ -131,7 +131,7 @@
                                                 <button class="btn btn-sm btn-label-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">@lang('Action')</button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <button type="button" class="dropdown-item approveBtn" data-id="{{ $withdraw->id }}" data-amount="{{ showAmount($withdraw->final_amount) }} {{$withdraw->currency}}">
+                                                        <button type="button" class="dropdown-item approveBtn" data-id="{{ $withdraw->id }}" data-amount="{{ showAmount($withdraw->final_amount) }} {{ $withdraw->currency }}">
                                                             <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
                                                         </button>
                                                     </li>
@@ -198,17 +198,17 @@
                             <div class="onboarding-info question">@lang('Have you sent')
                                 <span class="fw-bold withdraw-amount text-primary"></span>?
                             </div>
-    
+
                             <div class="row">
                                 <div class="col-sm-12">
-                                  <div class="mb-3">
-                                    <textarea class="form-control" name="admin_feedback" placeholder="@lang('Furnish the specifics, such as the transaction number, for example')" rows="3"></textarea>
-                                  </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" name="admin_feedback" placeholder="@lang('Furnish the specifics, such as the transaction number, for example')" rows="3"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="modal-footer border-0 justify-content-center">
                         <button type="submit" class="btn btn-primary">@lang('Yes')</button>
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
@@ -238,17 +238,17 @@
                         <div class="onboarding-content mb-0">
                             <h4 class="onboarding-title text-body">@lang('Cancel Withdrawal Confirmation')</h4>
                             <div class="onboarding-info question">@lang('Reason')</div>
-    
+
                             <div class="row">
                                 <div class="col-sm-12">
-                                  <div class="mb-3">
-                                    <textarea class="form-control" name="admin_feedback" rows="3" required></textarea>
-                                  </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" name="admin_feedback" rows="3" required></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="modal-footer border-0 justify-content-center">
                         <button type="submit" class="btn btn-primary">@lang('Yes')</button>
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
@@ -265,7 +265,7 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
             $('.detailBtn').on('click', function () {
@@ -280,7 +280,7 @@
                     statusHtml += `<span class="badge bg-label-danger">@lang('Canceled')</span>`
                 }
 
-                let basicHtml  = `<div class="mb-4">
+                let basicHtml = `<div class="mb-4">
                                     <h5>@lang('Basic Information')</h5>
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -336,15 +336,18 @@
 
                 $('.basicData').html(basicHtml);
 
-                if (userData) {                    
-                    let fileDownloadUrl = '{{ route("admin.file.download",["filePath" => "verify"]) }}';
+                if (userData) {
+                    let fileDownloadUrl = '{{ route('admin.file.download', ['filePath' => 'verify']) }}';
                     let infoHtml        = `<div class="mt-3">
                                                 <h5>@lang('Withdrawal User Data')</h5>
                                                 <ul class="list-group">`;
-    
+
                     userData.forEach(element => {
-                        if (!element.value) { return; }
-                        if(element.type != 'file') {
+                        if (!element.value) {
+                            return;
+                        }
+
+                        if (element.type != 'file') {
                             infoHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                             <b>${element.name}</b>
                                             <span>${element.value}</span>
@@ -368,14 +371,14 @@
                 }
             });
 
-            $('.approveBtn').on('click', function () {
+            $('.approveBtn').on('click', function() {
                 let modal = $('#approveModal');
                 modal.find('[name=id]').val($(this).data('id'));
                 modal.find('.withdraw-amount').text($(this).data('amount'));
                 modal.modal('show');
             });
 
-            $('.cancelBtn').on('click', function () {
+            $('.cancelBtn').on('click', function() {
                 let modal = $('#cancelModal');
                 modal.find('[name=id]').val($(this).data('id'));
                 modal.modal('show');
@@ -383,4 +386,3 @@
         })(jQuery);
     </script>
 @endpush
-
