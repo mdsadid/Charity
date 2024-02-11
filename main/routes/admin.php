@@ -60,7 +60,11 @@ Route::middleware('admin')->group(function () {
     // Campaign
     Route::controller('CampaignController')->prefix('campaigns')->name('campaigns.')->group(function () {
         Route::get('index', 'index')->name('index');
+        Route::get('pending', 'pending')->name('pending');
+        Route::get('approved', 'approved')->name('approved');
+        Route::get('rejected', 'rejected')->name('rejected');
         Route::get('details/{id}', 'details')->name('details');
+        Route::post('status-update/{id}/{type}', 'updateStatus')->name('status.update');
     });
 
     // User Management

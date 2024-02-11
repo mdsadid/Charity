@@ -65,6 +65,21 @@
                         <div class="text-truncate">@lang('All')</div>
                     </a>
                 </li>
+                <li class="menu-item {{ navigationActive('admin.campaigns.pending', 1) }}">
+                    <a href="{{ route('admin.campaigns.pending') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Pending')</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.campaigns.approved', 1) }}">
+                    <a href="{{ route('admin.campaigns.approved') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Approved')</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.campaigns.rejected', 1) }}">
+                    <a href="{{ route('admin.campaigns.rejected') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Rejected')</div>
+                    </a>
+                </li>
             </ul>
         </li>
 

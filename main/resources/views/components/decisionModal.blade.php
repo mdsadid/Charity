@@ -34,7 +34,7 @@
 
             $(document).on('click', '.decisionBtn', function() {
                 let modal = $('#decisionModal');
-                let data  = $(this).data();
+                let data = $(this).data();
 
                 modal.find('.question').text(`${data.question}`);
                 modal.find('form').attr('action', `${data.action}`);

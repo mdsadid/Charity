@@ -72,12 +72,12 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <button type="button" class="dropdown-item approveBtn" data-id="{{ $campaign->id }}">
+                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
                                                             <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <button type="button" class="dropdown-item cancelBtn" data-id="{{ $campaign->id }}">
+                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'reject']) }}">
                                                             <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject')
                                                         </button>
                                                     </li>
@@ -103,4 +103,6 @@
             </div>
         </div>
     </div>
+
+    <x-decisionModal />
 @endsection

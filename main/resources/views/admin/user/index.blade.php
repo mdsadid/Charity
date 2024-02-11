@@ -127,7 +127,7 @@
                 let infoHtml = ``;
 
                 if (kycData) {                    
-                    let fileDownloadUrl = '{{ route("admin.file.download",["filePath" => "verify"]) }}';
+                    let fileDownloadUrl = '{{ route("admin.file.download", ["filePath" => "verify"]) }}';
                     infoHtml           += `<div class="mt-3">
                                                 <ul class="list-group">`;
     

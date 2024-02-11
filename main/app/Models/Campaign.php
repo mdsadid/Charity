@@ -38,10 +38,26 @@ class Campaign extends Model
     }
 
     /**
+     * Scope a query to only include pending campaigns.
+     */
+    public function scopePending($query)
+    {
+        $query->where('status', ManageStatus::CAMPAIGN_PENDING);
+    }
+
+    /**
      * Scope a query to only include approved campaigns.
      */
     public function scopeApprove($query)
     {
         $query->where('status', ManageStatus::CAMPAIGN_APPROVED);
+    }
+
+    /**
+     * Scope a query to only include rejected campaigns.
+     */
+    public function scopeReject($query)
+    {
+        $query->where('status', ManageStatus::CAMPAIGN_REJECTED);
     }
 }
