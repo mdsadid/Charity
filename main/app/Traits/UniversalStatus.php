@@ -39,7 +39,7 @@ trait UniversalStatus
         });
     }
 
-    //Scope
+    // Scope
     public function scopeActive($query) {
         return $query->where('status', ManageStatus::ACTIVE);
     }

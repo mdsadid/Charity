@@ -64,6 +64,25 @@ class Campaign extends Model
     }
 
     /**
+     * Scope a query to only include featured campaigns.
+     */
+    public function scopeFeatured($query)
+    {
+        $query->where('featured', 1);
+    }
+
+    /**
+     * Scope a query to only include active campaigns.
+     */
+    public function scopeActive($query)
+    {
+        $query->whereHas('category', function ($innerQuery) {
+            $innerQuery->active();
+        })
+        ->whereDate('end_date', '>', now()->toDateString());
+    }
+
+    /**
      * Get the campaign's status.
      */
     protected function campaignStatusBadge(): Attribute

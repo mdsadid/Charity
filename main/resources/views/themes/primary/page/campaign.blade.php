@@ -79,7 +79,9 @@
                     <div class="row g-4">
                         @forelse ($campaigns as $campaign)
                             <div class="col-lg-6" data-aos="fade-up" data-aos-duration="1500">
-                                @include($activeTheme . 'partials.basicCampaign')
+                                <div class="campaign-card">
+                                    @include($activeTheme . 'partials.basicCampaign')
+                                </div>
                             </div>
                         @empty
                             <div class="col-12" data-aos="fade-up" data-aos-duration="1500">

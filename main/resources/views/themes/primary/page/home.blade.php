@@ -80,69 +80,17 @@
                 </div>
             </div>
             <div class="row g-4 justify-content-center">
-                <div class="col-xl-4 col-lg-5 col-md-6">
-                    <div class="campaign-card" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="campaign-card__img">
-                            <a href="donation-details.html"><img src="assets/images/thumbs/campaign-1.jpg" alt="image"></a>
-                        </div>
-                        <div class="campaign-card__txt">
-                            <h3 class="campaign-card__title"><a href="donation-details.html">The Entrepreneur Ship - Atlantic rowing challenge</a></h3>
-                            <div class="campaign__countdown" data-target-date="2023-12-31T23:59:59"></div>
-                            <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                            </div>
-                            <div class="campaign-card__bottom">
-                                <ul class="campaign-card__list">
-                                    <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                    <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                </ul>
-                                <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                            </div>
+                @forelse ($featuredCampaigns as $campaign)
+                    <div class="col-xl-4 col-lg-5 col-md-6">
+                        <div class="campaign-card" data-aos="fade-up" data-aos-duration="1500">
+                            @include($activeTheme . 'partials.basicCampaign')
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-4 col-lg-5 col-md-6">
-                    <div class="campaign-card" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="campaign-card__img">
-                            <a href="donation-details.html"><img src="assets/images/thumbs/campaign-3.jpg" alt="image"></a>
-                        </div>
-                        <div class="campaign-card__txt">
-                            <h3 class="campaign-card__title"><a href="donation-details.html">Turn 30% of our ocean into no take zones by 2030</a></h3>
-                            <div class="campaign__countdown" data-target-date="2024-01-30T23:59:59"></div>
-                            <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                            </div>
-                            <div class="campaign-card__bottom">
-                                <ul class="campaign-card__list">
-                                    <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                    <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                </ul>
-                                <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                            </div>
-                        </div>
+                @empty
+                    <div class="col-12">
+                        <p class="text-center" data-aos="fade-up" data-aos-duration="1500">{{ __($emptyMessage) }}</p>
                     </div>
-                </div>
-                <div class="col-xl-4 col-lg-5 col-md-6">
-                    <div class="campaign-card" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="campaign-card__img">
-                            <a href="donation-details.html"><img src="assets/images/thumbs/campaign-5.jpg" alt="image"></a>
-                        </div>
-                        <div class="campaign-card__txt">
-                            <h3 class="campaign-card__title"><a href="donation-details.html">The Menopause Charity Crowdfund</a></h3>
-                            <div class="campaign__countdown" data-target-date="2024-03-30T23:59:59"></div>
-                            <div class="progress custom--progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 25%"><span class="progress-txt">25%</span></div>
-                            </div>
-                            <div class="campaign-card__bottom">
-                                <ul class="campaign-card__list">
-                                    <li><span><i class="fa-solid fa-hand-holding-dollar"></i> Goal:</span> $500.00</li>
-                                    <li><span><i class="fa-solid fa-sack-dollar"></i> Raised:</span> $500.00</li>
-                                </ul>
-                                <a href="donation-details.html" class="btn btn--sm btn--base">Make A Donation</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -183,11 +131,17 @@
                 </div>
             </div>
             <div class="new-campaign__slider" data-aos="fade-up" data-aos-duration="1500">
-                @foreach ($recentCampaigns as $campaign)
+                @forelse ($recentCampaigns as $campaign)
                     <div class="new-campaign__slide">
-                        @include($activeTheme . 'partials.basicCampaign')
+                        <div class="campaign-card">
+                            @include($activeTheme . 'partials.basicCampaign')
+                        </div>
                     </div>
-                @endforeach
+                @empty
+                    {{-- <div class="col-12">
+                    </div> --}}
+                    <p class="text-center">{{ __($emptyMessage) }}</p>
+                @endforelse
             </div>
         </div>
     </div>
@@ -627,6 +581,19 @@
             -webkit-mask-image: url("{{ asset($activeThemeTrue . 'images/mask-shape-1.png') }}");
             background: url("{{ asset($activeThemeTrue . 'images/mask-shape-1.png') }}");
             mask-image: url("{{ asset($activeThemeTrue . 'images/mask-shape-1.png') }}");
+        }
+
+        .donor::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{{ asset($activeThemeTrue . 'images/section-bg-1.png') }}") center center no-repeat;
+            background-size: cover;
+            opacity: 0.65;
+            z-index: -1;
         }
 
         .counter-section__card {

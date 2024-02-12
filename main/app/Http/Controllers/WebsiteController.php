@@ -17,15 +17,16 @@ class WebsiteController extends Controller
         $bannerElements          = getSiteData('banner.element', false, null, true);
         $aboutUsContent          = getSiteData('about.content', true);
         $featuredCampaignContent = getSiteData('featured_campaign.content', true);
+        $featuredCampaigns       = Campaign::active()->approve()->featured()->latest()->get();
         $campaignCategoryContent = getSiteData('campaign_category.content', true);
         $campaignCategories      = Category::active()->get();
         $recentCampaignContent   = getSiteData('recent_campaign.content', true);
-        $recentCampaigns         = Campaign::approve()->latest()->limit(10)->get();
+        $recentCampaigns         = Campaign::active()->approve()->latest()->limit(10)->get();
         $volunteerContent        = getSiteData('volunteer.content', true);
         $volunteerElements       = getSiteData('volunteer.element', false, null, true);
         $counterElements         = getSiteData('counter.element', false, null, true);
 
-        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns'));
+        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns'));
     }
 
     function aboutUs() {
@@ -47,24 +48,14 @@ class WebsiteController extends Controller
 
     function campaigns() {
         $pageTitle = 'Campaigns';
-        $campaigns = Campaign::whereHas('category', function ($query) {
-            $query->active();
-        })
-            ->approve()
-            ->latest()
-            ->paginate(getPaginate(10));
+        $campaigns = Campaign::active()->approve()->latest()->paginate(getPaginate(10));
 
         return view($this->activeTheme . 'page.campaign', compact('pageTitle', 'campaigns'));
     }
 
     function campaignShow($slug) {
         $pageTitle        = 'Campaign Details';
-        $campaign         = Campaign::where('slug', $slug)->whereHas('category', function ($query) {
-            $query->active();
-        })
-            ->approve()
-            ->firstOrFail();
-
+        $campaign         = Campaign::where('slug', $slug)->active()->approve()->firstOrFail();
         $relatedCampaigns = Campaign::where('category_id', $campaign->category_id)
             ->whereNot('slug', $campaign->slug)
             ->approve()
