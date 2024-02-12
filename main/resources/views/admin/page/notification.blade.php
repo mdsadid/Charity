@@ -67,7 +67,7 @@
 @if (count($notifications))
     @push('breadcrumb')
         <a href="{{ route('admin.system.notification.read.all') }}" class="btn btn-label-primary">
-            <span class="tf-icons las la-check-double me-1"></span> @lang('Mark as all read')
+            <span class="tf-icons las la-check-double me-1"></span> @lang('Mark all as read')
         </a>
 
         <button type="submit" class="btn btn-label-danger decisionBtn" data-question="@lang('Are you confirming the removal all notifications?')" data-action="{{ route('admin.system.notification.remove.all') }}">

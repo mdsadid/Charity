@@ -55,9 +55,9 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-bullhorn text-cyan"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Campaigns')</div>
-                {{-- @if ($bannedUsersCount > 0 || $emailUnconfirmedUsersCount > 0 || $mobileUnconfirmedUsersCount > 0 || $kycUnconfirmedUsersCount > 0 || $kycPendingUsersCount > 0)
+                @if ($pendingCampaignCount)
                     <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
-                @endif --}}
+                @endif
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ navigationActive('admin.campaigns.index', 1) }}">
@@ -68,6 +68,9 @@
                 <li class="menu-item {{ navigationActive('admin.campaigns.pending', 1) }}">
                     <a href="{{ route('admin.campaigns.pending') }}" class="menu-link">
                         <div class="text-truncate">@lang('Pending')</div>
+                        @if ($pendingCampaignCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $pendingCampaignCount }}</div>
+                        @endif
                     </a>
                 </li>
                 <li class="menu-item {{ navigationActive('admin.campaigns.approved', 1) }}">

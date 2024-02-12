@@ -127,5 +127,5 @@
 @endsection
 
 @push('breadcrumb')
-    <x-searchForm placeholder="Campaign Name" dateSearch="yes" />
+    <x-searchForm placeholder="Campaign Name" />
 @endpush

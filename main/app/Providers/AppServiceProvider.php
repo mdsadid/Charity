@@ -2,15 +2,17 @@
 
 namespace App\Providers;
 
-use App\Constants\ManageStatus;
-use App\Models\AdminNotification;
+use App\Models\User;
 use App\Models\Contact;
 use App\Models\Deposit;
+use App\Models\Campaign;
 use App\Models\SiteData;
-use App\Models\User;
 use App\Models\Withdrawal;
-use Illuminate\Support\ServiceProvider;
+use App\Constants\ManageStatus;
+use App\Models\AdminNotification;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,7 +55,8 @@ class AppServiceProvider extends ServiceProvider
                 'kycPendingUsersCount'        => User::kycPending()->count(),
                 'pendingDepositsCount'        => Deposit::pending()->count(),
                 'pendingWithdrawCount'        => Withdrawal::pending()->count(),
-                'unansweredContactsCount'     => Contact::where('status', ManageStatus::NO)->count()
+                'unansweredContactsCount'     => Contact::where('status', ManageStatus::NO)->count(),
+                'pendingCampaignCount'        => Campaign::pending()->count(),
             ]);
         });
 
@@ -65,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         if ($setting->enforce_ssl) {
-            \URL::forceScheme('https');
+            URL::forceScheme('https');
         }
 
         Paginator::useBootstrapFour();
