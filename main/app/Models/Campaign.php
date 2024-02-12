@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use App\Constants\ManageStatus;
 use App\Traits\Searchable;
+use App\Constants\ManageStatus;
 use App\Traits\UniversalStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Campaign extends Model
 {
@@ -18,8 +19,8 @@ class Campaign extends Model
      */
     protected $casts = [
         'gallery'    => 'array',
-        'start_date' => 'date',
-        'end_date'   => 'date',
+        'start_date' => 'datetime:Y-m-d',
+        'end_date'   => 'datetime:Y-m-d',
     ];
 
     /**
@@ -60,5 +61,25 @@ class Campaign extends Model
     public function scopeReject($query)
     {
         $query->where('status', ManageStatus::CAMPAIGN_REJECTED);
+    }
+
+    /**
+     * Get the campaign's status.
+     */
+    protected function campaignStatusBadge(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
+                    $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
+                } else if ($this->status == ManageStatus::CAMPAIGN_APPROVED) {
+                    $html = '<span class="badge bg-label-success">' . trans('Approved') . '</span>';
+                } else {
+                    $html = '<span class="badge bg-label-danger">' . trans('Rejected') . '</span>';
+                }
+
+                return $html;
+            },
+        );
     }
 }

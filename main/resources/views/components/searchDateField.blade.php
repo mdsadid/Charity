@@ -4,7 +4,7 @@
 </div>
 
 @push('page-style-lib')
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/datepicker.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/datepicker.css') }}">
 @endpush
 
 @push('page-script-lib')
@@ -14,17 +14,16 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('.datepicker-here').on('input keyup keydown keypress', function () {
+            $('.datepicker-here').on('input keyup keydown keypress', function() {
                 return false;
             });
-            
-            if(!$('.datepicker-here').val()){
+
+            if (!$('.datepicker-here').val()) {
                 $('.datepicker-here').datepicker();
             }
         })(jQuery);
     </script>
 @endpush
-

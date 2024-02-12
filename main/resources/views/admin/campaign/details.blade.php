@@ -12,9 +12,49 @@
                             </div>
                             <div class="card-body">
                                 <h4 class="mb-2 lh-lg">{{ __($campaign->name) }}</h4>
+
+                                @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
+                                    <hr class="mb-2 mt-4">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-label-success w-100 decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
+                                                    <span class="tf-icons las la-check-circle fs-6 me-1"></span>@lang('Approve Campaign')
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-label-danger w-100 decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'reject']) }}">
+                                                    <span class="tf-icons lar la-times-circle fs-6 me-1"></span>@lang('Reject Campaign')
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @if ($campaign->status == ManageStatus::CAMPAIGN_APPROVED)
+                                    <hr class="mb-2 mt-4">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="demo-inline-spacing">
+                                                @if ($campaign->featured)
+                                                    <button type="button" class="btn btn-label-danger w-100 decisionBtn" data-question="@lang('Do you want to unfeatured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                        <span class="tf-icons lar la-times-circle fs-6 me-1"></span>@lang('Remove Featured')
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-label-success w-100 decisionBtn" data-question="@lang('Do you want to featured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                        <span class="tf-icons las la-check-circle fs-6 me-1"></span>@lang('Make Featured')
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <hr class="my-4">
-                                <div class="d-flex flex-wrap">
-                                    <div class="me-5">
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <p class="text-nowrap">
                                             <i class="las la-stream me-2"></i><span class="fw-bold">@lang('Category'):</span> {{ __($campaign->category->name) }}
                                         </p>
@@ -24,37 +64,13 @@
                                         <p class="text-nowrap">
                                             <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('End Date'):</span> {{ showDateTime($campaign->end_date, 'd-M-Y h:i A') }}
                                         </p>
-
-                                        @php
-                                            if ($campaign->status == ManageStatus::CAMPAIGN_PENDING) {
-                                                $badgeClass = 'bg-label-warning';
-                                                $status = 'Pending';
-                                            } elseif ($campaign->status == ManageStatus::CAMPAIGN_APPROVED) {
-                                                $badgeClass = 'bg-label-success';
-                                                $status = 'Approved';
-                                            } elseif ($campaign->status == ManageStatus::CAMPAIGN_REJECTED) {
-                                                $badgeClass = 'bg-label-danger';
-                                                $status = 'Rejected';
-                                            }
-                                        @endphp
-
                                         <p class="text-nowrap">
-                                            <i class="las la-clipboard-check me-2"></i><span class="fw-bold">@lang('Status'):</span> <span class="badge {{ $badgeClass }}">@lang($status)</span>
+                                            <i class="las la-clipboard-check me-2"></i><span class="fw-bold">@lang('Status'):</span> @php echo $campaign->campaignStatusBadge @endphp
                                         </p>
                                     </div>
-                                    <div>
-                                        @php
-                                            if ($campaign->is_featured) {
-                                                $featuredBadgeClass = 'bg-label-success';
-                                                $featuredStatus = 'Featured';
-                                            } else {
-                                                $featuredBadgeClass = 'bg-label-danger';
-                                                $featuredStatus = 'Not Featured';
-                                            }
-                                        @endphp
-
+                                    <div class="col-md-6">
                                         <p class="text-nowrap">
-                                            <i class="las la-tag me-2"></i><span class="fw-bold">@lang('Featured Status'):</span> <span class="badge {{ $featuredBadgeClass }}">@lang($featuredStatus)</span>
+                                            <i class="las la-tag me-2"></i><span class="fw-bold">@lang('Featured Status'):</span> <span class="badge {{ $campaign->featured ? 'bg-label-success' : 'bg-label-danger' }}">{{ $campaign->featured ? trans('Featured') : trans('Not Featured') }}</span>
                                         </p>
                                         <p class="text-nowrap">
                                             <i class="las la-hand-holding-usd me-2"></i><span class="fw-bold">@lang('Goal Amount'):</span> {{ $setting->cur_sym . showAmount($campaign->goal_amount) }}
@@ -306,6 +322,8 @@
             </div>
         </div>
     </div>
+
+    <x-decisionModal />
 @endsection
 
 @push('breadcrumb')

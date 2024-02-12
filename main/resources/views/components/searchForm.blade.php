@@ -11,6 +11,7 @@
             <x-searchKeyField placeholder="{{ $placeholder }}" />
         </div>
     @endif
+
     @if ($dateSearch == 'yes')
         <div class="d-inline">
             <x-searchDateField />

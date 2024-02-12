@@ -15,6 +15,7 @@
                                 <th>@lang('Start Date')</th>
                                 <th>@lang('End Date')</th>
                                 <th>@lang('Status')</th>
+                                <th>@lang('Featured')</th>
                                 <th>@lang('Action')</th>
                             </tr>
                         </thead>
@@ -22,7 +23,7 @@
                             @forelse ($campaigns as $campaign)
                                 <tr>
                                     <td>
-                                        {{ __(strLimit($campaign->name, 30)) }}
+                                        {{ __(strLimit($campaign->name, 20)) }}
                                     </td>
                                     <td>
                                         {{ __($campaign->category->name) }}
@@ -43,21 +44,22 @@
                                     </td>
                                     <td>
                                         <div>
-                                            {{ showDateTime($campaign->start_date, 'd-M-Y h:i A') }}<br>{{ diffForHumans($campaign->start_date) }}
+                                            {{ showDateTime($campaign->start_date, 'd-M-Y h:i A') }}
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            {{ showDateTime($campaign->end_date, 'd-M-Y h:i A') }}<br>{{ diffForHumans($campaign->end_date) }}
+                                            {{ showDateTime($campaign->end_date, 'd-M-Y h:i A') }}
                                         </div>
                                     </td>
                                     <td>
-                                        @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
-                                            <span class="badge bg-label-warning">@lang('Pending')</span>
-                                        @elseif ($campaign->status == ManageStatus::CAMPAIGN_APPROVED)
-                                            <span class="badge bg-label-success">@lang('Approved')</span>
-                                        @elseif ($campaign->status == ManageStatus::CAMPAIGN_REJECTED)
-                                            <span class="badge bg-label-danger">@lang('Rejected')</span>
+                                        @php echo $campaign->campaignStatusBadge @endphp
+                                    </td>
+                                    <td>
+                                        @if ($campaign->featured)
+                                            <span class="badge bg-label-success">@lang('Yes')</span>
+                                        @else
+                                            <span class="badge bg-label-danger">@lang('No')</span>
                                         @endif
                                     </td>
                                     <td>
@@ -65,40 +67,42 @@
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </a>
 
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                @lang('Action')
-                                            </button>
+                                        @if ($campaign->status != ManageStatus::CAMPAIGN_REJECTED)
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    @lang('Action')
+                                                </button>
 
-                                            @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
-                                                            <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'reject']) }}">
-                                                            <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject')
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            @elseif ($campaign->status == ManageStatus::CAMPAIGN_APPROVED)
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        @if ($campaign->featured)
-                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to unfeatured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
-                                                                <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Remove Featured')
+                                                @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
+                                                                <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve Campaign')
                                                             </button>
-                                                        @else
-                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to featured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
-                                                                <i class="las la-check-circle fs-6 link-success"></i> @lang('Make Featured')
+                                                        </li>
+                                                        <li>
+                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'reject']) }}">
+                                                                <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject Campaign')
                                                             </button>
-                                                        @endif
-                                                    </li>
-                                                </ul>
-                                            @endif
-                                        </div>
+                                                        </li>
+                                                    </ul>
+                                                @elseif ($campaign->status == ManageStatus::CAMPAIGN_APPROVED)
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            @if ($campaign->featured)
+                                                                <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to unfeatured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                                    <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Remove Featured')
+                                                                </button>
+                                                            @else
+                                                                <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to featured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                                    <i class="las la-check-circle fs-6 link-success"></i> @lang('Make Featured')
+                                                                </button>
+                                                            @endif
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                            </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -121,3 +125,7 @@
 
     <x-decisionModal />
 @endsection
+
+@push('breadcrumb')
+    <x-searchForm placeholder="Campaign Name" dateSearch="yes" />
+@endpush
