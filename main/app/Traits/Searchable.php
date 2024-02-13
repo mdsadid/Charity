@@ -7,7 +7,6 @@ use Illuminate\Validation\ValidationException;
 
 trait Searchable
 {
-
     /*
     |--------------------------------------------------------------------------
     | Search Data

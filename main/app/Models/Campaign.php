@@ -68,7 +68,7 @@ class Campaign extends Model
      */
     public function scopeFeatured($query)
     {
-        $query->where('featured', 1);
+        $query->where('featured', ManageStatus::YES);
     }
 
     /**

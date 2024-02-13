@@ -76,12 +76,12 @@
                                                 @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
                                                     <ul class="dropdown-menu">
                                                         <li>
-                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
+                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', [$campaign->id, 'approve']) }}">
                                                                 <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve Campaign')
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'reject']) }}">
+                                                            <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', [$campaign->id, 'reject']) }}">
                                                                 <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject Campaign')
                                                             </button>
                                                         </li>

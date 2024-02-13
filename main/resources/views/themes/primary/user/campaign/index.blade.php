@@ -6,16 +6,18 @@
             <div class="card custom--card">
                 <div class="card-body">
                     <div class="d-flex justify-content-end mb-3">
-                        <form class="input--group">
-                            <input type="text" class="form--control" placeholder="Search by title">
-                            <button class="btn btn--sm btn--base"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <form action="" class="input--group">
+                            <input type="text" class="form--control" name="search" placeholder="@lang('Search by name')">
+                            <button type="submit" class="btn btn--sm btn--base">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
                         </form>
                     </div>
                     <table class="table table-striped table-borderless table--responsive--xl">
                         <thead>
                             <tr>
                                 <th>@lang('S.N.')</th>
-                                <th>@lang('Title')</th>
+                                <th>@lang('Name')</th>
                                 <th>@lang('Goal Amount')</th>
                                 <th>@lang('Fund Raised')</th>
                                 <th>@lang('Deadline')</th>

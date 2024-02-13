@@ -138,8 +138,6 @@
                         </div>
                     </div>
                 @empty
-                    {{-- <div class="col-12">
-                    </div> --}}
                     <p class="text-center">{{ __($emptyMessage) }}</p>
                 @endforelse
             </div>
