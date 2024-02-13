@@ -67,7 +67,7 @@
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </a>
 
-                                        @if ($campaign->status != ManageStatus::CAMPAIGN_REJECTED)
+                                        @if ($campaign->status != ManageStatus::CAMPAIGN_REJECTED && !$campaign->isExpired())
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                     @lang('Action')

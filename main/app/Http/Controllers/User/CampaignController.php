@@ -17,15 +17,42 @@ class CampaignController extends Controller
 {
     function index() {
         $pageTitle = 'All Campaigns';
-        $campaigns = Campaign::whereHas('category', function ($query) {
-            $query->active();
-        })
-            ->where('user_id', auth()->id())
-            ->searchable(['name'])
-            ->latest()
-            ->paginate(getPaginate());
+        $campaigns = $this->campaignData();
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
+    }
+
+    function approved() {
+        $pageTitle = 'Approved Campaigns';
+        $campaigns = $this->campaignData('approve');
+
+        return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
+    }
+
+    function pending() {
+        $pageTitle = 'Pending Campaigns';
+        $campaigns = $this->campaignData('pending');
+
+        return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
+    }
+
+    function rejected() {
+        $pageTitle = 'Rejected Campaigns';
+        $campaigns = $this->campaignData('reject');
+
+        return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
+    }
+
+    protected function campaignData($scope = null) {
+        if ($scope) {
+            $campaigns = Campaign::$scope()->active();
+        } else {
+            $campaigns = Campaign::query()->whereHas('category', function ($query) {
+                $query->active();
+            });
+        }
+
+        return $campaigns->where('user_id', auth()->id())->searchable(['name'])->latest()->paginate(getPaginate());
     }
 
     function new() {

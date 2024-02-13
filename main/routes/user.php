@@ -48,6 +48,9 @@ Route::middleware('auth')->name('user.')->group(function () {
             // Campaign
             Route::controller('CampaignController')->prefix('campaign')->name('campaign.')->group(function () {
                 Route::get('index', 'index')->name('index');
+                Route::get('approved', 'approved')->name('approved');
+                Route::get('pending', 'pending')->name('pending');
+                Route::get('rejected', 'rejected')->name('rejected');
                 Route::get('new', 'new')->name('create');
                 Route::post('store', 'store')->name('store');
                 Route::get('edit/{slug}', 'edit')->name('edit');

@@ -42,12 +42,16 @@
                                         </span>
                                     </td>
                                     <td>
-                                        @if (@$campaign->status == ManageStatus::CAMPAIGN_PENDING)
-                                            <span class="badge badge--warning">@lang('Pending')</span>
-                                        @elseif (@$campaign->status == ManageStatus::CAMPAIGN_REJECTED)
-                                            <span class="badge badge--danger">@lang('Rejected')</span>
+                                        @if (@$campaign->isExpired())
+                                            <span class="badge badge--secondary">@lang('Expired')</span>
                                         @else
-                                            <span class="badge badge--success">@lang('Approved')</span>
+                                            @if (@$campaign->status == ManageStatus::CAMPAIGN_PENDING)
+                                                <span class="badge badge--warning">@lang('Pending')</span>
+                                            @elseif (@$campaign->status == ManageStatus::CAMPAIGN_REJECTED)
+                                                <span class="badge badge--danger">@lang('Rejected')</span>
+                                            @else
+                                                <span class="badge badge--success">@lang('Approved')</span>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>
@@ -62,7 +66,7 @@
                                                     </a>
                                                 </li>
 
-                                                @if (@$campaign->status == ManageStatus::CAMPAIGN_APPROVED)
+                                                @if (@$campaign->status == ManageStatus::CAMPAIGN_APPROVED && !@$campaign->isExpired())
                                                     <li>
                                                         <a href="{{ route('user.campaign.edit', $campaign->slug) }}" class="dropdown-item">
                                                             <i class="fa-regular fa-pen-to-square text--success"></i> @lang('Edit Image')
@@ -78,30 +82,6 @@
                                     <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
                                 </tr>
                             @endforelse
-
-                            {{-- <tr>
-                                <td data-label="S.N">04</td>
-                                <td data-label="Title"><span class="text-overflow-1 text--base">Education for Every Child: Donate to Break the Cycle of Poverty</span></td>
-                                <td data-label="Goal">$8,500.00</td>
-                                <td data-label="Fund Raised">$12,500.00</td>
-                                <td data-label="Deadline">
-                                    <span>
-                                        <span class="d-block">2023-01-30</span>
-                                    </span>
-                                </td>
-                                <td data-label="Status"><span class="badge badge--secondary">Expired</span></td>
-                                <td data-label="Action">
-                                    <div class="custom--dropdown dropdown-sm">
-                                        <button class="btn btn--sm btn-outline--base dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Action
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square text--info"></i> Edit</a></li>
-                                            <li><a class="dropdown-item" href="donation-details.html"><i class="fa-regular fa-eye text--danger"></i> Details</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr> --}}
                         </tbody>
                     </table>
 

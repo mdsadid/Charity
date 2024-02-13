@@ -89,16 +89,30 @@ class Campaign extends Model
     {
         return Attribute::make(
             get: function () {
-                if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
-                    $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
-                } else if ($this->status == ManageStatus::CAMPAIGN_APPROVED) {
-                    $html = '<span class="badge bg-label-success">' . trans('Approved') . '</span>';
+                if ($this->isExpired()) {
+                    $html = '<span class="badge bg-label-secondary">' . trans('Expired') . '</span>';
                 } else {
-                    $html = '<span class="badge bg-label-danger">' . trans('Rejected') . '</span>';
+                    if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
+                        $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
+                    } else if ($this->status == ManageStatus::CAMPAIGN_APPROVED) {
+                        $html = '<span class="badge bg-label-success">' . trans('Approved') . '</span>';
+                    } else {
+                        $html = '<span class="badge bg-label-danger">' . trans('Rejected') . '</span>';
+                    }
                 }
 
                 return $html;
             },
         );
+    }
+
+    /**
+     * Check if the campaign is expired. (custom method)
+     *
+     * @return bool
+     */
+    public function isExpired(): bool
+    {
+        return $this->end_date->isPast();
     }
 }

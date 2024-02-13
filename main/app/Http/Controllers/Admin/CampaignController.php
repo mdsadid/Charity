@@ -38,7 +38,7 @@ class CampaignController extends Controller
 
     protected function campaignData($scope = null) {
         if ($scope) {
-            $campaigns = Campaign::$scope();
+            $campaigns = Campaign::$scope()->whereDate('end_date', '>', now()->toDateString());
         } else {
             $campaigns = Campaign::query();
         }

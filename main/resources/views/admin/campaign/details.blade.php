@@ -13,43 +13,45 @@
                             <div class="card-body">
                                 <h4 class="mb-2 lh-lg">{{ __($campaign->name) }}</h4>
 
-                                @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
-                                    <hr class="mb-2 mt-4">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="demo-inline-spacing">
-                                                <button type="button" class="btn btn-label-success w-100 decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
-                                                    <span class="tf-icons las la-check-circle fs-6 me-1"></span>@lang('Approve Campaign')
-                                                </button>
+                                @if (!$campaign->isExpired())
+                                    @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
+                                        <hr class="mb-2 mt-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="demo-inline-spacing">
+                                                    <button type="button" class="btn btn-label-success w-100 decisionBtn" data-question="@lang('Do you want to approve this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'approve']) }}">
+                                                        <span class="tf-icons las la-check-circle fs-6 me-1"></span>@lang('Approve Campaign')
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="demo-inline-spacing">
+                                                    <button type="button" class="btn btn-label-danger w-100 decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'reject']) }}">
+                                                        <span class="tf-icons lar la-times-circle fs-6 me-1"></span>@lang('Reject Campaign')
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="demo-inline-spacing">
-                                                <button type="button" class="btn btn-label-danger w-100 decisionBtn" data-question="@lang('Do you want to reject this campaign?')" data-action="{{ route('admin.campaigns.status.update', ['id' => $campaign->id, 'type' => 'reject']) }}">
-                                                    <span class="tf-icons lar la-times-circle fs-6 me-1"></span>@lang('Reject Campaign')
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
+                                    @endif
 
-                                @if ($campaign->status == ManageStatus::CAMPAIGN_APPROVED)
-                                    <hr class="mb-2 mt-4">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="demo-inline-spacing">
-                                                @if ($campaign->featured)
-                                                    <button type="button" class="btn btn-label-danger w-100 decisionBtn" data-question="@lang('Do you want to unfeatured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
-                                                        <span class="tf-icons lar la-times-circle fs-6 me-1"></span>@lang('Remove Featured')
-                                                    </button>
-                                                @else
-                                                    <button type="button" class="btn btn-label-success w-100 decisionBtn" data-question="@lang('Do you want to featured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
-                                                        <span class="tf-icons las la-check-circle fs-6 me-1"></span>@lang('Make Featured')
-                                                    </button>
-                                                @endif
+                                    @if ($campaign->status == ManageStatus::CAMPAIGN_APPROVED)
+                                        <hr class="mb-2 mt-4">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="demo-inline-spacing">
+                                                    @if ($campaign->featured)
+                                                        <button type="button" class="btn btn-label-danger w-100 decisionBtn" data-question="@lang('Do you want to unfeatured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                            <span class="tf-icons lar la-times-circle fs-6 me-1"></span>@lang('Remove Featured')
+                                                        </button>
+                                                    @else
+                                                        <button type="button" class="btn btn-label-success w-100 decisionBtn" data-question="@lang('Do you want to featured this campaign?')" data-action="{{ route('admin.campaigns.featured.update', $campaign->id) }}">
+                                                            <span class="tf-icons las la-check-circle fs-6 me-1"></span>@lang('Make Featured')
+                                                        </button>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endif
 
                                 <hr class="my-4">

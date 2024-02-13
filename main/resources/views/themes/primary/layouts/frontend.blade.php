@@ -72,10 +72,15 @@
                                         <li class="dropdown-menu__list">
                                             <a href="{{ route('user.campaign.index') }}" class="dropdown-menu__link">@lang('All Campaigns')</a>
                                         </li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="approved-campaign.html">Approved Campaigns</a></li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="pending-campaign.html">Pending Campaigns</a></li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="rejected-campaign.html">Rejected Campaigns</a></li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="successful-campaign.html">Successful Campaigns</a></li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.campaign.approved') }}" class="dropdown-menu__link">@lang('Approved Campaigns')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.campaign.pending') }}" class="dropdown-menu__link">@lang('Pending Campaigns')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.campaign.rejected') }}" class="dropdown-menu__link">@lang('Rejected Campaigns')</a>
+                                        </li>
                                     </ul>
                                 </li>
 
