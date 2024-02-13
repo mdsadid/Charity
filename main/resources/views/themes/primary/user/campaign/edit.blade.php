@@ -82,6 +82,10 @@
             cursor: pointer;
         }
 
+        .swal2-confirm, .swal2-cancel {
+            padding: 5px 15px;
+        }
+
         .swal2-confirm {
             margin-right: 13px;
         }
@@ -154,8 +158,6 @@
                     text: "This will delete the gallery image permanently!",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
