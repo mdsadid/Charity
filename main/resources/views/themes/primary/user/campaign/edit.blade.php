@@ -81,6 +81,10 @@
             padding: 0px 8px;
             cursor: pointer;
         }
+
+        .swal2-confirm {
+            margin-right: 13px;
+        }
     </style>
 @endpush
 
@@ -127,6 +131,14 @@
                 }
             })
 
+            const swalWithCustomButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn--base",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            })
+
             $('.remove-button').on('click', function() {
                 let image = $(this).data('image')
                 let url   = $(this).data('action')
@@ -137,7 +149,7 @@
 
                 let _this = $(this)
 
-                Swal.fire({
+                swalWithCustomButtons.fire({
                     title: "Are you sure?",
                     text: "This will delete the gallery image permanently!",
                     icon: "warning",
@@ -146,14 +158,16 @@
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
-                    $.post(url, data, function(response) {
-                        if (response.status === 'success') {
-                            _this.parent().closest('.gallery-image').remove()
-                            showToasts('success', response.message)
-                        } else {
-                            showToasts('error', response.message)
-                        }
-                    })
+                    if (result.isConfirmed) {
+                        $.post(url, data, function(response) {
+                            if (response.status === 'success') {
+                                _this.parent().closest('.gallery-image').remove()
+                                showToasts('success', response.message)
+                            } else {
+                                showToasts('error', response.message)
+                            }
+                        })
+                    }
                 })
             })
         })(jQuery)
