@@ -52,7 +52,11 @@ class CampaignController extends Controller
             });
         }
 
-        return $campaigns->where('user_id', auth()->id())->searchable(['name'])->latest()->paginate(getPaginate());
+        return $campaigns->with('category')
+            ->where('user_id', auth()->id())
+            ->searchable(['name', 'category:name'])
+            ->latest()
+            ->paginate(getPaginate());
     }
 
     function new() {

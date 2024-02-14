@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-end mb-3">
                         <form action="" class="input--group">
-                            <input type="text" class="form--control" name="search" placeholder="@lang('Search by name')">
+                            <input type="text" class="form--control" name="search" value="{{ request('search') }}" placeholder="@lang('Search by campaign/category name')">
                             <button type="submit" class="btn btn--sm btn--base">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
@@ -18,10 +18,12 @@
                             <tr>
                                 <th>@lang('S.N.')</th>
                                 <th>@lang('Name')</th>
+                                <th>@lang('Category')</th>
                                 <th>@lang('Goal Amount')</th>
                                 <th>@lang('Fund Raised')</th>
                                 <th>@lang('Deadline')</th>
-                                <th>@lang('Status')</th>
+                                <th>@lang('Approval Status')</th>
+                                <th>@lang('Campaign Status')</th>
                                 <th>@lang('Action')</th>
                             </tr>
                         </thead>
@@ -29,11 +31,12 @@
                             @forelse ($campaigns as $campaign)
                                 <tr>
                                     <td>
-                                        {{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}
+                                        {{ $campaigns->firstItem() + $loop->index }}
                                     </td>
                                     <td>
                                         <span class="text-overflow-1 text--base">{{ __(@$campaign->name) }}</span>
                                     </td>
+                                    <td>{{ __(@$campaign->category->name) }}</td>
                                     <td>{{ $setting->cur_sym . showAmount(@$campaign->goal_amount) }}</td>
                                     <td>{{ $setting->cur_sym . showAmount(@$campaign->raised_amount) }}</td>
                                     <td>
@@ -42,16 +45,23 @@
                                         </span>
                                     </td>
                                     <td>
-                                        @if (@$campaign->isExpired())
+                                        @if (@$campaign->status == ManageStatus::CAMPAIGN_PENDING)
+                                            <span class="badge badge--warning">@lang('Pending')</span>
+                                        @elseif (@$campaign->status == ManageStatus::CAMPAIGN_REJECTED)
+                                            <span class="badge badge--danger">@lang('Rejected')</span>
+                                        @else
+                                            <span class="badge badge--success">@lang('Approved')</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (@$campaign->status == ManageStatus::CAMPAIGN_PENDING)
+                                            <span class="badge badge--warning">@lang('Pending')</span>
+                                        @elseif (@$campaign->status == ManageStatus::CAMPAIGN_REJECTED)
+                                            <span>-</span>
+                                        @elseif (@$campaign->isExpired())
                                             <span class="badge badge--secondary">@lang('Expired')</span>
                                         @else
-                                            @if (@$campaign->status == ManageStatus::CAMPAIGN_PENDING)
-                                                <span class="badge badge--warning">@lang('Pending')</span>
-                                            @elseif (@$campaign->status == ManageStatus::CAMPAIGN_REJECTED)
-                                                <span class="badge badge--danger">@lang('Rejected')</span>
-                                            @else
-                                                <span class="badge badge--success">@lang('Approved')</span>
-                                            @endif
+                                            <span class="badge badge--success">@lang('Running')</span>
                                         @endif
                                     </td>
                                     <td>

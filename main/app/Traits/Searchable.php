@@ -28,6 +28,7 @@ trait Searchable
         $query->where(function ($q) use ($params, $search) {
             foreach ($params as $key => $param) {
                 $relationData = explode(':', $param);
+                
                 if (@$relationData[1]) {
                     $q = $this->relationSearch($q, $relationData[0], $relationData[1], $search);
                 } else {

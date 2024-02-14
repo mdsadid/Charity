@@ -164,6 +164,11 @@
                         $.post(url, data, function(response) {
                             if (response.status === 'success') {
                                 _this.parent().closest('.gallery-image').remove()
+
+                                if ($('.gallery-image').length == 1) {
+                                    $('.gallery-image').find('.remove-button').remove()
+                                }
+
                                 showToasts('success', response.message)
                             } else {
                                 showToasts('error', response.message)

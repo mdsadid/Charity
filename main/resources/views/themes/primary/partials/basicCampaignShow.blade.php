@@ -7,7 +7,7 @@
             @lang('Description')
         </button>
         <button type="button" class="nav-link" id="nav-image-tab" data-bs-toggle="tab" data-bs-target="#nav-image" role="tab" aria-controls="nav-image" aria-selected="false">
-            @lang('Relevant Image')
+            @lang('Relevant Images')
         </button>
 
         @if (@$campaign->document)

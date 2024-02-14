@@ -111,6 +111,8 @@ class Campaign extends Model
             get: function () {
                 if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
                     $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
+                } else if ($this->status == ManageStatus::CAMPAIGN_REJECTED) {
+                    $html = '<span>-</span>';
                 } else if ($this->isExpired()) {
                     $html = '<span class="badge bg-label-secondary">' . trans('Expired') . '</span>';
                 } else {
