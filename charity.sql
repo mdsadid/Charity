@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 12, 2024 at 10:00 AM
+-- Generation Time: Feb 14, 2024 at 12:42 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -104,7 +104,11 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (36, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-07 07:10:04', '2024-02-12 06:57:02'),
 (37, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-12 06:48:40', '2024-02-12 06:57:02'),
 (38, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-12 06:50:32', '2024-02-12 06:57:02'),
-(39, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-12 06:52:51', '2024-02-12 06:56:53');
+(39, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-12 06:52:51', '2024-02-12 06:56:53'),
+(40, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-13 06:49:31', '2024-02-13 06:49:31'),
+(41, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-13 10:04:01', '2024-02-13 10:04:01'),
+(42, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-14 08:57:20', '2024-02-14 08:57:20'),
+(43, 13, 'New member registered', 0, '/admin/user/index', '2024-02-14 12:15:55', '2024-02-14 12:15:55');
 
 -- --------------------------------------------------------
 
@@ -140,12 +144,12 @@ CREATE TABLE `campaigns` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `category_id` bigint UNSIGNED NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gallery` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `document` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gallery` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `document` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `goal_amount` decimal(28,8) UNSIGNED NOT NULL,
   `raised_amount` decimal(28,8) UNSIGNED NOT NULL DEFAULT '0.00000000',
   `start_date` timestamp NOT NULL,
@@ -161,12 +165,7 @@ CREATE TABLE `campaigns` (
 --
 
 INSERT INTO `campaigns` (`id`, `user_id`, `category_id`, `image`, `gallery`, `name`, `slug`, `description`, `document`, `goal_amount`, `raised_amount`, `start_date`, `end_date`, `status`, `featured`, `created_at`, `updated_at`) VALUES
-(1, 12, 6, '65c84c0fd9acd1707625487.jpg', '[\"65c34880dd40f1707296896.jpg\",\"65c351aab74ee1707299242.jpg\",\"65c351aab90771707299242.jpg\"]', 'Education for Every Child: Donate to Break the Cycle of Poverty', 'education-for-every-child-donate-to-break-the-cycle-of-poverty', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', '65c224ed6b9f91707222253.pdf', 1000.00000000, 750.00000000, '2024-02-06 12:40:44', '2024-02-20 17:00:00', 1, 0, '2024-02-06 12:24:13', '2024-02-12 09:50:45'),
-(2, 12, 6, '65c84c3494ac61707625524.jpg', '[\"65c225268e5771707222310.jpg\",\"65c22527067091707222311.jpg\"]', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.', 'it-is-a-long-established-fact-that-a-reader-will-be-distracted-by-the-readable-content-of-a-page-when-looking-at-its-layout', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', NULL, 200.00000000, 0.00000000, '2024-02-06 12:41:33', '2024-02-22 17:00:00', 1, 1, '2024-02-06 12:26:43', '2024-02-12 05:25:27'),
-(3, 12, 3, '65c84c7c313301707625596.jpg', '[\"65c2259a714961707222426.jpg\",\"65c84c6ddfc121707625581.jpg\",\"65c84c6de243f1707625581.jpg\",\"65c84c6e6cd051707625582.jpg\",\"65c84c6e7365c1707625582.jpg\"]', 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.', 'the-standard-chunk-of-lorem-ipsum-used-since-the-1500s-is-reproduced-below-for-those-interested', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>', '65c225f8338051707222520.pdf', 95.00000000, 0.00000000, '2024-02-06 12:41:57', '2024-02-28 17:00:00', 0, 0, '2024-02-06 12:28:40', '2024-02-11 09:56:15'),
-(8, 12, 4, '65c9bf471135c1707720519.jpg', '[\"65c9bedc390bc1707720412.jpg\",\"65c9bedc3932c1707720412.jpg\",\"65c9bedcd68ea1707720412.jpg\"]', 'There are many variations of passages of Lorem Ipsum available', 'there-are-many-variations-of-passages-of-lorem-ipsum-available', '<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p><p> </p><p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, 350.00000000, 0.00000000, '2024-02-29 18:00:00', '2024-03-30 18:00:00', 1, 1, '2024-02-12 06:48:40', '2024-02-12 06:53:51'),
-(9, 12, 5, '65c9bfb8b98a01707720632.jpg', '[\"65c9bf5a1d1051707720538.jpg\",\"65c9bf5a1d7071707720538.jpg\",\"65c9bf5aa12431707720538.jpg\"]', 'Contrary to popular belief, Lorem Ipsum is not simply random text', 'contrary-to-popular-belief-lorem-ipsum-is-not-simply-random-text', '<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p><p> </p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', NULL, 400.00000000, 0.00000000, '2024-03-14 18:00:00', '2024-04-14 18:00:00', 1, 1, '2024-02-12 06:50:32', '2024-02-12 06:53:58'),
-(10, 12, 7, '65c9c04304a101707720771.jpg', '[\"65c9bfec1e32b1707720684.jpg\",\"65c9bfec2a4cc1707720684.jpg\",\"65c9bfec83e8f1707720684.jpg\"]', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry', 'lorem-ipsum-is-simply-dummy-text-of-the-printing-and-typesetting-industry', '<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>', NULL, 500.00000000, 0.00000000, '2024-03-20 18:00:00', '2024-04-29 18:00:00', 1, 0, '2024-02-12 06:52:51', '2024-02-12 06:53:31');
+(13, 12, 5, '65cc806f393671707901039.jpg', '[\"65cc7f93e33981707900819.jpg\",\"65cc7f93e6ef91707900819.jpg\"]', 'Education for Every Child: Donate to Break the Cycle of Poverty', 'education-for-every-child-donate-to-break-the-cycle-of-poverty', '<p>In a world filled with opportunities, education stands as the cornerstone of progress and empowerment. Yet, millions of children around the globe are denied this fundamental right, impeding not only their individual potential but also hindering the collective advancement of societies. It\'s time to recognize that education is not a privilege but a basic human right that should be accessible to every child, regardless of their background, ethnicity, or socio-economic status.</p><p> </p><p>At the heart of our campaign lies a profound belief in the transformative power of education. We envision a future where every child has equal access to quality education, where their talents are nurtured, their curiosity encouraged, and their dreams supported. Education is not just about imparting knowledge; it is about instilling values, fostering critical thinking, and equipping children with the skills they need to navigate an ever-changing world.</p><p> </p><p>Sadly, the reality today paints a starkly different picture. Across the globe, millions of children are out of school, trapped in a cycle of poverty, discrimination, and inequality. Many are forced into child labor, early marriage, or conflict, robbing them of their childhood and denying them the chance to fulfill their potential. This is not only a violation of their rights but also a colossal waste of human potential that undermines the fabric of our societies.</p><p> </p><p>Education is not a luxury reserved for the privileged few; it is a fundamental human right that should be accessible to all. It is the key to breaking the cycle of poverty, empowering individuals and communities, and driving sustainable development. When children are educated, they are more likely to lead healthy and productive lives, contribute meaningfully to society, and become agents of positive change in their communities.</p><p> </p><p>Our campaign seeks to address the barriers that prevent children from accessing education and advocate for policies and initiatives that prioritize education for every child. This includes addressing systemic issues such as poverty, gender inequality, discrimination, and conflict, which often serve as obstacles to education. It also involves investing in infrastructure, teacher training, and curriculum development to ensure that education is of high quality and relevance.</p><p> </p><p>But our campaign goes beyond mere advocacy; it is a call to action for governments, policymakers, civil society organizations, and individuals to prioritize education and invest in the future of our children. We must work together to ensure that no child is left behind, regardless of their circumstances. This requires political will, financial investment, and collective effort at all levels of society.</p><p> </p><p>Together, we can create a world where every child has the opportunity to learn, grow, and thrive. We can break the cycle of poverty and inequality and build a future where education is truly universal. Join us in our mission to ensure that every child has access to quality education – because when we invest in our children, we invest in the future of humanity. Education for every child is not just a noble aspiration; it is a moral imperative and the foundation upon which we can build a better world for all.</p>', '65cc80708a0aa1707901040.pdf', 500.00000000, 0.00000000, '2024-01-12 18:00:00', '2024-03-14 18:00:00', 1, 1, '2024-02-14 08:57:20', '2024-02-14 09:44:36');
 
 -- --------------------------------------------------------
 
@@ -176,8 +175,8 @@ INSERT INTO `campaigns` (`id`, `user_id`, `category_id`, `image`, `gallery`, `na
 
 CREATE TABLE `categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0 -> category is inactive, 1 -> category is active',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -192,9 +191,31 @@ INSERT INTO `categories` (`id`, `image`, `name`, `slug`, `status`, `created_at`,
 (2, '65c1c02a328661707196458.jpg', 'Treatment', 'treatment', 1, '2024-02-06 05:14:18', '2024-02-06 05:14:18'),
 (3, '65c1c04e96b741707196494.jpg', 'Medical', 'medical', 1, '2024-02-06 05:14:54', '2024-02-06 05:14:54'),
 (4, '65c1c061052f01707196513.jpg', 'Emergency', 'emergency', 1, '2024-02-06 05:15:13', '2024-02-06 05:15:13'),
-(5, '65c1c084a74ef1707196548.jpg', 'Non Profit', 'non-profit', 1, '2024-02-06 05:15:48', '2024-02-07 04:46:30'),
+(5, '65c1c084a74ef1707196548.jpg', 'Non Profit', 'non-profit', 1, '2024-02-06 05:15:48', '2024-02-14 11:49:33'),
 (6, '65c1c09f2cf7c1707196575.jpg', 'Financial Emergency', 'financial-emergency', 1, '2024-02-06 05:16:15', '2024-02-06 05:16:15'),
 (7, '65c1c0b8815be1707196600.jpg', 'Environment', 'environment', 1, '2024-02-06 05:16:40', '2024-02-08 05:45:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `campaign_id` bigint UNSIGNED NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `user_id`, `campaign_id`, `comment`, `created_at`, `updated_at`) VALUES
+(1, 13, 13, 'Join us in our campaign to ensure that every child receives the gift of education. Together, we can break down barriers and create a world where every child, regardless of their background or circumstances, has the opportunity to learn, grow, and thrive. Your support will not only transform individual lives but also contribute to building stronger, more equitable communities for generations to come. Let\'s make education a reality for every child, unlocking their potential and shaping a brighter future for us all.', '2024-02-14 12:19:00', '2024-02-14 12:19:00');
 
 -- --------------------------------------------------------
 
@@ -310,7 +331,7 @@ INSERT INTO `forms` (`id`, `act`, `form_data`, `created_at`, `updated_at`) VALUE
 CREATE TABLE `galleries` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -477,7 +498,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2023_12_06_154325_create_contacts_table', 17),
 (35, '2024_01_31_140216_create_categories_table', 18),
 (38, '2024_02_03_151844_create_campaigns_table', 19),
-(39, '2024_02_04_152936_create_galleries_table', 19);
+(39, '2024_02_04_152936_create_galleries_table', 19),
+(40, '2024_02_14_150246_create_comments_table', 20);
 
 -- --------------------------------------------------------
 
@@ -820,7 +842,8 @@ INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`
 (5, NULL, 'Demo', 'User Five', 'demouser5', 'demofive@demo.com', 'MT', 'Malta', '35612345678', 0, 0.00000000, '$2y$10$mHk3S8SI3O7MCKlhvxLi7u4Px4v9ZXWm6Ux.pLPSe4wRB6Hm7dZVW', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:09:35', '2023-12-05 16:09:35'),
 (10, NULL, 'Demo', 'User Six', 'demouser6', 'demosix@demo.com', 'TM', 'Turkmenistan', '993123456789', 0, 0.00000000, '$2y$10$i3XurA7Zxy3h1dWiUP12b.s.Tcn0a9Do2gBUbmujUwz4bpvti1A7e', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:19:44', '2023-12-05 17:19:44'),
 (11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42'),
-(12, NULL, 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"House - 32, Road - 04, Block - C, Pallabi, Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-01-31 06:35:41');
+(12, NULL, 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"House - 32, Road - 04, Block - C, Pallabi, Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-01-31 06:35:41'),
+(13, NULL, 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '88001931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-14 12:16:58');
 
 -- --------------------------------------------------------
 
@@ -923,6 +946,14 @@ ALTER TABLE `campaigns`
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `categories_name_unique` (`name`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comments_user_id_foreign` (`user_id`),
+  ADD KEY `comments_campaign_id_foreign` (`campaign_id`);
 
 --
 -- Indexes for table `contacts`
@@ -1064,7 +1095,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1076,13 +1107,19 @@ ALTER TABLE `admin_password_resets`
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -1112,7 +1149,7 @@ ALTER TABLE `forms`
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `gateways`
@@ -1136,7 +1173,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1184,7 +1221,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`
@@ -1208,6 +1245,13 @@ ALTER TABLE `withdraw_methods`
 ALTER TABLE `campaigns`
   ADD CONSTRAINT `campaigns_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `campaigns_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_campaign_id_foreign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`),
+  ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `galleries`

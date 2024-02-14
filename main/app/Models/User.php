@@ -74,6 +74,14 @@ class User extends Authenticatable
         return $this->hasMany(Campaign::class);
     }
 
+    /**
+     * Get the comments for the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     // SCOPES
     public function scopeActive($query)
     {

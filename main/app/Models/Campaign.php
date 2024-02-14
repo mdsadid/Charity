@@ -41,6 +41,14 @@ class Campaign extends Model
     }
 
     /**
+     * Get the comments for the campaign.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * Scope a query to only include pending campaigns.
      */
     public function scopePending($query)

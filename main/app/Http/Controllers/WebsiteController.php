@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\ManageStatus;
 use App\Models\Campaign;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\Language;
 use App\Models\SiteData;
@@ -56,6 +57,8 @@ class WebsiteController extends Controller
     function campaignShow($slug) {
         $pageTitle        = 'Campaign Details';
         $campaign         = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
+        $comments         = $campaign->comments;
+        $comments->load('user');
         $relatedCampaigns = Campaign::where('category_id', $campaign->category_id)
             ->whereNot('slug', $campaign->slug)
             ->approve()
@@ -72,6 +75,63 @@ class WebsiteController extends Controller
         $seoContents['image_size']         = $imageSize;
 
         return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents'));
+    }
+
+    function storeCampaignComment($slug) {
+        $this->validate(request(), [
+            'comment' => 'required|string'
+        ]);
+
+        // Check whether user active or not
+        if (!auth()->user()->status) {
+            $toast[] = ['error', 'The user is banned'];
+
+            return back()->withToasts($toast);
+        }
+
+        $campaign = Campaign::where('slug', $slug)->first();
+
+        // Check whether campaign found or not
+        if (!$campaign) {
+            $toast[] = ['error', 'Campaign not found'];
+
+            return back()->withToasts($toast);
+        }
+
+        // Check whether campaign category active or not
+        if (!$campaign->category->status) {
+            $toast[] = ['error', 'Campaign category is not active'];
+
+            return back()->withToasts($toast);
+        }
+
+        // Check for approved & running campaign
+        if ($campaign->status == ManageStatus::CAMPAIGN_PENDING ||
+            $campaign->status == ManageStatus::CAMPAIGN_REJECTED ||
+            !$campaign->isRunning() || 
+            $campaign->isExpired()
+        ) {
+            $toast[] = ['error', 'Campaign is not approved or running'];
+
+            return back()->withToasts($toast);
+        }
+
+        // Check whether user commenting on his/her own campaign
+        if ($campaign->user_id == auth()->id()) {
+            $toast[] = ['error', 'You can\'t comment on your own campaign'];
+
+            return back()->withToasts($toast);
+        }
+
+        $comment              = new Comment();
+        $comment->user_id     = auth()->id();
+        $comment->campaign_id = $campaign->id;
+        $comment->comment     = request('comment');
+        $comment->save();
+
+        $toast[] = ['success', 'Your comment has submitted'];
+
+        return back()->withToasts($toast);
     }
 
     function events() {

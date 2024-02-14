@@ -54,8 +54,24 @@
 
     <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab" tabindex="0">
         <div class="donation-details__comments">
-            <h3 class="donation-details__subtitle">@lang('Comments') (2)</h3>
-            <div class="donation-details__comment">
+            <h3 class="donation-details__subtitle">@lang('Comments') ({{ count(@$campaign->comments) }})</h3>
+
+            @forelse ($campaign->comments as $comment)
+                <div class="donation-details__comment">
+                    <div class="donation-details__comment__img">
+                        <img src="" alt="image">
+                    </div>
+                    <div class="donation-details__comment__txt">
+                        <h4 class="donation-details__comment__name">{{ __(@$comment->user->fullname) }}</h4>
+                        <p class="donation-details__comment__date">{{ showDateTime(@$comment->created_at, 'd M, Y') }}</p>
+                        <p class="donation-details__comment__desc">{{ __(@$comment->comment) }}</p>
+                    </div>
+                </div>
+            @empty
+                <p></p>
+            @endforelse
+
+            {{-- <div class="donation-details__comment">
                 <div class="donation-details__comment__img">
                     <img src="assets/images/thumbs/1.png" alt="image">
                 </div>
@@ -65,37 +81,29 @@
                     <p class="donation-details__comment__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, doloribus harum? Molestiae eligendi nulla eum itaque temporibus dolores commodi amet animi quas accusamus aut veritatis labore cupiditate id, repudiandae
                         voluptatem!</p>
                 </div>
-            </div>
-            <div class="donation-details__comment">
-                <div class="donation-details__comment__img">
-                    <img src="assets/images/thumbs/1.png" alt="image">
-                </div>
-                <div class="donation-details__comment__txt">
-                    <h4 class="donation-details__comment__name">John Doe</h4>
-                    <p class="donation-details__comment__date">12 Dec, 2023</p>
-                    <p class="donation-details__comment__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, doloribus harum? Molestiae eligendi nulla eum itaque temporibus dolores commodi amet animi quas accusamus aut veritatis labore cupiditate id, repudiandae
-                        voluptatem!</p>
-                </div>
-            </div>
+            </div> --}}
         </div>
 
         @if (request()->routeIs('campaign.show'))
             <div class="donation-details__post__comment">
-                <h3 class="donation-details__subtitle">Post a comment</h3>
-                <form class="row g-4">
-                    <div class="col-sm-6">
-                        <input type="text" class="form--control" placeholder="Your Name*" required>
-                    </div>
-                    <div class="col-sm-6">
-                        <input type="email" class="form--control" placeholder="Your Email*" required>
-                    </div>
-                    <div class="col-12">
-                        <textarea class="form--control" rows="10" placeholder="Your Message*" required></textarea>
-                    </div>
-                    <div class="col-12 d-flex justify-content-center">
-                        <button class="btn btn--base">Submit Comment</button>
-                    </div>
-                </form>
+                @guest
+                    <p>
+                        @lang('Leave a comment.') <a href="{{ route('user.login') }}" class="text--base">@lang('Sign In')</a>
+                    </p>
+                @endguest
+
+                @auth
+                    <h3 class="donation-details__subtitle">@lang('Post a comment')</h3>
+                    <form action="{{ route('campaign.comment', @$campaign->slug) }}" method="POST" class="row g-4">
+                        @csrf
+                        <div class="col-12">
+                            <textarea class="form--control" name="comment" rows="10" placeholder="Your Comment*" required>{{ old('comment') }}</textarea>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn--base">@lang('Submit')</button>
+                        </div>
+                    </form>
+                @endauth
             </div>
         @endif
     </div>
