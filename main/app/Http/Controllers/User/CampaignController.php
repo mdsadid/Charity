@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use Exception;
-use App\Models\Campaign;
-use App\Http\Controllers\Controller;
-use App\Models\AdminNotification;
-use App\Models\Category;
-use App\Models\Gallery;
-use Carbon\Carbon;
 use HTMLPurifier;
+use Carbon\Carbon;
+use App\Models\Gallery;
+use App\Models\Campaign;
+use App\Models\Category;
+use App\Models\AdminNotification;
+use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -45,11 +45,9 @@ class CampaignController extends Controller
 
     protected function campaignData($scope = null) {
         if ($scope) {
-            $campaigns = Campaign::$scope()->active();
+            $campaigns = Campaign::$scope();
         } else {
-            $campaigns = Campaign::query()->whereHas('category', function ($query) {
-                $query->active();
-            });
+            $campaigns = Campaign::query();
         }
 
         return $campaigns->with('category')
@@ -60,15 +58,8 @@ class CampaignController extends Controller
     }
 
     function new() {
-        // Delete previous gallery images if exist
-        $images = Gallery::where('user_id', auth()->id())->get();
-
-        if ($images) {
-            foreach ($images as $image) {
-                fileManager()->removeFile(getFilePath('campaign') . '/' . $image->image);
-                $image->delete();
-            }
-        }
+        // Delete previously unused gallery images if exist
+        $this->removePreviousGallery();
 
         $pageTitle  = 'Create New Campaign';
         $categories = Category::active()->get();
@@ -76,6 +67,9 @@ class CampaignController extends Controller
         return view($this->activeTheme . 'user.campaign.new', compact('pageTitle', 'categories'));
     }
 
+    /**
+     * Upload image while using dropzone
+     */
     function upload() {
         $validator = Validator::make(request()->all(), [
             'file' => ['required', File::types(['png', 'jpg', 'jpeg'])],
@@ -115,7 +109,7 @@ class CampaignController extends Controller
 
     function store() {
         $this->validate(request(), [
-            'category_id' => 'required|integer|exists:categories,id',
+            'category_id' => 'required|integer|gt:0',
             'image'       => ['required', File::types(['png', 'jpg', 'jpeg'])],
             'name'        => 'required|string|max:190',
             'description' => 'required|min:30',
@@ -139,7 +133,7 @@ class CampaignController extends Controller
 
         $images = Gallery::where('user_id', auth()->id())->get();
 
-        if (!$images) {
+        if (!count($images)) {
             $toast[] = ['error', 'Minimum one gallery image is required'];
 
             return back()->withToasts($toast);
@@ -202,19 +196,28 @@ class CampaignController extends Controller
     }
 
     function edit($slug) {
-        // Delete previous gallery images if exist
-        $images = Gallery::where('user_id', auth()->id())->get();
-
-        if ($images) {
-            foreach ($images as $image) {
-                fileManager()->removeFile(getFilePath('campaign') . '/' . $image->image);
-                $image->delete();
-            }
-        }
+        // Delete previously unused gallery images if exist
+        $this->removePreviousGallery();
 
         $pageTitle  = 'Edit Campaign';
         $categories = Category::get();
-        $campaign   = Campaign::where('slug', $slug)->where('user_id', auth()->id())->select('id', 'image', 'gallery')->firstOrFail();
+        $campaign   = Campaign::where('slug', $slug)
+            ->where('user_id', auth()->id())
+            ->approve()
+            ->select('id', 'image', 'gallery', 'end_date')
+            ->first();
+
+        if (!$campaign) {
+            $toast[] = ['error', 'Campaign not found'];
+
+            return back()->withToasts($toast);
+        }
+
+        if ($campaign->isExpired()) {
+            $toast[] = ['error', 'This campaign has expired'];
+
+            return back()->withToasts($toast);
+        }
 
         return view($this->activeTheme . 'user.campaign.edit', compact('pageTitle', 'categories', 'campaign'));
     }
@@ -280,6 +283,13 @@ class CampaignController extends Controller
             return back()->withToasts($toast);
         }
 
+        // Check whether campaign gallery exists or not
+        if (!count($campaign->gallery)) {
+            $toast[] = ['error', 'Minimum one gallery image is required'];
+
+            return back()->withToasts($toast);
+        }
+
         // Upload new main image
         if (request()->hasFile('image')) {
             try {
@@ -294,7 +304,7 @@ class CampaignController extends Controller
         // Update gallery images
         $images = Gallery::where('user_id', auth()->id())->get();
 
-        if ($images) {
+        if (count($images)) {
             $gallery = [];
 
             foreach ($images as $image) array_push($gallery, $image->image);
@@ -316,13 +326,21 @@ class CampaignController extends Controller
 
     function show($slug) {
         $pageTitle = 'Campaign Details';
-        $campaign  = Campaign::where('slug', $slug)
-            ->where('user_id', auth()->id())
-            ->whereHas('category', function ($query) {
-                $query->active();
-            })
-            ->firstOrFail();
+        $campaign  = Campaign::where('slug', $slug)->where('user_id', auth()->id())->firstOrFail();
 
         return view($this->activeTheme . 'user.campaign.show', compact('pageTitle', 'campaign'));
+    }
+
+    protected function removePreviousGallery() {
+        $images = Gallery::where('user_id', auth()->id())->get();
+
+        if (count($images)) {
+            foreach ($images as $image) {
+                fileManager()->removeFile(getFilePath('campaign') . '/' . $image->image);
+                $image->delete();
+            }
+        }
+
+        return;
     }
 }
