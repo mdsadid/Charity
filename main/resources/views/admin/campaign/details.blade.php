@@ -5,13 +5,11 @@
         <div class="col-12">
             <div class="card g-3">
                 <div class="card-body row g-3">
-                    <div class="col-lg-7">
-                        <div class="card academy-content shadow-none border">
-                            <div class="p-2 text-center">
-                                <img src="{{ getImage(getFilePath('campaign') . '/' . $campaign->image, getFileSize('campaign')) }}" alt="image" class="rounded">
-                            </div>
+                    <div class="col-lg-6">
+                        <div class="card academy-content shadow-sm border">
                             <div class="card-body">
-                                <h4 class="mb-2 lh-lg">{{ __($campaign->name) }}</h4>
+                                <img src="{{ getImage(getFilePath('campaign') . '/' . $campaign->image, getFileSize('campaign')) }}" alt="image" class="rounded img-fluid">
+                                <h4 class="mt-4 mb-2 lh-lg">{{ __($campaign->name) }}</h4>
 
                                 @if (!$campaign->isExpired())
                                     @if ($campaign->status == ManageStatus::CAMPAIGN_PENDING)
@@ -55,24 +53,41 @@
                                 @endif
 
                                 <hr class="my-4">
+                                <h5>@lang('Description')</h5>
+                                <div class="description">
+                                    @php echo $campaign->description @endphp
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card academy-content shadow-sm border">
+                            <div class="card-body">
+                                <h5>@lang('Basic Information')</h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p class="text-nowrap">
                                             <i class="las la-stream me-2"></i><span class="fw-bold">@lang('Category'):</span> {{ __($campaign->category->name) }}
                                         </p>
                                         <p class="text-nowrap">
-                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('Start Date'):</span> {{ showDateTime($campaign->start_date, 'd-M-Y h:i A') }}
+                                            <i class="las la-user me-2"></i><span class="fw-bold">@lang('Author'):</span> {{ __($campaign->user->fullname) }} <small><a href="{{ route('admin.user.details', $campaign->user->id) }}">{{ '@' . $campaign->user->username }}</a></small>
                                         </p>
                                         <p class="text-nowrap">
-                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('End Date'):</span> {{ showDateTime($campaign->end_date, 'd-M-Y h:i A') }}
+                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('Start Date'):</span> <span class="text-primary">{{ showDateTime($campaign->start_date, 'd-M-Y') }}</span>
                                         </p>
                                         <p class="text-nowrap">
-                                            <i class="las la-clipboard-check me-2"></i><span class="fw-bold">@lang('Status'):</span> @php echo $campaign->campaignStatusBadge @endphp
+                                            <i class="las la-calendar me-2"></i><span class="fw-bold">@lang('End Date'):</span> <span class="text-danger">{{ showDateTime($campaign->end_date, 'd-M-Y') }}</span>
+                                        </p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-clipboard-check me-2"></i><span class="fw-bold">@lang('Approval Status'):</span> @php echo $campaign->approvalStatusBadge @endphp
                                         </p>
                                     </div>
                                     <div class="col-md-6">
                                         <p class="text-nowrap">
-                                            <i class="las la-tag me-2"></i><span class="fw-bold">@lang('Featured Status'):</span> <span class="badge {{ $campaign->featured ? 'bg-label-success' : 'bg-label-danger' }}">{{ $campaign->featured ? trans('Featured') : trans('Not Featured') }}</span>
+                                            <i class="las la-bullhorn me-2"></i><span class="fw-bold">@lang('Campaign Status'):</span> @php echo $campaign->campaignStatusBadge @endphp
+                                        </p>
+                                        <p class="text-nowrap">
+                                            <i class="las la-tag me-2"></i><span class="fw-bold">@lang('Featured Status'):</span> @php echo $campaign->featuredStatusBadge @endphp
                                         </p>
                                         <p class="text-nowrap">
                                             <i class="las la-hand-holding-usd me-2"></i><span class="fw-bold">@lang('Goal Amount'):</span> {{ $setting->cur_sym . showAmount($campaign->goal_amount) }}
@@ -84,15 +99,29 @@
                                             <i class="las la-users me-2"></i><span class="fw-bold">@lang('Total Donor'):</span> 0
                                         </p>
                                     </div>
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-nowrap mb-0">
+                                                    <i class="las la-spinner me-2"></i><span class="fw-bold">@lang('Donation Progress'):</span>
+                                                </p>
+                                            </div>
+
+                                            @php
+                                                $percentage = donationPercentage($campaign->goal_amount, $campaign->raised_amount);
+                                            @endphp
+
+                                            <div class="progress flex-grow-1 custom-progress-bar">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{ $percentage }}%" aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100">
+                                                    {{ $percentage . '%' }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <hr class="mb-4 mt-2">
-                                <h5>@lang('Description')</h5>
-                                <div class="mb-4">
-                                    @php echo $campaign->description @endphp
-                                </div>
-                                <hr class="mb-4 mt-2">
+                                <hr class="my-4">
                                 <h5>@lang('Relevant Images')</h5>
-                                <div class="mb-4">
+                                <div>
                                     <div class="swiper" id="swiper-with-progress">
                                         <div class="swiper-wrapper">
                                             @foreach ($campaign->gallery as $image)
@@ -106,35 +135,17 @@
                                 </div>
 
                                 @if ($campaign->document)
-                                    <hr class="mb-4 mt-2">
+                                    <hr class="my-4">
                                     <h5>@lang('Relevant Document')</h5>
-                                    <div class="mb-4">
+                                    <div>
                                         <div class="donation-details__document">
                                             <object data="{{ asset(getFilePath('document') . '/' . $campaign->document) }}" type="application/pdf"></object>
                                         </div>
                                     </div>
                                 @endif
-
-                                <hr class="my-4">
-                                <h5>@lang('Author')</h5>
-                                <div class="d-flex justify-content-start align-items-center user-name">
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar avatar-sm me-2">
-                                            <img src="" alt="Avatar" class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-medium">{{ __($campaign->user->fullname) }}</span>
-                                        <small class="text-muted">
-                                            <a href="{{ route('admin.user.details', $campaign->user->id) }}">{{ '@' . $campaign->user->username }}</a>
-                                        </small>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="accordion stick-top accordion-bordered" id="courseContent">
+                        {{-- <div class="accordion stick-top accordion-bordered" id="courseContent">
                             <div class="accordion-item shadow-none border border-bottom-0 active mb-0">
                                 <div class="accordion-header" id="headingOne">
                                     <button type="button" class="accordion-button bg-lighter rounded-0" data-bs-toggle="collapse" data-bs-target="#chapterOne" aria-expanded="true" aria-controls="chapterOne">
@@ -318,7 +329,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -341,9 +352,18 @@
 
 @push('page-style')
     <style>
+        .description p {
+            margin-bottom: 0;
+        }
+
+        .custom-progress-bar {
+            max-width: 435px;
+            margin-left: 7px;
+        }
+
         .donation-details__document object {
             width: 100%;
-            height: 600px;
+            height: 450px;
             border-radius: 5px;
         }
     </style>

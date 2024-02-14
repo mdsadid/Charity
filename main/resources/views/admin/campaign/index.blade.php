@@ -11,10 +11,10 @@
                                 <th>@lang('Name')</th>
                                 <th>@lang('Category')</th>
                                 <th>@lang('Author')</th>
-                                <th>@lang('Goal Amount')</th>
-                                <th>@lang('Start Date')</th>
-                                <th>@lang('End Date')</th>
-                                <th>@lang('Status')</th>
+                                <th>@lang('Goal') | @lang('Raised')</th>
+                                <th>@lang('Start Date') | @lang('End Date')</th>
+                                <th>@lang('Approval Status')</th>
+                                <th>@lang('Campaign Status')</th>
                                 <th>@lang('Featured')</th>
                                 <th>@lang('Action')</th>
                             </tr>
@@ -26,7 +26,7 @@
                                         {{ __(strLimit($campaign->name, 20)) }}
                                     </td>
                                     <td>
-                                        {{ __($campaign->category->name) }}
+                                        <strong>{{ __($campaign->category->name) }}</strong>
                                     </td>
                                     <td>
                                         <div>
@@ -38,29 +38,25 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="fw-bold">
-                                            {{ $setting->cur_sym . showAmount($campaign->goal_amount) }}
-                                        </span>
-                                    </td>
-                                    <td>
                                         <div>
-                                            {{ showDateTime($campaign->start_date, 'd-M-Y h:i A') }}
+                                            <span class="text-primary">{{ $setting->cur_sym . showAmount($campaign->goal_amount) }}</span><br>
+                                            <span class="text-success">{{ $setting->cur_sym . showAmount($campaign->raised_amount) }}</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-                                            {{ showDateTime($campaign->end_date, 'd-M-Y h:i A') }}
+                                            <strong class="text-primary">{{ showDateTime($campaign->start_date, 'd-M-Y') }}</strong><br>
+                                            <strong class="text-danger">{{ showDateTime($campaign->end_date, 'd-M-Y') }}</strong>
                                         </div>
+                                    </td>
+                                    <td>
+                                        @php echo $campaign->approvalStatusBadge @endphp
                                     </td>
                                     <td>
                                         @php echo $campaign->campaignStatusBadge @endphp
                                     </td>
                                     <td>
-                                        @if ($campaign->featured)
-                                            <span class="badge bg-label-success">@lang('Yes')</span>
-                                        @else
-                                            <span class="badge bg-label-danger">@lang('No')</span>
-                                        @endif
+                                        @php echo $campaign->featuredStatusBadge @endphp
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.campaigns.details', $campaign->id) }}" class="btn btn-sm btn-label-info">

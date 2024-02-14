@@ -83,22 +83,56 @@ class Campaign extends Model
     }
 
     /**
+     * Get the approval's status.
+     */
+    protected function approvalStatusBadge(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
+                    $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
+                } else if ($this->status == ManageStatus::CAMPAIGN_APPROVED) {
+                    $html = '<span class="badge bg-label-success">' . trans('Approved') . '</span>';
+                } else {
+                    $html = '<span class="badge bg-label-danger">' . trans('Rejected') . '</span>';
+                }
+
+                return $html;
+            },
+        );
+    }
+
+    /**
      * Get the campaign's status.
      */
     protected function campaignStatusBadge(): Attribute
     {
         return Attribute::make(
             get: function () {
-                if ($this->isExpired()) {
+                if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
+                    $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
+                } else if ($this->isExpired()) {
                     $html = '<span class="badge bg-label-secondary">' . trans('Expired') . '</span>';
                 } else {
-                    if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
-                        $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
-                    } else if ($this->status == ManageStatus::CAMPAIGN_APPROVED) {
-                        $html = '<span class="badge bg-label-success">' . trans('Approved') . '</span>';
-                    } else {
-                        $html = '<span class="badge bg-label-danger">' . trans('Rejected') . '</span>';
-                    }
+                    $html = '<span class="badge bg-label-success">' . trans('Running') . '</span>';
+                }
+
+                return $html;
+            },
+        );
+    }
+
+    /**
+     * Get the campaign's featured status.
+     */
+    protected function featuredStatusBadge(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if ($this->featured) {
+                    $html = '<span class="badge bg-label-success">' . trans('Yes') . '</span>';
+                } else {
+                    $html = '<span class="badge bg-label-danger">' . trans('No') . '</span>';
                 }
 
                 return $html;
