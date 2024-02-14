@@ -58,10 +58,12 @@
                                             <span class="badge badge--warning">@lang('Pending')</span>
                                         @elseif (@$campaign->status == ManageStatus::CAMPAIGN_REJECTED)
                                             <span>-</span>
+                                        @elseif (@$campaign->isRunning())
+                                            <span class="badge badge--success">@lang('Running')</span>
                                         @elseif (@$campaign->isExpired())
                                             <span class="badge badge--secondary">@lang('Expired')</span>
                                         @else
-                                            <span class="badge badge--success">@lang('Running')</span>
+                                            <span class="badge badge--info">@lang('Not Started Yet')</span>
                                         @endif
                                     </td>
                                     <td>

@@ -115,7 +115,7 @@ class CampaignController extends Controller
             'description' => 'required|min:30',
             'document'    => ['nullable', File::types('pdf')],
             'goal_amount' => 'required|numeric|gt:0',
-            'start_date'  => 'required|date_format:d-m-Y',
+            'start_date'  => 'required|date_format:d-m-Y|after:today',
             'end_date'    => 'required|date_format:d-m-Y|after:start_date',
         ], [
             'category_id.required' => 'The category field is required.',

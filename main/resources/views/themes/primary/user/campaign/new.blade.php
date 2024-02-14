@@ -109,7 +109,7 @@
 
 @push('page-script')
     <script type="text/javascript">
-        (function ($) {
+        (function($) {
             "use strict"
 
             new Dropzone('.dropzone', {
@@ -125,7 +125,7 @@
                     showToasts('error', response.error.file[0])
                 },
                 removedfile: function(file) {
-                    let url  = "{{ route('user.campaign.file.remove') }}"
+                    let url = "{{ route('user.campaign.file.remove') }}"
                     let data = {
                         file: file.unique_name,
                         _token: "{{ csrf_token() }}",
@@ -142,6 +142,18 @@
                     let fileRef = file.previewElement
 
                     return fileRef != null ? fileRef.parentNode.removeChild(fileRef) : void 0
+                }
+            })
+
+            $('.datepicker').on('input keyup keydown keypress', function() {
+                return false
+            })
+
+            $('.datepicker').on('pick.datepicker', function(e) {
+                // Prevent to pick the older date
+                if (e.date < new Date()) {
+                    e.preventDefault()
+                    showToasts('error', 'You can\'t pick older date')
                 }
             })
         })(jQuery)

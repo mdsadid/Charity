@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\Searchable;
 use App\Constants\ManageStatus;
 use App\Traits\UniversalStatus;
@@ -72,14 +73,18 @@ class Campaign extends Model
     }
 
     /**
-     * Scope a query to only include active campaigns.
+     * Scope a query to only include campaigns that meet certain criteria.
      */
-    public function scopeActive($query)
+    public function scopeCampaignCheck($query)
     {
         $query->whereHas('category', function ($innerQuery) {
             $innerQuery->active();
         })
-        ->whereDate('end_date', '>', now()->toDateString());
+            ->whereHas('user', function ($innerQuery) {
+                $innerQuery->active();
+            })
+                ->whereDate('start_date', '<', now()->toDateString())
+                ->whereDate('end_date', '>', now()->toDateString());
     }
 
     /**
@@ -113,10 +118,12 @@ class Campaign extends Model
                     $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
                 } else if ($this->status == ManageStatus::CAMPAIGN_REJECTED) {
                     $html = '<span>-</span>';
+                } else if ($this->isRunning()) {
+                    $html = '<span class="badge bg-label-success">' . trans('Running') . '</span>';
                 } else if ($this->isExpired()) {
                     $html = '<span class="badge bg-label-secondary">' . trans('Expired') . '</span>';
                 } else {
-                    $html = '<span class="badge bg-label-success">' . trans('Running') . '</span>';
+                    $html = '<span class="badge bg-label-info">' . trans('Not Started Yet') . '</span>';
                 }
 
                 return $html;
@@ -150,5 +157,15 @@ class Campaign extends Model
     public function isExpired(): bool
     {
         return $this->end_date->isPast();
+    }
+
+    /**
+     * Check if the campaign is running. (custom method)
+     *
+     * @return bool
+     */
+    public function isRunning(): bool
+    {
+        return Carbon::today()->betweenIncluded($this->start_date, $this->end_date);
     }
 }
