@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 14, 2024 at 12:42 PM
+-- Generation Time: Feb 15, 2024 at 07:05 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -108,7 +108,10 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (40, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-13 06:49:31', '2024-02-13 06:49:31'),
 (41, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-13 10:04:01', '2024-02-13 10:04:01'),
 (42, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-14 08:57:20', '2024-02-14 08:57:20'),
-(43, 13, 'New member registered', 0, '/admin/user/index', '2024-02-14 12:15:55', '2024-02-14 12:15:55');
+(43, 13, 'New member registered', 0, '/admin/user/index', '2024-02-14 12:15:55', '2024-02-14 12:15:55'),
+(44, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-15 04:56:21', '2024-02-15 04:56:21'),
+(45, 14, 'New member registered', 0, '/admin/user/index', '2024-02-15 06:29:09', '2024-02-15 06:29:09'),
+(46, 15, 'New member registered', 0, '/admin/user/index', '2024-02-15 07:03:04', '2024-02-15 07:03:04');
 
 -- --------------------------------------------------------
 
@@ -165,7 +168,8 @@ CREATE TABLE `campaigns` (
 --
 
 INSERT INTO `campaigns` (`id`, `user_id`, `category_id`, `image`, `gallery`, `name`, `slug`, `description`, `document`, `goal_amount`, `raised_amount`, `start_date`, `end_date`, `status`, `featured`, `created_at`, `updated_at`) VALUES
-(13, 12, 5, '65cc806f393671707901039.jpg', '[\"65cc7f93e33981707900819.jpg\",\"65cc7f93e6ef91707900819.jpg\"]', 'Education for Every Child: Donate to Break the Cycle of Poverty', 'education-for-every-child-donate-to-break-the-cycle-of-poverty', '<p>In a world filled with opportunities, education stands as the cornerstone of progress and empowerment. Yet, millions of children around the globe are denied this fundamental right, impeding not only their individual potential but also hindering the collective advancement of societies. It\'s time to recognize that education is not a privilege but a basic human right that should be accessible to every child, regardless of their background, ethnicity, or socio-economic status.</p><p> </p><p>At the heart of our campaign lies a profound belief in the transformative power of education. We envision a future where every child has equal access to quality education, where their talents are nurtured, their curiosity encouraged, and their dreams supported. Education is not just about imparting knowledge; it is about instilling values, fostering critical thinking, and equipping children with the skills they need to navigate an ever-changing world.</p><p> </p><p>Sadly, the reality today paints a starkly different picture. Across the globe, millions of children are out of school, trapped in a cycle of poverty, discrimination, and inequality. Many are forced into child labor, early marriage, or conflict, robbing them of their childhood and denying them the chance to fulfill their potential. This is not only a violation of their rights but also a colossal waste of human potential that undermines the fabric of our societies.</p><p> </p><p>Education is not a luxury reserved for the privileged few; it is a fundamental human right that should be accessible to all. It is the key to breaking the cycle of poverty, empowering individuals and communities, and driving sustainable development. When children are educated, they are more likely to lead healthy and productive lives, contribute meaningfully to society, and become agents of positive change in their communities.</p><p> </p><p>Our campaign seeks to address the barriers that prevent children from accessing education and advocate for policies and initiatives that prioritize education for every child. This includes addressing systemic issues such as poverty, gender inequality, discrimination, and conflict, which often serve as obstacles to education. It also involves investing in infrastructure, teacher training, and curriculum development to ensure that education is of high quality and relevance.</p><p> </p><p>But our campaign goes beyond mere advocacy; it is a call to action for governments, policymakers, civil society organizations, and individuals to prioritize education and invest in the future of our children. We must work together to ensure that no child is left behind, regardless of their circumstances. This requires political will, financial investment, and collective effort at all levels of society.</p><p> </p><p>Together, we can create a world where every child has the opportunity to learn, grow, and thrive. We can break the cycle of poverty and inequality and build a future where education is truly universal. Join us in our mission to ensure that every child has access to quality education – because when we invest in our children, we invest in the future of humanity. Education for every child is not just a noble aspiration; it is a moral imperative and the foundation upon which we can build a better world for all.</p>', '65cc80708a0aa1707901040.pdf', 500.00000000, 0.00000000, '2024-01-12 18:00:00', '2024-03-14 18:00:00', 1, 1, '2024-02-14 08:57:20', '2024-02-14 09:44:36');
+(13, 12, 5, '65cc806f393671707901039.jpg', '[\"65cc7f93e33981707900819.jpg\",\"65cc7f93e6ef91707900819.jpg\"]', 'Education for Every Child: Donate to Break the Cycle of Poverty', 'education-for-every-child-donate-to-break-the-cycle-of-poverty', '<p>In a world filled with opportunities, education stands as the cornerstone of progress and empowerment. Yet, millions of children around the globe are denied this fundamental right, impeding not only their individual potential but also hindering the collective advancement of societies. It\'s time to recognize that education is not a privilege but a basic human right that should be accessible to every child, regardless of their background, ethnicity, or socio-economic status.</p><p> </p><p>At the heart of our campaign lies a profound belief in the transformative power of education. We envision a future where every child has equal access to quality education, where their talents are nurtured, their curiosity encouraged, and their dreams supported. Education is not just about imparting knowledge; it is about instilling values, fostering critical thinking, and equipping children with the skills they need to navigate an ever-changing world.</p><p> </p><p>Sadly, the reality today paints a starkly different picture. Across the globe, millions of children are out of school, trapped in a cycle of poverty, discrimination, and inequality. Many are forced into child labor, early marriage, or conflict, robbing them of their childhood and denying them the chance to fulfill their potential. This is not only a violation of their rights but also a colossal waste of human potential that undermines the fabric of our societies.</p><p> </p><p>Education is not a luxury reserved for the privileged few; it is a fundamental human right that should be accessible to all. It is the key to breaking the cycle of poverty, empowering individuals and communities, and driving sustainable development. When children are educated, they are more likely to lead healthy and productive lives, contribute meaningfully to society, and become agents of positive change in their communities.</p><p> </p><p>Our campaign seeks to address the barriers that prevent children from accessing education and advocate for policies and initiatives that prioritize education for every child. This includes addressing systemic issues such as poverty, gender inequality, discrimination, and conflict, which often serve as obstacles to education. It also involves investing in infrastructure, teacher training, and curriculum development to ensure that education is of high quality and relevance.</p><p> </p><p>But our campaign goes beyond mere advocacy; it is a call to action for governments, policymakers, civil society organizations, and individuals to prioritize education and invest in the future of our children. We must work together to ensure that no child is left behind, regardless of their circumstances. This requires political will, financial investment, and collective effort at all levels of society.</p><p> </p><p>Together, we can create a world where every child has the opportunity to learn, grow, and thrive. We can break the cycle of poverty and inequality and build a future where education is truly universal. Join us in our mission to ensure that every child has access to quality education – because when we invest in our children, we invest in the future of humanity. Education for every child is not just a noble aspiration; it is a moral imperative and the foundation upon which we can build a better world for all.</p>', '65cc80708a0aa1707901040.pdf', 500.00000000, 0.00000000, '2024-01-12 18:00:00', '2024-03-14 18:00:00', 1, 1, '2024-02-14 08:57:20', '2024-02-14 09:44:36'),
+(14, 12, 6, '65cd99745d66b1707972980.jpg', '[\"65cd9858ad6831707972696.jpg\",\"65cd9858ad7471707972696.jpg\"]', 'Rise Together: Empowering Communities for a Brighter Future', 'rise-together-empowering-communities-for-a-brighter-future', '<p>\"Rise Together: Empowering Communities for a Brighter Future\" is a transformative initiative dedicated to uniting individuals, organizations, and communities in a shared commitment to create positive change. At its core, this campaign recognizes the inherent strength within every community and seeks to harness that power to build a future filled with opportunity, equity, and prosperity for all.</p><p> </p><p>In today\'s rapidly changing world, it\'s essential to come together to address the challenges facing our societies. From economic disparities to social injustices, environmental concerns to health crises, the need for collective action has never been greater. \"Rise Together\" serves as a rallying cry, inspiring people from all walks of life to join forces and make a meaningful impact.</p><p> </p><p>This campaign is rooted in the belief that when communities unite, they become stronger, more resilient, and better equipped to overcome adversity. By fostering collaboration, amplifying diverse voices, and providing resources and support, \"Rise Together\" empowers communities to address systemic issues, advocate for change, and implement sustainable solutions.</p><p> </p><p>Through a series of grassroots initiatives, educational programs, advocacy efforts, and community-building activities, \"Rise Together\" aims to create lasting positive change across various domains, including social justice, economic development, environmental sustainability, healthcare access, and education equity.</p><p> </p><p>Together, we can build a future where every individual has the opportunity to thrive, where diversity is celebrated, and where communities are empowered to shape their own destinies. Join us in our mission to \"Rise Together\" and create a brighter, more inclusive, and equitable future for all.</p>', NULL, 2000.00000000, 0.00000000, '2024-01-31 18:00:00', '2024-04-04 18:00:00', 1, 0, '2024-02-15 04:56:21', '2024-02-15 04:57:34');
 
 -- --------------------------------------------------------
 
@@ -215,7 +219,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `user_id`, `campaign_id`, `comment`, `created_at`, `updated_at`) VALUES
-(1, 13, 13, 'Join us in our campaign to ensure that every child receives the gift of education. Together, we can break down barriers and create a world where every child, regardless of their background or circumstances, has the opportunity to learn, grow, and thrive. Your support will not only transform individual lives but also contribute to building stronger, more equitable communities for generations to come. Let\'s make education a reality for every child, unlocking their potential and shaping a brighter future for us all.', '2024-02-14 12:19:00', '2024-02-14 12:19:00');
+(1, 13, 13, 'Join us in our campaign to ensure that every child receives the gift of education. Together, we can break down barriers and create a world where every child, regardless of their background or circumstances, has the opportunity to learn, grow, and thrive. Your support will not only transform individual lives but also contribute to building stronger, more equitable communities for generations to come. Let\'s make education a reality for every child, unlocking their potential and shaping a brighter future for us all.', '2024-02-14 12:19:00', '2024-02-15 06:25:41'),
+(2, 14, 13, 'I\'m thrilled to be a part of the Rise Together campaign! Together, we can make a real difference in our communities and build a brighter future for everyone.', '2024-02-15 06:31:09', '2024-02-15 06:31:09'),
+(3, 15, 13, 'I\'m inspired by the spirit of collaboration and empowerment behind Rise Together. Let\'s keep the positivity flowing and create a better world for all.', '2024-02-15 07:04:21', '2024-02-15 07:04:21');
 
 -- --------------------------------------------------------
 
@@ -843,7 +849,9 @@ INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`
 (10, NULL, 'Demo', 'User Six', 'demouser6', 'demosix@demo.com', 'TM', 'Turkmenistan', '993123456789', 0, 0.00000000, '$2y$10$i3XurA7Zxy3h1dWiUP12b.s.Tcn0a9Do2gBUbmujUwz4bpvti1A7e', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:19:44', '2023-12-05 17:19:44'),
 (11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42'),
 (12, NULL, 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"House - 32, Road - 04, Block - C, Pallabi, Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-01-31 06:35:41'),
-(13, NULL, 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '88001931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-14 12:16:58');
+(13, NULL, 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '88001931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-14 12:16:58'),
+(14, NULL, 'John', 'Doe', 'johndoe', 'john@gmail.com', 'AX', 'Aland Islands', '358123456789', 0, 0.00000000, '$2y$10$jXQZDC90YT2pJ1rKfbOcy.9wH/Y/N5PmzS0.K46rDYpxpeeOiObAq', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JOHN123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdaf5424bcf1707978580.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 06:29:09', '2024-02-15 06:30:01'),
+(15, NULL, 'Jane', 'Doe', 'janedoe', 'jane@gmail.com', 'AS', 'AmericanSamoa', '1684987654321', 0, 0.00000000, '$2y$10$KAT0wI0OgG2dV1yz0p0L9.ehVORSPMo1U9sYAUV3GKpBV2GLm5M5y', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JANE987654321\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdb73f528841707980607.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 07:03:04', '2024-02-15 07:03:37');
 
 -- --------------------------------------------------------
 
@@ -1095,7 +1103,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1107,7 +1115,7 @@ ALTER TABLE `admin_password_resets`
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1119,7 +1127,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -1149,7 +1157,7 @@ ALTER TABLE `forms`
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `gateways`
@@ -1221,7 +1229,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`

@@ -63,25 +63,13 @@
                     </div>
                     <div class="donation-details__comment__txt">
                         <h4 class="donation-details__comment__name">{{ __(@$comment->user->fullname) }}</h4>
-                        <p class="donation-details__comment__date">{{ showDateTime(@$comment->created_at, 'd M, Y') }}</p>
+                        <p class="donation-details__comment__date">{{ showDateTime(@$comment->updated_at, 'd M, Y') }}</p>
                         <p class="donation-details__comment__desc">{{ __(@$comment->comment) }}</p>
                     </div>
                 </div>
             @empty
-                <p></p>
+                <p>{{ __($emptyMessage) }}</p>
             @endforelse
-
-            {{-- <div class="donation-details__comment">
-                <div class="donation-details__comment__img">
-                    <img src="assets/images/thumbs/1.png" alt="image">
-                </div>
-                <div class="donation-details__comment__txt">
-                    <h4 class="donation-details__comment__name">John Doe</h4>
-                    <p class="donation-details__comment__date">12 Dec, 2023</p>
-                    <p class="donation-details__comment__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, doloribus harum? Molestiae eligendi nulla eum itaque temporibus dolores commodi amet animi quas accusamus aut veritatis labore cupiditate id, repudiandae
-                        voluptatem!</p>
-                </div>
-            </div> --}}
         </div>
 
         @if (request()->routeIs('campaign.show'))

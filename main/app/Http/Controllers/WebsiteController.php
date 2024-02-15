@@ -123,10 +123,17 @@ class WebsiteController extends Controller
             return back()->withToasts($toast);
         }
 
-        $comment              = new Comment();
-        $comment->user_id     = auth()->id();
-        $comment->campaign_id = $campaign->id;
-        $comment->comment     = request('comment');
+        $comment = Comment::where('user_id', auth()->id())->where('campaign_id', $campaign->id)->first();
+
+        if ($comment) {
+            $comment->comment = request('comment');
+        } else {
+            $comment              = new Comment();
+            $comment->user_id     = auth()->id();
+            $comment->campaign_id = $campaign->id;
+            $comment->comment     = request('comment');
+        }
+
         $comment->save();
 
         $toast[] = ['success', 'Your comment has submitted'];
