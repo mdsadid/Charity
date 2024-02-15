@@ -86,6 +86,13 @@
             </ul>
         </li>
 
+        <li class="menu-item {{ navigationActive('admin.comments*', 1) }}">
+            <a href="{{ route('admin.comments.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons las la-comment text-info"></i>
+                <div class="text-truncate">@lang('Comments')</div>
+            </a>
+        </li>
+
         <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-user-tie text-purple"></i>

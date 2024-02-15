@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\ManageStatus;
-use App\Models\Campaign;
-use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Contact;
+use App\Models\Campaign;
+use App\Models\Category;
 use App\Models\Language;
 use App\Models\SiteData;
+use App\Constants\ManageStatus;
+use App\Models\AdminNotification;
 use Illuminate\Support\Facades\Cookie;
 
 class WebsiteController extends Controller
@@ -59,6 +60,7 @@ class WebsiteController extends Controller
         $campaign         = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
         $comments         = $campaign->comments;
         $comments->load('user');
+        $authUser         = auth()->user();
         $relatedCampaigns = Campaign::where('category_id', $campaign->category_id)
             ->whereNot('slug', $campaign->slug)
             ->approve()
@@ -74,12 +76,14 @@ class WebsiteController extends Controller
         $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaign->image, $imageSize);
         $seoContents['image_size']         = $imageSize;
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents'));
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser'));
     }
 
     function storeCampaignComment($slug) {
         $this->validate(request(), [
-            'comment' => 'required|string'
+            'name'    => 'required|string|max:40',
+            'email'   => 'required|string|max:40',
+            'comment' => 'required|string',
         ]);
 
         // Check whether user active or not
@@ -123,20 +127,37 @@ class WebsiteController extends Controller
             return back()->withToasts($toast);
         }
 
-        $comment = Comment::where('user_id', auth()->id())->where('campaign_id', $campaign->id)->first();
+        $comment              = new Comment();
 
-        if ($comment) {
-            $comment->comment = request('comment');
+        if (auth()->check()) {
+            $comment->user_id = auth()->id();
+            $comment->name    = auth()->user()->fullname;
+            $comment->email   = auth()->user()->email;
         } else {
-            $comment              = new Comment();
-            $comment->user_id     = auth()->id();
-            $comment->campaign_id = $campaign->id;
-            $comment->comment     = request('comment');
+            $comment->user_id = null;
+            $comment->name    = request('name');
+            $comment->email   = request('email');
         }
 
+        $comment->campaign_id = $campaign->id;
+        $comment->comment     = request('comment');
         $comment->save();
 
-        $toast[] = ['success', 'Your comment has submitted'];
+        // Create admin notification
+        $adminNotification = new AdminNotification();
+
+        if (auth()->check()) {
+            $adminNotification->user_id = auth()->id();
+            $adminNotification->title   = auth()->user()->fullname . ' has commented on a campaign.';
+        } else {
+            $adminNotification->user_id = 0;
+            $adminNotification->title   = request('name') . ' has commented on a campaign.';
+        }
+
+        $adminNotification->click_url = urlPath('admin.comments.index');
+        $adminNotification->save();
+
+        $toast[] = ['success', 'Your comment has submitted. Please wait for admin approval'];
 
         return back()->withToasts($toast);
     }

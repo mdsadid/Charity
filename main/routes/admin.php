@@ -68,6 +68,12 @@ Route::middleware('admin')->group(function () {
         Route::post('featured-update/{id}', 'updateFeatured')->name('featured.update');
     });
 
+    // Campaign comments
+    Route::controller('CommentController')->prefix('comments')->name('comments.')->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::post('status-update/{id}/{type}', 'updateStatus')->name('status.update');
+    });
+
     // User Management
     Route::controller('UserController')->name('user.')->prefix('user')->group(function () {
         Route::get('index', 'index')->name('index');

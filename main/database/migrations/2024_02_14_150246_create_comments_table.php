@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('campaign_id')->constrained();
+            $table->string('name', 40)->nullable();
+            $table->string('email', 40)->nullable();
             $table->text('comment');
+            $table->unsignedTinyInteger('status')
+                ->default(2)
+                ->comment('0 -> comment rejected by admin, 1 -> comment approved by admin, 2 -> comment is pending');
             $table->timestamps();
         });
     }

@@ -45,7 +45,7 @@ class Campaign extends Model
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class)->orderByDesc('id');
+        return $this->hasMany(Comment::class)->where('status', ManageStatus::CAMPAIGN_COMMENT_APPROVED)->orderByDesc('id');
     }
 
     /**

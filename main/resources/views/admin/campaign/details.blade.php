@@ -151,9 +151,9 @@
                             <div class="card-body">
                                 <h5>@lang('Comments')</h5>
 
-                                @if (count($campaign->comments))
+                                @if (count($comments))
                                     <div class="accordion accordion-bordered" id="commentsContent">
-                                        @foreach ($campaign->comments as $comment)
+                                        @foreach ($comments as $comment)
                                             <div @class(['accordion-item shadow-none border mb-0', 'border-bottom-0' => !$loop->last, 'active' => $loop->first])>
                                                 <div class="accordion-header" id="{{ 'heading_' . $loop->iteration }}">
                                                     <button type="button" @class(['accordion-button bg-lighter rounded-0', 'collapsed' => !$loop->first]) data-bs-toggle="collapse" data-bs-target="{{ '#comment_' . $loop->iteration }}" aria-expanded="@if ($loop->first) true @else false @endif" aria-controls="{{ 'comment_' . $loop->iteration }}">
@@ -171,6 +171,12 @@
                                             </div>
                                         @endforeach
                                     </div>
+
+                                    @if ($comments->hasPages())
+                                        <div class="pagination justify-content-center mt-4">
+                                            {{ paginateLinks($comments) }}
+                                        </div>
+                                    @endif
                                 @else
                                     <p class="mb-0">{{ __($emptyMessage) }}</p>
                                 @endif
@@ -211,6 +217,10 @@
             width: 100%;
             height: 450px;
             border-radius: 5px;
+        }
+
+        ul.pagination {
+            margin-bottom: 0;
         }
     </style>
 @endpush

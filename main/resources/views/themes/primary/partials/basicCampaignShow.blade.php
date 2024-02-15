@@ -72,26 +72,24 @@
             @endforelse
         </div>
 
-        @if (request()->routeIs('campaign.show'))
+        @if (request()->routeIs('campaign.show') && $campaign->user_id != @$authUser->id)
             <div class="donation-details__post__comment">
-                @guest
-                    <p>
-                        @lang('Leave a comment.') <a href="{{ route('user.login') }}" class="text--base">@lang('Sign In')</a>
-                    </p>
-                @endguest
-
-                @auth
-                    <h3 class="donation-details__subtitle">@lang('Post a comment')</h3>
-                    <form action="{{ route('campaign.comment', @$campaign->slug) }}" method="POST" class="row g-4">
-                        @csrf
-                        <div class="col-12">
-                            <textarea class="form--control" name="comment" rows="10" placeholder="Your Comment*" required>{{ old('comment') }}</textarea>
-                        </div>
-                        <div class="col-12 d-flex justify-content-center">
-                            <button type="submit" class="btn btn--base">@lang('Submit')</button>
-                        </div>
-                    </form>
-                @endauth
+                <h3 class="donation-details__subtitle">@lang('Post a comment')</h3>
+                <form action="{{ route('campaign.comment', @$campaign->slug) }}" method="POST" class="row g-4">
+                    @csrf
+                    <div class="col-sm-6">
+                        <input type="text" name="name" class="form--control" value="{{ old('name', @$authUser->fullname) }}" placeholder="Your Name*" required @readonly($authUser)>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="email" name="email" class="form--control" value="{{ old('email', @$authUser->email) }}" placeholder="Your Email*" required @readonly($authUser)>
+                    </div>
+                    <div class="col-12">
+                        <textarea class="form--control" name="comment" rows="10" placeholder="Your Comment*" required>{{ old('comment') }}</textarea>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="submit" class="btn btn--base">@lang('Submit')</button>
+                    </div>
+                </form>
             </div>
         @endif
     </div>

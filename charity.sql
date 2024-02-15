@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 15, 2024 at 07:05 AM
+-- Generation Time: Feb 15, 2024 at 12:40 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -111,7 +111,8 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (43, 13, 'New member registered', 0, '/admin/user/index', '2024-02-14 12:15:55', '2024-02-14 12:15:55'),
 (44, 12, 'New campaign created by Md. Sadid Hasan Rakib', 0, '/admin/campaigns/index', '2024-02-15 04:56:21', '2024-02-15 04:56:21'),
 (45, 14, 'New member registered', 0, '/admin/user/index', '2024-02-15 06:29:09', '2024-02-15 06:29:09'),
-(46, 15, 'New member registered', 0, '/admin/user/index', '2024-02-15 07:03:04', '2024-02-15 07:03:04');
+(46, 15, 'New member registered', 0, '/admin/user/index', '2024-02-15 07:03:04', '2024-02-15 07:03:04'),
+(49, 15, 'Jane Doe has commented on a campaign.', 0, '/admin/comments/index', '2024-02-15 10:44:57', '2024-02-15 10:44:57');
 
 -- --------------------------------------------------------
 
@@ -207,9 +208,12 @@ INSERT INTO `categories` (`id`, `image`, `name`, `slug`, `status`, `created_at`,
 
 CREATE TABLE `comments` (
   `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
   `campaign_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint UNSIGNED NOT NULL DEFAULT '2' COMMENT '0 -> comment rejected by admin, 1 -> comment approved by admin, 2 -> comment is pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -218,10 +222,8 @@ CREATE TABLE `comments` (
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`id`, `user_id`, `campaign_id`, `comment`, `created_at`, `updated_at`) VALUES
-(1, 13, 13, 'Join us in our campaign to ensure that every child receives the gift of education. Together, we can break down barriers and create a world where every child, regardless of their background or circumstances, has the opportunity to learn, grow, and thrive. Your support will not only transform individual lives but also contribute to building stronger, more equitable communities for generations to come. Let\'s make education a reality for every child, unlocking their potential and shaping a brighter future for us all.', '2024-02-14 12:19:00', '2024-02-15 06:25:41'),
-(2, 14, 13, 'I\'m thrilled to be a part of the Rise Together campaign! Together, we can make a real difference in our communities and build a brighter future for everyone.', '2024-02-15 06:31:09', '2024-02-15 06:31:09'),
-(3, 15, 13, 'I\'m inspired by the spirit of collaboration and empowerment behind Rise Together. Let\'s keep the positivity flowing and create a better world for all.', '2024-02-15 07:04:21', '2024-02-15 07:04:21');
+INSERT INTO `comments` (`id`, `user_id`, `campaign_id`, `name`, `email`, `comment`, `status`, `created_at`, `updated_at`) VALUES
+(1, 15, 13, 'Jane Doe', 'jane@gmail.com', 'Join us in our campaign to ensure that every child receives the gift of education. Together, we can break down barriers and create a world where every child, regardless of their background or circumstances, has the opportunity to learn, grow, and thrive. Your support will not only transform individual lives but also contribute to building stronger, more equitable communities for generations to come. Let\'s make education a reality for every child, unlocking their potential and shaping a brighter future for us all.', 2, '2024-02-15 10:44:57', '2024-02-15 10:44:57');
 
 -- --------------------------------------------------------
 
@@ -505,7 +507,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (35, '2024_01_31_140216_create_categories_table', 18),
 (38, '2024_02_03_151844_create_campaigns_table', 19),
 (39, '2024_02_04_152936_create_galleries_table', 19),
-(40, '2024_02_14_150246_create_comments_table', 20);
+(43, '2024_02_14_150246_create_comments_table', 20);
 
 -- --------------------------------------------------------
 
@@ -1103,7 +1105,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1127,7 +1129,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -1181,7 +1183,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`

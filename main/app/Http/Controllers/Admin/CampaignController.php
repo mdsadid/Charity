@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Comment;
 
 class CampaignController extends Controller
 {
@@ -49,9 +50,13 @@ class CampaignController extends Controller
     function details($id) {
         $pageTitle = 'Campaign Details';
         $backRoute = route('admin.campaigns.index');
-        $campaign  = Campaign::with(['user', 'category', 'comments.user'])->where('id', $id)->first();
+        $campaign  = Campaign::with(['user', 'category'])->where('id', $id)->first();
+        $comments  = Comment::with('user')
+            ->where('campaign_id', $campaign->id)
+            ->latest()
+            ->paginate(getPaginate());
 
-        return view('admin.campaign.details', compact('pageTitle', 'campaign', 'backRoute'));
+        return view('admin.campaign.details', compact('pageTitle', 'backRoute', 'campaign', 'comments'));
     }
 
     function updateStatus($id, $type) {
