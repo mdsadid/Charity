@@ -87,7 +87,7 @@ class WebsiteController extends Controller
         ]);
 
         // Check whether user active or not
-        if (!auth()->user()->status) {
+        if (auth()->check() && !auth()->user()->status) {
             $toast[] = ['error', 'The user is banned'];
 
             return back()->withToasts($toast);
@@ -121,13 +121,13 @@ class WebsiteController extends Controller
         }
 
         // Check whether user commenting on his/her own campaign
-        if ($campaign->user_id == auth()->id()) {
+        if (auth()->check() && $campaign->user_id == auth()->id()) {
             $toast[] = ['error', 'You can\'t comment on your own campaign'];
 
             return back()->withToasts($toast);
         }
 
-        $comment              = new Comment();
+        $comment = new Comment();
 
         if (auth()->check()) {
             $comment->user_id = auth()->id();

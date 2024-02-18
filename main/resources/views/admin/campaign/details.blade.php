@@ -155,12 +155,15 @@
                                     <div class="accordion accordion-bordered" id="commentsContent">
                                         @foreach ($comments as $comment)
                                             <div @class(['accordion-item shadow-none border mb-0', 'border-bottom-0' => !$loop->last, 'active' => $loop->first])>
-                                                <div class="accordion-header" id="{{ 'heading_' . $loop->iteration }}">
-                                                    <button type="button" @class(['accordion-button bg-lighter rounded-0', 'collapsed' => !$loop->first]) data-bs-toggle="collapse" data-bs-target="{{ '#comment_' . $loop->iteration }}" aria-expanded="@if ($loop->first) true @else false @endif" aria-controls="{{ 'comment_' . $loop->iteration }}">
+                                                <div class="accordion-header d-flex justify-content-between align-items-center bg-lighter" id="{{ 'heading_' . $loop->iteration }}">
+                                                    <button type="button" @class(['accordion-button bg-transparent rounded-0', 'collapsed' => !$loop->first]) data-bs-toggle="collapse" data-bs-target="{{ '#comment_' . $loop->iteration }}" aria-expanded="@if ($loop->first) true @else false @endif" aria-controls="{{ 'comment_' . $loop->iteration }}">
                                                         <span class="d-flex flex-column">
-                                                            <span class="h5 mb-2">{{ __($comment->user->fullname) }}</span>
-                                                            <span class="fw-normal">{{ showDateTime($comment->updated_at, 'd M, Y') }}</span>
+                                                            <h5 class="mb-2">{{ __($comment->user ? $comment->user->fullname : $comment->name) }}</h5>
+                                                            <span class="fw-normal">{{ showDateTime($comment->created_at, 'd M, Y') }}</span>
                                                         </span>
+                                                    </button>
+                                                    <button type="button" class="text-danger border-0 bg-transparent h-100 me-3 commentDeleteButton" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}">
+                                                        <i class="las la-trash-alt"></i>
                                                     </button>
                                                 </div>
                                                 <div id="{{ 'comment_' . $loop->iteration }}" @class(['accordion-collapse collapse', 'show' => $loop->first]) data-bs-parent="#commentsContent">
@@ -189,6 +192,8 @@
     </div>
 
     <x-decisionModal />
+
+    @include('admin.partials.deleteComment')
 @endsection
 
 @push('breadcrumb')
@@ -217,6 +222,10 @@
             width: 100%;
             height: 450px;
             border-radius: 5px;
+        }
+
+        .commentDeleteButton i {
+            font-size: 1.2rem;
         }
 
         ul.pagination {

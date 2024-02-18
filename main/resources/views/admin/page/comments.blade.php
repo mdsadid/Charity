@@ -65,14 +65,22 @@
                                             </button>
 
                                             <ul class="dropdown-menu">
+                                                @if ($comment->status == ManageStatus::CAMPAIGN_COMMENT_PENDING)
+                                                    <li>
+                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this comment?')" data-action="{{ route('admin.comments.status.update', [$comment->id, 'approve']) }}">
+                                                            <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve Comment')
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this comment?')" data-action="{{ route('admin.comments.status.update', [$comment->id, 'reject']) }}">
+                                                            <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject Comment')
+                                                        </button>
+                                                    </li>
+                                                @endif
+
                                                 <li>
-                                                    <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this comment?')" data-action="{{ route('admin.comments.status.update', [$comment->id, 'approve']) }}">
-                                                        <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve Comment')
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this comment?')" data-action="{{ route('admin.comments.status.update', [$comment->id, 'reject']) }}">
-                                                        <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject Comment')
+                                                    <button type="button" class="dropdown-item commentDeleteButton" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}">
+                                                        <i class="las la-trash-alt fs-6 link-danger"></i> @lang('Delete Comment')
                                                     </button>
                                                 </li>
                                             </ul>
@@ -108,6 +116,8 @@
     </div>
 
     <x-decisionModal />
+
+    @include('admin.partials.deleteComment')
 @endsection
 
 @push('page-script')
@@ -116,7 +126,7 @@
             "use strict"
 
             $('.commentViewBtn').on('click', function() {
-                let comment = $(this).data('comment')
+                let comment     = $(this).data('comment')
                 let commentHtml = `<p>${comment}</p>`
 
                 $('.userComment').html(commentHtml)

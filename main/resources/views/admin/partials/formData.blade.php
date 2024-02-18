@@ -1,4 +1,3 @@
-
 <div class="col-12 mt-4">
     <div class="card mb-4 border">
         <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center border-bottom">
@@ -12,13 +11,13 @@
 
         <div class="card-body">
             <div class="row g-4 addedField">
-                @if($form)
-                    @foreach($form->form_data as $formData)
+                @if ($form)
+                    @foreach ($form->form_data as $formData)
                         <div class="col-xxl-4 col-md-6">
                             <div class="card border p-3" id="{{ $loop->index }}">
                                 <input type="hidden" name="form_generator[is_required][]" value="{{ $formData->is_required }}">
                                 <input type="hidden" name="form_generator[extensions][]" value="{{ $formData->extensions }}">
-                                <input type="hidden" name="form_generator[options][]" value="{{ implode(',',$formData->options) }}">
+                                <input type="hidden" name="form_generator[options][]" value="{{ implode(',', $formData->options) }}">
 
                                 <div class="row mb-3">
                                     <label class="col-md-4 col-form-label">@lang('Label')</label>
@@ -69,5 +68,5 @@
         formGenerator.totalField = {{ $form ? count((array) $form->form_data) : 0 }}
     </script>
 
-    <script src="{{asset('assets/universal/js/form_actions.js')}}"></script>
+    <script src="{{ asset('assets/universal/js/form_actions.js') }}"></script>
 @endpush

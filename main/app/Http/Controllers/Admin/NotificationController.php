@@ -43,8 +43,9 @@ class NotificationController extends Controller
     function templateEdit($id) {
         $template  = NotificationTemplate::findOrFail($id);
         $pageTitle = $template->name;
+        $backRoute = route('admin.notification.templates');
 
-        return view('admin.notification.edit', compact('pageTitle', 'template'));
+        return view('admin.notification.edit', compact('pageTitle', 'template', 'backRoute'));
     }
 
     function templateUpdate($id){

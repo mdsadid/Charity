@@ -72,6 +72,7 @@ Route::middleware('admin')->group(function () {
     Route::controller('CommentController')->prefix('comments')->name('comments.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::post('status-update/{id}/{type}', 'updateStatus')->name('status.update');
+        Route::post('delete/{id}', 'destroy')->name('delete');
     });
 
     // User Management

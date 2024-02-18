@@ -53,6 +53,7 @@ class CampaignController extends Controller
         $campaign  = Campaign::with(['user', 'category'])->where('id', $id)->first();
         $comments  = Comment::with('user')
             ->where('campaign_id', $campaign->id)
+            ->approve()
             ->latest()
             ->paginate(getPaginate());
 
@@ -68,7 +69,6 @@ class CampaignController extends Controller
 
         notify($campaign->user, $template, [
             'campaign_name' => $campaign->name,
-            'user_name'     => $campaign->user->fullname,
         ]);
 
         $toastMsg = ($type == 'approve') ? 'Campaign approval success' : 'Campaign rejection success';

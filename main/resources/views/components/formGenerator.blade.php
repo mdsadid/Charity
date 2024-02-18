@@ -54,22 +54,22 @@
 </div>
 
 @push('page-style-lib')
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/select2.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/select2.css') }}">
 @endpush
 
 @push('page-script-lib')
-    <script src="{{asset('assets/admin/js/page/select2.js')}}"></script>
-    <script src="{{asset('assets/universal/js/form_generator.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/page/select2.js') }}"></script>
+    <script src="{{ asset('assets/universal/js/form_generator.js') }}"></script>
 @endpush
 
 @push('page-script')
-  <script>
-    (function ($) {
-        "use strict";
+    <script>
+        (function($) {
+            "use strict";
 
-        $(document).find('.select2').select2({
-            dropdownParent: '.select2-design'
-        });
-    })(jQuery);
-  </script>
+            $(document).find('.select2').select2({
+                dropdownParent: '.select2-design'
+            });
+        })(jQuery);
+    </script>
 @endpush

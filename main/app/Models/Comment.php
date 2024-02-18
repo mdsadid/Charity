@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\ManageStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
@@ -39,5 +40,13 @@ class Comment extends Model
                 return $html;
             },
         );
+    }
+
+    /**
+     * Scope a query to only include approved comments.
+     */
+    public function scopeApprove($query)
+    {
+        $query->where('status', ManageStatus::CAMPAIGN_COMMENT_APPROVED);
     }
 }

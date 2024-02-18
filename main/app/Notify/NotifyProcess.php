@@ -84,11 +84,6 @@ class NotifyProcess
     public $message;
 
     /**
-     * Notification log will be created or not
-     *
-     * @var bool
-
-    /**
      * Method configuration field name in database
      *
      * @var string

@@ -47,9 +47,9 @@
                         </thead>
 
                         <tbody class="table-border-bottom-0">
-                            @foreach($setting->universal_shortcodes as $shortCode => $codeDetails)
+                            @foreach ($setting->universal_shortcodes as $shortCode => $codeDetails)
                                 <tr>
-                                    <td>@{{@php echo $shortCode @endphp}}</td>
+                                    <td>@php echo "{{". $shortCode ."}}"  @endphp</td>
                                     <td>{{ __($codeDetails) }}</td>
                                 </tr>
                             @endforeach
@@ -77,7 +77,7 @@
                             <label class="col-sm-3 col-form-label">@lang('Status')</label>
                             <div class="col-sm-9">
                                 <label class="switch me-0">
-                                    <input type="checkbox" class="switch-input" name="email_status" @if($template->email_status) checked @endif>
+                                    <input type="checkbox" class="switch-input" name="email_status" @if ($template->email_status) checked @endif>
                                     @include('admin.partials.switcher')
                                 </label>
                             </div>
@@ -96,7 +96,7 @@
                             <label class="col-sm-3 col-form-label">@lang('Status')</label>
                             <div class="col-sm-9">
                                 <label class="switch me-0">
-                                    <input type="checkbox" class="switch-input" name="sms_status" @if($template->sms_status) checked @endif>
+                                    <input type="checkbox" class="switch-input" name="sms_status" @if ($template->sms_status) checked @endif>
                                     @include('admin.partials.switcher')
                                 </label>
                             </div>
@@ -118,22 +118,32 @@
     </form>
 @endsection
 
+@push('breadcrumb')
+    <a href="{{ $backRoute }}" class="btn btn-label-primary">
+        <span class="tf-icons las la-arrow-circle-left me-1"></span> @lang('Back')
+    </a>
+@endpush
+
 @push('page-script-lib')
     <script src="{{ asset('assets/admin/js/page/nicEdit.js') }}"></script>
 @endpush
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
             bkLib.onDomLoaded(function() {
-                $( ".nicEdit" ).each(function( index ) {
-                    $(this).attr("id","nicEditor"+index);
-                    new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
+                $(".nicEdit").each(function(index) {
+                    $(this).attr("id", "nicEditor" + index);
+
+                    new nicEditor({
+                        fullPanel: true
+                    }).panelInstance('nicEditor' + index, {
+                        hasPanel: true
+                    });
                 });
             });
         })(jQuery);
     </script>
 @endpush
-

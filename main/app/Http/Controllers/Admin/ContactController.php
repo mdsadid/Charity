@@ -63,7 +63,7 @@ class ContactController extends Controller
         $toast[] = ['success', 'Contact delete success'];
         return back()->withToasts($toast);
     }
-    
+
     function contactStatus($id) {
         return Contact::changeStatus($id);
     }

@@ -22,13 +22,35 @@ class CommentController extends Controller
 
         $template = ($type == 'approve') ? 'COMMENT_APPROVE' : 'COMMENT_REJECT';
 
-        notify($campaign->user, $template, [
-            'campaign_name' => $campaign->name,
-        ]);
+        if ($comment->user) {
+            $user = [
+                'username' => $comment->user->username,
+                'email'    => $comment->user->email,
+                'fullname' => $comment->user->fullname,
+            ];
+        } else {
+            $user = [
+                'username' => $comment->email,
+                'email'    => $comment->email,
+                'fullname' => $comment->name,
+            ];
+        }
 
-        $toastMsg = ($type == 'approve') ? 'Campaign approval success' : 'Campaign rejection success';
+        notify($user, $template, [
+            'campaign_name' => $comment->campaign->name,
+        ], ['email']);
+
+        $toastMsg = ($type == 'approve') ? 'Comment approval success' : 'Comment rejection success';
 
         $toast[] = ['success', $toastMsg];
+
+        return back()->withToasts($toast);
+    }
+
+    function destroy($id) {
+        Comment::where('id', $id)->delete();
+
+        $toast[] = ['success', 'Comment deleted successfully'];
 
         return back()->withToasts($toast);
     }
