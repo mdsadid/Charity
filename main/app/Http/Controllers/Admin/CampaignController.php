@@ -68,6 +68,7 @@ class CampaignController extends Controller
 
         notify($campaign->user, $template, [
             'campaign_name' => $campaign->name,
+            'user_name'     => $campaign->user->fullname,
         ]);
 
         $toastMsg = ($type == 'approve') ? 'Campaign approval success' : 'Campaign rejection success';
