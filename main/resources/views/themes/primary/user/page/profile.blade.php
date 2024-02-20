@@ -17,10 +17,25 @@
                                     </ul>
                                 </div>
                                 <div class="col-lg-7">
-                                    <form action="" method="POST" class="row gx-4 gy-3">
+                                    <form action="" method="POST" class="row gx-4 gy-3" enctype="multipart/form-data">
                                         @csrf
                                         <div class="col-12">
                                             <h6 class="card-subtitle"><i class="fa-solid fa-user"></i> @lang('Update Profile')</h6>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="upload__img mb-2">
+                                                <label for="imageUpload" class="form--label required">@lang('Image')</label>
+                                                <label for="imageUpload" class="upload__img__btn"><i class="las la-camera"></i></label>
+                                                <input type="file" id="imageUpload" name="image" required accept=".jpeg, .jpg, .png">
+                                                <div class="upload__img-preview image-preview">
+                                                    @if ($user->image)
+                                                        <img src="{{ getImage(getFilePath('userProfile') . '/' . $user->image, getFileSize('userProfile')) }}" alt="">
+                                                    @else
+                                                        +
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <span><em><small>*@lang('Supported files'): <span class="text--base fw-bold">@lang('jpeg'), @lang('jpg'), @lang('png')</span>. @lang('Image size'): <span class="text--base fw-bold">{{ getFileSize('userProfile') }}@lang('px')</span>.</small></em></span>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="form--label required">@lang('First Name')</label>
@@ -59,3 +74,20 @@
         </div>
     </div>
 @endsection
+
+@push('page-style')
+    <style>
+        .upload__img {
+            margin-left: 0;
+        }
+
+        .upload__img input, 
+        .image-preview {
+            width: 200px;
+        }
+
+        .upload__img .image-preview {
+            color: rgb(136, 134, 134);
+        }
+    </style>
+@endpush

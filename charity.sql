@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 18, 2024 at 11:04 AM
+-- Generation Time: Feb 20, 2024 at 09:22 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -121,7 +121,11 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (55, 13, 'Md. Saeed Mahmud has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 10:35:03', '2024-02-18 10:35:03'),
 (56, 13, 'Md. Saeed Mahmud has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 10:35:53', '2024-02-18 10:35:53'),
 (57, 13, 'Md. Saeed Mahmud has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 10:59:40', '2024-02-18 10:59:40'),
-(58, 13, 'Md. Saeed Mahmud has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 11:00:28', '2024-02-18 11:00:28');
+(58, 13, 'Md. Saeed Mahmud has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 11:00:28', '2024-02-18 11:00:28'),
+(59, 13, 'Md. Saeed Mahmud has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 11:23:52', '2024-02-18 11:23:52'),
+(60, 0, 'Greg Nixon has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 11:26:21', '2024-02-18 11:26:21'),
+(61, 0, 'Rose Miles has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 11:28:19', '2024-02-18 11:28:19'),
+(62, 0, 'Irma Stewart has commented on a campaign.', 0, '/admin/comments/index', '2024-02-18 11:29:10', '2024-02-18 11:29:10');
 
 -- --------------------------------------------------------
 
@@ -232,12 +236,16 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `user_id`, `campaign_id`, `name`, `email`, `comment`, `status`, `created_at`, `updated_at`) VALUES
-(1, 15, 13, 'Jane Doe', 'jane@gmail.com', 'Join us in our campaign to ensure that every child receives the gift of education. Together, we can break down barriers and create a world where every child, regardless of their background or circumstances, has the opportunity to learn, grow, and thrive. Your support will not only transform individual lives but also contribute to building stronger, more equitable communities for generations to come. Let\'s make education a reality for every child, unlocking their potential and shaping a brighter future for us all.', 1, '2024-02-15 10:44:57', '2024-02-18 07:58:04'),
+(1, 15, 13, 'Jane Doe', 'jane@gmail.com', 'The Rise Together campaign is a reminder that we\'re stronger when we lift each other up. Let\'s rise to the occasion and make a difference!', 1, '2024-02-15 10:44:57', '2024-02-18 07:58:04'),
 (2, 15, 13, 'Jane Doe', 'jane@gmail.com', 'I love the message of unity and empowerment behind the Rise Together campaign. Let\'s work together to create lasting impact.', 1, '2024-02-18 08:55:07', '2024-02-18 08:56:20'),
 (3, NULL, 13, 'Alexander Holland', 'alexander@gmail.com', 'I\'m inspired by the spirit of collaboration and empowerment behind Rise Together. Let\'s keep the positivity flowing and create a better world for all.', 1, '2024-02-18 09:01:40', '2024-02-18 09:02:12'),
 (4, NULL, 14, 'Shawn Wood', 'shawn@gmail.com', 'The Rise Together campaign is a reminder that we\'re stronger when we lift each other up. Let\'s rise to the occasion and make a difference!', 0, '2024-02-18 09:07:04', '2024-02-18 09:08:51'),
 (5, NULL, 14, 'Juana Castro', 'juana@gmail.com', 'As a community leader, I\'m excited to see initiatives like Rise Together bringing people together for positive change. It\'s inspiring!', 1, '2024-02-18 09:07:34', '2024-02-18 09:09:14'),
-(6, 13, 14, 'Md. Saeed Mahmud', 'saeed@gmail.com', 'The Rise Together campaign gives me hope for a better future. Let\'s keep the momentum going!', 2, '2024-02-18 09:08:18', '2024-02-18 09:08:18');
+(6, 13, 14, 'Md. Saeed Mahmud', 'saeed@gmail.com', 'The Rise Together campaign gives me hope for a better future. Let\'s keep the momentum going!', 2, '2024-02-18 09:08:18', '2024-02-18 09:08:18'),
+(11, 13, 13, 'Md. Saeed Mahmud', 'saeed@gmail.com', 'I\'ve already seen the impact of Rise Together in my community. It\'s incredible how coming together can create meaningful change.', 1, '2024-02-18 11:23:52', '2024-02-18 11:26:35'),
+(12, NULL, 13, 'Greg Nixon', 'greg@gmail.com', 'Rise Together is exactly what our community needs right now. Let\'s join forces and make a difference!', 1, '2024-02-18 11:26:21', '2024-02-18 11:26:40'),
+(13, NULL, 13, 'Rose Miles', 'rose@gmail.com', 'I\'ve donated to this campaign and encourage others to do the same. Every little bit helps!', 1, '2024-02-18 11:28:19', '2024-02-18 11:29:25'),
+(14, NULL, 13, 'Irma Stewart', 'irma@gmail.com', 'The stories shared in this campaign are touching. Let\'s continue to amplify voices and create change.', 1, '2024-02-18 11:29:10', '2024-02-18 11:29:29');
 
 -- --------------------------------------------------------
 
@@ -866,10 +874,10 @@ INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`
 (5, NULL, 'Demo', 'User Five', 'demouser5', 'demofive@demo.com', 'MT', 'Malta', '35612345678', 0, 0.00000000, '$2y$10$mHk3S8SI3O7MCKlhvxLi7u4Px4v9ZXWm6Ux.pLPSe4wRB6Hm7dZVW', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:09:35', '2023-12-05 16:09:35'),
 (10, NULL, 'Demo', 'User Six', 'demouser6', 'demosix@demo.com', 'TM', 'Turkmenistan', '993123456789', 0, 0.00000000, '$2y$10$i3XurA7Zxy3h1dWiUP12b.s.Tcn0a9Do2gBUbmujUwz4bpvti1A7e', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:19:44', '2023-12-05 17:19:44'),
 (11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42'),
-(12, NULL, 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"House - 32, Road - 04, Block - C, Pallabi, Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-01-31 06:35:41'),
-(13, NULL, 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '88001931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-14 12:16:58'),
+(12, '65d466e8710181708418792.jpg', 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"House - 32, Road - 04, Block - C, Pallabi, Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-02-20 08:46:33'),
+(13, '65d46c259fae31708420133.jpg', 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '88001931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-20 09:08:54'),
 (14, NULL, 'John', 'Doe', 'johndoe', 'john@gmail.com', 'AX', 'Aland Islands', '358123456789', 0, 0.00000000, '$2y$10$jXQZDC90YT2pJ1rKfbOcy.9wH/Y/N5PmzS0.K46rDYpxpeeOiObAq', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JOHN123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdaf5424bcf1707978580.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 06:29:09', '2024-02-15 06:30:01'),
-(15, NULL, 'Jane', 'Doe', 'janedoe', 'jane@gmail.com', 'AS', 'AmericanSamoa', '1684987654321', 0, 0.00000000, '$2y$10$KAT0wI0OgG2dV1yz0p0L9.ehVORSPMo1U9sYAUV3GKpBV2GLm5M5y', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JANE987654321\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdb73f528841707980607.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 07:03:04', '2024-02-15 07:03:37');
+(15, '65d46c908d6141708420240.jpg', 'Jane', 'Doe', 'janedoe', 'jane@gmail.com', 'AS', 'AmericanSamoa', '1684987654321', 0, 0.00000000, '$2y$10$KAT0wI0OgG2dV1yz0p0L9.ehVORSPMo1U9sYAUV3GKpBV2GLm5M5y', '{\"state\":null,\"zip\":null,\"city\":null,\"address\":null}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JANE987654321\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdb73f528841707980607.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 07:03:04', '2024-02-20 09:10:41');
 
 -- --------------------------------------------------------
 
@@ -1121,7 +1129,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1145,7 +1153,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `contacts`

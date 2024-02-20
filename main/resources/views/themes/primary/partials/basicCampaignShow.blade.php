@@ -53,7 +53,7 @@
     @endif
 
     <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab" tabindex="0">
-        <div class="donation-details__comments">
+        <div @class(['donation-details__comments', 'border-bottom-none' => $campaign->user_id == @$authUser->id])>
             <h3 class="donation-details__subtitle">@lang('Comments') ({{ @$commentCount }})</h3>
 
             @if (count($comments))
@@ -61,7 +61,7 @@
                     @foreach ($comments->take(5) as $comment)
                         <div class="donation-details__comment">
                             <div class="donation-details__comment__img">
-                                <img src="" alt="image">
+                                <img src="{{ getImage(getFilePath('userProfile') . '/' . @$comment->user->image, getFileSize('userProfile')) }}" alt="image">
                             </div>
                             <div class="donation-details__comment__txt">
                                 <h4 class="donation-details__comment__name">{{ __(@$comment->user ? @$comment->user->fullname : @$comment->name) }}</h4>
@@ -109,6 +109,10 @@
 
 @push('page-style')
     <style>
+        .border-bottom-none {
+            border-bottom: none;
+        }
+
         .loadComment {
             padding-top: 35px;
         }

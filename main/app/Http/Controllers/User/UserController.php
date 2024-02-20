@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
-use App\Lib\FormProcessor;
-use App\Lib\GoogleAuthenticator;
+use Exception;
 use App\Models\Form;
+use App\Lib\FormProcessor;
 use App\Models\Transaction;
+use App\Constants\ManageStatus;
+use App\Lib\GoogleAuthenticator;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
@@ -76,12 +78,24 @@ class UserController extends Controller
         $this->validate(request(), [
             'firstname' => 'required|string',
             'lastname'  => 'required|string',
+            'image'     => ['nullable', File::types(['png', 'jpg', 'jpeg'])],
         ], [
             'firstname.required' => 'First name field is required',
             'lastname.required'  => 'Last name field is required'
         ]);
 
-        $user            = auth()->user();
+        $user = auth()->user();
+
+        if (request()->hasFile('image')) {
+            try {
+                $user->image = fileUploader(request('image'), getFilePath('userProfile'), getFileSize('userProfile'), $user->image);
+            } catch (Exception) {
+                $toast[] = ['error', 'Image uploading process has failed'];
+
+                return back()->withToasts($toast);
+            }
+        }
+
         $user->firstname = request('firstname');
         $user->lastname  = request('lastname');
 
