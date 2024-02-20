@@ -187,19 +187,24 @@ class WebsiteController extends Controller
             ], 404);
         }
 
-        $comments = Comment::with('user')
+        $commentsCount = Comment::where('campaign_id', $campaign->id)->approve()->count();
+        $skip          = (int) request('skip');
+        $comments      = Comment::with('user')
             ->where('campaign_id', $campaign->id)
-            ->skip(request('skip'))
+            ->skip($skip)
             ->approve()
             ->latest()
             ->limit(5)
             ->get();
 
+        $remainingComments = $commentsCount - ($skip + $comments->count());
+
         if (count($comments)) {
             $view = view($this->activeTheme . 'partials.basicComment', compact('comments'))->render();
 
             return response()->json([
-                'html' => $view
+                'html'               => $view,
+                'remaining_comments' => $remainingComments,
             ]);
         } else {
             return response()->json([

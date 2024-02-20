@@ -75,21 +75,6 @@
                 <p>{{ __($emptyMessage) }}</p>
             @endif
 
-            {{-- @forelse ($comments->take(5) as $comment)
-                <div class="donation-details__comment">
-                    <div class="donation-details__comment__img">
-                        <img src="" alt="image">
-                    </div>
-                    <div class="donation-details__comment__txt">
-                        <h4 class="donation-details__comment__name">{{ __(@$comment->user ? @$comment->user->fullname : @$comment->name) }}</h4>
-                        <p class="donation-details__comment__date">{{ showDateTime(@$comment->created_at, 'd M, Y') }}</p>
-                        <p class="donation-details__comment__desc">{{ __(@$comment->comment) }}</p>
-                    </div>
-                </div>
-            @empty
-                <p>{{ __($emptyMessage) }}</p>
-            @endforelse --}}
-
             @if (count($comments) > 5)
                 <div class="text-center loadComment">
                     <button type="button" class="btn btn--base loadCommentButton" data-url="{{ route('campaign.comment.fetch', $campaign->slug) }}">
@@ -154,6 +139,10 @@
                         $('#loadMoreComment').append(response.html)
                         _this.removeClass('btn-disabled').attr("disabled", false)
                         showComments += 5
+
+                        if (response.remaining_comments == 0) {
+                            $('.loadComment').addClass('d-none')
+                        }
                     },
                     error: function(errorData) {
                         if (errorData.status === 400) {
