@@ -54,9 +54,28 @@
 
     <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab" tabindex="0">
         <div class="donation-details__comments">
-            <h3 class="donation-details__subtitle">@lang('Comments') ({{ count(@$campaign->comments) }})</h3>
+            <h3 class="donation-details__subtitle">@lang('Comments') ({{ @$commentCount }})</h3>
 
-            @forelse ($campaign->comments as $comment)
+            @if (count($comments))
+                <div id="loadMoreComment">
+                    @foreach ($comments->take(5) as $comment)
+                        <div class="donation-details__comment">
+                            <div class="donation-details__comment__img">
+                                <img src="" alt="image">
+                            </div>
+                            <div class="donation-details__comment__txt">
+                                <h4 class="donation-details__comment__name">{{ __(@$comment->user ? @$comment->user->fullname : @$comment->name) }}</h4>
+                                <p class="donation-details__comment__date">{{ showDateTime(@$comment->created_at, 'd M, Y') }}</p>
+                                <p class="donation-details__comment__desc">{{ __(@$comment->comment) }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p>{{ __($emptyMessage) }}</p>
+            @endif
+
+            {{-- @forelse ($comments->take(5) as $comment)
                 <div class="donation-details__comment">
                     <div class="donation-details__comment__img">
                         <img src="" alt="image">
@@ -69,7 +88,15 @@
                 </div>
             @empty
                 <p>{{ __($emptyMessage) }}</p>
-            @endforelse
+            @endforelse --}}
+
+            @if (count($comments) > 5)
+                <div class="text-center loadComment">
+                    <button type="button" class="btn btn--base loadCommentButton" data-url="{{ route('campaign.comment.fetch', $campaign->slug) }}">
+                        @lang('Load More')
+                    </button>
+                </div>
+            @endif
         </div>
 
         @if (request()->routeIs('campaign.show') && $campaign->user_id != @$authUser->id)
@@ -94,3 +121,51 @@
         @endif
     </div>
 </div>
+
+@push('page-style')
+    <style>
+        .loadComment {
+            padding-top: 35px;
+        }
+    </style>
+@endpush
+
+@push('page-script')
+    <script>
+        (function($) {
+            "use strict"
+
+            let showComments = 5
+
+            $('.loadCommentButton').on('click', function() {
+                $(this).addClass('btn-disabled').attr("disabled", true)
+
+                let url = $(this).data('url')
+                let skip = showComments
+                let _this = $(this)
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {
+                        skip,
+                    },
+                    success: function(response) {
+                        $('#loadMoreComment').append(response.html)
+                        _this.removeClass('btn-disabled').attr("disabled", false)
+                        showComments += 5
+                    },
+                    error: function(errorData) {
+                        if (errorData.status === 400) {
+                            console.log(errorData.responseJSON.error.skip[0])
+                        } else {
+                            showToasts('error', errorData.responseJSON.message)
+                        }
+
+                        _this.removeClass('btn-disabled').attr("disabled", false)
+                    }
+                })
+            })
+        })(jQuery)
+    </script>
+@endpush

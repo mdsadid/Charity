@@ -7,8 +7,11 @@ Route::controller('WebsiteController')->group(function () {
     Route::get('about-us', 'aboutUs')->name('about.us');
     Route::get('faq', 'faq')->name('faq');
     Route::get('campaign', 'campaigns')->name('campaign');
-    Route::get('campaign/{slug}', 'campaignShow')->name('campaign.show');
-    Route::post('campaign/{slug}/comment', 'storeCampaignComment')->name('campaign.comment');
+    Route::prefix('campaign/{slug}')->name('campaign.')->group(function () {
+        Route::get('', 'campaignShow')->name('show');
+        Route::post('comment', 'storeCampaignComment')->name('comment');
+        Route::get('fetch-comment', 'fetchCampaignComment')->name('comment.fetch');
+    });
     Route::get('event', 'events')->name('event');
     Route::get('contact', 'contact')->name('contact');
 

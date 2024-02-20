@@ -11,6 +11,7 @@ use App\Models\SiteData;
 use App\Constants\ManageStatus;
 use App\Models\AdminNotification;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Validator;
 
 class WebsiteController extends Controller
 {
@@ -58,8 +59,13 @@ class WebsiteController extends Controller
     function campaignShow($slug) {
         $pageTitle        = 'Campaign Details';
         $campaign         = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
-        $comments         = $campaign->comments;
-        $comments->load('user');
+        $comments         = Comment::with('user')
+            ->where('campaign_id', $campaign->id)
+            ->approve()
+            ->latest()
+            ->limit(6)
+            ->get();
+        $commentCount     = Comment::where('campaign_id', $campaign->id)->approve()->count();
         $authUser         = auth()->user();
         $relatedCampaigns = Campaign::where('category_id', $campaign->category_id)
             ->whereNot('slug', $campaign->slug)
@@ -76,7 +82,7 @@ class WebsiteController extends Controller
         $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaign->image, $imageSize);
         $seoContents['image_size']         = $imageSize;
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser'));
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount'));
     }
 
     function storeCampaignComment($slug) {
@@ -160,6 +166,46 @@ class WebsiteController extends Controller
         $toast[] = ['success', 'Your comment has submitted. Please wait for admin approval'];
 
         return back()->withToasts($toast);
+    }
+
+    function fetchCampaignComment($slug) {
+        $validator = Validator::make(request()->all(), [
+            'skip' => 'required|integer|gt:0'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors(),
+            ], 400);
+        }
+
+        $campaign = Campaign::where('slug', $slug)->first();
+
+        if (!$campaign) {
+            return response()->json([
+                'message' => 'Campaign not found'
+            ], 404);
+        }
+
+        $comments = Comment::with('user')
+            ->where('campaign_id', $campaign->id)
+            ->skip(request('skip'))
+            ->approve()
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        if (count($comments)) {
+            $view = view($this->activeTheme . 'partials.basicComment', compact('comments'))->render();
+
+            return response()->json([
+                'html' => $view
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'No more comments found'
+            ], 404);
+        }
     }
 
     function events() {
