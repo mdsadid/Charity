@@ -1983,6 +1983,7 @@ p {
     line-height: 32px;
     padding: 0;
     position: relative;
+    cursor: pointer;
 }
 
 .form--control[type=file]::file-selector-button {
@@ -1994,6 +1995,7 @@ p {
     line-height: 32.6px;
     position: relative;
     color: hsl(var(--white)) !important;
+    cursor: pointer;
 }
 
 .form--control[type=file]::file-selector-button:hover {

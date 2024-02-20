@@ -56,8 +56,21 @@
                                     <label class="form--label required">@lang('Goal Amount')</label>
                                     <div class="input--group">
                                         <span class="input-group-text">{{ @$setting->cur_sym }}</span>
-                                        <input type="number" step="any" class="form--control" name="goal_amount" value="{{ old('goal_amount') }}" required>
+                                        <input type="number" step="any" min="0" class="form--control" name="goal_amount" value="{{ old('goal_amount') }}" required>
                                     </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form--label required">@lang('Preferred Amounts')</label>
+                                    <div class="d-flex gap-2">
+                                        <div class="input--group w-100">
+                                            <span class="input-group-text">{{ @$setting->cur_sym }}</span>
+                                            <input type="number" step="any" min="0" class="form--control" name="preferred_amounts[]" value="" required>
+                                        </div>
+                                        <a role="button" class="btn btn--base px-3 d-flex align-items-center" id="addMoreAmounts">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </a>
+                                    </div>
+                                    <div class="add-more-amounts"></div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Start Date')</label>
@@ -102,6 +115,15 @@
     <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/dropzone.min.css') }}">
 @endpush
 
+@push('page-style')
+    <style>
+        .datepicker {
+            caret-color: transparent;
+            cursor: pointer;
+        }
+    </style>
+@endpush
+
 @push('page-script-lib')
     <script src="{{ asset($activeThemeTrue . 'js/dropzone.min.js') }}"></script>
     <script src="{{ asset($activeThemeTrue . 'js/ckeditor.js') }}"></script>
@@ -111,6 +133,26 @@
     <script type="text/javascript">
         (function($) {
             "use strict"
+
+            // Add More Preferred Amounts On Campaign Create Start
+            $('#addMoreAmounts').on('click', function () {
+                $('.add-more-amounts').append(`
+                    <div class="extra-amount d-flex gap-2 pt-2">
+                        <div class="input--group w-100">
+                            <span class="input-group-text">{{ $setting->cur_sym }}</span>
+                            <input type="number" step="any" min="0" class="form--control" name="preferred_amounts[]" required>
+                        </div>
+                        <a role="button" class="btn btn--danger px-3 d-flex align-items-center close-extra-amount">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                `)
+            })
+
+            $(document).on('click', '.close-extra-amount', function () {
+                $(this).closest('.extra-amount').remove()
+            })
+            // Add More Preferred Amounts On Campaign Create End
 
             new Dropzone('.dropzone', {
                 thumbnailWidth: 200,
@@ -149,8 +191,8 @@
                 return false
             })
 
+            // Prevent to pick the older date
             $('.datepicker').on('pick.datepicker', function(e) {
-                // Prevent to pick the older date
                 if (e.date < new Date()) {
                     e.preventDefault()
                     showToasts('error', 'You can\'t pick older date')

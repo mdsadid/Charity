@@ -83,6 +83,8 @@ class WebsiteController extends Controller
             ->limit(4)
             ->get();
 
+        $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+
         $seoContents['keywords']           = $campaign->meta_keywords ?? [];
         $seoContents['social_title']       = $campaign->name;
         $seoContents['description']        = strLimit($campaign->description, 150);
@@ -91,7 +93,7 @@ class WebsiteController extends Controller
         $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaign->image, $imageSize);
         $seoContents['image_size']         = $imageSize;
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount'));
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount', 'countries'));
     }
 
     function storeCampaignComment($slug) {

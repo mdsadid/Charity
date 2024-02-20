@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 20, 2024 at 09:22 AM
+-- Generation Time: Feb 20, 2024 at 12:31 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -740,7 +740,7 @@ INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_a
 (35, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea3d571c61706420797.png\"}', '2024-01-28 05:46:37', '2024-01-28 05:46:37'),
 (36, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea48bce621706420808.png\"}', '2024-01-28 05:46:48', '2024-01-28 05:46:48'),
 (37, 'partner.element', '{\"has_image\":\"1\",\"image\":\"65b5ea53051e61706420819.png\"}', '2024-01-28 05:46:58', '2024-01-28 05:46:59'),
-(38, 'faq.content', '{\"heading\":\"Frequently Asked Question\",\"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-01-28 06:18:23', '2024-01-28 06:29:44'),
+(38, 'faq.content', '{\"heading\":\"Frequently Asked Question\",\"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.\"}', '2024-01-28 06:18:23', '2024-02-20 09:40:06'),
 (39, 'faq.element', '{\"question\":\"What is crowdfunding?\",\"answer\":\"Crowdfunding is a method of raising funds from a large number of people, typically via online platforms. It allows individuals, businesses, or organizations to present their projects, causes, or ventures to a wide audience, inviting contributions from interested individuals, known as backers or supporters.<br \\/>\"}', '2024-01-28 06:19:09', '2024-01-28 06:19:09'),
 (40, 'faq.element', '{\"question\":\"How does crowdfunding work?\",\"answer\":\"Crowdfunding involves creating a campaign that outlines the details of a project or cause, including its purpose, goals, and often, rewards for backers. Supporters can then contribute financially to the campaign through the crowdfunding platform. If the funding goal is reached within a specified timeframe, the project is funded, and funds are typically released to the campaign creator.<br \\/>\"}', '2024-01-28 06:19:39', '2024-01-28 06:19:39'),
 (41, 'faq.element', '{\"question\":\"What types of crowdfunding are there?\",\"answer\":\"There are various types of crowdfunding, including reward-based (backers receive non-financial incentives), equity-based (backers receive a share of the project), donation-based (contributors give without expecting anything in return), and debt-based (backers lend money to the project, expecting repayment with interest).<br \\/>\"}', '2024-01-28 06:20:10', '2024-01-28 06:20:10'),

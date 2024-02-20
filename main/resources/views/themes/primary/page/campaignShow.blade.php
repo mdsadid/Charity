@@ -29,21 +29,21 @@
                         @include($activeTheme . 'partials.basicCampaignSidebar')
 
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Make a Donation</h3>
+                            <h3 class="post-sidebar__card__header">@lang('Make a Donation')</h3>
                             <div class="post-sidebar__card__body">
                                 <form>
                                     <div class="form-group">
                                         <div class="input--group">
-                                            <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
-                                            <input type="text" class="form--control" id="donationAmount" placeholder="0" readonly>
+                                            <span class="input-group-text">{{ $setting->cur_sym }}</span>
+                                            <input type="number" step="any" class="form--control" id="donationAmount" name="amount" placeholder="0" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
                                         <div class="d-flex flex-wrap gap-3">
                                             <div class="form--radio">
-                                                <input class="form-check-input" type="radio" name="donationAmount" data-amount="100" id="donationAmount1">
+                                                <input type="radio" class="form-check-input" id="donationAmount1" name="amount" data-amount="100">
                                                 <label class="form-check-label" for="donationAmount1">
-                                                    $100
+                                                    {{ $setting->cur_sym . '100' }}
                                                 </label>
                                             </div>
                                             <div class="form--radio">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Exception;
 use HTMLPurifier;
 use Carbon\Carbon;
+use App\Models\Comment;
 use App\Models\Gallery;
 use App\Models\Campaign;
 use App\Models\Category;
@@ -327,8 +328,24 @@ class CampaignController extends Controller
     function show($slug) {
         $pageTitle = 'Campaign Details';
         $campaign  = Campaign::where('slug', $slug)->where('user_id', auth()->id())->firstOrFail();
+        $comments  = Comment::with('user')
+            ->where('campaign_id', $campaign->id)
+            ->approve()
+            ->latest()
+            ->limit(6)
+            ->get();
 
-        return view($this->activeTheme . 'user.campaign.show', compact('pageTitle', 'campaign'));
+        $commentCount = Comment::where('campaign_id', $campaign->id)->approve()->count();
+
+        $seoContents['keywords']           = $campaign->meta_keywords ?? [];
+        $seoContents['social_title']       = $campaign->name;
+        $seoContents['description']        = strLimit($campaign->description, 150);
+        $seoContents['social_description'] = strLimit($campaign->description, 150);
+        $imageSize                         = getFileSize('campaign');
+        $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaign->image, $imageSize);
+        $seoContents['image_size']         = $imageSize;
+
+        return view($this->activeTheme . 'user.campaign.show', compact('pageTitle', 'campaign', 'comments', 'commentCount', 'seoContents'));
     }
 
     protected function removePreviousGallery() {
