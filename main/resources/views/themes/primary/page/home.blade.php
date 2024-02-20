@@ -108,12 +108,12 @@
                 @foreach ($campaignCategories as $category)
                     <div class="cause-category__slide">
                         <div class="cause-category__img">
-                            <a href="#">
+                            <a href="{{ route('campaign', ['category' => $category->slug]) }}">
                                 <img src="{{ getImage(getFilePath('category') . '/' . $category->image, getFileSize('category')) }}" alt="{{ $category->name }}">
                             </a>
                         </div>
                         <h3 class="cause-category__title">
-                            <a href="#">{{ __($category->name) }}</a>
+                            <a href="{{ route('campaign', ['category' => $category->slug]) }}">{{ __($category->name) }}</a>
                         </h3>
                     </div>
                 @endforeach

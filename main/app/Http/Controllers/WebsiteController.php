@@ -51,7 +51,16 @@ class WebsiteController extends Controller
 
     function campaigns() {
         $pageTitle = 'Campaigns';
-        $campaigns = Campaign::campaignCheck()->approve()->latest()->paginate(getPaginate(10));
+        $campaigns = Campaign::when(request()->has('category'), function ($query) {
+            $categorySlug = request('category');
+            $category     = Category::where('slug', $categorySlug)->active()->first();
+
+            if ($category) $query->where('category_id', $category->id);
+        })
+            ->campaignCheck()
+            ->approve()
+            ->latest()
+            ->paginate(getPaginate(10));
 
         return view($this->activeTheme . 'page.campaign', compact('pageTitle', 'campaigns'));
     }

@@ -6,18 +6,13 @@ Route::controller('WebsiteController')->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('about-us', 'aboutUs')->name('about.us');
     Route::get('faq', 'faq')->name('faq');
-    Route::get('campaign', 'campaigns')->name('campaign');
+    Route::get('campaigns', 'campaigns')->name('campaign');
     Route::prefix('campaign/{slug}')->name('campaign.')->group(function () {
         Route::get('', 'campaignShow')->name('show');
         Route::post('comment', 'storeCampaignComment')->name('comment');
         Route::get('fetch-comment', 'fetchCampaignComment')->name('comment.fetch');
     });
-    Route::get('event', 'events')->name('event');
-    Route::get('contact', 'contact')->name('contact');
-
-    Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
-
-    // Contact
+    Route::get('events', 'events')->name('event');
     Route::get('contact', 'contact')->name('contact');
     Route::post('contact', 'contactStore');
 
@@ -30,4 +25,6 @@ Route::controller('WebsiteController')->group(function () {
 
     // Policy Details
     Route::get('policy/{slug}/{id}', 'policyPages')->name('policy.pages');
+
+    Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
 });
