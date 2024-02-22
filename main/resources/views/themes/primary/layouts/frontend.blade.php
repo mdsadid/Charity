@@ -171,7 +171,7 @@
         <div class="pb-60 pt-60">
             <div class="container">
                 <div class="row justify-content-center gy-5">
-                    <div class="col-xl-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="col-xl-4 col-sm-6 col-xsm-6">
                         <div class="footer-item">
                             <div class="footer-item__logo">
                                 <a href="{{ route('home') }}">
@@ -190,7 +190,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="col-xl-2 col-sm-6 col-xsm-6">
                         <div class="footer-item">
                             <h5 class="footer-item__title">@lang('Useful Link')</h5>
                             <ul class="footer-menu">
@@ -201,18 +201,24 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="col-xl-3 col-sm-6 col-xsm-6">
                         <div class="footer-item">
-                            <h5 class="footer-item__title">Categories</h5>
-                            <ul class="footer-menu">
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link">Blog </a></li>
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link">Blog Details </a></li>
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link">Dashboard </a></li>
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link"> Contact Us</a></li>
-                            </ul>
+                            <h5 class="footer-item__title">@lang('Categories')</h5>
+
+                            @if (count($campCategories))
+                                <ul class="footer-menu">
+                                    @foreach ($campCategories as $campCategory)
+                                        <li class="footer-menu__item">
+                                            <a href="{{ route('campaign', ['category' => $campCategory->slug]) }}" class="footer-menu__link">
+                                                {{ __($campCategory->name) }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </div>
                     </div>
-                    <div class="col-xl-3 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="col-xl-3 col-sm-6 col-xsm-6">
                         <div class="footer-item">
                             <h5 class="footer-item__title">@lang('Contact With Us')</h5>
                             <ul class="footer-contact-menu">

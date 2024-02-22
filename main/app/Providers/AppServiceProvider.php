@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Models\Deposit;
 use App\Models\Campaign;
+use App\Models\Category;
 use App\Models\SiteData;
 use App\Models\Withdrawal;
 use App\Constants\ManageStatus;
@@ -62,8 +63,15 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('partials.seo', function ($view) {
             $seo = SiteData::where('data_key', 'seo.data')->first();
+
             $view->with([
                 'seo' => $seo ? $seo->data_info : $seo,
+            ]);
+        });
+
+        view()->composer($activeTheme . 'layouts.frontend', function ($view) {
+            $view->with([
+                'campCategories' => Category::active()->latest()->limit(4)->get(),
             ]);
         });
 

@@ -19,9 +19,10 @@ class Campaign extends Model
      * @var array
      */
     protected $casts = [
-        'gallery'    => 'array',
-        'start_date' => 'datetime:Y-m-d',
-        'end_date'   => 'datetime:Y-m-d',
+        'gallery'           => 'array',
+        'preferred_amounts' => 'array',
+        'start_date'        => 'datetime:Y-m-d',
+        'end_date'          => 'datetime:Y-m-d',
     ];
 
     /**

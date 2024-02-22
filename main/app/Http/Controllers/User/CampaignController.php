@@ -110,14 +110,16 @@ class CampaignController extends Controller
 
     function store() {
         $this->validate(request(), [
-            'category_id' => 'required|integer|gt:0',
-            'image'       => ['required', File::types(['png', 'jpg', 'jpeg'])],
-            'name'        => 'required|string|max:190',
-            'description' => 'required|min:30',
-            'document'    => ['nullable', File::types('pdf')],
-            'goal_amount' => 'required|numeric|gt:0',
-            'start_date'  => 'required|date_format:d-m-Y|after:today',
-            'end_date'    => 'required|date_format:d-m-Y|after:start_date',
+            'category_id'         => 'required|integer|gt:0',
+            'image'               => ['required', File::types(['png', 'jpg', 'jpeg'])],
+            'name'                => 'required|string|max:190',
+            'description'         => 'required|min:30',
+            'document'            => ['nullable', File::types('pdf')],
+            'goal_amount'         => 'required|numeric|gt:0',
+            'preferred_amounts'   => 'required|array|min:1',
+            'preferred_amounts.*' => 'required|numeric|gt:0',
+            'start_date'          => 'required|date_format:d-m-Y|after:today',
+            'end_date'            => 'required|date_format:d-m-Y|after:start_date',
         ], [
             'category_id.required' => 'The category field is required.',
             'category_id.integer'  => 'The category must be an integer.',
@@ -176,9 +178,10 @@ class CampaignController extends Controller
             }
         }
 
-        $campaign->goal_amount = request('goal_amount');
-        $campaign->start_date  = Carbon::parse(request('start_date'));
-        $campaign->end_date    = Carbon::parse(request('end_date'));
+        $campaign->goal_amount       = request('goal_amount');
+        $campaign->preferred_amounts = request('preferred_amounts');
+        $campaign->start_date        = Carbon::parse(request('start_date'));
+        $campaign->end_date          = Carbon::parse(request('end_date'));
         $campaign->save();
 
         // Delete gallery images

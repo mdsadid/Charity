@@ -28,74 +28,76 @@
                     <div class="post-sidebar">
                         @include($activeTheme . 'partials.basicCampaignSidebar')
 
-                        <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">@lang('Make a Donation')</h3>
-                            <div class="post-sidebar__card__body">
-                                <form>
-                                    <div class="form-group">
-                                        <div class="input--group">
-                                            <span class="input-group-text">{{ $setting->cur_sym }}</span>
-                                            <input type="number" step="any" class="form--control" id="donationAmount" name="amount" placeholder="0" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <div class="d-flex flex-wrap gap-3">
-                                            <div class="form--radio">
-                                                <input type="radio" class="form-check-input" id="donationAmount1" name="amount" data-amount="100">
-                                                <label class="form-check-label" for="donationAmount1">
-                                                    {{ $setting->cur_sym . '100' }}
-                                                </label>
-                                            </div>
-                                            <div class="form--radio">
-                                                <input class="form-check-input" type="radio" name="donationAmount" data-amount="200" id="donationAmount2">
-                                                <label class="form-check-label" for="donationAmount2">
-                                                    $200
-                                                </label>
-                                            </div>
-                                            <div class="form--radio">
-                                                <input class="form-check-input" type="radio" name="donationAmount" data-amount="300" id="donationAmount3">
-                                                <label class="form-check-label" for="donationAmount3">
-                                                    $300
-                                                </label>
-                                            </div>
-                                            <div class="form--radio">
-                                                <input class="form-check-input" type="radio" name="donationAmount" id="customDonationAmount">
-                                                <label class="form-check-label" for="customDonationAmount">
-                                                    custom
-                                                </label>
+                        @if (auth()->id() != $campaign->user_id)
+                            <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
+                                <h3 class="post-sidebar__card__header">@lang('Make a Donation')</h3>
+                                <div class="post-sidebar__card__body">
+                                    <form>
+                                        <div class="form-group">
+                                            <div class="input--group">
+                                                <span class="input-group-text">{{ $setting->cur_sym }}</span>
+                                                <input type="number" step="any" min="0" class="form--control" id="donationAmount" name="amount" placeholder="0" readonly>
                                             </div>
                                         </div>
-                                    </div>
-                                    <h4 class="post-sidebar__card__subtitle">Personal Information</h4>
-                                    <div class="form-group">
-                                        <div class="form--check">
-                                            <input class="form-check-input" type="checkbox" name="anonymousDonation" id="anonymousDonation">
-                                            <label class="form-check-label" for="anonymousDonation">
-                                                Donate as anonymous
-                                            </label>
+                                        <div class="form-group mb-4">
+                                            <div class="d-flex flex-wrap gap-3">
+                                                @foreach ($campaign->preferred_amounts as $preferredAmount)
+                                                    <div class="form--radio">
+                                                        <input type="radio" class="form-check-input" id="{{ 'donationAmount_' . $loop->iteration }}" name="donationAmount" data-amount="{{ $preferredAmount }}">
+                                                        <label class="form-check-label" for="{{ 'donationAmount_' . $loop->iteration }}">
+                                                            {{ $setting->cur_sym . $preferredAmount }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+
+                                                <div class="form--radio">
+                                                    <input type="radio" class="form-check-input" id="customDonationAmount" name="donationAmount">
+                                                    <label class="form-check-label" for="customDonationAmount">
+                                                        @lang('Custom')
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label" for="donorName">Full Name: <span class="text--danger">*</span></label>
-                                        <input type="text" class="form--control" id="donorName" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label" for="donorEmail">Email: <span class="text--danger">*</span></label>
-                                        <input type="text" class="form--control" id="donorEmail" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label" for="donorPhone">Phone: <span class="text--danger">*</span></label>
-                                        <input type="text" class="form--control" id="donorPhone" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label" for="donorCountry">Country: <span class="text--danger">*</span></label>
-                                        <input type="text" class="form--control" id="donorCountry" required>
-                                    </div>
-                                    <button class="btn btn--base w-100">Donate Now</button>
-                                </form>
+                                        <h4 class="post-sidebar__card__subtitle">@lang('Personal Information')</h4>
+                                        <div class="form-group">
+                                            <div class="form--check">
+                                                <input type="checkbox" class="form-check-input" name="anonymousDonation" id="anonymousDonation">
+                                                <label class="form-check-label" for="anonymousDonation">
+                                                    @lang('Donate as anonymous')
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form--label required">@lang('Full Name')</label>
+                                            <input type="text" class="form--control" name="full_name" value="{{ old('full_name') }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form--label required">@lang('Email')</label>
+                                            <input type="email" class="form--control" name="email" value="{{ old('email') }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form--label required">@lang('Phone')</label>
+                                            <input type="text" class="form--control" name="phone" value="{{ old('phone') }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form--label required">@lang('Country')</label>
+                                            <select class="form--control form-select" name="country" required>
+                                                <option selected disabled>@lang('Select Country')</option>
+
+                                                @foreach ($countries as $key => $country)
+                                                    <option value="{{ $country->country }}" @selected(old('country') == $country->country)>
+                                                        {{ __(@$country->country) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <button class="btn btn--base w-100 mt-2">@lang('Donate Now')</button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
+                        @endif
+
+                        {{-- <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
                             <h3 class="post-sidebar__card__header">Donate a Gift</h3>
                             <div class="post-sidebar__card__body">
                                 <div class="gift-donation mb-4">
@@ -185,7 +187,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
