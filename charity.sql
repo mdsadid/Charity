@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 22, 2024 at 07:12 AM
+-- Generation Time: Feb 22, 2024 at 12:49 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -313,6 +313,32 @@ INSERT INTO `deposits` (`id`, `user_id`, `method_code`, `amount`, `method_curren
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `donations`
+--
+
+CREATE TABLE `donations` (
+  `id` bigint UNSIGNED NOT NULL,
+  `campaign_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` decimal(28,8) UNSIGNED NOT NULL,
+  `charge` decimal(28,8) UNSIGNED NOT NULL DEFAULT '0.00000000',
+  `gateway_id` bigint UNSIGNED NOT NULL,
+  `gateway_currency` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `conversion_rate` decimal(28,8) UNSIGNED NOT NULL DEFAULT '0.00000000',
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint UNSIGNED NOT NULL COMMENT '1 -> payment success, 2 -> payment pending, 3 -> payment cancel',
+  `admin_feedback` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -531,7 +557,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (38, '2024_02_03_151844_create_campaigns_table', 19),
 (39, '2024_02_04_152936_create_galleries_table', 19),
 (43, '2024_02_14_150246_create_comments_table', 20),
-(45, '2024_02_22_110001_add_preferred_amounts_to_campaigns_table', 21);
+(45, '2024_02_22_110001_add_preferred_amounts_to_campaigns_table', 21),
+(47, '2024_02_22_132250_create_donations_table', 22);
 
 -- --------------------------------------------------------
 
@@ -877,7 +904,7 @@ INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`
 (10, NULL, 'Demo', 'User Six', 'demouser6', 'demosix@demo.com', 'TM', 'Turkmenistan', '993123456789', 0, 0.00000000, '$2y$10$i3XurA7Zxy3h1dWiUP12b.s.Tcn0a9Do2gBUbmujUwz4bpvti1A7e', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:19:44', '2023-12-05 17:19:44'),
 (11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42'),
 (12, '65d466e8710181708418792.jpg', 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"House - 32, Road - 04, Block - C, Pallabi, Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-02-20 08:46:33'),
-(13, '65d46c259fae31708420133.jpg', 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '88001931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-20 09:08:54'),
+(13, '65d46c259fae31708420133.jpg', 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '8801931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-20 09:08:54'),
 (14, NULL, 'John', 'Doe', 'johndoe', 'john@gmail.com', 'AX', 'Aland Islands', '358123456789', 0, 0.00000000, '$2y$10$jXQZDC90YT2pJ1rKfbOcy.9wH/Y/N5PmzS0.K46rDYpxpeeOiObAq', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JOHN123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdaf5424bcf1707978580.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 06:29:09', '2024-02-15 06:30:01'),
 (15, '65d46c908d6141708420240.jpg', 'Jane', 'Doe', 'janedoe', 'jane@gmail.com', 'AS', 'AmericanSamoa', '1684987654321', 0, 0.00000000, '$2y$10$KAT0wI0OgG2dV1yz0p0L9.ehVORSPMo1U9sYAUV3GKpBV2GLm5M5y', '{\"state\":null,\"zip\":null,\"city\":null,\"address\":null}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JANE987654321\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdb73f528841707980607.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 07:03:04', '2024-02-20 09:10:41');
 
@@ -1002,6 +1029,15 @@ ALTER TABLE `contacts`
 --
 ALTER TABLE `deposits`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `donations`
+--
+ALTER TABLE `donations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `donations_campaign_id_foreign` (`campaign_id`),
+  ADD KEY `donations_user_id_foreign` (`user_id`),
+  ADD KEY `donations_gateway_id_foreign` (`gateway_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -1170,6 +1206,12 @@ ALTER TABLE `deposits`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
+-- AUTO_INCREMENT for table `donations`
+--
+ALTER TABLE `donations`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -1209,7 +1251,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1288,6 +1330,14 @@ ALTER TABLE `campaigns`
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_campaign_id_foreign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`),
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `donations`
+--
+ALTER TABLE `donations`
+  ADD CONSTRAINT `donations_campaign_id_foreign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`),
+  ADD CONSTRAINT `donations_gateway_id_foreign` FOREIGN KEY (`gateway_id`) REFERENCES `gateways` (`id`),
+  ADD CONSTRAINT `donations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `galleries`

@@ -10,7 +10,7 @@ class Gateway extends Model
     use UniversalStatus;
 
     protected $hidden = [
-        'gateway_parameters','extra'
+        'gateway_parameters', 'extra'
     ];
 
     protected $casts = [
@@ -32,7 +32,7 @@ class Gateway extends Model
 
     public function singleCurrency()
     {
-        return $this->hasOne(GatewayCurrency::class, 'method_code', 'code')->orderBy('id','desc');
+        return $this->hasOne(GatewayCurrency::class, 'method_code', 'code')->orderBy('id', 'desc');
     }
 
     public function scopeAutomated($query)

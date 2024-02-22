@@ -359,6 +359,7 @@
         var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
         $countdownElement.html("<span>" + days + "d</span><span>" + hours + "h</span><span>" + minutes + "m</span><span>" + seconds + "s</span>");
 
         if (remainingTime <= 0) {
@@ -376,14 +377,6 @@
       } else {
         var donationAmount = $(this).data('amount');
         $('#donationAmount').prop('readonly', true).val(donationAmount);
-      }
-    });
-
-    $('#anonymousDonation').on('change', function () {
-      if ($(this).is(':checked')) {
-        $('#donorName, #donorEmail, #donorPhone, #donorCountry').prop('disabled', true);
-      } else {
-        $('#donorName, #donorEmail, #donorPhone, #donorCountry').prop('disabled', false);
       }
     });
     // ========================= Campaign Donation Form End ==========

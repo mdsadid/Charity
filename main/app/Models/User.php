@@ -44,10 +44,23 @@ class User extends Authenticatable
         'ver_code_send_at'  => 'datetime'
     ];
 
+    /**
+     * Get the user's full name.
+     */
     public function fullname(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             get: fn () => $this->firstname . ' ' . $this->lastname,
+        );
+    }
+
+    /**
+     * Get the user's mobile number.
+     */
+    protected function mobile(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => '+' . $value,
         );
     }
 
