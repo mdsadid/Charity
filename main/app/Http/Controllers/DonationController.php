@@ -41,7 +41,5 @@ class DonationController extends Controller
         ]);
 
         $amount = request('amount');
-
-        
     }
 }

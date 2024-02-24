@@ -16,17 +16,16 @@ use net\authorize\api\contract\v1\PaymentType;
 use net\authorize\api\contract\v1\TransactionRequestType;
 use net\authorize\api\controller\CreateTransactionController;
 
-
 class ProcessController extends Controller
 {
-
     public static function process($deposit)
     {
         $alias          = $deposit->gateway->alias;
         $send['track']  = $deposit->trx;
-        $send['view']   = 'user.payment.'.$alias;
+        $send['view']   = 'user.payment.' . $alias;
         $send['method'] = 'post';
-        $send['url']    = route('ipn.'.$alias);
+        $send['url']    = route('ipn.' . $alias);
+
         return json_encode($send);
     }
 
@@ -34,9 +33,10 @@ class ProcessController extends Controller
     {
         $track   = Session::get('Track');
         $deposit = Deposit::where('trx', $track)->initiate()->orderBy('id', 'DESC')->first();
-        
+
         if ($deposit->status == ManageStatus::PAYMENT_SUCCESS) {
             $toast[] = ['error', 'Invalid request.'];
+
             return to_route(gatewayRedirectUrl())->withToasts($toast);
         }
 
@@ -46,8 +46,8 @@ class ProcessController extends Controller
             'cardCVC'    => 'required',
         ]);
 
-        $cardNumber  = str_replace(' ','',$request->cardNumber);
-        $exp         = str_replace(' ','',$request->cardExpiry);
+        $cardNumber  = str_replace(' ', '', $request->cardNumber);
+        $exp         = str_replace(' ', '', $request->cardExpiry);
         $credentials = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
         // Common setup for API credentials
@@ -75,16 +75,18 @@ class ProcessController extends Controller
         $transactionRequest->setTransactionRequest($transactionRequestType);
 
         $controller = new CreateTransactionController($transactionRequest);
-        $response = $controller->executeWithApiResponse(ANetEnvironment::PRODUCTION);
-        $response = $response->getTransactionResponse();
+        $response   = $controller->executeWithApiResponse(ANetEnvironment::PRODUCTION);
+        $response   = $response->getTransactionResponse();
 
         if (($response != null) && ($response->getResponseCode() == "1")) {
             PaymentController::userDataUpdate($deposit);
             $toast[] = ['success', 'Payment captured successfully'];
+
             return to_route(gatewayRedirectUrl(true))->withToasts($toast);
         }
 
-        $toast[] = ['error','Something went wrong'];
+        $toast[] = ['error', 'Something went wrong'];
+
         return to_route(gatewayRedirectUrl())->withToasts($toast);
     }
 }

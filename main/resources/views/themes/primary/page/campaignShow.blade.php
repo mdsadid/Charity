@@ -31,8 +31,9 @@
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
                             <h3 class="post-sidebar__card__header">@lang('Make a Donation')</h3>
                             <div class="post-sidebar__card__body">
-                                <form action="{{ route('campaign.donate', $campaign->slug) }}" method="POST">
+                                <form action="{{ route('user.deposit.insert', $campaign->slug) }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="currency">
                                     <div class="form-group">
                                         <div class="input--group">
                                             <span class="input-group-text">{{ $setting->cur_sym }}</span>
@@ -61,7 +62,7 @@
                                     <h4 class="post-sidebar__card__subtitle">@lang('Personal Information')</h4>
                                     <div class="form-group">
                                         <div class="form--check">
-                                            <input type="checkbox" class="form-check-input" name="anonymousDonation" id="anonymousDonation">
+                                            <input type="checkbox" class="form-check-input" name="anonymousDonation" @checked(old('anonymousDonation')) id="anonymousDonation">
                                             <label class="form-check-label" for="anonymousDonation">
                                                 @lang('Donate as anonymous')
                                             </label>
@@ -243,6 +244,10 @@
         .anonymous-alert-text .alert {
             background-color: #cff4fc !important;
         }
+
+        .select2-results__option {
+            padding-left: 16px;
+        }
     </style>
 @endpush
 
@@ -327,7 +332,7 @@
                 $('[name=gateway]').change()
             })
 
-            $('[name=donationAmount]').on('change', function () {
+            $(document).on('change', '[name=donationAmount]', function () {
                 $('[name=gateway]').change()
             })
         })(jQuery)

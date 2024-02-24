@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Gateway;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
-use App\Lib\FormProcessor;
-use App\Models\AdminNotification;
-use App\Models\Deposit;
-use App\Models\GatewayCurrency;
-use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Deposit;
+use App\Models\Campaign;
+use App\Lib\FormProcessor;
+use App\Models\Transaction;
+use App\Constants\ManageStatus;
+use App\Models\GatewayCurrency;
+use App\Models\AdminNotification;
+use App\Http\Controllers\Controller;
+use App\Models\Donation;
 
 class PaymentController extends Controller
 {
@@ -23,46 +25,76 @@ class PaymentController extends Controller
         return view($this->activeTheme . 'user.deposit.create', compact('gatewayCurrency', 'pageTitle'));
     }
 
-    function depositInsert() {
+    function depositInsert($slug) {
+        $countryData = (array) json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $countries   = implode(',', array_column($countryData, 'country'));
+
         $this->validate(request(), [
-            'amount'   => 'required|numeric|gt:0',
-            'gateway'  => 'required',
-            'currency' => 'required',
+            'amount'    => 'required|numeric|gt:0',
+            'full_name' => 'required|string|max:255',
+            'email'     => 'required|email|max:40',
+            'phone'     => 'required|regex:/^\+[0-9]*$/|max:40',
+            'country'   => 'required|max:40|in:' . $countries,
+            'gateway'   => 'required|exists:gateways,code',
+            'currency'  => 'required',
         ]);
 
-        $user = auth()->user();
-        $gate = GatewayCurrency::whereHas('method', function ($gate) {
-            $gate->active();
-        })->where('method_code', request('gateway'))->where('currency', request('currency'))->first();
+        $campaign = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
 
-        if (!$gate) {
+        if (!$campaign) {
+            $toast[] = ['error', 'Campaign not found'];
+
+            return back()->withToasts($toast);
+        }
+
+        // ? What if a donor is same as the campaign creator?
+
+        $gatewayData = GatewayCurrency::whereHas('method', function ($gateway) {
+            $gateway->active();
+        })
+            ->where('method_code', request('gateway'))
+            ->where('currency', request('currency'))
+            ->first();
+
+        if (!$gatewayData) {
             $toast[] = ['error', 'Invalid gateway'];
 
             return back()->withToasts($toast);
         }
 
-        if ($gate->min_amount > request('amount') || $gate->max_amount < request('amount')) {
-            $toast[] = ['error', 'Please follow deposit limit'];
+        if ($gatewayData->min_amount > request('amount') || $gatewayData->max_amount < request('amount')) {
+            $toast[] = ['error', 'Please follow donation limit'];
 
             return back()->withToasts($toast);
         }
 
-        $charge    = $gate->fixed_charge + (request('amount') * $gate->percent_charge / 100);
-        $payable   = request('amount') + $charge;
-        $final_amo = $payable * $gate->rate;
+        $charge       = $gatewayData->fixed_charge + (request('amount') * $gatewayData->percent_charge / 100);
+        $payable      = request('amount') + $charge;
+        $final_amount = $payable * $gatewayData->rate;
 
+        // Save data in deposit table
         $deposit                  = new Deposit();
-        $deposit->user_id         = $user->id;
-        $deposit->method_code     = $gate->method_code;
-        $deposit->method_currency = strtoupper($gate->currency);
+        $deposit->user_id         = auth()->check() ? auth()->id() : 0;
+        $deposit->method_code     = $gatewayData->method_code;
+        $deposit->method_currency = strtoupper($gatewayData->currency);
         $deposit->amount          = request('amount');
         $deposit->charge          = $charge;
-        $deposit->rate            = $gate->rate;
-        $deposit->final_amo       = $final_amo;
+        $deposit->rate            = $gatewayData->rate;
+        $deposit->final_amo       = $final_amount;
         $deposit->btc_amo         = 0;
         $deposit->btc_wallet      = "";
         $deposit->trx             = getTrx();
         $deposit->save();
+
+        // Save data in donation table
+        $donation              = new Donation();
+        $donation->deposit_id  = $deposit->id;
+        $donation->campaign_id = $campaign->id;
+        $donation->full_name   = request('full_name') ?? null;
+        $donation->email       = request('email') ?? null;
+        $donation->phone       = request('phone') ?? null;
+        $donation->country     = request('country') ?? null;
+        $donation->save();
 
         session()->put('Track', $deposit->trx);
 
@@ -94,7 +126,7 @@ class PaymentController extends Controller
             $deposit->save();
         }
 
-        $pageTitle = 'Deposit Confirm';
+        $pageTitle = 'Donation Confirmation';
 
         return view($this->activeTheme . $data->view, compact('data', 'pageTitle', 'deposit'));
     }
@@ -147,7 +179,7 @@ class PaymentController extends Controller
         if (!$deposit) return to_route(gatewayRedirectUrl());
 
         if ($deposit->method_code > 999) {
-            $pageTitle = 'Deposit Confirm';
+            $pageTitle = 'Donation Confirmation';
             $method    = $deposit->gatewayCurrency();
             $gateway   = $method->method;
 

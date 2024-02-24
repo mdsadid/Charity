@@ -27,6 +27,11 @@ class Deposit extends Model
         return $this->belongsTo(Gateway::class, 'method_code', 'code');
     }
 
+    public function donation()
+    {
+        return $this->hasOne(Donation::class);
+    }
+
     // Scope
     public function scopeGatewayCurrency()
     {

@@ -33,7 +33,7 @@ class ProcessController extends Controller
 
             $send['redirect']     = true;
             $send['redirect_url'] = $invoice['checkoutLink'];
-        } catch (\Throwable$e) {
+        } catch (\Throwable $e) {
             $send['error']     = true;
             $send['message'] = $e->getMessage();;
         }
@@ -80,8 +80,7 @@ class ProcessController extends Controller
                 if ($deposit) {
                     $this->processPayment($deposit, $postData);
                 }
-
-            } catch (\Throwable$e) {
+            } catch (\Throwable $e) {
                 $adminNotification            = new AdminNotification();
                 $adminNotification->user_id   = 0;
                 $adminNotification->title     = 'Error decoding webhook payload: ' . $e->getMessage();

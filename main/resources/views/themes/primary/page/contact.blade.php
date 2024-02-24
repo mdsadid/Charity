@@ -22,11 +22,11 @@
                                 @csrf
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Your Full Name')</label>
-                                    <input type="text" name="name" class="form--control" value="{{ old('name', @$user->fullname) }}" @readonly($user) required>
+                                    <input type="text" name="name" class="form--control" value="{{ old('name', @$user->fullname) }}" @readonly(@$user) required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Your Email')</label>
-                                    <input type="email" name="email" class="form--control" value="{{ old('email', @$user->email) }}" @readonly($user) required>
+                                    <input type="email" name="email" class="form--control" value="{{ old('email', @$user->email) }}" @readonly(@$user) required>
                                 </div>
                                 <div class="col-12">
                                     <label class="form--label required">@lang('Subject')</label>

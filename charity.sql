@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 22, 2024 at 12:49 PM
+-- Generation Time: Feb 24, 2024 at 12:59 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -318,20 +318,13 @@ INSERT INTO `deposits` (`id`, `user_id`, `method_code`, `amount`, `method_curren
 
 CREATE TABLE `donations` (
   `id` bigint UNSIGNED NOT NULL,
+  `deposit_id` bigint UNSIGNED NOT NULL,
   `campaign_id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `full_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `country` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `amount` decimal(28,8) UNSIGNED NOT NULL,
-  `charge` decimal(28,8) UNSIGNED NOT NULL DEFAULT '0.00000000',
-  `gateway_id` bigint UNSIGNED NOT NULL,
-  `gateway_currency` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `conversion_rate` decimal(28,8) UNSIGNED NOT NULL DEFAULT '0.00000000',
-  `trx` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint UNSIGNED NOT NULL COMMENT '1 -> payment success, 2 -> payment pending, 3 -> payment cancel',
-  `admin_feedback` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -558,7 +551,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (39, '2024_02_04_152936_create_galleries_table', 19),
 (43, '2024_02_14_150246_create_comments_table', 20),
 (45, '2024_02_22_110001_add_preferred_amounts_to_campaigns_table', 21),
-(47, '2024_02_22_132250_create_donations_table', 22);
+(49, '2024_02_22_132250_create_donations_table', 22);
 
 -- --------------------------------------------------------
 
@@ -1035,9 +1028,8 @@ ALTER TABLE `deposits`
 --
 ALTER TABLE `donations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `donations_campaign_id_foreign` (`campaign_id`),
-  ADD KEY `donations_user_id_foreign` (`user_id`),
-  ADD KEY `donations_gateway_id_foreign` (`gateway_id`);
+  ADD KEY `donations_deposit_id_foreign` (`deposit_id`),
+  ADD KEY `donations_campaign_id_foreign` (`campaign_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -1203,13 +1195,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `deposits`
 --
 ALTER TABLE `deposits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1251,7 +1243,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1336,8 +1328,7 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `donations`
   ADD CONSTRAINT `donations_campaign_id_foreign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`),
-  ADD CONSTRAINT `donations_gateway_id_foreign` FOREIGN KEY (`gateway_id`) REFERENCES `gateways` (`id`),
-  ADD CONSTRAINT `donations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `donations_deposit_id_foreign` FOREIGN KEY (`deposit_id`) REFERENCES `deposits` (`id`);
 
 --
 -- Constraints for table `galleries`
