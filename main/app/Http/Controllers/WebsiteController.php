@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Language;
 use App\Models\SiteData;
 use App\Constants\ManageStatus;
+use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
@@ -83,8 +84,6 @@ class WebsiteController extends Controller
             ->limit(4)
             ->get();
 
-        $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
-
         $seoContents['keywords']           = $campaign->meta_keywords ?? [];
         $seoContents['social_title']       = $campaign->name;
         $seoContents['description']        = strLimit($campaign->description, 150);
@@ -93,7 +92,15 @@ class WebsiteController extends Controller
         $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaign->image, $imageSize);
         $seoContents['image_size']         = $imageSize;
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount', 'countries'));
+        $countries         = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $gatewayCurrencies = GatewayCurrency::whereHas('method', function ($gateway) {
+            $gateway->active();
+        })
+            ->with('method')
+            ->orderby('method_code')
+            ->get();
+
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount', 'countries', 'gatewayCurrencies'));
     }
 
     function storeCampaignComment($slug) {

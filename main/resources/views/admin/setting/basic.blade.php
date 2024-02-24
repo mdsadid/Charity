@@ -36,13 +36,13 @@
                                 <label class="col-sm-3 col-form-label required">@lang('Time Region')</label>
                                 <div class="col-sm-9 select2-design">
                                     <select class="select2 form-select" name="timeRegion" data-allow-clear="true" required>
-                                        @foreach($timeRegions as $timeRegion)
-                                            <option value="'{{ @$timeRegion}}'">{{ __($timeRegion) }}</option>
+                                        @foreach ($timeRegions as $timeRegion)
+                                            <option value="'{{ @$timeRegion }}'">{{ __($timeRegion) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-        
+
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label required">@lang('Primary Color')</label>
                                 <div class="col-sm-9">
@@ -91,7 +91,7 @@
                             <div class="col-md-6">
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/signup.png') }}" alt="signup" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/signup.png') }}" alt="signup" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -100,16 +100,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="signup" @if($setting->signup) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="signup" @if ($setting->signup) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/password.png') }}" alt="signup" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/password.png') }}" alt="signup" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -118,16 +118,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="strong_pass" @if($setting->strong_pass) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="strong_pass" @if ($setting->strong_pass) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/policy.png') }}" alt="policy" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/policy.png') }}" alt="policy" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -136,16 +136,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="agree_policy" @if($setting->agree_policy) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="agree_policy" @if ($setting->agree_policy) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/kyc.png') }}" alt="kyc" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/kyc.png') }}" alt="kyc" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -154,16 +154,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="kc" @if($setting->kc) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="kc" @if ($setting->kc) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/mailverify.png') }}" alt="mail" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/mailverify.png') }}" alt="mail" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -172,7 +172,7 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="ec" @if($setting->ec) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="ec" @if ($setting->ec) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
@@ -183,7 +183,7 @@
                             <div class="col-md-6">
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/mailalert.png') }}" alt="mail" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/mailalert.png') }}" alt="mail" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -192,16 +192,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="ea" @if($setting->ea) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="ea" @if ($setting->ea) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/smsverify.png') }}" alt="mobile" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/smsverify.png') }}" alt="mobile" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -210,16 +210,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="sc" @if($setting->sc) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="sc" @if ($setting->sc) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/smsalert.png') }}" alt="phone" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/smsalert.png') }}" alt="phone" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -228,16 +228,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="sa" @if($setting->sa) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="sa" @if ($setting->sa) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/sslcertificate.png') }}" alt="ssl" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/sslcertificate.png') }}" alt="ssl" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -246,16 +246,16 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="enforce_ssl"  @if($setting->enforce_ssl) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="enforce_ssl" @if ($setting->enforce_ssl) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="d-flex mb-3">
                                     <div class="flex-shrink-0">
-                                        <img src="{{ getImage(getFilePath('setting').'/language.png') }}" alt="language" class="me-3" height="40">
+                                        <img src="{{ getImage(getFilePath('setting') . '/language.png') }}" alt="language" class="me-3" height="40">
                                     </div>
                                     <div class="flex-grow-1 row">
                                         <div class="col-9 mb-sm-0 mb-2">
@@ -264,7 +264,7 @@
                                         </div>
                                         <div class="col-3 text-end">
                                             <label class="switch me-0">
-                                                <input type="checkbox" class="switch-input" name="language" @if($setting->language) checked @endif>
+                                                <input type="checkbox" class="switch-input" name="language" @if ($setting->language) checked @endif>
                                                 @include('admin.partials.switcher')
                                             </label>
                                         </div>
@@ -297,7 +297,7 @@
                             <div class="image-upload">
                                 <div class="thumb">
                                     <div class="avatar-preview">
-                                        <div class="profilePicPreview" style="background-image: url({{ getImage(getFilePath('logoFavicon').'/logo_light.png') }})">
+                                        <div class="profilePicPreview" style="background-image: url({{ getImage(getFilePath('logoFavicon') . '/logo_light.png') }})">
                                             <button type="button" class="remove-image"><i class="las la-times"></i></button>
                                         </div>
                                     </div>
@@ -312,7 +312,7 @@
                             <div class="image-upload">
                                 <div class="thumb">
                                     <div class="avatar-preview">
-                                        <div class="profilePicPreview" style="background-image: url({{ getImage(getFilePath('logoFavicon').'/logo_dark.png') }})">
+                                        <div class="profilePicPreview" style="background-image: url({{ getImage(getFilePath('logoFavicon') . '/logo_dark.png') }})">
                                             <button type="button" class="remove-image"><i class="las la-times"></i></button>
                                         </div>
                                     </div>
@@ -327,7 +327,7 @@
                             <div class="image-upload">
                                 <div class="thumb">
                                     <div class="avatar-preview">
-                                        <div class="profilePicPreview" style="background-image: url({{ getImage(getFilePath('logoFavicon').'/favicon.png', getFileSize('favicon')) }})">
+                                        <div class="profilePicPreview" style="background-image: url({{ getImage(getFilePath('logoFavicon') . '/favicon.png', getFileSize('favicon')) }})">
                                             <button type="button" class="remove-image"><i class="las la-times"></i></button>
                                         </div>
                                     </div>
@@ -350,13 +350,13 @@
 @endsection
 
 @push('page-style-lib')
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/select2.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/spectrum.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/universal/css/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/spectrum.css') }}">
 @endpush
 
 @push('page-script-lib')
-    <script src="{{asset('assets/admin/js/page/select2.js')}}"></script>
-    <script src="{{asset('assets/admin/js/page/spectrum.js')}}"></script>
+    <script src="{{ asset('assets/universal/js/select2.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/page/spectrum.js') }}"></script>
 @endpush
 
 @push('page-style')
@@ -384,30 +384,30 @@
 @endpush
 
 @push('page-script')
-  <script>
-    (function ($) {
-        "use strict";
+    <script>
+        (function($) {
+            "use strict";
 
-        $('.colorPicker').spectrum({
-            color: $(this).data('color'),
-            change: function (color) {
-                $(this).parent().siblings('.colorCode').val(color.toHexString().replace(/^#?/, ''));
-            }
-        });
-
-        $('.colorCode').on('input', function () {
-            var clr = $(this).val();
-            $(this).parents('.input-group').find('.colorPicker').spectrum({
-                color: clr,
+            $('.colorPicker').spectrum({
+                color: $(this).data('color'),
+                change: function(color) {
+                    $(this).parent().siblings('.colorCode').val(color.toHexString().replace(/^#?/, ''));
+                }
             });
-        });
 
-        $('[name=timeRegion]').val("'{{ config('app.timezone') }}'").select2();
+            $('.colorCode').on('input', function() {
+                var clr = $(this).val();
+                $(this).parents('.input-group').find('.colorPicker').spectrum({
+                    color: clr,
+                });
+            });
 
-        $('.select2').select2({
-            placeholder: "@lang('Select value')",
-            dropdownParent: '.select2-design'
-        });
-    })(jQuery);
-  </script>
+            $('[name=timeRegion]').val("'{{ config('app.timezone') }}'").select2();
+
+            $('.select2').select2({
+                placeholder: "@lang('Select value')",
+                dropdownParent: '.select2-design'
+            });
+        })(jQuery);
+    </script>
 @endpush
