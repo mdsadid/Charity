@@ -32,6 +32,16 @@ class DonationController extends Controller
             return back()->withToasts($toast);
         }
 
-        // TODO: put data into session
+        // Put data into session
+        session([
+            'full_name' => request('full_name'),
+            'email'     => request('email'),
+            'phone'     => request('phone'),
+            'country'   => request('country'),
+        ]);
+
+        $amount = request('amount');
+
+        
     }
 }
