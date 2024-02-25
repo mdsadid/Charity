@@ -129,7 +129,15 @@ class PaymentController extends Controller
 
             $user = User::find($deposit->user_id);
 
-            $deposit->load('donation.campaign');
+            if (!$user) {
+                $donationData = $deposit->donation;
+                $user         = [
+                    'username' => $donationData->email,
+                    'email'    => $donationData->email,
+                    'fullname' => $donationData->full_name,
+                ];
+            }
+
             $campaign                 = $deposit->donation->campaign;
             $campaign->raised_amount += $deposit->amount;
             $campaign->save();
@@ -138,18 +146,18 @@ class PaymentController extends Controller
             $transaction->user_id               = $deposit->user_id;
             $transaction->amount                = $deposit->amount;
             $transaction->charge                = $deposit->charge;
-            $transaction->post_balance          = $user->balance;
+            $transaction->post_balance          = $user->balance ?? 0;
             $transaction->campaign_id           = $campaign->id;
             $transaction->campaign_post_balance = $campaign->raised_amount;
             $transaction->trx_type              = '+';
-            $transaction->details               = 'Deposit Via ' . $deposit->gatewayCurrency()->name;
+            $transaction->details               = 'Donation Via ' . $deposit->gatewayCurrency()->name;
             $transaction->trx                   = $deposit->trx;
             $transaction->remark                = 'deposit';
             $transaction->save();
 
             if (!$isManual) {
                 $adminNotification            = new AdminNotification();
-                $adminNotification->user_id   = $user->id;
+                $adminNotification->user_id   = $deposit->user_id;
                 $adminNotification->title     = 'Deposit successful via ' . $deposit->gatewayCurrency()->name . ' for a campaign';
                 $adminNotification->click_url = urlPath('admin.deposit.done');
                 $adminNotification->save();
@@ -164,7 +172,7 @@ class PaymentController extends Controller
                 'rate'            => showAmount($deposit->rate),
                 'trx'             => $deposit->trx,
                 'campaign_name'   => $campaign->name,
-            ]);
+            ], ['email']);
         }
     }
 

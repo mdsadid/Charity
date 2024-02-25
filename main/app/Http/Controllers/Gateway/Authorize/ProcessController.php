@@ -75,7 +75,7 @@ class ProcessController extends Controller
         $transactionRequest->setTransactionRequest($transactionRequestType);
 
         $controller = new CreateTransactionController($transactionRequest);
-        $response   = $controller->executeWithApiResponse(ANetEnvironment::SANDBOX);
+        $response   = $controller->executeWithApiResponse(ANetEnvironment::PRODUCTION);
         $response   = $response->getTransactionResponse();
 
         if (($response != null) && ($response->getResponseCode() == "1")) {

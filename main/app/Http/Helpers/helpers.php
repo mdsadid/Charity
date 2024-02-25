@@ -318,11 +318,11 @@ function getTrx($length = 12) {
 }
 
 function gatewayRedirectUrl($type = false) {
-    if ($type) {
+    if (auth()->check() && $type) {
         return 'user.donation.history';
-    } else {
-        return 'campaign';
     }
+
+    return 'campaign';
 }
 
 function showAmount($amount, $decimal = 2, $separate = true, $exceptZeros = false) {
