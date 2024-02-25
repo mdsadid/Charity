@@ -319,9 +319,9 @@ function getTrx($length = 12) {
 
 function gatewayRedirectUrl($type = false) {
     if ($type) {
-        return 'user.deposit.history';
+        return 'user.donation.history';
     } else {
-        return 'user.deposit.index';
+        return 'campaign';
     }
 }
 

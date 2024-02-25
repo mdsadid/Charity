@@ -50,6 +50,14 @@ class Campaign extends Model
     }
 
     /**
+     * Get the donations for the campaign.
+     */
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
+
+    /**
      * Scope a query to only include pending campaigns.
      */
     public function scopePending($query)

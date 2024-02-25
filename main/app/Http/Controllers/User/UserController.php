@@ -207,17 +207,26 @@ class UserController extends Controller
         return back()->withToasts($toast);
     }
 
-    function depositHistory() {
-        $pageTitle = 'Deposit History';
-        $deposits  = auth()->user()->deposits()->searchable(['trx'])->index()->with('gateway')->latest()->paginate(getPaginate());
+    function donationHistory() {
+        $pageTitle = 'My Donations';
+        $deposits  = auth()->user()->deposits()
+            ->with(['gateway', 'donation.campaign'])
+            ->searchable(['trx'])
+            ->index()
+            ->latest()
+            ->paginate(getPaginate());
 
-        return view($this->activeTheme . 'user.deposit.index', compact('pageTitle', 'deposits'));
+        return view($this->activeTheme . 'user.page.donations', compact('pageTitle', 'deposits'));
     }
 
     public function transactions() {
         $pageTitle    = 'Transactions';
         $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
-        $transactions = Transaction::where('user_id', auth()->id())->searchable(['trx'])->filter(['trx_type', 'remark'])->orderBy('id', 'desc')->paginate(getPaginate());
+        $transactions = Transaction::where('user_id', auth()->id())
+            ->searchable(['trx'])
+            ->filter(['trx_type', 'remark'])
+            ->orderBy('id', 'desc')
+            ->paginate(getPaginate());
 
         return view($this->activeTheme . 'user.page.transactions', compact('pageTitle', 'transactions', 'remarks'));
     }

@@ -31,7 +31,7 @@
                             @forelse ($campaigns as $campaign)
                                 <tr>
                                     <td>
-                                        {{ $campaigns->firstItem() + $loop->index }}
+                                        {{ @$campaigns->firstItem() + $loop->index }}
                                     </td>
                                     <td>
                                         <span class="text-overflow-1 text--base">{{ __(@$campaign->name) }}</span>

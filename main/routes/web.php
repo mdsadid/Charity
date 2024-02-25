@@ -28,7 +28,3 @@ Route::controller('WebsiteController')->group(function () {
 
     Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
 });
-
-Route::controller('DonationController')->group(function () {
-    Route::post('campaign/{slug}/donate', 'index')->name('campaign.donate');
-});

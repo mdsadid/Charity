@@ -98,12 +98,14 @@
                                         <li class="dropdown-menu__list">
                                             <a href="{{ route('user.change.password') }}" class="dropdown-menu__link">@lang('Change Password')</a>
                                         </li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="received-donation.html">Received Donation</a></li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="my-donation.html">My Donations</a></li>
                                         <li class="dropdown-menu__list">
                                             <a href="{{ route('user.twofactor.form') }}" class="dropdown-menu__link">@lang('2FA Settings')</a>
                                         </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.donation.history') }}" class="dropdown-menu__link">@lang('My Donations')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
+                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="received-donation.html">Received Donation</a></li>
                                         <li class="dropdown-menu__list">
                                             <a href="{{ route('user.logout') }}" class="dropdown-menu__link">@lang('Log Out')</a>
                                         </li>

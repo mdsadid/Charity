@@ -1,6 +1,98 @@
-@extends($activeTheme. 'layouts.auth')
-@section('auth')
-    <div class="py-5 ">
+@extends($activeTheme . 'layouts.frontend')
+
+@section('front_end')
+    <div class="dashboard py-60">
+        <div class="container">
+            <div class="card custom--card">
+                <div class="card-body">
+                    <table class="table table-striped table-borderless table--responsive--xl">
+                        <thead>
+                            <tr>
+                                <th>@lang('S.N.')</th>
+                                <th>@lang('Campaign')</th>
+                                <th>@lang('Gateway') | @lang('Trx')</th>
+                                <th>@lang('Date')</th>
+                                <th>@lang('Amount')</th>
+                                <th>@lang('Conversion')</th>
+                                <th>@lang('Status')</th>
+                                <th>@lang('Action')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($deposits as $deposit)
+                                <tr>
+                                    <td>
+                                        {{ @$deposits->firstItem() + $loop->index }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('campaign.show', @$deposit->donation->campaign->slug) }}">
+                                            <span class="text-overflow-1 text--base">
+                                                {{ __(@$deposit->donation->campaign->name) }}
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="text--base">{{ __(@$deposit->gateway->name) }}</span>
+                                        <br>
+                                        <small data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="@lang('Transaction Number')">
+                                            {{ @$deposit->trx }}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        {{ showDateTime(@$deposit->created_at) }}
+                                        <br>
+                                        {{ diffForHumans(@$deposit->created_at) }}
+                                    </td>
+                                    <td>
+                                        {{ $setting->cur_sym . showAmount(@$deposit->amount) }} + <span class="text-danger" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="@lang('Charge')">{{ showAmount(@$deposit->charge) }}</span>
+                                        <br>
+                                        <strong data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="@lang('Amount With Charge')">
+                                            {{ showAmount(@$deposit->amount + @$deposit->charge) . ' ' . __($setting->site_cur) }}
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        1 {{ $setting->site_cur }} = {{ showAmount(@$deposit->rate, 4) . ' ' . __(@$deposit->method_currency) }}
+                                        <br>
+                                        <strong>
+                                            {{ showAmount(@$deposit->final_amo) . ' ' . __(@$deposit->method_currency) }}
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        @if (@$deposit->status == ManageStatus::PAYMENT_PENDING)
+                                            <span class="badge badge--warning">@lang('Pending')</span>
+                                        @elseif (@$deposit->status == ManageStatus::PAYMENT_SUCCESS)
+                                            <span class="badge badge--success">@lang('Succeeded')</span>
+                                        @elseif (@$deposit->status == ManageStatus::PAYMENT_CANCEL)
+                                            <span class="badge badge--secondary">@lang('Canceled')</span>
+                                        @else
+                                            <span class="badge badge--secondary">@lang('Initiated')</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="received-details.html" class="btn btn--icon btn--base">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td class="text-muted text-center" colspan="100%">
+                                        {{ __($emptyMessage) }}
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+
+                    @if ($deposits->hasPages())
+                        {{ $deposits->links() }}
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- <div class="py-5 ">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12">
@@ -53,7 +145,7 @@
                                                 <strong>{{ showAmount($deposit->final_amo) }} {{__($deposit->method_currency)}}</strong>
                                             </td>
                                             <td class="text-center">
-                                                @if($deposit->status == ManageStatus::PAYMENT_PENDING)
+                                                @if ($deposit->status == ManageStatus::PAYMENT_PENDING)
                                                     <span class="badge badge--warning">@lang('Pending')</span>
                                                 @elseif($deposit->status == ManageStatus::PAYMENT_SUCCESS)
                                                     <span class="badge badge--success">@lang('Done')</span>
@@ -68,8 +160,8 @@
                                                 @endphp
 
                                                 <td>
-                                                    <a href="javascript:void(0)" class="btn btn--base btn-sm @if($deposit->method_code >= 1000) detailBtn @else disabled @endif"
-                                                        @if($deposit->method_code >= 1000)
+                                                    <a href="javascript:void(0)" class="btn btn--base btn-sm @if ($deposit->method_code >= 1000) detailBtn @else disabled @endif"
+                                                        @if ($deposit->method_code >= 1000)
                                                             data-info="{{ $details }}"
                                                         @endif
 
@@ -91,7 +183,7 @@
                             </div>
                         </div>
                         
-                        @if($deposits->hasPages())
+                        @if ($deposits->hasPages())
                             <div class="card-footer">
                                 {{ $deposits->links() }}
                             </div>
@@ -100,10 +192,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- APPROVE MODAL --}}
-    <div id="detailModal" class="modal fade" tabindex="-1" role="dialog">
+    {{-- <div id="detailModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -122,24 +214,31 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @push('page-script')
     <script>
-        (function ($) {
-            "use strict";
-            $('.detailBtn').on('click', function () {
+        (function($) {
+            "use strict"
+
+            $('[data-bs-toggle="tooltip"]').each(function(index, element) {
+                new bootstrap.Tooltip(element)
+            })
+
+            $('.detailBtn').on('click', function() {
                 var modal = $('#detailModal');
 
                 var userData = $(this).data('info');
                 var html = '';
-                if(userData){
-                    let fileDownloadUrl = '{{ route("user.file.download",["filePath" => "verify"]) }}';
+                if (userData) {
+                    let fileDownloadUrl = '{{ route('user.file.download', ['filePath' => 'verify']) }}';
 
                     userData.forEach(element => {
-                        if (!element.value) { return; }
-                        if(element.type != 'file'){
+                        if (!element.value) {
+                            return;
+                        }
+                        if (element.type != 'file') {
                             html += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>${element.name}</span>
                                         <span">${element.value}</span>
@@ -159,14 +258,14 @@
 
                 modal.find('.userData').html(html);
 
-                if($(this).data('admin_feedback') != undefined){
+                if ($(this).data('admin_feedback') != undefined) {
                     var adminFeedback = `
                         <div class="my-3">
                             <strong>@lang('Admin Feedback')</strong>
                             <p>${$(this).data('admin_feedback')}</p>
                         </div>
                     `;
-                }else{
+                } else {
                     var adminFeedback = '';
                 }
 
@@ -176,6 +275,5 @@
                 modal.modal('show');
             });
         })(jQuery);
-
     </script>
 @endpush

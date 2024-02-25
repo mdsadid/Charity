@@ -75,12 +75,12 @@ class ProcessController extends Controller
         $transactionRequest->setTransactionRequest($transactionRequestType);
 
         $controller = new CreateTransactionController($transactionRequest);
-        $response   = $controller->executeWithApiResponse(ANetEnvironment::PRODUCTION);
+        $response   = $controller->executeWithApiResponse(ANetEnvironment::SANDBOX);
         $response   = $response->getTransactionResponse();
 
         if (($response != null) && ($response->getResponseCode() == "1")) {
-            PaymentController::userDataUpdate($deposit);
-            $toast[] = ['success', 'Payment captured successfully'];
+            PaymentController::campaignDataUpdate($deposit);
+            $toast[] = ['success', 'Payment completed successfully'];
 
             return to_route(gatewayRedirectUrl(true))->withToasts($toast);
         }

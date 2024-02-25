@@ -5,7 +5,6 @@
         "vendor": "/main/resources/views/vendor"
     },
     "cSpell.words": [
-        "bkash",
         "endauth",
         "endforeach",
         "endforelse",
@@ -16,6 +15,8 @@
         "forelse",
         "recaptcha",
         "stylesheet",
+        "tbody",
+        "thead",
         "Unban"
     ],
     "files.readonlyInclude": {

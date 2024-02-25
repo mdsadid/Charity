@@ -32,92 +32,89 @@ Route::namespace('User\Auth')->name('user.')->group(function () {
     });
 });
 
-Route::middleware('auth')->name('user.')->group(function () {
-    Route::namespace('User')->group(function () {
-        // Authorization
-        Route::controller('AuthorizationController')->group(function () {
-            Route::get('authorization', 'authorizeForm')->name('authorization');
-            Route::get('resend-verify/{type}', 'sendVerifyCode')->name('send.verify.code');
-            Route::post('verify-email', 'emailVerification')->name('verify.email');
-            Route::post('verify-mobile', 'mobileVerification')->name('verify.mobile');
-            Route::post('verify-g2fa', 'g2faVerification')->name('go2fa.verify');
+Route::middleware('auth')->name('user.')->namespace('User')->group(function () {
+    // Authorization
+    Route::controller('AuthorizationController')->group(function () {
+        Route::get('authorization', 'authorizeForm')->name('authorization');
+        Route::get('resend-verify/{type}', 'sendVerifyCode')->name('send.verify.code');
+        Route::post('verify-email', 'emailVerification')->name('verify.email');
+        Route::post('verify-mobile', 'mobileVerification')->name('verify.mobile');
+        Route::post('verify-g2fa', 'g2faVerification')->name('go2fa.verify');
+    });
+
+    Route::middleware('authorize.status')->group(function () {
+        // Campaign
+        Route::controller('CampaignController')->prefix('campaign')->name('campaign.')->group(function () {
+            Route::get('index', 'index')->name('index');
+            Route::get('approved', 'approved')->name('approved');
+            Route::get('pending', 'pending')->name('pending');
+            Route::get('rejected', 'rejected')->name('rejected');
+            Route::get('new', 'new')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::get('edit/{slug}', 'edit')->name('edit');
+            Route::post('image-remove/{id}', 'removeImage')->name('image.remove');
+            Route::post('update/{id}', 'update')->name('update');
+            Route::get('details/{slug}', 'show')->name('show');
+
+            Route::name('file.')->group(function () {
+                Route::post('file-upload', 'upload')->name('upload');
+                Route::post('file-remove', 'remove')->name('remove');
+            });
         });
 
         // User Operation
-        Route::middleware('authorize.status')->group(function () {
-            // Campaign
-            Route::controller('CampaignController')->prefix('campaign')->name('campaign.')->group(function () {
-                Route::get('index', 'index')->name('index');
-                Route::get('approved', 'approved')->name('approved');
-                Route::get('pending', 'pending')->name('pending');
-                Route::get('rejected', 'rejected')->name('rejected');
-                Route::get('new', 'new')->name('create');
-                Route::post('store', 'store')->name('store');
-                Route::get('edit/{slug}', 'edit')->name('edit');
-                Route::post('image-remove/{id}', 'removeImage')->name('image.remove');
-                Route::post('update/{id}', 'update')->name('update');
-                Route::get('details/{slug}', 'show')->name('show');
+        Route::controller('UserController')->group(function () {
+            // KYC Dashboard
+            Route::get('dashboard', 'home')->name('home');
 
-                Route::name('file.')->group(function () {
-                    Route::post('file-upload', 'upload')->name('upload');
-                    Route::post('file-remove', 'remove')->name('remove');
-                });
+            // KYC Check
+            Route::prefix('kyc')->name('kyc.')->group(function () {
+                Route::get('data', 'kycData')->name('data');
+                Route::get('form', 'kycForm')->name('form');
+                Route::post('form', 'kycSubmit');
             });
 
-            Route::controller('UserController')->group(function () {
-                // KYC Dashboard
-                Route::get('dashboard', 'home')->name('home');
+            // Profile Update
+            Route::get('profile', 'profile')->name('profile');
+            Route::post('profile', 'profileUpdate');
 
-                // KYC Check
-                Route::prefix('kyc')->name('kyc.')->group(function () {
-                    Route::get('data', 'kycData')->name('data');
-                    Route::get('form', 'kycForm')->name('form');
-                    Route::post('form', 'kycSubmit');
-                });
+            // Password Change
+            Route::get('change/password', 'password')->name('change.password');
+            Route::post('change/password', 'passwordChange');
 
-                // Profile Update
-                Route::get('profile', 'profile')->name('profile');
-                Route::post('profile', 'profileUpdate');
-
-                // Password Change
-                Route::get('change/password', 'password')->name('change.password');
-                Route::post('change/password', 'passwordChange');
-
-                // 2 Factor Authenticator
-                Route::prefix('twofactor')->name('twofactor.')->group(function () {
-                    Route::get('/', 'show2faForm')->name('form');
-                    Route::post('enable', 'enable2fa')->name('enable');
-                    Route::post('disable', 'disable2fa')->name('disable');
-                });
-
-                // Report
-                Route::get('deposit/history', 'depositHistory')->name('deposit.history');
-                Route::get('transactions', 'transactions')->name('transactions');
-
-                // File Download
-                Route::get('file-download', 'fileDownload')->name('file.download');
+            // 2 Factor Authenticator
+            Route::prefix('twofactor')->name('twofactor.')->group(function () {
+                Route::get('/', 'show2faForm')->name('form');
+                Route::post('enable', 'enable2fa')->name('enable');
+                Route::post('disable', 'disable2fa')->name('disable');
             });
 
-            // Withdraw
-            Route::controller('WithdrawController')->prefix('withdraw')->name('withdraw.')->group(function () {
-                Route::middleware('kyc.status')->group(function () {
-                    Route::get('/', 'methods')->name('methods');
-                    Route::post('/', 'store');
-                    Route::get('preview', 'preview')->name('preview');
-                    Route::post('preview', 'submit');
-                });
+            // Report
+            Route::get('donation/history', 'donationHistory')->name('donation.history');
+            Route::get('transactions', 'transactions')->name('transactions');
 
-                Route::get('index', 'index')->name('index');
+            // File Download
+            Route::get('file-download', 'fileDownload')->name('file.download');
+        });
+
+        // Withdraw
+        Route::controller('WithdrawController')->prefix('withdraw')->name('withdraw.')->group(function () {
+            Route::middleware('kyc.status')->group(function () {
+                Route::get('/', 'methods')->name('methods');
+                Route::post('/', 'store');
+                Route::get('preview', 'preview')->name('preview');
+                Route::post('preview', 'submit');
             });
+
+            Route::get('index', 'index')->name('index');
         });
     });
+});
 
-    // Deposit
-    Route::middleware('authorize.status')->prefix('deposit')->name('deposit.')->controller('Gateway\PaymentController')->group(function () {
-        Route::any('/', 'deposit')->name('index');
-        Route::post('insert/{slug}', 'depositInsert')->name('insert');
-        Route::get('confirm', 'depositConfirm')->name('confirm');
-        Route::get('manual', 'manualDepositConfirm')->name('manual.confirm');
-        Route::post('manual', 'manualDepositUpdate')->name('manual.update');
-    });
+// Deposit
+Route::prefix('deposit')->name('user.deposit.')->controller('Gateway\PaymentController')->group(function () {
+    Route::post('insert/{slug}', 'depositInsert')->name('insert');
+    Route::get('confirm', 'depositConfirm')->name('confirm');
+    Route::get('manual', 'manualDepositConfirm')->name('manual.confirm');
+    Route::post('manual', 'manualDepositUpdate')->name('manual.update');
 });

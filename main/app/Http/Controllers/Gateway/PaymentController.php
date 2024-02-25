@@ -15,16 +15,6 @@ use App\Models\Donation;
 
 class PaymentController extends Controller
 {
-    function deposit() {
-        $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
-            $gate->active();
-        })->with('method')->orderby('method_code')->get();
-
-        $pageTitle = 'Deposit Methods';
-
-        return view($this->activeTheme . 'user.deposit.create', compact('gatewayCurrency', 'pageTitle'));
-    }
-
     function depositInsert($slug) {
         $countryData = (array) json_decode(file_get_contents(resource_path('views/partials/country.json')));
         $countries   = implode(',', array_column($countryData, 'country'));
@@ -90,6 +80,7 @@ class PaymentController extends Controller
         $donation              = new Donation();
         $donation->deposit_id  = $deposit->id;
         $donation->campaign_id = $campaign->id;
+        $donation->type        = request('anonymousDonation') == 'on' ? Donation::ANONYMOUS_DONATION : Donation::KNOWN_DONATION;
         $donation->full_name   = request('full_name') ?? null;
         $donation->email       = request('email') ?? null;
         $donation->phone       = request('phone') ?? null;
@@ -131,35 +122,40 @@ class PaymentController extends Controller
         return view($this->activeTheme . $data->view, compact('data', 'pageTitle', 'deposit'));
     }
 
-    static function userDataUpdate($deposit, $isManual = null) {
+    static function campaignDataUpdate($deposit, $isManual = null) {
         if ($deposit->status == ManageStatus::PAYMENT_INITIATE || $deposit->status == ManageStatus::PAYMENT_PENDING) {
             $deposit->status = ManageStatus::PAYMENT_SUCCESS;
             $deposit->save();
 
-            $user           = User::find($deposit->user_id);
-            $user->balance += $deposit->amount;
-            $user->save();
+            $user = User::find($deposit->user_id);
 
-            $transaction               = new Transaction();
-            $transaction->user_id      = $deposit->user_id;
-            $transaction->amount       = $deposit->amount;
-            $transaction->post_balance = $user->balance;
-            $transaction->charge       = $deposit->charge;
-            $transaction->trx_type     = '+';
-            $transaction->details      = 'Deposit Via ' . $deposit->gatewayCurrency()->name;
-            $transaction->trx          = $deposit->trx;
-            $transaction->remark       = 'deposit';
+            $deposit->load('donation.campaign');
+            $campaign                 = $deposit->donation->campaign;
+            $campaign->raised_amount += $deposit->amount;
+            $campaign->save();
+
+            $transaction                        = new Transaction();
+            $transaction->user_id               = $deposit->user_id;
+            $transaction->amount                = $deposit->amount;
+            $transaction->charge                = $deposit->charge;
+            $transaction->post_balance          = $user->balance;
+            $transaction->campaign_id           = $campaign->id;
+            $transaction->campaign_post_balance = $campaign->raised_amount;
+            $transaction->trx_type              = '+';
+            $transaction->details               = 'Deposit Via ' . $deposit->gatewayCurrency()->name;
+            $transaction->trx                   = $deposit->trx;
+            $transaction->remark                = 'deposit';
             $transaction->save();
 
             if (!$isManual) {
                 $adminNotification            = new AdminNotification();
                 $adminNotification->user_id   = $user->id;
-                $adminNotification->title     = 'Deposit successful via ' . $deposit->gatewayCurrency()->name;
+                $adminNotification->title     = 'Deposit successful via ' . $deposit->gatewayCurrency()->name . ' for a campaign';
                 $adminNotification->click_url = urlPath('admin.deposit.done');
                 $adminNotification->save();
             }
 
-            notify($user, $isManual ? 'DEPOSIT_APPROVE' : 'DEPOSIT_COMPLETE', [
+            notify($user, $isManual ? 'DEPOSIT_APPROVE' : 'DONATION_COMPLETE', [
                 'method_name'     => $deposit->gatewayCurrency()->name,
                 'method_currency' => $deposit->method_currency,
                 'method_amount'   => showAmount($deposit->final_amo),
@@ -167,7 +163,7 @@ class PaymentController extends Controller
                 'charge'          => showAmount($deposit->charge),
                 'rate'            => showAmount($deposit->rate),
                 'trx'             => $deposit->trx,
-                'post_balance'    => showAmount($user->balance),
+                'campaign_name'   => $campaign->name,
             ]);
         }
     }
