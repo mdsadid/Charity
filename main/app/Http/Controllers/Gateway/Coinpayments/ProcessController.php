@@ -11,10 +11,6 @@ use Illuminate\Http\Request;
 
 class ProcessController extends Controller
 {
-    /*
-     * CoinPaymentHosted Gateway
-     */
-
     public static function process($deposit)
     {
         $coinPayAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
@@ -25,11 +21,12 @@ class ProcessController extends Controller
             } catch (\Exception $e) {
                 $send['error']   = true;
                 $send['message'] = $e->getMessage();
+
                 return json_encode($send);
             }
 
             $cps->Setup($coinPayAcc->private_key, $coinPayAcc->public_key);
-            $callbackUrl = route('ipn.'.$deposit->gateway->alias);
+            $callbackUrl = route('ipn.' . $deposit->gateway->alias);
 
             $req = array(
                 'amount'      => $deposit->final_amo,
@@ -41,11 +38,12 @@ class ProcessController extends Controller
             );
 
             $result = $cps->CreateTransaction($req);
+
             if ($result['error'] == 'ok') {
-                $bcoin                 = sprintf('%.08f', $result['result']['amount']);
-                $sendadd               = $result['result']['address'];
-                $deposit['btc_amo']    = $bcoin;
-                $deposit['btc_wallet'] = $sendadd;
+                $bCoin                 = sprintf('%.08f', $result['result']['amount']);
+                $sendAdd               = $result['result']['address'];
+                $deposit['btc_amo']    = $bCoin;
+                $deposit['btc_wallet'] = $sendAdd;
                 $deposit->update();
             } else {
                 $send['error']   = true;
@@ -58,6 +56,7 @@ class ProcessController extends Controller
         $send['img']      = cryptoQR($deposit->btc_wallet);
         $send['currency'] = "$deposit->method_currency";
         $send['view']     = 'user.payment.crypto';
+
         return json_encode($send);
     }
 
@@ -72,7 +71,7 @@ class ProcessController extends Controller
             $coinPayAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
             if ($deposit->method_currency == $request->currency2 && $deposit->btc_amo <= $amount2  && $coinPayAcc->merchant_id == $request->merchant && $deposit->status == ManageStatus::PAYMENT_INITIATE) {
-                PaymentController::userDataUpdate($deposit);
+                PaymentController::campaignDataUpdate($deposit);
             }
         }
     }

@@ -1,7 +1,7 @@
 @extends($activeTheme . 'layouts.frontend')
 
 @section('front_end')
-    <div class="contact py-120">
+    <div class="py-120">
         <div class="container">
             <div class="row gy-5 justify-content-lg-around justify-content-center align-items-center">
                 <div class="col-lg-6 col-md-10">
