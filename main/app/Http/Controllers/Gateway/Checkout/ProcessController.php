@@ -11,7 +11,6 @@ use App\Http\Controllers\Gateway\PaymentController;
 
 class ProcessController extends Controller
 {
-
     public static function process($deposit)
     {
         $alias          = $deposit->gateway->alias;
@@ -19,6 +18,7 @@ class ProcessController extends Controller
         $send['view']   = 'user.payment.' . $alias;
         $send['method'] = 'post';
         $send['url']    = route('ipn.' . $alias);
+
         return json_encode($send);
     }
 
@@ -29,6 +29,7 @@ class ProcessController extends Controller
 
         if ($deposit->status == ManageStatus::PAYMENT_SUCCESS) {
             $toast[] = ['error', 'Invalid request.'];
+
             return to_route(gatewayRedirectUrl())->withToasts($toast);
         }
 
@@ -38,20 +39,20 @@ class ProcessController extends Controller
             'cardCVC'    => 'required',
         ]);
 
-        $checkoutAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
+        $checkoutAcc         = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $processingChannelId = $checkoutAcc->processing_channel_id;
-        $publicKey   = $checkoutAcc->public_key;
-        $secretKey   = $checkoutAcc->secret_key;
-        $cardExpire  = explode('/', $request->cardExpiry);
-        $data        = array(
-                            'type'         => 'card',
-                            'number'       => str_replace(' ', '', $request->cardNumber),
-                            'expiry_month' => $cardExpire[0],
-                            'expiry_year'  => $cardExpire[1],
-                            'cvv'          => $request->cardCVC,
-                        );
+        $publicKey           = $checkoutAcc->public_key;
+        $secretKey           = $checkoutAcc->secret_key;
+        $cardExpire          = explode('/', $request->cardExpiry);
+        $data                = array(
+            'type'         => 'card',
+            'number'       => str_replace(' ', '', $request->cardNumber),
+            'expiry_month' => $cardExpire[0],
+            'expiry_year'  => $cardExpire[1],
+            'cvv'          => $request->cardCVC,
+        );
 
-        $tokenUrl   = 'https://api.checkout.com/tokens';
+        $tokenUrl   = "https://api.checkout.com/tokens";
         $paymentUrl = "https://api.checkout.com/payments";
 
         $response = CurlRequest::curlPostContent($tokenUrl, json_encode($data), array(
@@ -66,13 +67,9 @@ class ProcessController extends Controller
         } else {
             $toast = [];
 
-            foreach ($response->error_codes ?? [] as $error) {
-                $toast[] = ['error', $error];
-            }
+            foreach ($response->error_codes ?? [] as $error) $toast[] = ['error', $error];
 
-            if (empty($toast)) {
-                $toast[] = ['error', 'Something went wrong'];
-            }
+            if (empty($toast)) $toast[] = ['error', 'Something went wrong'];
 
             return to_route(gatewayRedirectUrl())->withToasts($toast);
         }
@@ -82,36 +79,39 @@ class ProcessController extends Controller
                 "type"  => "token",
                 "token" => $cardToken,
             ),
-            "amount"                => (int)(round($deposit->final_amo, 2) *100),
+            "amount"                => (int)(round($deposit->final_amo, 2) * 100),
             "currency"              => $deposit->method_currency,
             "processing_channel_id" => $processingChannelId,
             "reference"             => $deposit->trx,
             "capture"               => true,
             "customer"              => array(
-                "email" => @$deposit->user->email,
-                "name"  => @$deposit->user->fullname,
+                "email" => @$deposit->user->email ?? @$deposit->donation->email,
+                "name"  => @$deposit->user->fullname ?? @$deposit->donation->full_name,
                 "phone" => array(
-                    "number" => @$deposit->user->mobile,
+                    "number" => @$deposit->user->mobile ?? "415 555 2671",
                 ),
-            )
+            ),
         );
 
         $data   = json_encode($data);
         $result = CurlRequest::curlPostContent($paymentUrl, $data, array(
-            "Authorization: $secretKey",
-            "Content-Type: application/json",
-            "Content-Length: " . strlen($data))
+                "Authorization: Bearer $secretKey",
+                "Content-Type: application/json",
+                "Content-Length: " . strlen($data)
+            )
         );
 
         $result = json_decode($result);
 
-        if ((@$result->status == 'Authorized' || @$result->status == 'Captured')) {
-            PaymentController::userDataUpdate($deposit);
-            $toast[] = ['success', 'Payment captured successfully'];
+        if (@$result->status == 'Authorized' || @$result->status == 'Captured') {
+            PaymentController::campaignDataUpdate($deposit);
+            $toast[] = ['success', 'Payment completed successfully'];
+
             return to_route(gatewayRedirectUrl(true))->withToasts($toast);
         }
 
-        $toast[] = ['error', 'Payment Failed'];
+        $toast[] = ['error', 'Payment failed'];
+
         return to_route(gatewayRedirectUrl())->withToasts($toast);
     }
 }

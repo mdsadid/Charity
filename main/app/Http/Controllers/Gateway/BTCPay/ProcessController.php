@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gateway\BTCPay;
 
+use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
 use App\Models\AdminNotification;
@@ -28,14 +29,14 @@ class ProcessController extends Controller
             );
 
             $deposit->btc_wallet = $invoice->getData()['id'];
-            $deposit->detail = json_encode($invoice->getData());
+            $deposit->detail     = json_encode($invoice->getData());
             $deposit->save();
 
             $send['redirect']     = true;
             $send['redirect_url'] = $invoice['checkoutLink'];
         } catch (\Throwable $e) {
-            $send['error']     = true;
-            $send['message'] = $e->getMessage();;
+            $send['error']   = true;
+            $send['message'] = $e->getMessage();
         }
 
         return json_encode($send);
@@ -44,15 +45,15 @@ class ProcessController extends Controller
     public function ipn()
     {
         $rawPostData = file_get_contents("php://input");
+
         if ($rawPostData) {
             $headers = getallheaders();
+
             foreach ($headers as $key => $value) {
-                if (strtolower($key) === 'btcpay-sig') {
-                    $signature = $value;
-                }
+                if (strtolower($key) === 'btcpay-sig') $signature = $value;
             }
 
-            $gateway = Gateway::where('alias', 'BTCPay')->first();
+            $gateway           = Gateway::where('alias', 'BTCPay')->first();
             $gatewayParameters = json_decode($gateway->gateway_parameters);
 
             if (!isset($signature) || !$this->validWebhookRequest($signature, $rawPostData, $gatewayParameters->secret_code->value)) {
@@ -61,6 +62,7 @@ class ProcessController extends Controller
                 $adminNotification->title     = 'Webhook request validation failed.';
                 $adminNotification->click_url = '#';
                 $adminNotification->save();
+
                 return false;
             }
 
@@ -73,19 +75,20 @@ class ProcessController extends Controller
                     $adminNotification->title     = 'No BTCPay invoiceId provided, aborting.';
                     $adminNotification->click_url = '#';
                     $adminNotification->save();
+
                     return false;
                 }
 
-                $deposit = Deposit::where('btc_wallet', $postData->invoiceId)->where('status', 0)->first();
-                if ($deposit) {
-                    $this->processPayment($deposit, $postData);
-                }
+                $deposit = Deposit::where('btc_wallet', $postData->invoiceId)->where('status', ManageStatus::PAYMENT_INITIATE)->first();
+
+                if ($deposit) $this->processPayment($deposit, $postData);
             } catch (\Throwable $e) {
                 $adminNotification            = new AdminNotification();
                 $adminNotification->user_id   = 0;
                 $adminNotification->title     = 'Error decoding webhook payload: ' . $e->getMessage();
                 $adminNotification->click_url = '#';
                 $adminNotification->save();
+
                 return false;
             }
         }
@@ -100,10 +103,12 @@ class ProcessController extends Controller
                 $adminNotification->title     = 'Payment expired for trx ' . $deposit->trx;
                 $adminNotification->click_url = '#';
                 $adminNotification->save();
+
                 return false;
             } else {
                 if ($webhookData->payment->status == 'Settled') {
-                    PaymentController::userDataUpdate($deposit);
+                    PaymentController::campaignDataUpdate($deposit);
+
                     return true;
                 } else {
                     $adminNotification            = new AdminNotification();
@@ -111,6 +116,7 @@ class ProcessController extends Controller
                     $adminNotification->title     = 'Amount is not fully paid for trx ' . $deposit->trx;
                     $adminNotification->click_url = '#';
                     $adminNotification->save();
+
                     return false;
                 }
             }

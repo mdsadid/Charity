@@ -11,14 +11,14 @@ use App\Models\Withdrawal;
 use App\Models\WithdrawMethod;
 
 class WithdrawController extends Controller
-{   
+{
     function index() {
         $pageTitle = 'Withdraw History';
         $withdraws = Withdrawal::where('user_id', auth()->id())->searchable(['trx'])->index()->with('method')->latest()->paginate(getPaginate());
 
         return view($this->activeTheme . 'user.withdraw.index', compact('pageTitle', 'withdraws'));
     }
-    
+
     function methods() {
         $pageTitle = 'Make Withdraw';
         $methods   = WithdrawMethod::active()->get();
@@ -38,16 +38,19 @@ class WithdrawController extends Controller
 
         if ($amount < $method->min_amount) {
             $toast[] = ['error', 'The requested amount is below the minimum allowable amount'];
+
             return back()->withToasts($toast);
         }
 
         if ($amount > $method->max_amount) {
             $toast[] = ['error', 'The requested amount exceeds the maximum allowable amount'];
+
             return back()->withToasts($toast);
         }
 
         if ($amount > $user->balance) {
             $toast[] = ['error', 'You lack the necessary balance to process a withdrawal'];
+
             return back()->withToasts($toast);
         }
 
@@ -68,23 +71,31 @@ class WithdrawController extends Controller
         $withdraw->save();
 
         session()->put('wtrx', $withdraw->trx);
+
         return to_route('user.withdraw.preview');
     }
 
     function preview() {
         $pageTitle = 'Withdraw Preview';
-        $withdraw  = Withdrawal::with('method', 'user')->where('trx', session()->get('wtrx'))->initiate()->latest()->firstOrFail();
-        return view($this->activeTheme . 'user.withdraw.preview', compact('pageTitle','withdraw'));
+        $withdraw  = Withdrawal::with('method', 'user')
+            ->where('trx', session()->get('wtrx'))
+            ->initiate()
+            ->latest()
+            ->firstOrFail();
+
+        return view($this->activeTheme . 'user.withdraw.preview', compact('pageTitle', 'withdraw'));
     }
 
     function submit() {
-        $withdraw = Withdrawal::with('method', 'user')->where('trx', session()->get('wtrx'))->initiate()->latest()->firstOrFail();
+        $withdraw = Withdrawal::with('method', 'user')
+            ->where('trx', session()->get('wtrx'))
+            ->initiate()
+            ->latest()
+            ->firstOrFail();
 
         $method = $withdraw->method;
 
-        if ($method->status == ManageStatus::INACTIVE) {
-            abort(404);
-        }
+        if ($method->status == ManageStatus::INACTIVE) abort(404);
 
         $formData       = $method->form->form_data;
         $formProcessor  = new FormProcessor();
@@ -100,20 +111,22 @@ class WithdrawController extends Controller
 
             if (!$response) {
                 $toast[] = ['error', 'Wrong verification code'];
+
                 return back()->withToasts($toast);
             }
         }
 
         if ($withdraw->amount > $user->balance) {
             $toast[] = ['error', 'Your requested amount exceeds your current balance'];
+
             return back()->withToasts($toast);
         }
-        
-        $withdraw->status = ManageStatus::PAYMENT_PENDING;
+
+        $withdraw->status               = ManageStatus::PAYMENT_PENDING;
         $withdraw->withdraw_information = $userData;
         $withdraw->save();
 
-        $user->balance -=  $withdraw->amount;
+        $user->balance -= $withdraw->amount;
         $user->save();
 
         $transaction               = new Transaction();
@@ -129,7 +142,7 @@ class WithdrawController extends Controller
 
         $adminNotification            = new AdminNotification();
         $adminNotification->user_id   = $user->id;
-        $adminNotification->title     = 'New withdraw request from '.$user->username;
+        $adminNotification->title     = 'New withdraw request from ' . $user->username;
         $adminNotification->click_url = urlPath('admin.withdraw.pending');
         $adminNotification->save();
 
@@ -145,6 +158,7 @@ class WithdrawController extends Controller
         ]);
 
         $toast[] = ['success', 'Withdraw request sent success'];
+
         return to_route('user.withdraw.index')->withToasts($toast);
     }
 }

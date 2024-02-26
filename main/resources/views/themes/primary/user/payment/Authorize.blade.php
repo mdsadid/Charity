@@ -17,28 +17,28 @@
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Name')</label>
                                     <div class="input--group">
-                                        <input type="text" name="name" class="form--control" value="{{ old('name') }}" required autocomplete="off">
+                                        <input type="text" class="form--control" name="name" value="{{ old('name') }}" required autocomplete="off">
                                         <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Card Number')</label>
                                     <div class="input--group">
-                                        <input type="text" name="cardNumber" class="form--control" value="{{ old('cardNumber') }}" required autocomplete="off">
+                                        <input type="text" class="form--control" name="cardNumber" value="{{ old('cardNumber') }}" required autocomplete="off">
                                         <span class="input-group-text"><i class="fa-solid fa-credit-card"></i></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Expire Date')</label>
                                     <div class="input--group">
-                                        <input type="text" name="cardExpiry" class="form--control" value="{{ old('cardExpiry') }}" required autocomplete="off">
+                                        <input type="text" class="form--control" name="cardExpiry" value="{{ old('cardExpiry') }}" required autocomplete="off">
                                         <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('CVC Code')</label>
                                     <div class="input--group">
-                                        <input type="text" name="cardCVC" class="form--control" value="{{ old('cardCVC') }}" required autocomplete="off">
+                                        <input type="text" class="form--control" name="cardCVC" value="{{ old('cardCVC') }}" required autocomplete="off">
                                         <span class="input-group-text"><i class="fa-solid fa-list-ol"></i></span>
                                     </div>
                                 </div>

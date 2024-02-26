@@ -1,48 +1,52 @@
-@extends($activeTheme. 'layouts.auth')
-@section('auth')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+@extends($activeTheme . 'layouts.frontend')
 
-                <div class="card custom--card">
-                    <div class="card-header">
-                        <h5>@lang('Checkout.com')</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-wrapper mb-3"></div>
-                        <form role="form" id="payment-form" method="{{$data->method}}" action="{{$data->url}}">
-                            @csrf
-                            <input type="hidden" value="{{$data->track}}" name="track">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="form-label">@lang('Name on Card')</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control form--control" name="name" value="{{ old('name') }}" required autocomplete="off" autofocus>
-                                        <span class="input-group-text"><i class="fa fa-font"></i></span>
+@section('front_end')
+    <div class="contact py-120">
+        <div class="container">
+            <div class="row gy-5 justify-content-lg-around justify-content-center align-items-center">
+                <div class="col-lg-6 col-md-10">
+                    <div class="card custom--card" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="card-header">
+                            <h3 class="title">@lang('Checkout.com')</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-wrapper mb-4"></div>
+                            <form action="{{ $data->url }}" method="{{ $data->method }}" class="row g-3" id="payment-form">
+                                @csrf
+                                <input type="hidden" value="{{ $data->track }}" name="track">
+                                <div class="col-sm-6">
+                                    <label class="form--label required">@lang('Name')</label>
+                                    <div class="input--group">
+                                        <input type="text" class="form--control" name="name" value="{{ old('name') }}" required autocomplete="off">
+                                        <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">@lang('Card Number')</label>
-                                    <div class="input-group">
-                                        <input type="tel" class="form-control form--control" name="cardNumber" autocomplete="off" value="{{ old('cardNumber') }}" required autofocus>
-                                        <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+                                <div class="col-sm-6">
+                                    <label class="form--label required">@lang('Card Number')</label>
+                                    <div class="input--group">
+                                        <input type="text" class="form--control" name="cardNumber" value="{{ old('cardNumber') }}" required autocomplete="off">
+                                        <span class="input-group-text"><i class="fa-solid fa-credit-card"></i></span>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <label class="form-label">@lang('Expiration Date')</label>
-                                    <input type="tel" class="form-control form--control" name="cardExpiry" value="{{ old('cardExpiry') }}" autocomplete="off" required>
+                                <div class="col-sm-6">
+                                    <label class="form--label required">@lang('Expire Date')</label>
+                                    <div class="input--group">
+                                        <input type="text" class="form--control" name="cardExpiry" value="{{ old('cardExpiry') }}" required autocomplete="off">
+                                        <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 ">
-                                    <label class="form-label">@lang('CVC Code')</label>
-                                    <input type="tel" class="form-control form--control" name="cardCVC" value="{{ old('cardCVC') }}" autocomplete="off" required>
+                                <div class="col-sm-6">
+                                    <label class="form--label required">@lang('CVC Code')</label>
+                                    <div class="input--group">
+                                        <input type="text" class="form--control" name="cardCVC" value="{{ old('cardCVC') }}" required autocomplete="off">
+                                        <span class="input-group-text"><i class="fa-solid fa-list-ol"></i></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <br>
-                            <button class="btn btn--base w-100" type="submit"> @lang('Submit')</button>
-                        </form>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn--base w-100 mt-2">@lang('Submit')</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,12 +55,12 @@
 @endsection
 
 @push('page-script-lib')
-    <script src="{{asset('assets/universal/js/card.js')}}"></script>
+    <script src="{{ asset('assets/universal/js/card.js') }}"></script>
 @endpush
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
             var card = new Card({
