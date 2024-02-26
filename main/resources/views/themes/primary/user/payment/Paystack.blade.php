@@ -1,5 +1,6 @@
-@extends($activeTheme. 'layouts.auth')
-@section('auth')
+@extends($activeTheme . 'layouts.frontend')
+
+@section('front_end')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">

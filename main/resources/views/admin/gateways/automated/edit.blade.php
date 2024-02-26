@@ -322,7 +322,7 @@
     @push('breadcrumb')
         <div class="input-group">
             <select class="form-select form-control newCurrencyVal" required>
-                <option value="">@lang('Select currency')</option>
+                <option value="">@lang('Select Currency')</option>
                 
                 @forelse($supportedCurrencies as $currency => $symbol)
                     <option value="{{$currency}}" data-symbol="{{ $symbol }}">{{ __($currency) }} </option>
