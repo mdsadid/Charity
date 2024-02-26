@@ -9,15 +9,10 @@ use App\Http\Controllers\Gateway\PaymentController;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 
-
 class ProcessController extends Controller
 {
-    /*
-     * RazorPay Gateway
-     */
-
     public static function process($deposit)
-    {   
+    {
         $razorAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
         //  API request and response for creating an order
@@ -37,10 +32,10 @@ class ProcessController extends Controller
         } catch (\Exception $e) {
             $send['error']   = true;
             $send['message'] = $e->getMessage();
+
             return json_encode($send);
         }
-        
-        
+
         $deposit->btc_wallet = $order->id;
         $deposit->save();
 
@@ -49,49 +44,46 @@ class ProcessController extends Controller
         $val['currency']        = $deposit->method_currency;
         $val['order_id']        = $order['id'];
         $val['buttontext']      = "Pay with Razorpay";
-        $val['name']            = auth()->user()->username;
+        $val['name']            = $deposit->user->fullname ?? $deposit->donation->name;
         $val['description']     = "Payment By Razorpay";
-        $val['image']           = getImage(getFilePath('logoFavicon').'/logo_dark.png');
-        $val['prefill.name']    = auth()->user()->firstname . ' ' . auth()->user()->lastname;
-        $val['prefill.email']   = auth()->user()->email;
-        $val['prefill.contact'] = auth()->user()->mobile;
-        $val['theme.color']     = "#2ecc71";
-        
+        $val['image']           = getImage(getFilePath('logoFavicon') . '/logo_dark.png');
+        $val['prefill.name']    = $deposit->user->fullname ?? $deposit->donation->name;
+        $val['prefill.email']   = $deposit->user->email ?? $deposit->donation->email;
+        $val['prefill.contact'] = $deposit->user->mobile ?? $deposit->donation->phone;
+        $val['theme.color']     = "#47d195";
         $send['val']            = $val;
         $send['method']         = 'POST';
 
         $alias = $deposit->gateway->alias;
-        
-        $send['url']         = route('ipn.'.$alias);
+
+        $send['url']         = route('ipn.' . $alias);
         $send['custom']      = $deposit->trx;
         $send['checkout_js'] = "https://checkout.razorpay.com/v1/checkout.js";
-        $send['view']        = 'user.payment.'.$alias;
+        $send['view']        = 'user.payment.' . $alias;
 
         return json_encode($send);
     }
 
     public function ipn(Request $request)
     {
-
         $deposit  = Deposit::where('btc_wallet', $request->razorpay_order_id)->orderBy('id', 'DESC')->first();
         $razorAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
-        if (!$deposit) {
-            $toast[] = ['error', 'Invalid request'];
-        }
+        if (!$deposit) $toast[] = ['error', 'Invalid request'];
 
-        $sig = hash_hmac('sha256', $request->razorpay_order_id . "|" . $request->razorpay_payment_id, $razorAcc->key_secret);
+        $sig             = hash_hmac('sha256', $request->razorpay_order_id . "|" . $request->razorpay_payment_id, $razorAcc->key_secret);
         $deposit->detail = $request->all();
         $deposit->save();
 
         if ($sig == $request->razorpay_signature && $deposit->status == ManageStatus::PAYMENT_INITIATE) {
-            PaymentController::userDataUpdate($deposit);
-            $toast[] = ['success', 'Transaction was successful'];
+            PaymentController::campaignDataUpdate($deposit);
+            $toast[] = ['success', 'Payment completed successfully'];
+
             return to_route(gatewayRedirectUrl(true))->withToasts($toast);
         } else {
             $toast[] = ['error', "Invalid Request"];
+
             return to_route(gatewayRedirectUrl())->withToasts($toast);
         }
-
     }
 }

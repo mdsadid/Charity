@@ -88,7 +88,7 @@ class ProcessController extends Controller
                 "email" => @$deposit->user->email ?? @$deposit->donation->email,
                 "name"  => @$deposit->user->fullname ?? @$deposit->donation->full_name,
                 "phone" => array(
-                    "number" => @$deposit->user->mobile ?? "",
+                    "number" => @$deposit->user->mobile ?? @$deposit->donation->phone,
                 ),
             ),
         );

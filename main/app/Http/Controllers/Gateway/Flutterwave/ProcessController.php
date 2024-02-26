@@ -17,7 +17,7 @@ class ProcessController extends Controller
         $send['encryption_key'] = $flutterAcc->encryption_key;
         $send['customer_email'] = $deposit->user->email ?? $deposit->donation->email;
         $send['amount']         = round($deposit->final_amo, 2);
-        $send['customer_phone'] = $deposit->user->mobile ?? '';
+        $send['customer_phone'] = $deposit->user->mobile ?? $deposit->donation->phone;
         $send['currency']       = $deposit->method_currency;
         $send['txref']          = $deposit->trx;
         $send['notify_url']     = url('ipn/flutterwave');
