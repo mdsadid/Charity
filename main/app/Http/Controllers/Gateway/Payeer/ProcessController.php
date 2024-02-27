@@ -10,10 +10,6 @@ use Illuminate\Http\Request;
 
 class ProcessController extends Controller
 {
-    /*
-     * Payeer Gateway
-     */
-
     public static function process($deposit)
     {
         $payeerAcc        = json_decode($deposit->gatewayCurrency()->gateway_parameter);
@@ -33,7 +29,6 @@ class ProcessController extends Controller
 
         return json_encode($send);
     }
-
 
     public function ipn(Request $request)
     {
@@ -57,9 +52,15 @@ class ProcessController extends Controller
             if ($request->m_sign != $sign_hash) {
                 $toast[] = ['error', 'The digital signature did not matched'];
             } else {
-                if ($request->m_amount == getAmount($deposit->final_amo) && $request->m_curr == $deposit->method_currency && $request->m_status == 'success' && $deposit->status == ManageStatus::PAYMENT_INITIATE) {
-                    PaymentController::userDataUpdate($deposit);
-                    $toast[] = ['success', 'Transaction is successful'];
+                if (
+                    $request->m_amount == getAmount($deposit->final_amo) && 
+                    $request->m_curr == $deposit->method_currency && 
+                    $request->m_status == 'success' && 
+                    $deposit->status == ManageStatus::PAYMENT_INITIATE
+                ) {
+                    PaymentController::campaignDataUpdate($deposit);
+                    $toast[] = ['success', 'Payment completed successfully'];
+
                     return to_route(gatewayRedirectUrl(true))->withToasts($toast);
                 } else {
                     $toast[] = ['error', 'Payment failed'];
@@ -68,6 +69,7 @@ class ProcessController extends Controller
         } else {
             $toast[] = ['error', 'Payment failed'];
         }
+
         return to_route(gatewayRedirectUrl())->withToasts($toast);
     }
 }
