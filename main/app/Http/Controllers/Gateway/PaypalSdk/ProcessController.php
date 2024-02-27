@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Gateway\PaypalSdk;
 
+use App\Models\Deposit;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
 use App\Http\Controllers\Gateway\PaypalSdk\Core\PayPalHttpClient;
-use App\Http\Controllers\Gateway\PaypalSdk\Core\ProductionEnvironment;
-use App\Http\Controllers\Gateway\PaypalSdk\Orders\OrdersCaptureRequest;
-use App\Http\Controllers\Gateway\PaypalSdk\Orders\OrdersCreateRequest;
 use App\Http\Controllers\Gateway\PaypalSdk\PayPalHttp\HttpException;
-use App\Models\Deposit;
+use App\Http\Controllers\Gateway\PaypalSdk\Core\ProductionEnvironment;
+use App\Http\Controllers\Gateway\PaypalSdk\Orders\OrdersCreateRequest;
+use App\Http\Controllers\Gateway\PaypalSdk\Orders\OrdersCaptureRequest;
 
 class ProcessController extends Controller
 {
-
     public static function process($deposit)
     {
         $paypalAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
@@ -26,30 +25,32 @@ class ProcessController extends Controller
         $request      = new OrdersCreateRequest();
         $request->prefer('return=representation');
 
-        $request->body  = [
-                             "intent" => "CAPTURE",
-                             "purchase_units" => [[
-                                 "reference_id" =>$deposit->trx,
-                                 "amount" => [
-                                     "value" => round($deposit->final_amo,2),
-                                     "currency_code" => $deposit->method_currency
-                                 ]
-                             ]],
-                             "application_context" => [
-                                  "cancel_url" => route(gatewayRedirectUrl()),
-                                  "return_url" => route('ipn.'.$deposit->gateway->alias)
-                             ]
-                         ];
+        $request->body = [
+            "intent"              => "CAPTURE",
+            "purchase_units"      => [
+                [
+                    "reference_id" => $deposit->trx,
+                    "amount"       => [
+                        "value"         => round($deposit->final_amo, 2),
+                        "currency_code" => $deposit->method_currency,
+                    ],
+                ],
+            ],
+            "application_context" => [
+                "cancel_url" => route(gatewayRedirectUrl()),
+                "return_url" => route('ipn.' . $deposit->gateway->alias),
+            ],
+        ];
 
         try {
-            $response = $client->execute($request);
+            $response            = $client->execute($request);
             $deposit->btc_wallet = $response->result->id;
             $deposit->save();
 
             $send['redirect']     = true;
             $send['redirect_url'] = $response->result->links[1]->href;
-        }catch (HttpException $ex) {
-            $send['error'] = true;
+        } catch (HttpException $ex) {
+            $send['error']   = true;
             $send['message'] = 'Failed to process with api';
         }
 
@@ -62,7 +63,7 @@ class ProcessController extends Controller
         $request->prefer('return=representation');
 
         try {
-            $deposit      = Deposit::where('btc_wallet',$_GET['token'])->initiate()->firstOrFail();
+            $deposit      = Deposit::where('btc_wallet', $_GET['token'])->initiate()->firstOrFail();
             $paypalAcc    = json_decode($deposit->gatewayCurrency()->gateway_parameter);
             $clientId     = $paypalAcc->clientId;
             $clientSecret = $paypalAcc->clientSecret;
@@ -70,22 +71,20 @@ class ProcessController extends Controller
             $client       = new PayPalHttpClient($environment);
             $response     = $client->execute($request);
 
-            if(@$response->result->status == 'COMPLETED'){
+            if (@$response->result->status == 'COMPLETED') {
                 $deposit->detail = json_decode(json_encode($response->result->payer));
                 $deposit->save();
 
-                PaymentController::userDataUpdate($deposit);
+                PaymentController::campaignDataUpdate($deposit);
+                $toast[] = ['success', 'Payment completed successfully'];
 
-                $toast[] = ['success', 'Payment captured successfully'];
                 return to_route(gatewayRedirectUrl(true))->withToasts($toast);
-
-            }else{
-
+            } else {
                 $toast[] = ['error', 'Payment captured failed'];
+
                 return to_route(gatewayRedirectUrl())->withToasts($toast);
             }
-
-        }catch (HttpException $ex) {
+        } catch (HttpException $ex) {
             return to_route(gatewayRedirectUrl());
         }
     }
