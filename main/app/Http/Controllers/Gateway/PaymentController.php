@@ -37,8 +37,6 @@ class PaymentController extends Controller
             return back()->withToasts($toast);
         }
 
-        // ? What if a donor is same as the campaign creator?
-
         $gatewayData = GatewayCurrency::whereHas('method', function ($gateway) {
             $gateway->active();
         })

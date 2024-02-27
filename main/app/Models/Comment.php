@@ -34,7 +34,7 @@ class Comment extends Model
                 if ($this->user_id) {
                     $html = '<span class="badge bg-label-success">' . trans('Registered') . '</span>';
                 } else {
-                    $html = '<span class="badge bg-label-warning">' . trans('Not Registered') . '</span>';
+                    $html = '<span class="badge bg-label-warning">' . trans('Guest') . '</span>';
                 }
 
                 return $html;

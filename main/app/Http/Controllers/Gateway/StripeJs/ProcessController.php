@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Gateway\StripeJs;
 
-use App\Constants\ManageStatus;
-use App\Models\Deposit;
-use App\Http\Controllers\Gateway\PaymentController;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Exception;
 use Stripe\Charge;
-use Stripe\Customer;
 use Stripe\Stripe;
+use Stripe\Customer;
+use App\Models\Deposit;
+use Illuminate\Http\Request;
+use App\Constants\ManageStatus;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gateway\PaymentController;
 
 class ProcessController extends Controller
 {
@@ -53,7 +54,7 @@ class ProcessController extends Controller
                 'email'  => $request->stripeEmail,
                 'source' => $request->stripeToken,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $toast[] = ['error', $e->getMessage()];
 
             return to_route(gatewayRedirectUrl())->withToasts($toast);
@@ -66,7 +67,7 @@ class ProcessController extends Controller
                 'amount'      => round($deposit->final_amo, 2) * 100,
                 'currency'    => $deposit->method_currency,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $toast[] = ['error', $e->getMessage()];
 
             return to_route(gatewayRedirectUrl())->withToasts($toast);
