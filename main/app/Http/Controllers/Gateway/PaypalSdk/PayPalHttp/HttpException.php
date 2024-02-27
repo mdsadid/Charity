@@ -17,7 +17,8 @@ class HttpException extends IOException
     public function __construct($message, $statusCode, $headers)
     {
         parent::__construct($message);
+
         $this->statusCode = $statusCode;
-        $this->headers = $headers;
+        $this->headers    = $headers;
     }
 }

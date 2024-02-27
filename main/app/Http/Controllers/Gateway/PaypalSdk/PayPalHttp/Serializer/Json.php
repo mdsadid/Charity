@@ -13,7 +13,6 @@ use App\Http\Controllers\Gateway\PaypalSdk\PayPalHttp\Serializer;
  */
 class Json implements Serializer
 {
-
     public function contentType()
     {
         return "/^application\\/json/";
@@ -22,12 +21,15 @@ class Json implements Serializer
     public function encode(HttpRequest $request)
     {
         $body = $request->body;
+
         if (is_string($body)) {
             return $body;
         }
+
         if (is_array($body)) {
             return json_encode($body);
         }
+
         throw new \Exception("Cannot serialize data. Unknown type");
     }
 

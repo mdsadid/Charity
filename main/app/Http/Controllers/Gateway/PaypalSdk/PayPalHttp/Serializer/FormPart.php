@@ -9,7 +9,7 @@ class FormPart
 
     public function __construct($value, $headers)
     {
-        $this->value = $value;
+        $this->value   = $value;
         $this->headers = array_merge([], $headers);
     }
 

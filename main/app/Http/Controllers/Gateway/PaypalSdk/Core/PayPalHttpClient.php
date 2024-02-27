@@ -12,6 +12,7 @@ class PayPalHttpClient extends HttpClient
     public function __construct(PayPalEnvironment $environment, $refreshToken = NULL)
     {
         parent::__construct($environment);
+
         $this->refreshToken = $refreshToken;
         $this->authInjector = new AuthorizationInjector($this, $environment, $refreshToken);
         $this->addInjector($this->authInjector);
@@ -24,4 +25,3 @@ class PayPalHttpClient extends HttpClient
         return UserAgent::getValue();
     }
 }
-

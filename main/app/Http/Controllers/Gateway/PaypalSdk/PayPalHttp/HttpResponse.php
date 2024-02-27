@@ -28,7 +28,7 @@ class HttpResponse
     public function __construct($statusCode, $body, $headers)
     {
         $this->statusCode = $statusCode;
-        $this->headers = $headers;
-        $this->result = $body;
+        $this->headers    = $headers;
+        $this->result     = $body;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Gateway\PaypalSdk\Core;
 
-
 class AccessToken
 {
     public $token;
@@ -12,9 +11,9 @@ class AccessToken
 
     public function __construct($token, $tokenType, $expiresIn)
     {
-        $this->token = $token;
-        $this->tokenType = $tokenType;
-        $this->expiresIn = $expiresIn;
+        $this->token      = $token;
+        $this->tokenType  = $tokenType;
+        $this->expiresIn  = $expiresIn;
         $this->createDate = time();
     }
 

@@ -34,8 +34,8 @@ class HttpClient
     function __construct(Environment $environment)
     {
         $this->environment = $environment;
-        $this->encoder = new Encoder();
-        $this->curlCls = Curl::class;
+        $this->encoder     = new Encoder();
+        $this->curlCls     = Curl::class;
     }
 
     /**
@@ -58,24 +58,26 @@ class HttpClient
     public function execute(HttpRequest $httpRequest)
     {
         $requestCpy = clone $httpRequest;
-        $curl = new Curl();
+        $curl       = new Curl();
 
         foreach ($this->injectors as $inj) {
             $inj->inject($requestCpy);
         }
 
-        $url = $this->environment->baseUrl() . $requestCpy->path;
+        $url              = $this->environment->baseUrl() . $requestCpy->path;
         $formattedHeaders = $this->prepareHeaders($requestCpy->headers);
+
         if (!array_key_exists("user-agent", $formattedHeaders)) {
             $requestCpy->headers["user-agent"] = $this->userAgent();
         }
 
         $body = "";
+
         if (!is_null($requestCpy->body)) {
-            $rawHeaders = $requestCpy->headers;
+            $rawHeaders          = $requestCpy->headers;
             $requestCpy->headers = $formattedHeaders;
-            $body = $this->encoder->serializeRequest($requestCpy);
-            $requestCpy->headers = $this->mapHeaders($rawHeaders,$requestCpy->headers);
+            $body                = $this->encoder->serializeRequest($requestCpy);
+            $requestCpy->headers = $this->mapHeaders($rawHeaders, $requestCpy->headers);
         }
 
         $curl->setOpt(CURLOPT_URL, $url);
@@ -109,7 +111,8 @@ class HttpClient
      * @param $headers
      * @return array
      */
-    public function prepareHeaders($headers){
+    public function prepareHeaders($headers)
+    {
         return array_change_key_case($headers);
     }
 
@@ -120,13 +123,16 @@ class HttpClient
      * @param $formattedHeaders
      * @return array
      */
-    public function mapHeaders($rawHeaders, $formattedHeaders){
+    public function mapHeaders($rawHeaders, $formattedHeaders)
+    {
         $rawHeadersKey = array_keys($rawHeaders);
+
         foreach ($rawHeadersKey as $array_key) {
-            if(array_key_exists(strtolower($array_key), $formattedHeaders)){
+            if (array_key_exists(strtolower($array_key), $formattedHeaders)) {
                 $rawHeaders[$array_key] = $formattedHeaders[strtolower($array_key)];
             }
         }
+
         return $rawHeaders;
     }
 
@@ -162,6 +168,7 @@ class HttpClient
     private function serializeHeaders($headers)
     {
         $headerArray = [];
+
         if ($headers) {
             foreach ($headers as $key => $val) {
                 $headerArray[] = $key . ": " . $val;
@@ -174,9 +181,10 @@ class HttpClient
     private function parseResponse($curl)
     {
         $headers = [];
-        $curl->setOpt(CURLOPT_HEADERFUNCTION,
-            function($curl, $header) use (&$headers)
-            {
+
+        $curl->setOpt(
+            CURLOPT_HEADERFUNCTION,
+            function ($curl, $header) use (&$headers) {
                 $len = strlen($header);
 
                 $k = "";
@@ -186,12 +194,13 @@ class HttpClient
                 $headers[$k] = $v;
 
                 return $len;
-            });
+            }
+        );
 
         $responseData = $curl->exec();
-        $statusCode = $curl->getInfo(CURLINFO_HTTP_CODE);
-        $errorCode = $curl->errNo();
-        $error = $curl->error();
+        $statusCode   = $curl->getInfo(CURLINFO_HTTP_CODE);
+        $errorCode    = $curl->errNo();
+        $error        = $curl->error();
 
         if ($errorCode > 0) {
             throw new IOException($error, $errorCode);
@@ -224,8 +233,8 @@ class HttpClient
             }
 
             list($k, $v) = explode(":", $header);
-            $key = trim($k);
-            $value = trim($v);
+            $key         = trim($k);
+            $value       = trim($v);
         }
     }
 }

@@ -15,23 +15,24 @@ class Curl
 
     public function __construct($curl = NULL)
     {
-
-        if (is_null($curl))
-        {
+        if (is_null($curl)) {
             $curl = curl_init();
         }
+
         $this->curl = $curl;
     }
 
     public function setOpt($option, $value)
     {
         curl_setopt($this->curl, $option, $value);
+
         return $this;
     }
 
     public function close()
     {
         curl_close($this->curl);
+
         return $this;
     }
 
