@@ -2353,6 +2353,11 @@ body .select2-container--default .select2-results__option--highlighted[aria-sele
     color: hsl(var(--white));
 }
 
+body .select2-container--default.select2-container--disabled .select2-selection--single {
+    background-color: hsl(var(--black)/0.03) !important;
+    opacity: 1;
+}
+
 /* ================================= Form Css End =========================== */
 /* ================================= Modal Css Start =========================== */
 .custom--modal.modal {
@@ -3914,7 +3919,7 @@ body .select2-container--default .select2-results__option--highlighted[aria-sele
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    background-color: hsl(var(--balck)/0.5);
+    background-color: hsl(var(--black)/0.5);
 }
 
 .login-registration-list__icon {
@@ -3956,7 +3961,7 @@ body .select2-container--default .select2-results__option--highlighted[aria-sele
 }
 
 .language-box .select {
-    color: hsl(var(--balck)) !important;
+    color: hsl(var(--black)) !important;
     background-color: transparent;
     padding: 3px 25px 3px 10px;
     font-weight: 400;
@@ -3966,7 +3971,7 @@ body .select2-container--default .select2-results__option--highlighted[aria-sele
 }
 
 .language-box .select:focus {
-    color: hsl(var(--balck)) !important;
+    color: hsl(var(--black)) !important;
 }
 
 .language-box .select option {

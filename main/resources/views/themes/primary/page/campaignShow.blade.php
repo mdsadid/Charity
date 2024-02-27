@@ -34,13 +34,56 @@
                                 <form action="{{ route('user.deposit.insert', $campaign->slug) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="currency">
+
+                                    @auth
+                                        <input type="hidden" name="country" value="{{ @$authUser->country_name }}">
+                                    @endauth
+
+                                    <div class="form-group">
+                                        <div class="form--check">
+                                            <input type="checkbox" class="form-check-input" name="anonymousDonation" @checked(old('anonymousDonation')) id="anonymousDonation">
+                                            <label class="form-check-label" for="anonymousDonation">
+                                                @lang('Donate as anonymous')
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group anonymous-alert-text d-none">
+                                        <div class="alert alert-info" role="alert">
+                                            @lang('We require your information even if you choose to donate anonymously. However, rest assured that your details will not be displayed anywhere in our system.')
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form--label required">@lang('Full Name')</label>
+                                        <input type="text" class="form--control" name="full_name" value="{{ old('full_name', @$authUser->fullname) }}" placeholder="@lang('John Doe')" @readonly(@$authUser)>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form--label required">@lang('Email')</label>
+                                        <input type="email" class="form--control" name="email" value="{{ old('email', @$authUser->email) }}" placeholder="@lang('example@example.com')" @readonly(@$authUser)>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form--label required">@lang('Phone')</label>
+                                        <input type="text" class="form--control" name="phone" value="{{ old('phone', @$authUser->mobile) }}" placeholder="@lang('+0123 456 789')" @readonly(@$authUser)>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form--label required">@lang('Country')</label>
+                                        <select class="form--control form-select select-2" name="country" @disabled(@$authUser)>
+                                            <option selected disabled>@lang('Select Country')</option>
+
+                                            @foreach ($countries as $key => $country)
+                                                <option value="{{ $country->country }}" @selected(old('country', @$authUser->country_name) == @$country->country)>
+                                                    {{ __(@$country->country) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <h4 class="post-sidebar__card__subtitle mt-4">@lang('Choose an amount')</h4>
                                     <div class="form-group">
                                         <div class="input--group">
                                             <span class="input-group-text">{{ $setting->cur_sym }}</span>
                                             <input type="number" step="any" min="0" class="form--control" id="donationAmount" name="amount" value="{{ old('amount') }}" placeholder="0" readonly>
                                         </div>
                                     </div>
-                                    <div class="form-group mb-4">
+                                    <div class="form-group">
                                         <div class="d-flex flex-wrap gap-3">
                                             @foreach ($campaign->preferred_amounts as $preferredAmount)
                                                 <div class="form--radio">
@@ -58,44 +101,6 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <h4 class="post-sidebar__card__subtitle">@lang('Personal Information')</h4>
-                                    <div class="form-group">
-                                        <div class="form--check">
-                                            <input type="checkbox" class="form-check-input" name="anonymousDonation" @checked(old('anonymousDonation')) id="anonymousDonation">
-                                            <label class="form-check-label" for="anonymousDonation">
-                                                @lang('Donate as anonymous')
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group anonymous-alert-text d-none">
-                                        <div class="alert alert-info" role="alert">
-                                            @lang('We require your information even if you choose to donate anonymously. However, rest assured that your details will not be displayed anywhere in our system.')
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label required">@lang('Full Name')</label>
-                                        <input type="text" class="form--control" id="donorName" name="full_name" value="{{ old('full_name', @$authUser->fullname) }}" placeholder="@lang('John Doe')">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label required">@lang('Email')</label>
-                                        <input type="email" class="form--control" id="donorEmail" name="email" value="{{ old('email', @$authUser->email) }}" placeholder="@lang('example@example.com')">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label required">@lang('Phone')</label>
-                                        <input type="text" class="form--control" id="donorPhone" name="phone" value="{{ old('phone', @$authUser->mobile) }}" placeholder="@lang('+0123 456 789')">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form--label required">@lang('Country')</label>
-                                        <select class="form--control form-select select-2" id="donorCountry" name="country">
-                                            <option selected disabled>@lang('Select Country')</option>
-
-                                            @foreach ($countries as $key => $country)
-                                                <option value="{{ $country->country }}" @selected(old('country', @$authUser->country_name) == $country->country)>
-                                                    {{ __(@$country->country) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="form--label required">@lang('Gateway')</label>
