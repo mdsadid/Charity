@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Gateway\MercadoPago;
 
 use App\Models\Deposit;
-use App\Http\Controllers\Gateway\PaymentController;
-use App\Http\Controllers\Controller;
 use App\Models\Gateway;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gateway\PaymentController;
 
 class ProcessController extends Controller
 {
@@ -83,7 +83,7 @@ class ProcessController extends Controller
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $paymentUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        
+
         $paymentData = curl_exec($ch);
         curl_close($ch);
 
