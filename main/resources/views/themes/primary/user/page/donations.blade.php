@@ -68,8 +68,13 @@
                                             <span class="badge badge--secondary">@lang('Initiated')</span>
                                         @endif
                                     </td>
+
+                                    @php
+                                        $details = $deposit->detail != null ? json_encode($deposit->detail) : null;
+                                    @endphp
+
                                     <td>
-                                        <a href="received-details.html" class="btn btn--icon btn--base">
+                                        <a href="javascript:void(0)" class="btn btn--icon btn--base @if ($deposit->method_code >= 1000) detailsBtn @else disabled @endif" @if ($deposit->method_code >= 1000) data-info="{{ $details }}" data-url="{{ route('user.file.download', ['filePath' => 'verify']) }}" @endif @if ($deposit->status == ManageStatus::PAYMENT_CANCEL) data-admin_feedback="{{ $deposit->admin_feedback }}" @endif>
                                             <i class="fa-regular fa-eye"></i>
                                         </a>
                                     </td>
@@ -194,8 +199,8 @@
         </div>
     </div> --}}
 
-    {{-- APPROVE MODAL --}}
-    {{-- <div id="detailModal" class="modal fade" tabindex="-1" role="dialog">
+    {{-- Details Modal --}}
+    <div id="detailsModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -205,8 +210,7 @@
                     </span>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group userData mb-2">
-                    </ul>
+                    <ul class="list-group userData mb-2"></ul>
                     <div class="feedback"></div>
                 </div>
                 <div class="modal-footer">
@@ -214,7 +218,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 
 @push('page-script')
@@ -226,23 +230,22 @@
                 new bootstrap.Tooltip(element)
             })
 
-            $('.detailBtn').on('click', function() {
-                var modal = $('#detailModal');
+            $('.detailsBtn').on('click', function() {
+                var modal = $('#detailsModal')
+                var userData = $(this).data('info')
+                var html = ''
 
-                var userData = $(this).data('info');
-                var html = '';
                 if (userData) {
-                    let fileDownloadUrl = '{{ route('user.file.download', ['filePath' => 'verify']) }}';
+                    let fileDownloadUrl = $(this).data('url')
 
                     userData.forEach(element => {
-                        if (!element.value) {
-                            return;
-                        }
+                        if (!element.value) return
+
                         if (element.type != 'file') {
                             html += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>${element.name}</span>
                                         <span">${element.value}</span>
-                                    </li>`;
+                                    </li>`
                         } else {
                             html += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>${element.name}</span>
@@ -251,29 +254,25 @@
                                                 <i class="las la-arrow-circle-down"></i> @lang('Attachment')
                                             </a>
                                         </span>
-                                    </li>`;
+                                    </li>`
                         }
-                    });
+                    })
                 }
 
-                modal.find('.userData').html(html);
+                modal.find('.userData').html(html)
 
                 if ($(this).data('admin_feedback') != undefined) {
-                    var adminFeedback = `
-                        <div class="my-3">
-                            <strong>@lang('Admin Feedback')</strong>
-                            <p>${$(this).data('admin_feedback')}</p>
-                        </div>
-                    `;
+                    var adminFeedback = `<div class="my-3">
+                                            <strong>@lang('Admin Feedback')</strong>
+                                            <p>${$(this).data('admin_feedback')}</p>
+                                        </div>`
                 } else {
-                    var adminFeedback = '';
+                    var adminFeedback = ''
                 }
 
-                modal.find('.feedback').html(adminFeedback);
-
-
-                modal.modal('show');
-            });
-        })(jQuery);
+                modal.find('.feedback').html(adminFeedback)
+                modal.modal('show')
+            })
+        })(jQuery)
     </script>
 @endpush

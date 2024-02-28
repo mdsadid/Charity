@@ -1,38 +1,44 @@
-@extends($activeTheme. 'layouts.auth')
-@section('auth')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card custom--card">
-                    <div class="card-header card-header-bg">
-                        <h5 class="card-title">{{__($pageTitle)}}</h5>
-                    </div>
-                    <div class="card-body  ">
-                        <form action="{{ route('user.deposit.manual.update') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <p class="text-center mt-2">@lang('You have requested') <b class="text-success">{{ showAmount($deposit['amount'])  }} {{__($setting->site_cur)}}</b> , @lang('Please pay')
-                                        <b class="text-success">{{showAmount($deposit['final_amo']) .' '.$deposit['method_currency'] }} </b> @lang('for successful payment')
+@extends($activeTheme . 'layouts.frontend')
+
+@section('front_end')
+    <div class="py-120">
+        <div class="container">
+            <div class="row gy-5 justify-content-lg-around justify-content-center align-items-center">
+                <div class="col-lg-7 col-md-10">
+                    <div class="card custom--card" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="card-header">
+                            <h3 class="title">{{ __(@$gateway->name) }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('user.deposit.manual.update') }}" method="POST" class="row g-3" enctype="multipart/form-data">
+                                @csrf
+                                <div class="text-center">
+                                    <p class="fw-bold payment-preview-text">
+                                        @lang('You have requested a donation of') <span class="text--base">{{ showAmount(@$deposit['amount']) . ' ' . __(@$setting->site_cur) }}</span>, @lang('Please pay') <span class="text--base">{{ showAmount(@$deposit['final_amo']) . ' ' . @$deposit['method_currency'] }}</span> @lang('for the successful payment.')
                                     </p>
-                                    <h4 class="text-center mb-4">@lang('Please follow the instruction below')</h4>
-
-                                    <p class="my-4 text-center">@php echo  $deposit->gateway->guideline @endphp</p>
-
+                                    <h5 class="payment-preview-text mt-4 mb-1">@lang('Please follow the instruction below')</h5>
                                 </div>
 
-                                <x-phinix-form identifier="id" identifierValue="{{ $gateway->form_id }}" />
+                                @php echo @$gateway->guideline @endphp
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn--base w-100">@lang('Pay Now')</button>
-                                    </div>
+                                <x-phinix-form identifier="id" identifierValue="{{ @$gateway->form_id }}" />
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn--base w-100 mt-2">@lang('Pay Now')</button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('page-style')
+    <style>
+        .payment-preview-text {
+            color: hsl(var(--black) / 0.6);
+        }
+    </style>
+@endpush

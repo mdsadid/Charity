@@ -181,11 +181,11 @@ class PaymentController extends Controller
         if (!$deposit) return to_route(gatewayRedirectUrl());
 
         if ($deposit->method_code > 999) {
-            $pageTitle = 'Donation Confirmation';
-            $method    = $deposit->gatewayCurrency();
-            $gateway   = $method->method;
+            $pageTitle       = 'Donation Confirmation';
+            $gatewayCurrency = $deposit->gatewayCurrency();
+            $gateway         = $gatewayCurrency->method;
 
-            return view($this->activeTheme . 'user.payment.manual', compact('deposit', 'pageTitle', 'method', 'gateway'));
+            return view($this->activeTheme . 'user.payment.manual', compact('deposit', 'pageTitle', 'gateway'));
         }
 
         abort(404);
@@ -212,23 +212,23 @@ class PaymentController extends Controller
         $deposit->save();
 
         $adminNotification            = new AdminNotification();
-        $adminNotification->user_id   = $deposit->user->id;
-        $adminNotification->title     = 'Deposit request from ' . $deposit->user->username;
+        $adminNotification->user_id   = $deposit->user->id ?? 0;
+        $adminNotification->title     = 'Deposit request from ' . $deposit->user->username ?? 'an anonymous user' . ' for a campaign';
         $adminNotification->click_url = urlPath('admin.deposit.pending');
         $adminNotification->save();
 
-        notify($deposit->user, 'DEPOSIT_REQUEST', [
-            'method_name'     => $deposit->gatewayCurrency()->name,
-            'method_currency' => $deposit->method_currency,
-            'method_amount'   => showAmount($deposit->final_amo),
-            'amount'          => showAmount($deposit->amount),
-            'charge'          => showAmount($deposit->charge),
-            'rate'            => showAmount($deposit->rate),
-            'trx'             => $deposit->trx
-        ]);
+        // notify($deposit->user, 'DEPOSIT_REQUEST', [
+        //     'method_name'     => $deposit->gatewayCurrency()->name,
+        //     'method_currency' => $deposit->method_currency,
+        //     'method_amount'   => showAmount($deposit->final_amo),
+        //     'amount'          => showAmount($deposit->amount),
+        //     'charge'          => showAmount($deposit->charge),
+        //     'rate'            => showAmount($deposit->rate),
+        //     'trx'             => $deposit->trx
+        // ]);
 
-        $toast[] = ['success', 'You have deposit request has been taken'];
+        $toast[] = ['success', 'Your donation request has been taken. Please wait for admin response'];
 
-        return to_route('user.deposit.history')->withToasts($toast);
+        return to_route('user.donation.history')->withToasts($toast);
     }
 }

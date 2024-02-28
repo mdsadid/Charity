@@ -11,7 +11,7 @@
                         </div>
                         <div class="card-body text-center">
                             <p class="fw-bold payment-preview-text">
-                                @lang('Please send exactly') <span class="text--base">{{ $data->amount }}</span> {{ __($data->currency) }} @lang('to') <span class="text--base">{{ $data->sendTo }}</span>
+                                @lang('Please send exactly') <span class="text--base">{{ $data->amount . ' ' . __($data->currency) }}</span> @lang('to') <span class="text--base">{{ $data->sendTo }}</span>
                             </p>
                             <img src="{{ $data->img }}" alt="@lang('QR Code')" class="mt-3">
                             <p class="fw-bold payment-preview-text mt-3">@lang('Scan To Send')</p>
