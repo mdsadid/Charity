@@ -64,7 +64,7 @@ class ProcessController extends Controller
     {
         $postData    = file_get_contents("php://input");
         $res         = json_decode($postData);
-        $deposit     = Deposit::where('trx', $res->event->data->metadata->trx)->orderBy('id', 'DESC')->first();
+        $deposit     = Deposit::where('trx', $res->event->data->metadata->trx)->first();
         $coinbaseAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $headers     = apache_request_headers();
         $headers     = json_decode(json_encode($headers), true);

@@ -66,7 +66,7 @@ class ProcessController extends Controller
 
     public function ipn(Request $request)
     {
-        $deposit  = Deposit::where('btc_wallet', $request->razorpay_order_id)->orderBy('id', 'DESC')->first();
+        $deposit  = Deposit::where('btc_wallet', $request->razorpay_order_id)->first();
         $razorAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
         if (!$deposit) $toast[] = ['error', 'Invalid request'];

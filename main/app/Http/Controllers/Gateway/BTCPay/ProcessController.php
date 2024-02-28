@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Gateway\BTCPay;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Gateway\PaymentController;
-use App\Models\AdminNotification;
+use Throwable;
 use App\Models\Deposit;
 use App\Models\Gateway;
+use App\Constants\ManageStatus;
 use BTCPayServer\Client\Invoice;
 use BTCPayServer\Client\Webhook;
+use App\Models\AdminNotification;
+use App\Http\Controllers\Controller;
 use BTCPayServer\Util\PreciseNumber;
+use App\Http\Controllers\Gateway\PaymentController;
 
 class ProcessController extends Controller
 {
@@ -34,7 +35,7 @@ class ProcessController extends Controller
 
             $send['redirect']     = true;
             $send['redirect_url'] = $invoice['checkoutLink'];
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $send['error']   = true;
             $send['message'] = $e->getMessage();
         }
@@ -82,7 +83,7 @@ class ProcessController extends Controller
                 $deposit = Deposit::where('btc_wallet', $postData->invoiceId)->where('status', ManageStatus::PAYMENT_INITIATE)->first();
 
                 if ($deposit) $this->processPayment($deposit, $postData);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $adminNotification            = new AdminNotification();
                 $adminNotification->user_id   = 0;
                 $adminNotification->title     = 'Error decoding webhook payload: ' . $e->getMessage();

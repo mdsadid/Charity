@@ -33,7 +33,7 @@ class ProcessController extends Controller
     public function ipn(Request $request)
     {
         if (isset($request->m_operation_id) && isset($request->m_sign)) {
-            $deposit   = Deposit::where('trx', $request->m_orderid)->orderBy('id', 'DESC')->first();
+            $deposit   = Deposit::where('trx', $request->m_orderid)->first();
             $payeerAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
             $sign_hash = strtoupper(hash('sha256', implode(":", array(
                 $request->m_operation_id,

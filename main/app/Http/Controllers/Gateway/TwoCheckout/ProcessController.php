@@ -34,7 +34,7 @@ class ProcessController extends Controller
 
     public function ipn(Request $request)
     {
-        $deposit = Deposit::initiate()->where('trx', $request->li_0_product_id)->orderBy('id','desc')->first();
+        $deposit = Deposit::initiate()->where('trx', $request->li_0_product_id)->first();
         if ($deposit) {
             $configuration = json_decode($deposit->gatewayCurrency()->gateway_parameter);
             $hash = strtoupper(md5($configuration->secret_key . $configuration->merchant_code . $request->order_number . round($deposit->final_amo,2)));

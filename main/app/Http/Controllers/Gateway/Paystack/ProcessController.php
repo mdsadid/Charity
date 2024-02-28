@@ -33,7 +33,7 @@ class ProcessController extends Controller
         ]);
 
         $track       = $request->reference;
-        $deposit     = Deposit::where('trx', $track)->orderBy('id', 'DESC')->first();
+        $deposit     = Deposit::where('trx', $track)->first();
         $paystackAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $secret_key  = $paystackAcc->secret_key;
         $result      = array();

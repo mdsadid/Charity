@@ -32,7 +32,7 @@ class ProcessController extends Controller
     public function ipn(Request $request)
     {
         $track   = Session::get('Track');
-        $deposit = Deposit::where('trx', $track)->initiate()->orderBy('id', 'DESC')->first();
+        $deposit = Deposit::where('trx', $track)->initiate()->first();
 
         if ($deposit->status == ManageStatus::PAYMENT_SUCCESS) {
             $toast[] = ['error', 'Invalid request.'];

@@ -37,7 +37,7 @@ class ProcessController extends Controller
 
     public function ipn()
     {
-        $deposit    = Deposit::where('trx', $_POST['PAYMENT_ID'])->orderBy('id', 'DESC')->first();
+        $deposit    = Deposit::where('trx', $_POST['PAYMENT_ID'])->first();
         $pmAcc      = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $passphrase = strtoupper(md5($pmAcc->passphrase));
 

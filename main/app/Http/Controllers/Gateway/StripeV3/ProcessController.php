@@ -83,7 +83,7 @@ class ProcessController extends Controller
         // Handle the checkout.session.completed event
         if ($event->type == 'checkout.session.completed') {
             $session = $event->data->object;
-            $deposit = Deposit::where('btc_wallet', $session->id)->orderBy('id', 'DESC')->first();
+            $deposit = Deposit::where('btc_wallet', $session->id)->first();
 
             if ($deposit->status == ManageStatus::PAYMENT_INITIATE) {
                 PaymentController::campaignDataUpdate($deposit);

@@ -25,7 +25,7 @@ class ProcessController extends Controller
     public function ipn(Request $request)
     {
         $track   = $request->track;
-        $deposit = Deposit::where('trx', $track)->orderBy('id', 'DESC')->first();
+        $deposit = Deposit::where('trx', $track)->first();
 
         if ($deposit->status == ManageStatus::PAYMENT_SUCCESS) {
             $toast[] = ['error', 'Invalid request.'];

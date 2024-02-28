@@ -30,7 +30,7 @@ class ProcessController extends Controller
 
     public function ipn($track, $type)
     {
-        $deposit = Deposit::where('trx', $track)->orderBy('id', 'DESC')->first();
+        $deposit = Deposit::where('trx', $track)->first();
 
         if ($type == 'error') {
             $message = 'Transaction failed, Ref: ' . $track;

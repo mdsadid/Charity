@@ -63,7 +63,7 @@ class ProcessController extends Controller
         $request->prefer('return=representation');
 
         try {
-            $deposit      = Deposit::where('btc_wallet', $_GET['token'])->initiate()->firstOrFail();
+            $deposit      = Deposit::where('btc_wallet', $_GET['token'])->initiate()->first();
             $paypalAcc    = json_decode($deposit->gatewayCurrency()->gateway_parameter);
             $clientId     = $paypalAcc->clientId;
             $clientSecret = $paypalAcc->clientSecret;

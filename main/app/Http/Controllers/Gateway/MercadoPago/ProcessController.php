@@ -89,7 +89,7 @@ class ProcessController extends Controller
 
         $payment = json_decode($paymentData, true);
         $trx     = $payment['additional_info']['items'][0]['id'];
-        $deposit = Deposit::where('trx', $trx)->initiate()->orderBy('id', 'DESC')->first();
+        $deposit = Deposit::where('trx', $trx)->initiate()->first();
 
         if ($payment['status'] == 'approved' && $deposit) {
             PaymentController::campaignDataUpdate($deposit);

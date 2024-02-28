@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Gateway\Coinpayments;
 
-use App\Constants\ManageStatus;
+use Exception;
 use App\Models\Deposit;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Gateway\Coinpayments\CoinPaymentHosted;
-use App\Http\Controllers\Gateway\PaymentController;
 use Illuminate\Http\Request;
+use App\Constants\ManageStatus;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gateway\PaymentController;
+use App\Http\Controllers\Gateway\Coinpayments\CoinPaymentHosted;
 
 class ProcessController extends Controller
 {
@@ -18,7 +19,7 @@ class ProcessController extends Controller
         if ($deposit->btc_amo == 0 || $deposit->btc_wallet == "") {
             try {
                 $cps = new CoinPaymentHosted();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $send['error']   = true;
                 $send['message'] = $e->getMessage();
 
@@ -33,7 +34,7 @@ class ProcessController extends Controller
                 'currency1'   => 'USD',
                 'currency2'   => $deposit->method_currency,
                 'custom'      => $deposit->trx,
-                'buyer_email' => auth()->user()->email,
+                'buyer_email' => $deposit->user->email ?? $deposit->donation->email,
                 'ipn_url'     => $callbackUrl,
             );
 
@@ -52,7 +53,7 @@ class ProcessController extends Controller
         }
 
         $send['amount']   = $deposit->btc_amo;
-        $send['sendto']   = $deposit->btc_wallet;
+        $send['sendTo']   = $deposit->btc_wallet;
         $send['img']      = cryptoQR($deposit->btc_wallet);
         $send['currency'] = "$deposit->method_currency";
         $send['view']     = 'user.payment.crypto';
@@ -65,12 +66,17 @@ class ProcessController extends Controller
         $track   = $request->custom;
         $status  = $request->status;
         $amount2 = floatval($request->amount2);
-        $deposit = Deposit::where('trx', $track)->orderBy('id', 'DESC')->first();
+        $deposit = Deposit::where('trx', $track)->first();
 
         if ($status >= 100 || $status == 2) {
             $coinPayAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
-            if ($deposit->method_currency == $request->currency2 && $deposit->btc_amo <= $amount2  && $coinPayAcc->merchant_id == $request->merchant && $deposit->status == ManageStatus::PAYMENT_INITIATE) {
+            if (
+                $deposit->method_currency == $request->currency2 && 
+                $deposit->btc_amo <= $amount2 && 
+                $coinPayAcc->merchant_id == $request->merchant && 
+                $deposit->status == ManageStatus::PAYMENT_INITIATE
+            ) {
                 PaymentController::campaignDataUpdate($deposit);
             }
         }

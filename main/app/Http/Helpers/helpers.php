@@ -343,7 +343,7 @@ function showAmount($amount, $decimal = 2, $separate = true, $exceptZeros = fals
 }
 
 function cryptoQR($wallet) {
-    return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$wallet&choe=UTF-8";
+    return "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=$wallet&choe=UTF-8";
 }
 
 function diffForHumans($date) {
