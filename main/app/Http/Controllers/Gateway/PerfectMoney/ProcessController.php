@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Gateway\PerfectMoney;
 
-use App\Constants\ManageStatus;
 use App\Models\Deposit;
-use App\Http\Controllers\Gateway\PaymentController;
+use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gateway\PaymentController;
 
 class ProcessController extends Controller
 {
