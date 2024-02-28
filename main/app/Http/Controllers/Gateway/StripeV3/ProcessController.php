@@ -57,7 +57,7 @@ class ProcessController extends Controller
 
     public function ipn()
     {
-        $stripeAcc         = GatewayCurrency::where('gateway_alias', 'StripeV3')->orderBy('id', 'desc')->first();
+        $stripeAcc         = GatewayCurrency::where('gateway_alias', 'StripeV3')->first();
         $gateway_parameter = json_decode($stripeAcc->gateway_parameter);
 
         Stripe::setApiKey($gateway_parameter->secret_key);

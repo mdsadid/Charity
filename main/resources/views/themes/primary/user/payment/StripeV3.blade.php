@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>@lang('Donation with Stripe')</title>
-        <script src="https://js.stripe.com/v3/"></script>
     </head>
 
     <body>
@@ -12,6 +11,7 @@
             $sessionId       = $data->session->id;
         @endphp
 
+        <script src="https://js.stripe.com/v3/"></script>
         <script>
             "use strict"
 
