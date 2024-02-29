@@ -90,7 +90,11 @@ Route::middleware('auth')->name('user.')->namespace('User')->group(function () {
             });
 
             // Report
-            Route::get('donation/history', 'donationHistory')->name('donation.history');
+            Route::prefix('donation')->name('donation.')->group(function () {
+                Route::get('history', 'donationHistory')->name('history');
+                Route::get('received', 'donationReceived')->name('received');
+            });
+
             Route::get('transactions', 'transactions')->name('transactions');
 
             // File Download

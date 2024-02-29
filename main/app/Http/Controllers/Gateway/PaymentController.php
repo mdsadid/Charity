@@ -78,7 +78,7 @@ class PaymentController extends Controller
             $userFullName = auth()->user()->fullname;
             $userEmail    = auth()->user()->email;
             $userPhone    = auth()->user()->mobile;
-            $userCountry  = auth()->user()->country;
+            $userCountry  = auth()->user()->country_name;
         } else {
             $userFullName = request('full_name');
             $userEmail    = request('email');
@@ -142,9 +142,10 @@ class PaymentController extends Controller
             if (!$user) {
                 $donationData = $deposit->donation;
                 $user         = [
+                    'fullname' => $donationData->full_name,
                     'username' => $donationData->email,
                     'email'    => $donationData->email,
-                    'fullname' => $donationData->full_name,
+                    'mobile'   => $donationData->phone,
                 ];
             }
 
@@ -182,7 +183,7 @@ class PaymentController extends Controller
                 'rate'            => showAmount($deposit->rate),
                 'trx'             => $deposit->trx,
                 'campaign_name'   => $campaign->name,
-            ], ['email']);
+            ]);
         }
     }
 
@@ -225,19 +226,33 @@ class PaymentController extends Controller
 
         $adminNotification            = new AdminNotification();
         $adminNotification->user_id   = $deposit->user->id ?? 0;
-        $adminNotification->title     = 'Deposit request from ' . $deposit->user->username ?? 'an anonymous user' . ' for a campaign';
+        $donor                        = $deposit->user->fullname ?? 'an anonymous user';
+        $adminNotification->title     = "Deposit request from $donor for a campaign";
         $adminNotification->click_url = urlPath('admin.deposit.pending');
         $adminNotification->save();
 
-        // notify($deposit->user, 'DEPOSIT_REQUEST', [
-        //     'method_name'     => $deposit->gatewayCurrency()->name,
-        //     'method_currency' => $deposit->method_currency,
-        //     'method_amount'   => showAmount($deposit->final_amo),
-        //     'amount'          => showAmount($deposit->amount),
-        //     'charge'          => showAmount($deposit->charge),
-        //     'rate'            => showAmount($deposit->rate),
-        //     'trx'             => $deposit->trx
-        // ]);
+        if (!$deposit->user) {
+            $donationData = $deposit->donation;
+            $user         = [
+                'fullname' => $donationData->full_name,
+                'username' => $donationData->email,
+                'email'    => $donationData->email,
+                'mobile'   => $donationData->phone,
+            ];
+        } else {
+            $user = $deposit->user;
+        }
+
+        notify($user, 'DONATION_REQUEST', [
+            'method_name'     => $deposit->gatewayCurrency()->name,
+            'method_currency' => $deposit->method_currency,
+            'method_amount'   => showAmount($deposit->final_amo),
+            'amount'          => showAmount($deposit->amount),
+            'charge'          => showAmount($deposit->charge),
+            'rate'            => showAmount($deposit->rate),
+            'trx'             => $deposit->trx,
+            'campaign_name'   => $deposit->donation->campaign->name,
+        ]);
 
         $toast[] = ['success', 'Your donation request has been taken. Please wait for admin response'];
 

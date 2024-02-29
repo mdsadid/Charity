@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Constants\ManageStatus;
 use App\Lib\GoogleAuthenticator;
 use App\Http\Controllers\Controller;
+use App\Models\Deposit;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
@@ -216,7 +217,21 @@ class UserController extends Controller
             ->latest()
             ->paginate(getPaginate());
 
-        return view($this->activeTheme . 'user.page.donations', compact('pageTitle', 'deposits'));
+        return view($this->activeTheme . 'user.donation.sendLog', compact('pageTitle', 'deposits'));
+    }
+
+    function donationReceived() {
+        $pageTitle = 'Received Donations';
+        $campaigns = auth()->user()->campaigns()->pluck('id');
+        $donations = Deposit::whereHas('donation', function ($query) use ($campaigns) {
+            $query->whereIn('campaign_id', $campaigns);
+        })
+            ->with(['user', 'gateway', 'donation.campaign'])
+            ->done()
+            ->latest()
+            ->paginate(getPaginate());
+
+        return view($this->activeTheme . 'user.donation.receivedLog', compact('pageTitle', 'donations'));
     }
 
     public function transactions() {
