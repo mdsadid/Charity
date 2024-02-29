@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     function index() {
         $pageTitle = 'Campaign Comments';
-        $comments  = Comment::with(['user', 'campaign'])->latest()->paginate(getPaginate());
+        $comments  = Comment::with(['user', 'campaign'])->searchable(['name', 'campaign:name'])->latest()->paginate(getPaginate());
 
         return view('admin.page.comments', compact('pageTitle', 'comments'));
     }

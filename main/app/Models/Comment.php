@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
 use App\Constants\ManageStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Comment extends Model
 {
+    use Searchable;
+
     /**
      * Get the campaign that owns the comment.
      */

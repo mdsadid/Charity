@@ -56,7 +56,7 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-label-info commentViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-comment="{{ $comment->comment }}">
-                                            <span class="tf-icons las la-eye me-1"></span> @lang('View Comment')
+                                            <span class="tf-icons las la-eye me-1"></span> @lang('View')
                                         </button>
 
                                         <div class="btn-group">
@@ -68,19 +68,19 @@
                                                 @if ($comment->status == ManageStatus::CAMPAIGN_COMMENT_PENDING)
                                                     <li>
                                                         <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this comment?')" data-action="{{ route('admin.comments.status.update', [$comment->id, 'approve']) }}">
-                                                            <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve Comment')
+                                                            <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
                                                         </button>
                                                     </li>
                                                     <li>
                                                         <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this comment?')" data-action="{{ route('admin.comments.status.update', [$comment->id, 'reject']) }}">
-                                                            <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject Comment')
+                                                            <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject')
                                                         </button>
                                                     </li>
                                                 @endif
 
                                                 <li>
                                                     <button type="button" class="dropdown-item commentDeleteButton" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}">
-                                                        <i class="las la-trash-alt fs-6 link-danger"></i> @lang('Delete Comment')
+                                                        <i class="las la-trash-alt fs-6 link-danger"></i> @lang('Delete')
                                                     </button>
                                                 </li>
                                             </ul>
@@ -119,6 +119,10 @@
 
     @include('admin.partials.deleteComment')
 @endsection
+
+@push('breadcrumb')
+    <x-searchForm placeholder="Campaign/Author" />
+@endpush
 
 @push('page-script')
     <script>

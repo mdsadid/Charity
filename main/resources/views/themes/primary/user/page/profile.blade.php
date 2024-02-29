@@ -12,7 +12,7 @@
                                     <ul class="user-profile-list">
                                         <li><span><i class="fa-solid fa-user"></i> @lang('Username')</span> {{ __($user->username) }}</li>
                                         <li><span><i class="fa-solid fa-envelope"></i> @lang('Email')</span> {{ $user->email }}</li>
-                                        <li><span><i class="fa-solid fa-mobile"></i> @lang('Mobile')</span> {{ '+' . $user->mobile }}</li>
+                                        <li><span><i class="fa-solid fa-mobile"></i> @lang('Mobile')</span> {{ $user->mobile }}</li>
                                         <li><span><i class="fa-solid fa-earth-asia"></i> @lang('Country')</span> {{ __($user->country_name) }}</li>
                                     </ul>
                                 </div>
@@ -24,9 +24,9 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="upload__img mb-2">
-                                                <label for="imageUpload" class="form--label required">@lang('Image')</label>
+                                                <label for="imageUpload" class="form--label">@lang('Image')</label>
                                                 <label for="imageUpload" class="upload__img__btn"><i class="las la-camera"></i></label>
-                                                <input type="file" id="imageUpload" name="image" required accept=".jpeg, .jpg, .png">
+                                                <input type="file" id="imageUpload" name="image" accept=".jpeg, .jpg, .png">
                                                 <div class="upload__img-preview image-preview">
                                                     @if ($user->image)
                                                         <img src="{{ getImage(getFilePath('userProfile') . '/' . $user->image, getFileSize('userProfile')) }}" alt="">

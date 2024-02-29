@@ -86,7 +86,7 @@
 
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ auth()->user()->fullname }}
+                                        {{ auth()->user()->username }}
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-menu__list">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 28, 2024 at 12:05 PM
+-- Generation Time: Feb 29, 2024 at 07:13 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -70,59 +70,16 @@ CREATE TABLE `admin_notifications` (
 --
 
 INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_url`, `created_at`, `updated_at`) VALUES
-(3, 0, 'SMS Error: unexpected response from API', 1, '#', '2023-11-05 06:02:41', '2023-12-06 17:16:45'),
-(4, 0, 'unexpected response from API', 1, '#', '2023-11-05 06:02:41', '2023-12-06 17:16:45'),
-(5, 1, 'New member registered', 1, '#', '2023-11-09 12:39:56', '2023-12-06 17:16:45'),
-(6, 0, 'SMS Error: Bad Credentials', 1, '#', '2023-11-12 18:30:49', '2023-12-06 17:16:45'),
-(7, 0, 'SMS Error: Bad Credentials', 1, '#', '2023-11-15 19:15:17', '2023-12-06 17:16:45'),
-(8, 0, 'SMS Error: Bad Credentials', 1, '#', '2023-11-15 19:17:16', '2024-02-12 06:57:02'),
-(9, 0, 'SMS Error: Bad Credentials', 1, '#', '2023-11-16 12:49:57', '2024-02-12 06:57:02'),
-(10, 1, 'Deposit successful via Stripe Storefront - USD', 1, '#', '2023-11-19 12:09:54', '2024-02-12 06:57:02'),
-(11, 0, 'SMS Error: Bad Credentials', 1, '#', '2023-11-19 12:09:58', '2023-12-06 17:13:01'),
-(12, 1, 'Deposit request from demouser', 1, '#', '2023-11-19 12:53:06', '2023-12-06 17:13:01'),
-(13, 0, 'SMS Error: Bad Credentials', 1, '#', '2023-11-19 12:53:09', '2023-12-06 17:13:01'),
-(14, 1, 'New withdraw request from demouser', 1, '#', '2023-11-22 18:59:15', '2023-12-04 19:44:47'),
-(15, 1, 'New withdraw request from demouser', 1, '#', '2023-11-23 11:54:08', '2024-02-12 06:57:02'),
-(16, 2, 'New member registered', 1, '#', '2023-12-02 16:53:04', '2023-12-04 19:44:11'),
-(17, 2, 'Deposit successful via Stripe Storefront - USD', 1, '/admin/deposit/done', '2023-12-04 18:59:10', '2024-02-12 06:57:02'),
-(18, 2, 'New withdraw request from demouser2', 1, '/admin/withdraw/pending', '2023-12-04 19:09:02', '2023-12-06 17:16:45'),
-(19, 3, 'New member registered', 1, '/admin/user/index', '2023-12-05 16:06:26', '2024-02-12 06:57:02'),
-(20, 4, 'New member registered', 1, '/admin/user/index', '2023-12-05 16:07:25', '2023-12-06 17:13:01'),
-(21, 5, 'New member registered', 1, '/admin/user/index', '2023-12-05 16:09:35', '2024-02-12 06:57:02'),
-(22, 10, 'New member registered', 1, '/admin/user/index', '2023-12-05 17:19:44', '2023-12-06 17:13:01'),
-(23, 11, 'New member registered', 1, '/admin/user/index', '2023-12-05 17:20:42', '2023-12-06 17:16:45'),
 (24, 12, 'New member registered', 1, '/admin/user/index', '2024-01-29 10:18:43', '2024-02-12 06:57:02'),
-(27, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-05 11:28:35', '2024-02-12 06:57:02'),
-(28, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 06:45:07', '2024-02-12 06:57:02'),
-(29, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 06:48:39', '2024-02-12 06:57:02'),
-(30, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 12:24:13', '2024-02-12 06:57:02'),
-(31, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 12:26:43', '2024-02-12 06:57:02'),
-(32, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 12:28:40', '2024-02-12 06:57:02'),
-(33, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 12:33:28', '2024-02-12 06:57:02'),
-(34, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 12:34:59', '2024-02-12 06:57:02'),
-(35, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-06 12:36:23', '2024-02-12 06:57:02'),
-(36, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-07 07:10:04', '2024-02-12 06:57:02'),
-(37, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-12 06:48:40', '2024-02-12 06:57:02'),
-(38, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-12 06:50:32', '2024-02-12 06:57:02'),
-(39, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-12 06:52:51', '2024-02-12 06:56:53'),
-(40, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-13 06:49:31', '2024-02-27 04:52:53'),
-(41, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-13 10:04:01', '2024-02-27 04:52:53'),
-(42, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-14 08:57:20', '2024-02-27 04:52:53'),
+(42, 12, 'New campaign created by James Marshall', 1, '/admin/campaigns/index', '2024-02-14 08:57:20', '2024-02-27 04:52:53'),
 (43, 13, 'New member registered', 1, '/admin/user/index', '2024-02-14 12:15:55', '2024-02-27 04:52:53'),
-(44, 12, 'New campaign created by Md. Sadid Hasan Rakib', 1, '/admin/campaigns/index', '2024-02-15 04:56:21', '2024-02-27 04:52:53'),
+(44, 12, 'New campaign created by James Marshall', 1, '/admin/campaigns/index', '2024-02-15 04:56:21', '2024-02-27 04:52:53'),
 (45, 14, 'New member registered', 1, '/admin/user/index', '2024-02-15 06:29:09', '2024-02-27 04:52:53'),
 (46, 15, 'New member registered', 1, '/admin/user/index', '2024-02-15 07:03:04', '2024-02-27 04:52:53'),
 (49, 15, 'Jane Doe has commented on a campaign.', 1, '/admin/comments/index', '2024-02-15 10:44:57', '2024-02-27 04:52:53'),
 (50, 15, 'Jane Doe has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 08:55:07', '2024-02-27 04:52:53'),
-(51, 0, 'John Doe has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 09:01:40', '2024-02-27 04:52:53'),
-(52, 0, 'John Doe has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 09:07:04', '2024-02-27 04:52:53'),
-(53, 0, 'Jane Doe has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 09:07:34', '2024-02-27 04:52:53'),
-(54, 13, 'Md. Saeed Mahmud has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 09:08:18', '2024-02-27 04:52:53'),
-(55, 13, 'Md. Saeed Mahmud has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 10:35:03', '2024-02-27 04:52:53'),
-(56, 13, 'Md. Saeed Mahmud has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 10:35:53', '2024-02-27 04:52:53'),
-(57, 13, 'Md. Saeed Mahmud has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 10:59:40', '2024-02-27 04:52:53'),
-(58, 13, 'Md. Saeed Mahmud has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 11:00:28', '2024-02-27 04:52:53'),
-(59, 13, 'Md. Saeed Mahmud has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 11:23:52', '2024-02-27 04:52:53'),
+(54, 13, 'David Gonzalez has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 09:08:18', '2024-02-27 04:52:53'),
+(59, 13, 'David Gonzalez has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 11:23:52', '2024-02-27 04:52:53'),
 (60, 0, 'Greg Nixon has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 11:26:21', '2024-02-27 04:52:53'),
 (61, 0, 'Rose Miles has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 11:28:19', '2024-02-27 04:52:53'),
 (62, 0, 'Irma Stewart has commented on a campaign.', 1, '/admin/comments/index', '2024-02-18 11:29:10', '2024-02-27 04:52:53');
@@ -239,11 +196,8 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`id`, `user_id`, `campaign_id`, `name`, `email`, `comment`, `status`, `created_at`, `updated_at`) VALUES
 (1, 15, 13, 'Jane Doe', 'jane@gmail.com', 'The Rise Together campaign is a reminder that we\'re stronger when we lift each other up. Let\'s rise to the occasion and make a difference!', 1, '2024-02-15 10:44:57', '2024-02-18 07:58:04'),
 (2, 15, 13, 'Jane Doe', 'jane@gmail.com', 'I love the message of unity and empowerment behind the Rise Together campaign. Let\'s work together to create lasting impact.', 1, '2024-02-18 08:55:07', '2024-02-18 08:56:20'),
-(3, NULL, 13, 'Alexander Holland', 'alexander@gmail.com', 'I\'m inspired by the spirit of collaboration and empowerment behind Rise Together. Let\'s keep the positivity flowing and create a better world for all.', 1, '2024-02-18 09:01:40', '2024-02-18 09:02:12'),
-(4, NULL, 14, 'Shawn Wood', 'shawn@gmail.com', 'The Rise Together campaign is a reminder that we\'re stronger when we lift each other up. Let\'s rise to the occasion and make a difference!', 0, '2024-02-18 09:07:04', '2024-02-18 09:08:51'),
-(5, NULL, 14, 'Juana Castro', 'juana@gmail.com', 'As a community leader, I\'m excited to see initiatives like Rise Together bringing people together for positive change. It\'s inspiring!', 1, '2024-02-18 09:07:34', '2024-02-18 09:09:14'),
-(6, 13, 14, 'Md. Saeed Mahmud', 'saeed@gmail.com', 'The Rise Together campaign gives me hope for a better future. Let\'s keep the momentum going!', 2, '2024-02-18 09:08:18', '2024-02-18 09:08:18'),
-(11, 13, 13, 'Md. Saeed Mahmud', 'saeed@gmail.com', 'I\'ve already seen the impact of Rise Together in my community. It\'s incredible how coming together can create meaningful change.', 1, '2024-02-18 11:23:52', '2024-02-18 11:26:35'),
+(6, 13, 14, 'David Gonzalez', 'david@gmail.com', 'The Rise Together campaign gives me hope for a better future. Let\'s keep the momentum going!', 2, '2024-02-18 09:08:18', '2024-02-18 09:08:18'),
+(11, 13, 13, 'David Gonzalez', 'david@gmail.com', 'I\'ve already seen the impact of Rise Together in my community. It\'s incredible how coming together can create meaningful change.', 1, '2024-02-18 11:23:52', '2024-02-18 11:26:35'),
 (12, NULL, 13, 'Greg Nixon', 'greg@gmail.com', 'Rise Together is exactly what our community needs right now. Let\'s join forces and make a difference!', 1, '2024-02-18 11:26:21', '2024-02-18 11:26:40'),
 (13, NULL, 13, 'Rose Miles', 'rose@gmail.com', 'I\'ve donated to this campaign and encourage others to do the same. Every little bit helps!', 1, '2024-02-18 11:28:19', '2024-02-18 11:29:25'),
 (14, NULL, 13, 'Irma Stewart', 'irma@gmail.com', 'The stories shared in this campaign are touching. Let\'s continue to amplify voices and create change.', 1, '2024-02-18 11:29:10', '2024-02-18 11:29:29');
@@ -264,14 +218,6 @@ CREATE TABLE `contacts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `contacts`
---
-
-INSERT INTO `contacts` (`id`, `name`, `email`, `subject`, `message`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'dsafasdf', 'demo@demo.com', 'sadfsadf', 'sdfsdfsdf', 0, '2023-12-06 10:13:47', '2023-12-06 10:13:47'),
-(3, 'Sherrinford Willum', 'demouser@gmail.com', 'Demo Contact Test', 'Demo Contact Mesage', 1, '2023-12-06 11:27:32', '2023-12-06 11:55:42');
 
 -- --------------------------------------------------------
 
@@ -299,16 +245,6 @@ CREATE TABLE `deposits` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `deposits`
---
-
-INSERT INTO `deposits` (`id`, `user_id`, `method_code`, `amount`, `method_currency`, `charge`, `rate`, `final_amo`, `detail`, `btc_amo`, `btc_wallet`, `trx`, `payment_try`, `status`, `from_api`, `admin_feedback`, `created_at`, `updated_at`) VALUES
-(27, 1, 111, 10.00000000, 'USD', 1.10000000, 1.00000000, 11.10000000, NULL, '0', '', 'JPRP82MFX6SN', 0, 1, 0, NULL, '2023-11-19 12:03:44', '2023-11-19 12:09:54'),
-(28, 1, 1000, 10.00000000, 'USD', 1.50000000, 1.00000000, 11.50000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"123456\"},{\"name\":\"Gender\",\"type\":\"select\",\"value\":\"Mail\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2023\\/11\\/19\\/655a053275c441700398386.png\"}]', '0', '', '6396Z4JQCFQ4', 0, 1, 0, 'De bari mathai kop, Litudar joy hok', '2023-11-19 12:23:37', '2023-11-29 12:11:04'),
-(29, 2, 111, 215.00000000, 'USD', 3.15000000, 1.00000000, 218.15000000, NULL, '0', '', 'VU57YWFMVYOM', 0, 1, 0, NULL, '2023-12-04 18:58:47', '2023-12-04 18:59:10'),
-(30, 1, 111, 100.00000000, 'AUD', 10.00000000, 1.48000000, 162.80000000, NULL, '0', '', 'S4NVXC8MG7A7', 0, 0, 0, NULL, '2023-12-20 08:05:57', '2023-12-20 08:05:57');
 
 -- --------------------------------------------------------
 
@@ -369,8 +305,8 @@ INSERT INTO `forms` (`id`, `act`, `form_data`, `created_at`, `updated_at`) VALUE
 (3, 'kyc', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":\"\",\"options\":[],\"type\":\"text\"},\"voter_id\":{\"name\":\"Voter Id\",\"label\":\"voter_id\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"nid_photo\":{\"name\":\"NID Photo\",\"label\":\"nid_photo\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png,pdf\",\"options\":[],\"type\":\"file\"}}', '2023-10-09 06:58:42', '2024-01-29 11:58:41'),
 (4, 'manual_deposit', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"email\":{\"name\":\"Email\",\"label\":\"email\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"trx_number\":{\"name\":\"Trx Number\",\"label\":\"trx_number\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 07:07:31', '2024-02-28 10:35:26'),
 (5, 'manual_deposit', '{\"trx_number\":{\"name\":\"Trx Number\",\"label\":\"trx_number\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 09:12:25', '2024-02-28 10:40:22'),
-(6, 'withdraw_method', '{\"full_name\":{\"name\":\"Full name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"father_name\":{\"name\":\"Father Name\",\"label\":\"father_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"mother_name\":{\"name\":\"Mother Name\",\"label\":\"mother_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 11:15:53', '2023-11-21 11:17:05'),
-(7, 'withdraw_method', '{\"screenshot\":{\"name\":\"Screenshot\",\"label\":\"screenshot\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png\",\"options\":[],\"type\":\"file\"}}', '2023-11-21 17:08:05', '2023-11-23 06:55:58');
+(6, 'withdraw_method', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 11:15:53', '2024-02-29 05:42:09'),
+(7, 'withdraw_method', '{\"email\":{\"name\":\"Email\",\"label\":\"email\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 17:08:05', '2024-02-29 05:43:01');
 
 -- --------------------------------------------------------
 
@@ -619,7 +555,6 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`email`, `code`, `created_at`) VALUES
-('demouser@gmail.com', '835476', '2023-12-08 17:09:53'),
 ('sadid.hasan14@gmail.com', '967255', '2024-01-30 09:12:54');
 
 -- --------------------------------------------------------
@@ -710,7 +645,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `site_name`, `site_cur`, `cur_sym`, `email_from`, `email_template`, `sms_body`, `sms_from`, `mail_config`, `sms_config`, `universal_shortcodes`, `first_color`, `second_color`, `signup`, `enforce_ssl`, `agree_policy`, `strong_pass`, `kc`, `ec`, `ea`, `sc`, `sa`, `site_maintenance`, `language`, `active_theme`, `created_at`, `updated_at`) VALUES
-(1, 'Charity', 'BDT', '৳', 'info@softphinix.com', '<p><strong>Hello {{fullname}} ({{username}})</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{message}}</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{site_name}}</strong>&nbsp;. All Rights Reserved.</p>', 'hi {{fullname}} ({{username}}), {{message}}', 'PhinixAdmin', '{\"name\":\"php\"}', '{\"name\":\"custom\",\"nexmo\":{\"api_key\":\"------\",\"api_secret\":\"------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"-----------------------\",\"from\":\"----------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\",\"Demo Api\"],\"value\":[\"test_api\",\"Demo Api\"]},\"body\":{\"name\":[\"from_number\",\"Demo bodyt Api\"],\"value\":[\"565754\",\"Demo body API\"]}}}', '{\r\n    \"site_name\":\"Name of your site\",\r\n    \"site_currency\":\"Currency of your site\",\r\n    \"currency_symbol\":\"Symbol of currency\"\r\n}', '1b6be6', '8d0fe9', 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 'primary', NULL, '2024-02-22 05:13:15');
+(1, 'Charity', 'BDT', '৳', 'info@softphinix.com', '<p><strong>Hello {{fullname}} ({{username}})</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{message}}</strong></p><p><strong>---------------------------------------</strong></p><p><strong>{{site_name}}</strong>.</p>', 'Hi {{fullname}} ({{username}}), {{message}}', 'PhinixAdmin', '{\"name\":\"php\"}', '{\"name\":\"custom\",\"nexmo\":{\"api_key\":\"------\",\"api_secret\":\"------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"-----------------------\",\"from\":\"----------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\",\"Demo API\"],\"value\":[\"test_api\",\"Demo API\"]},\"body\":{\"name\":[\"from_number\",\"Demo body API\"],\"value\":[\"123-456-789\",\"Demo body API\"]}}}', '{\r\n    \"site_name\":\"Name of your site\",\r\n    \"site_currency\":\"Currency of your site\",\r\n    \"currency_symbol\":\"Symbol of currency\"\r\n}', '1b6be6', '8d0fe9', 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 'primary', NULL, '2024-02-29 05:08:41');
 
 -- --------------------------------------------------------
 
@@ -732,14 +667,11 @@ CREATE TABLE `site_data` (
 
 INSERT INTO `site_data` (`id`, `data_key`, `data_info`, `created_at`, `updated_at`) VALUES
 (1, 'seo.data', '{\"seo_image\":\"1\",\"keywords\":[\"charity\",\"donation\"],\"social_title\":\"Charity\",\"description\":\"Join Charity in creating positive change worldwide. Donate, volunteer, or spread the word to support impactful projects and foster community engagement. Together, let\'s make a difference. Donate now.\",\"social_description\":\"Empower change with Charity. Join us in our mission to create a brighter future for all through donations, volunteering, and community engagement. Together, let\'s make a difference. #Charity #Impact #DonateNow\",\"image\":\"65c46fbd9fe061707372477.jpeg\"}', '2023-08-15 14:11:35', '2024-02-08 06:13:16'),
-(2, 'feature.content', '{\"heading\":\"asdasdsad\",\"subheading\":\"asdasdasd\"}', '2023-09-23 13:12:01', '2023-09-23 13:18:41'),
 (3, 'about.content', '{\"has_image\":\"1\",\"heading\":\"Together We Fund, Together We Flourish\",\"description\":\"Welcome to our community, where our mantra is simple yet powerful: \\\"Together We Fund, Together We Flourish.\\\" We believe that collective generosity cultivates flourishing outcomes.\\r\\n\\r\\nJoin us on this journey of shared purpose, as every contribution sows the seeds for a thriving, interconnected future.\",\"button_text\":\"Learn More\",\"button_url\":\"https:\\/\\/example.com\\/\",\"background_image\":\"65b2340b51b391706177547.jpg\",\"image\":\"65b2204867fb71706172488.png\"}', '2023-09-23 13:19:27', '2024-01-25 10:14:35'),
 (8, 'cookie.data', '{\"short_details\":\"We may use cookies or any other tracking technologies when you visit our website, including any other media form, mobile website, or mobile application related or connected to help customize the Site and improve your experience\",\"details\":\"<p><strong>We may use cookies or any other tracking technologies when you visit our website, including any other media form, mobile website, or mobile application related or connected to help customize the Site and improve your experience<\\/strong><\\/p>\",\"status\":1}', NULL, '2023-11-06 11:04:44'),
 (9, 'maintenance.data', '{\"heading\":\"Under Maintenance\",\"details\":\"<h3><strong>What information do we collect?<\\/strong><\\/h3><p>We gather data from you when you register on our site, submit a request, buy any services, react to an overview, or round out a structure. At the point when requesting any assistance or enrolling on our site, as suitable, you might be approached to enter your: name, email address, or telephone number. You may, nonetheless, visit our site anonymously.<\\/p>\"}', NULL, '2023-11-06 15:14:38'),
-(10, 'feature.element', '{\"has_image\":\"1\",\"trx_type\":\"deposit\",\"title\":\"Abcdefgh\",\"description\":\"dfdf\",\"feature_icon\":\"<i class=\\\"fab fa-accessible-icon\\\"><\\/i>\",\"demo_icon\":\"<i class=\\\"fab fa-acquisitions-incorporated\\\"><\\/i>\",\"abc\":\"<p>dfdfdfdf<\\/p>\",\"background_image\":\"6512c792671e21695729554.jpg\",\"feature_image\":\"6512c4fd42a711695728893.jpg\"}', '2023-09-26 11:48:13', '2023-11-16 14:31:50'),
 (11, 'policy_pages.element', '{\"title\":\"Privacy Policy\",\"details\":\"<h3><strong>What information do we collect?<\\/strong><\\/h3><p>We gather data from you when you register on our site, submit a request, buy any services, react to an overview, or round out a structure. At the point when requesting any assistance or enrolling on our site, as suitable, you might be approached to enter your: name, email address, or telephone number. You may, nonetheless, visit our site anonymously.<\\/p><h3><strong>How do we protect your information?<\\/strong><\\/h3><p>All provided delicate\\/credit data is sent through Stripe.<br \\/>After an exchange, your private data (credit cards, social security numbers, financials, and so on) won\'t be put away on our workers.<\\/p><h3><strong>Do we disclose any information to outside parties?<\\/strong><\\/h3><p>We don\'t sell, exchange, or in any case move to outside gatherings by and by recognizable data. This does exclude confided in outsiders who help us in working our site, leading our business, or adjusting you, since those gatherings consent to keep this data private. We may likewise deliver your data when we accept discharge is suitable to follow the law, implement our site strategies, or ensure our own or others\' rights, property, or wellbeing.<\\/p><h3><strong>Children\'s Online Privacy Protection Act Compliance<\\/strong><\\/h3><p>We are consistent with the prerequisites of COPPA (Children\'s Online Privacy Protection Act), we don\'t gather any data from anybody under 13 years old. Our site, items, and administrations are completely coordinated to individuals who are in any event 13 years of age or more established.<\\/p><h3><strong>Changes to our Privacy Policy<\\/strong><\\/h3><p>If we decide to change our privacy policy, we will post those changes on this page.<\\/p><h3><strong>How long we retain your information?<\\/strong><\\/h3><p>At the point when you register for our site, we cycle and keep your information we have about you however long you don\'t erase the record or withdraw yourself (subject to laws and guidelines).<\\/p><h3><strong>What we don\\u2019t do with your data<\\/strong><\\/h3><p>We don\'t and will never share, unveil, sell, or in any case give your information to different organizations for the promoting of their items or administrations.<\\/p>\"}', '2023-11-09 10:17:26', '2023-11-09 10:17:26'),
 (12, 'policy_pages.element', '{\"title\":\"Terms of Service\",\"details\":\"<p>We claim all authority to dismiss, end, or handicap any help with or without cause per administrator discretion. This is a Complete independent facilitating, on the off chance that you misuse our ticket or Livechat or emotionally supportive network by submitting solicitations or protests we will impair your record. The solitary time you should reach us about the seaward facilitating is if there is an issue with the worker. We have not many substance limitations and everything is as per laws and guidelines. Try not to join on the off chance that you intend to do anything contrary to the guidelines, we do check these things and we will know, don\'t burn through our own and your time by joining on the off chance that you figure you will have the option to sneak by us and break the terms.<\\/p><ul><li>Configuration requests - If you have a fully managed dedicated server with us then we offer custom PHP\\/MySQL configurations, firewalls for dedicated IPs, DNS, and httpd configurations.<\\/li><li>Software requests - Cpanel Extension Installation will be granted as long as it does not interfere with the security, stability, and performance of other users on the server.<\\/li><li>Emergency Support - We do not provide emergency support \\/ Phone Support \\/ LiveChat Support. Support may take some hours sometimes.<\\/li><li>Webmaster help - We do not offer any support for webmaster related issues and difficulty including coding, & installs, Error solving. if there is an issue where a library or configuration of the server then we can help you if it\'s possible from our end.<\\/li><li>Backups - We keep backups but we are not responsible for data loss, you are fully responsible for all backups.<\\/li><li>We Don\'t support any child porn or such material.<\\/li><li>No spam-related sites or material, such as email lists, mass mail programs, and scripts, etc.<\\/li><li>No harassing material that may cause people to retaliate against you.<\\/li><li>No phishing pages.<\\/li><li>You may not run any exploitation script from the server. reason can be terminated immediately.<\\/li><li>If Anyone attempting to hack or exploit the server by using your script or hosting, we will terminate your account to keep safe other users.<\\/li><li>Malicious Botnets are strictly forbidden.<\\/li><li>Spam, mass mailing, or email marketing in any way are strictly forbidden here.<\\/li><li>Malicious hacking materials, trojans, viruses, & malicious bots running or for download are forbidden.<\\/li><li>Resource and cronjob abuse is forbidden and will result in suspension or termination.<\\/li><li>Php\\/CGI proxies are strictly forbidden.<\\/li><li>CGI-IRC is strictly forbidden.<\\/li><li>No fake or disposal mailers, mass mailing, mail bombers, SMS bombers, etc.<\\/li><li>NO CREDIT OR REFUND will be granted for interruptions of service, due to User Agreement violations.<\\/li><\\/ul><h3><strong>Terms & Conditions for Users<\\/strong><\\/h3><p>Before getting to this site, you are consenting to be limited by these site Terms and Conditions of Use, every single appropriate law, and guidelines, and concur that you are answerable for consistency with any material neighborhood laws. If you disagree with any of these terms, you are restricted from utilizing or getting to this site.<\\/p><h3><strong>Support<\\/strong><\\/h3><p>Whenever you have downloaded our item, you may get in touch with us for help through email and we will give a valiant effort to determine your issue. We will attempt to answer using the Email for more modest bug fixes, after which we will refresh the center bundle. Content help is offered to confirmed clients by Tickets as it were. Backing demands made by email and Livechat.<\\/p><p>On the off chance that your help requires extra adjustment of the System, at that point, you have two alternatives:<\\/p><ul><li>Hang tight for additional update discharge.<\\/li><li>Or on the other hand, enlist a specialist (We offer customization for extra charges).<\\/li><\\/ul><h3><strong>Ownership<\\/strong><\\/h3><p>You may not guarantee scholarly or selective possession of any of our items, altered or unmodified. All items are property, we created them. Our items are given \\\"with no guarantees\\\" without guarantee of any sort, either communicated or suggested. On no occasion will our juridical individual be subject to any harms including, however not restricted to, immediate, roundabout, extraordinary, accidental, or significant harms or different misfortunes emerging out of the utilization of or powerlessness to utilize our items.<\\/p><h3><strong>Warranty<\\/strong><\\/h3><p>We don\'t offer any guarantee or assurance of these Services in any way. When our Services have been modified we can\'t ensure they will work with all outsider plugins, modules, or internet browsers. Program similarity ought to be tried against the show formats on the demo worker. If you don\'t mind guarantee that the programs you use will work with the component, as we can not ensure that our systems will work with all program mixes.<\\/p><h3><strong>Unauthorized\\/Illegal Usage<\\/strong><\\/h3><p>You may not utilize our things for any illicit or unapproved reason or may you, in the utilization of the stage, disregard any laws in your locale (counting yet not restricted to copyright laws) just as the laws of your nation and International law. Specifically, it is disallowed to utilize the things on our foundation for pages that advance: brutality, illegal intimidation, hard sexual entertainment, bigotry, obscenity content or warez programming joins.<br \\/><br \\/>You can\'t imitate, copy, duplicate, sell, exchange or adventure any of our segment, utilization of the offered on our things, or admittance to the administration without the express composed consent by us or item proprietor.<br \\/><br \\/>Our Members are liable for all substance posted on the discussion and demo and movement that happens under your record.<br \\/><br \\/>We hold the chance of hindering your participation account quickly if we will think about a particularly not allowed conduct.<br \\/><br \\/>If you make a record on our site, you are liable for keeping up the security of your record, and you are completely answerable for all exercises that happen under the record and some other activities taken regarding the record. You should quickly inform us, of any unapproved employments of your record or some other penetrates of security.<\\/p><h3><strong>Fiverr, Seoclerks Sellers Or Affiliates<\\/strong><\\/h3><p>We do NOT ensure full SEO campaign conveyance within 24 hours. We make no assurance for conveyance time by any means. We give our best assessment to orders during the putting in of requests, anyway, these are gauges. We won\'t be considered liable for loss of assets, negative surveys or you being prohibited for late conveyance. If you are selling on a site that requires time touchy outcomes, utilize Our SEO Services at your own risk.<\\/p><h3><strong>Payment\\/Refund Policy<\\/strong><\\/h3><p>No refund or cash back will be made. After a deposit has been finished, it is extremely unlikely to invert it. You should utilize your equilibrium on requests our administrations, Hosting, SEO campaign. You concur that once you complete a deposit, you won\'t document a debate or a chargeback against us in any way, shape, or form.<br \\/><br \\/>If you document a debate or chargeback against us after a deposit, we claim all authority to end every single future request, prohibit you from our site. False action, for example, utilizing unapproved or taken charge cards will prompt the end of your record. There are no special cases.<\\/p><h3><strong>Free Balance \\/ Coupon Policy<\\/strong><\\/h3><p>We offer numerous approaches to get FREE Balance, Coupons and Deposit offers yet we generally reserve the privilege to audit it and deduct it from your record offset with any explanation we may it is a sort of misuse. If we choose to deduct a few or all of free Balance from your record balance, and your record balance becomes negative, at that point the record will naturally be suspended. If your record is suspended because of a negative Balance you can request to make a custom payment to settle your equilibrium to actuate your record.<\\/p>\"}', '2023-11-09 10:17:51', '2023-11-09 10:17:51'),
-(13, 'social_icon.element', '{\"title\":\"sadsad\",\"social_icon\":\"<i class=\\\"fab fa-accessible-icon\\\"><\\/i>\",\"url\":\"sadsadsd\"}', '2024-01-23 14:28:34', '2024-01-23 14:28:34'),
 (14, 'banner.element', '{\"has_image\":\"1\",\"title\":\"Pledge for Progress\",\"heading\":\"Empowering Dreams, One Backing at a Time\",\"short_description\":\"Crowdfunding is a funding method where individuals or organizations raise small amounts of money from a large number of people, typically via online platforms.\",\"first_button_text\":\"Join With Us\",\"first_button_url\":\"https:\\/\\/example.com\\/\",\"second_button_text\":\"Explore Campaign\",\"second_button_url\":\"https:\\/\\/example.com\\/\",\"background_image\":\"65b2056b8623d1706165611.jpg\"}', '2024-01-25 06:53:31', '2024-01-25 06:53:31'),
 (15, 'banner.element', '{\"has_image\":\"1\",\"title\":\"Join the Backing Revolution\",\"heading\":\"Backing Visionaries, Building Tomorrow\",\"short_description\":\"Crowdfunding is a funding method where individuals or organizations raise small amounts of money from a large number of people, typically via online platforms.\",\"first_button_text\":\"Join With Us\",\"first_button_url\":\"https:\\/\\/example.com\\/\",\"second_button_text\":\"Explore Campaign\",\"second_button_url\":\"https:\\/\\/example.com\\/\",\"background_image\":\"65b20636395661706165814.jpg\"}', '2024-01-25 06:56:54', '2024-01-25 06:56:54'),
 (16, 'banner.element', '{\"has_image\":\"1\",\"title\":\"Back, Believe, Build\",\"heading\":\"Where Ideas Take Flight, Fueled by You\",\"short_description\":\"Crowdfunding is a funding method where individuals or organizations raise small amounts of money from a large number of people, typically via online platforms.\",\"first_button_text\":\"Join With Us\",\"first_button_url\":\"https:\\/\\/example.com\\/\",\"second_button_text\":\"Explore Campaign\",\"second_button_url\":\"https:\\/\\/example.com\\/\",\"background_image\":\"65b2068a2840e1706165898.jpg\"}', '2024-01-25 06:58:18', '2024-01-25 06:58:18'),
@@ -808,13 +740,6 @@ CREATE TABLE `subscribers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `subscribers`
---
-
-INSERT INTO `subscribers` (`id`, `email`, `created_at`, `updated_at`) VALUES
-(3, 'test@test.com', '2023-12-06 11:04:26', '2023-12-06 11:04:26');
-
 -- --------------------------------------------------------
 
 --
@@ -836,47 +761,6 @@ CREATE TABLE `transactions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `user_id`, `amount`, `charge`, `post_balance`, `campaign_id`, `campaign_post_balance`, `trx_type`, `trx`, `details`, `remark`, `created_at`, `updated_at`) VALUES
-(1, 1, 10.00000000, 1.10000000, 10.00000000, NULL, 0.00000000, '+', 'JPRP82MFX6SN', 'Deposit Via Stripe Storefront - USD', 'deposit', '2023-11-19 12:09:54', '2023-11-19 12:09:54'),
-(2, 1, 10.00000000, 0.10000000, 0.00000000, NULL, 0.00000000, '-', 'QD57B6T91OBE', '99.00 USD Withdraw Via Demo One', 'withdraw', '2023-11-22 18:59:15', '2023-11-22 18:59:15'),
-(3, 1, 25.00000000, 0.00000000, 75.00000000, NULL, 0.00000000, '-', 'KHGKFKTA5WK5', '25.00 USD Withdraw Via Demo Two', 'withdraw', '2023-11-23 11:54:08', '2023-11-23 11:54:08'),
-(4, 1, 10.00000000, 1.50000000, 105.00000000, NULL, 0.00000000, '+', '6396Z4JQCFQ4', 'Deposit Via Demo Gateway', 'deposit', '2023-11-29 12:11:04', '2023-11-29 12:11:04'),
-(5, 1, 10.00000000, 0.00000000, 115.00000000, NULL, 0.00000000, '+', 'QD57B6T91OBE', '10.00  Refunded from withdrawal cancellation', 'withdraw_reject', '2023-11-30 06:26:34', '2023-11-30 06:26:34'),
-(6, 2, 5.00000000, 0.00000000, 5.00000000, NULL, 0.00000000, '+', 'TDCWPY71ZJAB', 'As my wish', 'balance_add', '2023-12-03 12:35:37', '2023-12-03 12:35:37'),
-(7, 1, 5.00000000, 0.00000000, 110.00000000, NULL, 0.00000000, '-', 'ZU12EMQFBSYZ', 'As my wish', 'balance_subtract', '2023-12-03 12:37:37', '2023-12-03 12:37:37'),
-(8, 2, 215.00000000, 3.15000000, 220.00000000, NULL, 0.00000000, '+', 'VU57YWFMVYOM', 'Deposit Via Stripe Storefront - USD', 'deposit', '2023-12-04 18:59:10', '2023-12-04 18:59:10'),
-(9, 2, 15.00000000, 0.00000000, 205.00000000, NULL, 0.00000000, '-', 'YWV4XF1V4X96', '15.00 USD Withdraw Via Demo Two', 'withdraw', '2023-12-04 19:09:02', '2023-12-04 19:09:02'),
-(10, 13, 300.00000000, 4.00000000, 0.00000000, 14, 300.00000000, '+', 'QBFG319Y528R', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 06:04:23', '2024-02-25 06:04:23'),
-(11, 13, 200.00000000, 3.00000000, 0.00000000, 14, 500.00000000, '+', '13TO2VHE3FUO', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 06:11:26', '2024-02-25 06:11:26'),
-(12, 13, 100.00000000, 2.00000000, 0.00000000, 14, 600.00000000, '+', 'DR8AKSU8UTHJ', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 07:04:34', '2024-02-25 07:04:34'),
-(13, 13, 300.00000000, 4.00000000, 0.00000000, 14, 900.00000000, '+', 'YC4OF8KO4V3Z', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 07:07:44', '2024-02-25 07:07:44'),
-(14, 13, 100.00000000, 2.00000000, 0.00000000, 14, 100.00000000, '+', 'QJW4URXAR29C', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 07:41:17', '2024-02-25 07:41:17'),
-(15, 13, 50.00000000, 1.50000000, 0.00000000, 13, 50.00000000, '+', 'NFQ8W37H9PXZ', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 07:42:46', '2024-02-25 07:42:46'),
-(16, 13, 200.00000000, 3.00000000, 0.00000000, 14, 300.00000000, '+', '8PZA41RY4PDE', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 07:49:26', '2024-02-25 07:49:26'),
-(17, 13, 100.00000000, 2.00000000, 0.00000000, 14, 400.00000000, '+', 'WOGCSF95PXJ7', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 07:51:37', '2024-02-25 07:51:37'),
-(18, 13, 300.00000000, 4.00000000, 0.00000000, 14, 700.00000000, '+', 'NRSA4DW15QR9', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 08:33:27', '2024-02-25 08:33:27'),
-(19, 13, 150.00000000, 2.50000000, 0.00000000, 13, 150.00000000, '+', 'E2J9KR2XHM7T', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 08:39:54', '2024-02-25 08:39:54'),
-(20, 13, 250.00000000, 3.50000000, 0.00000000, 13, 250.00000000, '+', 'NDRG7MN4STQX', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 08:46:04', '2024-02-25 08:46:04'),
-(21, 13, 200.00000000, 3.00000000, 0.00000000, 13, 200.00000000, '+', 'AEEEPR4X14US', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 11:34:50', '2024-02-25 11:34:50'),
-(22, 13, 300.00000000, 4.00000000, 0.00000000, 13, 500.00000000, '+', 'K7AGGTOJEV7M', 'Deposit Via Authorize.net - USD', 'deposit', '2024-02-25 11:57:05', '2024-02-25 11:57:05'),
-(23, 0, 300.00000000, 4.00000000, 0.00000000, 13, 1200.00000000, '+', 'GUSOUOWH622F', 'Donation Via Authorize.net - USD', 'deposit', '2024-02-25 12:37:33', '2024-02-25 12:37:33'),
-(24, 0, 50.00000000, 1.50000000, 0.00000000, 13, 1250.00000000, '+', 'XJSE7RQP7Z9E', 'Donation Via Authorize.net - USD', 'deposit', '2024-02-25 12:38:42', '2024-02-25 12:38:42'),
-(25, 0, 150.00000000, 2.50000000, 0.00000000, 13, 1400.00000000, '+', 'XDH3KSUKZFXR', 'Donation Via Authorize.net - USD', 'deposit', '2024-02-25 12:43:04', '2024-02-25 12:43:04'),
-(26, 0, 100.00000000, 2.00000000, 0.00000000, 13, 1500.00000000, '+', 'FAYFXKTNAPPH', 'Donation Via Authorize.net - USD', 'deposit', '2024-02-25 12:46:13', '2024-02-25 12:46:13'),
-(27, 0, 300.00000000, 4.00000000, 0.00000000, 13, 1800.00000000, '+', '5ZNGN74RFPCX', 'Donation Via Authorize.net - USD', 'deposit', '2024-02-25 12:58:42', '2024-02-25 12:58:42'),
-(28, 13, 250.00000000, 3.50000000, 0.00000000, 13, 250.00000000, '+', 'AOZ2KTOM4AVG', 'Donation Via Checkout - USD', 'deposit', '2024-02-26 06:17:56', '2024-02-26 06:17:56'),
-(29, 13, 100.00000000, 2.00000000, 0.00000000, 14, 100.00000000, '+', 'R2X3362FYCVU', 'Donation Via Flutterwave - CAD', 'deposit', '2024-02-26 09:51:43', '2024-02-26 09:51:43'),
-(30, 13, 300.00000000, 4.00000000, 0.00000000, 14, 400.00000000, '+', '3NCGD5Q4W312', 'Donation Via Flutterwave - CAD', 'deposit', '2024-02-26 09:54:32', '2024-02-26 09:54:32'),
-(31, 13, 50.00000000, 1.50000000, 0.00000000, 13, 300.00000000, '+', '3ADSUYC1X8MZ', 'Donation Via RazorPay - INR', 'deposit', '2024-02-26 11:48:46', '2024-02-26 11:48:46'),
-(32, 13, 970.00000000, 10.70000000, 0.00000000, 13, 1270.00000000, '+', '32JD7XGJ19OQ', 'Donation Via RazorPay - INR', 'deposit', '2024-02-26 11:49:37', '2024-02-26 11:49:37'),
-(33, 13, 400.00000000, 5.00000000, 0.00000000, 14, 400.00000000, '+', 'MDKXOCW356DM', 'Donation Via PayStack - NGN', 'deposit', '2024-02-27 05:26:32', '2024-02-27 05:26:32'),
-(34, 13, 150.00000000, 2.50000000, 0.00000000, 13, 150.00000000, '+', '96PCJDCK9A6U', 'Donation Via PayStack - NGN', 'deposit', '2024-02-27 05:29:49', '2024-02-27 05:29:49'),
-(35, 13, 700.00000000, 40.00000000, 0.00000000, 13, 850.00000000, '+', '7NRU4ODH3NPB', 'Donation Via Stripe Storefront - AUD', 'deposit', '2024-02-27 11:06:38', '2024-02-27 11:06:38');
 
 -- --------------------------------------------------------
 
@@ -919,15 +803,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`, `country_code`, `country_name`, `mobile`, `ref_by`, `balance`, `password`, `address`, `status`, `kyc_data`, `kc`, `ec`, `sc`, `ver_code`, `ver_code_send_at`, `ts`, `tc`, `tsc`, `ban_reason`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '', 'Sherrinford', 'Willum', 'demouser', 'demouser@gmail.com', 'BD', 'Bangladesh', '880123456789', 0, 110.00000000, '$2y$10$FHAsomyDRlXNTvgMZQ68dOxYSBf09tsaunyLezghO28Pp3S4l1dkG', '{\"city\":\"Dhaka\",\"state\":\"Uttara\",\"zip\":\"1230\",\"country\":\"Bangladesh\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"asdasd\"},{\"name\":\"Voter Id\",\"type\":\"textarea\",\"value\":\"asdasd\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2023\\/12\\/04\\/656cc2b0d76911701626544.png\"}]', 1, 1, 1, '628388', '2023-12-09 11:54:35', 0, 1, NULL, NULL, NULL, '2023-11-09 12:39:56', '2023-12-21 05:15:07'),
-(2, '', 'Demo', 'User Two', 'demouser2', 'demotwo@gmail.com', 'AF', 'Afghanistan', '93123456789', 0, 205.00000000, '$2y$10$NhcLfz/6ORQvy5uNrwWUUe9LvQHbx3.F5utkCbzwHtfhYpzaVGnfy', '{\"city\":\"dsfdsf\",\"state\":\"sadfsdf\",\"zip\":\"dsfdsf\",\"country\":\"Afghanistan\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Demo User Two\"},{\"name\":\"Voter Id\",\"type\":\"textarea\",\"value\":\"13245689\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2023\\/12\\/02\\/656b6254118e21701536340.png\"}]', 1, 1, 1, '938614', '2023-12-02 22:53:05', 0, 1, NULL, NULL, NULL, '2023-12-02 16:53:04', '2023-12-05 15:47:55'),
-(3, NULL, 'Demo', 'Three', 'demouser3', 'demothree@demo.com', 'BH', 'Bahrain', '97312345678', 0, 0.00000000, '$2y$10$9iV79hrH/TxCjRvajYu9OuLFS25dZAtgrvutJiQSNuOW7ulWk9uEq', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"zsdgsdfg\"},{\"name\":\"Voter Id\",\"type\":\"textarea\",\"value\":\"dsfgdsfgdsf\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2023\\/12\\/06\\/657076ff5a9221701869311.png\"}]', 2, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:06:26', '2023-12-06 13:28:31'),
-(4, NULL, 'Demo', 'User Four', 'demouser4', 'demofour@demo.com', 'KW', 'Kuwait', '96512345678', 0, 0.00000000, '$2y$10$WMIdOJ01QcjUW9CSk1vjx.j6n4cWwD4V/T2O82ckTFYVg5m0dnUXK', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:07:25', '2023-12-05 16:07:25'),
-(5, NULL, 'Demo', 'User Five', 'demouser5', 'demofive@demo.com', 'MT', 'Malta', '35612345678', 0, 0.00000000, '$2y$10$mHk3S8SI3O7MCKlhvxLi7u4Px4v9ZXWm6Ux.pLPSe4wRB6Hm7dZVW', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 16:09:35', '2023-12-05 16:09:35'),
-(10, NULL, 'Demo', 'User Six', 'demouser6', 'demosix@demo.com', 'TM', 'Turkmenistan', '993123456789', 0, 0.00000000, '$2y$10$i3XurA7Zxy3h1dWiUP12b.s.Tcn0a9Do2gBUbmujUwz4bpvti1A7e', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:19:44', '2023-12-05 17:19:44'),
-(11, NULL, 'Demo', 'User Seven', 'demouser7', 'demoseven@demo.com', 'ZA', 'South Africa', '2712345678', 0, 0.00000000, '$2y$10$.DrLjmLxOzvlmEqgHmf7zeiDiFV5WOoAEyDhwaj9HjbZHYnNfDw3i', NULL, 1, NULL, 0, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-12-05 17:20:42', '2023-12-05 17:20:42'),
-(12, '65d466e8710181708418792.jpg', 'Md. Sadid Hasan', 'Rakib', 'mdsadid', 'sadid.hasan14@gmail.com', 'BD', 'Bangladesh', '8801686321356', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"House - 32, Road - 04, Block - C, Pallabi, Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Sadid Hasan Rakib\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"RAKIB123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/01\\/29\\/65b7948e1b22a1706529934.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-02-20 08:46:33'),
-(13, '65d46c259fae31708420133.jpg', 'Md. Saeed', 'Mahmud', 'mdsaeed', 'saeed@gmail.com', 'BD', 'Bangladesh', '8801931341253', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', '{\"state\":null,\"zip\":\"1216\",\"city\":\"Dhaka\",\"address\":\"Mirpur 12\"}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"Md. Saeed Mahmud\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"SAEED123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/14\\/65ccaf2415f001707912996.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-20 09:08:54'),
+(12, '65d466e8710181708418792.jpg', 'James', 'Marshall', 'james', 'james@gmail.com', 'US', 'United States', '817-290-8546', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":\"Louisiana\",\"zip\":\"70116\",\"city\":\"New Orleans\",\"address\":\"1003 Bourbon St\"}', 1, NULL, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-02-29 06:22:27'),
+(13, '65d46c259fae31708420133.jpg', 'David', 'Gonzalez', 'david', 'david@gmail.com', 'US', 'United States', '912-307-5602', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', '{\"state\":\"Texas\",\"zip\":\"75223\",\"city\":\"Dallas\",\"address\":\"515 S Peak St\"}', 1, NULL, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-29 06:25:04'),
 (14, NULL, 'John', 'Doe', 'johndoe', 'john@gmail.com', 'AX', 'Aland Islands', '358123456789', 0, 0.00000000, '$2y$10$jXQZDC90YT2pJ1rKfbOcy.9wH/Y/N5PmzS0.K46rDYpxpeeOiObAq', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JOHN123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdaf5424bcf1707978580.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 06:29:09', '2024-02-15 06:30:01'),
 (15, '65d46c908d6141708420240.jpg', 'Jane', 'Doe', 'janedoe', 'jane@gmail.com', 'AS', 'AmericanSamoa', '1684987654321', 0, 0.00000000, '$2y$10$KAT0wI0OgG2dV1yz0p0L9.ehVORSPMo1U9sYAUV3GKpBV2GLm5M5y', '{\"state\":null,\"zip\":null,\"city\":null,\"address\":null}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JANE987654321\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdb73f528841707980607.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 07:03:04', '2024-02-20 09:10:41');
 
@@ -954,15 +831,6 @@ CREATE TABLE `withdrawals` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `withdrawals`
---
-
-INSERT INTO `withdrawals` (`id`, `method_id`, `user_id`, `amount`, `currency`, `rate`, `charge`, `trx`, `final_amount`, `after_charge`, `withdraw_information`, `status`, `admin_feedback`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 10.00000000, 'USD', 10.00000000, 0.10000000, 'QD57B6T91OBE', 99.00000000, 9.90000000, '[{\"name\":\"Full name\",\"type\":\"text\",\"value\":\"Demo name\"},{\"name\":\"Father Name\",\"type\":\"text\",\"value\":\"Demo father name\"},{\"name\":\"Mother Name\",\"type\":\"text\",\"value\":\"Demo mother name\"}]', 3, 'As my wish. I am cancelling this, do whatever you want.', '2023-11-22 18:22:16', '2023-11-30 06:26:34'),
-(2, 2, 1, 25.00000000, 'USD', 1.00000000, 0.00000000, 'KHGKFKTA5WK5', 25.00000000, 25.00000000, '[{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2023\\/11\\/23\\/655f3d60c13a01700740448.png\"}]', 2, NULL, '2023-11-23 11:54:02', '2023-11-28 13:41:47'),
-(3, 2, 2, 15.00000000, 'USD', 1.00000000, 0.00000000, 'YWV4XF1V4X96', 15.00000000, 15.00000000, '[{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2023\\/12\\/05\\/656e23cea30131701716942.png\"}]', 1, 'I provide it', '2023-12-04 19:08:54', '2023-12-04 19:09:33');
 
 -- --------------------------------------------------------
 
@@ -991,8 +859,8 @@ CREATE TABLE `withdraw_methods` (
 --
 
 INSERT INTO `withdraw_methods` (`id`, `form_id`, `name`, `min_amount`, `max_amount`, `fixed_charge`, `rate`, `percent_charge`, `currency`, `guideline`, `status`, `created_at`, `updated_at`) VALUES
-(1, 6, 'Demo One', 1.00000000, 1000.00000000, 0.00000000, 1.00000000, 1.00, 'USD', '<p>Demo withdrawal instruction I have given for you. Don\'t worry, Real version and data will come very soon.</p>', 1, '2023-11-21 11:15:53', '2023-11-30 06:25:14'),
-(2, 7, 'Demo Two', 1.00000000, 1000.00000000, 0.00000000, 1.00000000, 0.00, 'USD', '<p>This is another demo. Let\'s have a check on this.</p>', 1, '2023-11-21 17:08:05', '2023-11-23 06:55:58');
+(1, 6, 'EasyCashOut', 1.00000000, 1000.00000000, 0.00000000, 2.54000000, 1.00, 'PKR', '<p>To withdraw funds using EasyCashOut, log in, go to the \'Withdrawal\' section, choose EasyCashOut, enter the amount, and confirm. Funds will be transferred within 1-3 business days. Check for fees and ensure accurate account details.<br></p>', 1, '2023-11-21 11:15:53', '2024-02-29 05:42:09'),
+(2, 7, 'InstantCash', 1.00000000, 1000.00000000, 0.00000000, 0.67000000, 1.00, 'AFN', '<p>To withdraw funds using InstantCash, log in, go to the \'Withdrawal\' section, choose InstantCash, enter the amount, and confirm. Funds will be transferred within 1-3 business days. Check for fees and ensure accurate account details.<br></p>', 1, '2023-11-21 17:08:05', '2024-02-29 05:43:01');
 
 --
 -- Indexes for dumped tables
@@ -1225,13 +1093,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `deposits`
 --
 ALTER TABLE `deposits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`

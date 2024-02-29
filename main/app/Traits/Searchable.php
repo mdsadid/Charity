@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Exception;
 use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
 
@@ -20,15 +21,15 @@ trait Searchable
 
     public function scopeSearchable($query, $params, $like = true) {
         $search = request()->search;
-        if (!$search) {
-            return $query;
-        }
+
+        if (!$search) return $query;
+
         $search = $like ? "%$search%" : $search;
 
         $query->where(function ($q) use ($params, $search) {
             foreach ($params as $key => $param) {
                 $relationData = explode(':', $param);
-                
+
                 if (@$relationData[1]) {
                     $q = $this->relationSearch($q, $relationData[0], $relationData[1], $search);
                 } else {
@@ -45,10 +46,12 @@ trait Searchable
         foreach ($params as $param) {
             $relationData = explode(':', $param);
             $filters      = array_keys(request()->all());
+
             if (@$relationData[1]) {
                 $query = $this->relationFilter($query, $relationData[0], $relationData[1], $filters);
             } else {
                 $column = $param;
+
                 if (in_array($column, $filters) && request()->$column != null) {
                     if (gettype(request()->$column) == 'array') {
                         $query->whereIn($column, request()->$column);
@@ -58,24 +61,24 @@ trait Searchable
                 }
             }
         }
+
         return $query;
     }
 
     public function scopeDateFilter($query, $column = 'created_at') {
-        if (!request()->date) {
-            return $query;
-        }
+        if (!request()->date) return $query;
+
         try {
             $date      = explode('-', request()->date);
             $startDate = Carbon::parse(trim($date[0]))->format('Y-m-d');
             $endDate   = @$date[1] ? Carbon::parse(trim(@$date[1]))->format('Y-m-d') : $startDate;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw ValidationException::withMessages(['error' => 'Unauthorized action']);
         }
 
         request()->merge(['start_date' => $startDate, 'end_date' => $endDate]);
 
-        return  $query->whereDate($column, '>=', $startDate)->whereDate($column, '<=', $endDate);
+        return $query->whereDate($column, '>=', $startDate)->whereDate($column, '<=', $endDate);
     }
 
     private function relationSearch($query, $relation, $columns, $search) {
@@ -84,6 +87,7 @@ trait Searchable
                 $q->where($column, 'like', $search);
             });
         }
+
         return $query;
     }
 
@@ -95,6 +99,7 @@ trait Searchable
                 });
             }
         }
+
         return $query;
     }
 }

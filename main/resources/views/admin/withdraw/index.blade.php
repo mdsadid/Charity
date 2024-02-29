@@ -260,7 +260,7 @@
 @endsection
 
 @push('breadcrumb')
-    <x-searchForm placeholder="TRX / Username" dateSearch="yes" />
+    <x-searchForm placeholder="TRX/Username" dateSearch="yes" />
 @endpush
 
 @push('page-script')
