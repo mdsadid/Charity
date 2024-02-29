@@ -123,5 +123,5 @@
 @endsection
 
 @push('breadcrumb')
-    <x-searchForm placeholder="Campaign/Category/Author" />
+    <x-searchForm placeholder="Campaign/Category" />
 @endpush

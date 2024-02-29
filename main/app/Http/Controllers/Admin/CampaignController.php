@@ -44,7 +44,7 @@ class CampaignController extends Controller
             $campaigns = Campaign::query();
         }
 
-        return $campaigns->with(['user', 'category'])->searchable(['name'])->latest()->paginate(getPaginate());
+        return $campaigns->with(['user', 'category'])->searchable(['name', 'category:name'])->latest()->paginate(getPaginate());
     }
 
     function details($id) {

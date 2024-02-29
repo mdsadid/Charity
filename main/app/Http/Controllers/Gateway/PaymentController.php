@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Gateway;
 use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Campaign;
+use App\Models\Donation;
 use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use App\Constants\ManageStatus;
 use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
 use App\Http\Controllers\Controller;
-use App\Models\Donation;
 
 class PaymentController extends Controller
 {
@@ -23,7 +23,7 @@ class PaymentController extends Controller
             'amount'    => 'required|numeric|gt:0',
             'full_name' => 'required|string|max:255',
             'email'     => 'required|email|max:40',
-            'phone'     => 'required|regex:/^\+[0-9]*$/|max:40',
+            'phone'     => 'required|max:40',
             'country'   => 'required|max:40|in:' . $countries,
             'gateway'   => 'required|exists:gateways,code',
             'currency'  => 'required',
@@ -74,15 +74,27 @@ class PaymentController extends Controller
         $deposit->trx             = getTrx();
         $deposit->save();
 
+        if (auth()->check()) {
+            $userFullName = auth()->user()->fullname;
+            $userEmail    = auth()->user()->email;
+            $userPhone    = auth()->user()->mobile;
+            $userCountry  = auth()->user()->country;
+        } else {
+            $userFullName = request('full_name');
+            $userEmail    = request('email');
+            $userPhone    = request('phone');
+            $userCountry  = request('country');
+        }
+
         // Save data in donation table
         $donation              = new Donation();
         $donation->deposit_id  = $deposit->id;
         $donation->campaign_id = $campaign->id;
         $donation->type        = request('anonymousDonation') == 'on' ? Donation::ANONYMOUS_DONATION : Donation::KNOWN_DONATION;
-        $donation->full_name   = request('full_name') ?? null;
-        $donation->email       = request('email') ?? null;
-        $donation->phone       = request('phone') ?? null;
-        $donation->country     = request('country') ?? null;
+        $donation->full_name   = $userFullName;
+        $donation->email       = $userEmail;
+        $donation->phone       = $userPhone;
+        $donation->country     = $userCountry;
         $donation->save();
 
         session()->put('Track', $deposit->trx);
