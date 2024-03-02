@@ -20,7 +20,11 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($deposits as $deposit)
                                 <tr>
-                                    <td>{{ __(strLimit($deposit->donation->campaign->name, 30)) }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.campaigns.details', $deposit->donation->campaign->id) }}" target="_blank">
+                                            {{ __(strLimit($deposit->donation->campaign->name, 30)) }}
+                                        </a>
+                                    </td>
                                     <td>
                                         <div>
                                             <span class="text-primary">{{ __($deposit->gateway->name) }}</span>
@@ -67,13 +71,13 @@
                                             <span class="tf-icons las la-eye me-1"></span> @lang('View')
                                         </button>
 
-                                        {{-- <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                @lang('Action')
-                                            </button>
+                                        @if ($deposit->status == ManageStatus::PAYMENT_PENDING)
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-label-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    @lang('Action')
+                                                </button>
 
-                                            <ul class="dropdown-menu">
-                                                @if ($deposit->status == ManageStatus::CAMPAIGN_COMMENT_PENDING)
+                                                <ul class="dropdown-menu">
                                                     <li>
                                                         <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this comment?')" data-action="{{ route('admin.comments.status.update', [$deposit->id, 'approve']) }}">
                                                             <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
@@ -84,15 +88,9 @@
                                                             <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject')
                                                         </button>
                                                     </li>
-                                                @endif
-
-                                                <li>
-                                                    <button type="button" class="dropdown-item commentDeleteButton" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $deposit->id) }}">
-                                                        <i class="las la-trash-alt fs-6 link-danger"></i> @lang('Delete')
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div> --}}
+                                                </ul>
+                                            </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

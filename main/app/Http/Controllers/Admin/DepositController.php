@@ -9,7 +9,7 @@ use App\Models\Deposit;
 use App\Models\Gateway;
 
 class DepositController extends Controller
-{   
+{
     function index() {
         $pageTitle   = 'All Deposits';
         $depositData = $this->depositData('index', true);
@@ -45,15 +45,16 @@ class DepositController extends Controller
 
     function approve($id) {
         $deposit = Deposit::where('id', $id)->pending()->firstOrFail();
-        PaymentController::userDataUpdate($deposit, true);
+        PaymentController::campaignDataUpdate($deposit, true);
 
         $toast[] = ['success', 'Deposit approval success'];
+
         return back()->withToasts($toast);
     }
 
     function cancel() {
         $this->validate(request(), [
-            'id' => 'required|int|gt:0',
+            'id'             => 'required|int|gt:0',
             'admin_feedback' => 'required|max:255',
         ]);
 
@@ -74,13 +75,15 @@ class DepositController extends Controller
         ]);
 
         $toast[] = ['success', 'Deposit cancellation success'];
+
         return back()->withToasts($toast);
     }
 
-    protected function depositData($scope = null, $summery = false) {
+    protected function depositData($scope = null, $summery = false)
+    {
         if ($scope) {
             $deposits = Deposit::$scope()->with(['user', 'gateway']);
-        }else{
+        } else {
             $deposits = Deposit::with(['user', 'gateway']);
         }
 
@@ -94,13 +97,13 @@ class DepositController extends Controller
 
         if (!$summery) {
             return $deposits->latest()->paginate(getPaginate());
-        }else{
+        } else {
             $doneSummery     = (clone $deposits)->done()->sum('amount');
             $pendingSummery  = (clone $deposits)->pending()->sum('amount');
             $canceledSummery = (clone $deposits)->canceled()->sum('amount');
 
             return [
-                'data' => $deposits->latest()->paginate(getPaginate()),
+                'data'    => $deposits->latest()->paginate(getPaginate()),
                 'summery' => [
                     'done'     => $doneSummery,
                     'pending'  => $pendingSummery,
