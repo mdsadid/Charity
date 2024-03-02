@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Deposit;
+use App\Models\Gateway;
 use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
-use App\Models\Deposit;
-use App\Models\Gateway;
 
 class DepositController extends Controller
 {
     function index() {
-        $pageTitle   = 'All Deposits';
-        $depositData = $this->depositData('index', true);
+        $pageTitle   = 'All Donations';
+        $depositData = $this->donationData(null, true);
         $deposits    = $depositData['data'];
         $summery     = $depositData['summery'];
         $done        = $summery['done'];
         $pending     = $summery['pending'];
         $canceled    = $summery['canceled'];
 
-        return view('admin.deposit.index', compact('pageTitle', 'deposits', 'done', 'pending', 'canceled'));
+        return view('admin.page.donations', compact('pageTitle', 'deposits'));
+
+        // return view('admin.deposit.index', compact('pageTitle', 'deposits', 'done', 'pending', 'canceled'));
     }
 
     function pending() {
@@ -79,17 +81,16 @@ class DepositController extends Controller
         return back()->withToasts($toast);
     }
 
-    protected function depositData($scope = null, $summery = false)
-    {
+    protected function donationData($scope = null, $summery = false) {
         if ($scope) {
-            $deposits = Deposit::$scope()->with(['user', 'gateway']);
+            $deposits = Deposit::has('donation')->with(['gateway', 'donation.campaign'])->$scope();
         } else {
-            $deposits = Deposit::with(['user', 'gateway']);
+            $deposits = Deposit::has('donation')->with(['gateway', 'donation.campaign']);
         }
 
         $deposits = $deposits->searchable(['trx', 'user:username'])->dateFilter();
 
-        // By Payment Method
+        // Filter By Payment Method
         if (request('method')) {
             $method   = Gateway::where('alias', request('method'))->firstOrFail();
             $deposits = $deposits->where('method_code', $method->code);

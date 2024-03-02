@@ -80,6 +80,16 @@ Route::middleware('admin')->group(function () {
         Route::get('index', 'index')->name('index');
     });
 
+    // Campaign donations
+    Route::controller('DepositController')->prefix('donations')->name('donations.')->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::get('pending', 'pending')->name('pending');
+        Route::get('done', 'done')->name('done');
+        Route::get('canceled', 'canceled')->name('canceled');
+        Route::post('approve/{id}', 'approve')->name('approve');
+        Route::post('cancel', 'cancel')->name('cancel');
+    });
+
     // User Management
     Route::controller('UserController')->name('user.')->prefix('user')->group(function () {
         Route::get('index', 'index')->name('index');
@@ -121,16 +131,6 @@ Route::middleware('admin')->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::post('status/{id}', 'status')->name('status');
         });
-    });
-
-    // Deposit Management
-    Route::controller('DepositController')->prefix('deposit')->name('deposit.')->group(function () {
-        Route::get('index', 'index')->name('index');
-        Route::get('pending', 'pending')->name('pending');
-        Route::get('done', 'done')->name('done');
-        Route::get('canceled', 'canceled')->name('canceled');
-        Route::post('approve/{id}', 'approve')->name('approve');
-        Route::post('cancel', 'cancel')->name('cancel');
     });
 
     // Withdrawal Management

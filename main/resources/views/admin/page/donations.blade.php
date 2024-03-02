@@ -2,6 +2,9 @@
 
 @section('master')
     <div class="row">
+        @if (request()->routeIs('admin.donations.index'))
+        @endif
+
         <div class="col-xxl">
             <div class="card">
                 <div class="card-body table-responsive text-nowrap fixed-min-height-table">
@@ -9,7 +12,7 @@
                         <thead>
                             <tr>
                                 <th>@lang('Campaign')</th>
-                                <th>@lang('Gateway | Trx')</th>
+                                <th>@lang('Gateway | Transaction')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Conversion Rate')</th>
                                 <th>@lang('Donation Date')</th>
@@ -68,7 +71,7 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-label-info donorViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-donor_type="{{ $deposit->donation->donorType }}" data-donor_name="{{ $deposit->donation->donorName }}" data-donor_email="{{ $deposit->donation->donorEmail }}" data-donor_phone="{{ $deposit->donation->donorPhone }}" data-donor_country="{{ $deposit->donation->donorCountry }}">
-                                            <span class="tf-icons las la-eye me-1"></span> @lang('View')
+                                            <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </button>
 
                                         @if ($deposit->status == ManageStatus::PAYMENT_PENDING)

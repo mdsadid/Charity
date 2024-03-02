@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="row">
+    {{-- <div class="row">
         <a href="{{ route('admin.deposit.done') }}" class="col-lg-3 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -141,7 +141,7 @@
                 </div>
             </div>
         </a>
-    </div>
+    </div> --}}
 
     <div class="row">
         <a href="{{ route('admin.withdraw.done') }}" class="col-sm-6 col-lg-3 mb-4">

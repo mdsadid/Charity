@@ -1,5 +1,5 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo ">
+    <div class="app-brand demo">
         <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2 logo-big">
                 <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_dark.png') }}" alt="logo">
@@ -51,7 +51,7 @@
             </a>
         </li>
 
-        <li class="menu-item {{ navigationActive('admin.campaign*', 2) }}">
+        <li class="menu-item {{ navigationActive('admin.campaigns*', 2) }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-bullhorn text-cyan"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Campaigns')</div>
@@ -93,11 +93,39 @@
             </a>
         </li>
 
-        <li class="menu-item {{ navigationActive('admin.donations*', 1) }}">
-            <a href="{{ route('admin.donations.index') }}" class="menu-link">
+        <li class="menu-item {{ navigationActive('admin.donations*', 2) }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-hand-holding-usd text-success"></i>
-                <div class="text-truncate">@lang('Donations')</div>
+                <div class="text-truncate text-nowrap d-inline-block">@lang('Donations')</div>
+                {{-- @if ($pendingDepositsCount)
+                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
+                @endif --}}
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ navigationActive('admin.donations.index', 1) }}">
+                    <a href="{{ route('admin.donations.index') }}" class="menu-link">
+                        <div class="text-truncate">@lang('All')</div>
+                    </a>
+                </li>
+                {{-- <li class="menu-item {{ navigationActive('admin.deposit.pending', 1) }}">
+                    <a href="{{ route('admin.deposit.pending') }}" class="menu-link">
+                        <div class="text-truncate text-nowrap d-inline-block">@lang('Pending')</div>
+                        @if ($pendingDepositsCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $pendingDepositsCount }}</div>
+                        @endif
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.deposit.done', 1) }}">
+                    <a href="{{ route('admin.deposit.done') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Done')</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.deposit.canceled', 1) }}">
+                    <a href="{{ route('admin.deposit.canceled') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Canceled')</div>
+                    </a>
+                </li> --}}
+            </ul>
         </li>
 
         <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
@@ -157,41 +185,6 @@
                         @if ($mobileUnconfirmedUsersCount)
                             <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $mobileUnconfirmedUsersCount }}</div>
                         @endif
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <li class="menu-item {{ navigationActive('admin.deposit*', 2) }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons las la-wallet text-cyan"></i>
-                <div class="text-truncate text-nowrap d-inline-block">@lang('Deposits')</div>
-                @if ($pendingDepositsCount)
-                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
-                @endif
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ navigationActive('admin.deposit.pending', 1) }}">
-                    <a href="{{ route('admin.deposit.pending') }}" class="menu-link">
-                        <div class="text-truncate text-nowrap d-inline-block">@lang('Pending')</div>
-                        @if ($pendingDepositsCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $pendingDepositsCount }}</div>
-                        @endif
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.deposit.done', 1) }}">
-                    <a href="{{ route('admin.deposit.done') }}" class="menu-link">
-                        <div class="text-truncate">@lang('Done')</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.deposit.canceled', 1) }}">
-                    <a href="{{ route('admin.deposit.canceled') }}" class="menu-link">
-                        <div class="text-truncate">@lang('Canceled')</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.deposit.index*', 1) }}">
-                    <a href="{{ route('admin.deposit.index') }}" class="menu-link">
-                        <div class="text-truncate">@lang('All')</div>
                     </a>
                 </li>
             </ul>
