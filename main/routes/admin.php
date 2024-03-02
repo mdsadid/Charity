@@ -75,6 +75,11 @@ Route::middleware('admin')->group(function () {
         Route::post('delete/{id}', 'destroy')->name('delete');
     });
 
+    // Campaign donations
+    Route::controller('DonationController')->prefix('donations')->name('donations.')->group(function () {
+        Route::get('index', 'index')->name('index');
+    });
+
     // User Management
     Route::controller('UserController')->name('user.')->prefix('user')->group(function () {
         Route::get('index', 'index')->name('index');

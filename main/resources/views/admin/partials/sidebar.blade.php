@@ -93,6 +93,13 @@
             </a>
         </li>
 
+        <li class="menu-item {{ navigationActive('admin.donations*', 1) }}">
+            <a href="{{ route('admin.donations.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons las la-hand-holding-usd text-success"></i>
+                <div class="text-truncate">@lang('Donations')</div>
+            </a>
+        </li>
+
         <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-user-tie text-purple"></i>

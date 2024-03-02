@@ -171,7 +171,7 @@
             transition: all .23s ease .1s;
             transform: translate(23px, -25px);
             position: relative;
-            left: 587px;
+            left: 562px;
             bottom: 4px;
         }
 

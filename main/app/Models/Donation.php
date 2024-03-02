@@ -51,6 +51,24 @@ class Donation extends Model
     }
 
     /**
+     * Get the donor's type.
+     */
+    public function donorType(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if ($this->type == self::ANONYMOUS_DONATION) {
+                    $html = '<span class="badge bg-label-warning donor-badge">' . trans('Anonymous') . '</span>';
+                } else {
+                    $html = '<span class="badge bg-label-success donor-badge">' . trans('Known') . '</span>';
+                }
+
+                return $html;
+            },
+        );
+    }
+
+    /**
      * Get the deposit that owns the donation.
      */
     public function deposit()

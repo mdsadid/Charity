@@ -19,7 +19,11 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($comments as $comment)
                                 <tr>
-                                    <td>{{ __(strLimit($comment->campaign->name, 45)) }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.campaigns.details', $comment->campaign->id) }}" target="_blank">
+                                            {{ __(strLimit($comment->campaign->name, 45)) }}
+                                        </a>
+                                    </td>
                                     <td>
                                         @if ($comment->user)
                                             <div>
