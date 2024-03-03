@@ -71,7 +71,7 @@
                                         @elseif (@$deposit->status == ManageStatus::PAYMENT_SUCCESS)
                                             <span class="badge badge--success">@lang('Succeeded')</span>
                                         @elseif (@$deposit->status == ManageStatus::PAYMENT_CANCEL)
-                                            <span class="badge badge--secondary">@lang('Canceled')</span>
+                                            <span class="badge badge--danger">@lang('Canceled')</span>
                                         @else
                                             <span class="badge badge--secondary">@lang('Initiated')</span>
                                         @endif
@@ -116,7 +116,7 @@
                     </span>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group userData mb-2"></ul>
+                    <ul class="list-group userData"></ul>
                     <div class="feedback"></div>
                 </div>
                 <div class="modal-footer">
@@ -132,6 +132,12 @@
         .details-modal-title {
             color: hsl(var(--black) / 0.6);
         }
+
+        .feedback-heading {
+            font-family: var(--body-font);
+            font-size: 1.5rem;
+            color: hsl(var(--secondary));
+        }
     </style>
 @endpush
 
@@ -145,9 +151,9 @@
             })
 
             $('.detailsBtn').on('click', function() {
-                var modal = $('#detailsModal')
-                var userData = $(this).data('info')
-                var html = ''
+                let modal    = $('#detailsModal')
+                let userData = $(this).data('info')
+                let html     = ''
 
                 if (userData) {
                     let fileDownloadUrl = $(this).data('url')
@@ -158,12 +164,12 @@
                         if (element.type != 'file') {
                             html += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>${element.name}</span>
-                                        <span">${element.value}</span>
+                                        <span>${element.value}</span>
                                     </li>`
                         } else {
                             html += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>${element.name}</span>
-                                        <span">
+                                        <span>
                                             <a href="${fileDownloadUrl}&fileName=${element.value}">
                                                 <i class="las la-arrow-circle-down"></i> @lang('Attachment')
                                             </a>
@@ -174,14 +180,15 @@
                 }
 
                 modal.find('.userData').html(html)
+                let adminFeedback = ''
 
                 if ($(this).data('admin_feedback') != undefined) {
-                    var adminFeedback = `<div class="my-3">
-                                            <strong>@lang('Admin Feedback')</strong>
-                                            <p>${$(this).data('admin_feedback')}</p>
-                                        </div>`
+                    adminFeedback += `<div class="mt-4">
+                                        <h5 class="mb-2 feedback-heading">@lang('Admin Feedback')</h5>
+                                        <p class="mb-0">${$(this).data('admin_feedback')}</p>
+                                    </div>`
                 } else {
-                    var adminFeedback = ''
+                    adminFeedback += ''
                 }
 
                 modal.find('.feedback').html(adminFeedback)
