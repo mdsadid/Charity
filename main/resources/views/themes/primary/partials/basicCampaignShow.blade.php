@@ -1,5 +1,5 @@
 <div class="donation-details__img" data-aos="fade-up" data-aos-duration="1500">
-    <img src="{{ getImage(getFilePath('campaign') . '/' . @$campaign->image, getFileSize('campaign')) }}" alt="image">
+    <img src="{{ getImage(getFilePath('campaign') . '/' . @$campaignData->image, getFileSize('campaign')) }}" alt="image">
 </div>
 <nav>
     <div class="nav nav-tabs custom--tab" id="nav-tab" role="tablist">
@@ -10,7 +10,7 @@
             @lang('Relevant Images')
         </button>
 
-        @if (@$campaign->document)
+        @if (@$campaignData->document)
             <button type="button" class="nav-link" id="nav-document-tab" data-bs-toggle="tab" data-bs-target="#nav-document" role="tab" aria-controls="nav-document" aria-selected="false">
                 @lang('Relevant Document')
             </button>
@@ -24,15 +24,15 @@
 <div class="tab-content mb-4" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-desc" role="tabpanel" aria-labelledby="nav-desc-tab" tabindex="0">
         <div class="donation-details__txt">
-            <h2 class="donation-details__title" data-aos="fade-up" data-aos-duration="1500">{{ __(@$campaign->name) }}</h2>
+            <h2 class="donation-details__title" data-aos="fade-up" data-aos-duration="1500">{{ __(@$campaignData->name) }}</h2>
             <div class="donation-details__desc" data-aos="fade-up" data-aos-duration="1500">
-                @php echo @$campaign->description @endphp
+                @php echo @$campaignData->description @endphp
             </div>
         </div>
     </div>
     <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab" tabindex="0">
         <div class="row g-4">
-            @foreach ($campaign->gallery as $image)
+            @foreach ($campaignData->gallery as $image)
                 <div class="col-md-4 col-sm-6 col-xsm-6">
                     <div class="donation-details__relevent-img">
                         <a href="{{ getImage(getFilePath('campaign') . '/' . @$image, getFileSize('campaign')) }}" data-lightbox="Campaign Name">
@@ -44,16 +44,16 @@
         </div>
     </div>
 
-    @if (@$campaign->document)
+    @if (@$campaignData->document)
         <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab" tabindex="0">
             <div class="donation-details__document">
-                <object data="{{ asset(getFilePath('document') . '/' . @$campaign->document) }}" type="application/pdf"></object>
+                <object data="{{ asset(getFilePath('document') . '/' . @$campaignData->document) }}" type="application/pdf"></object>
             </div>
         </div>
     @endif
 
     <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab" tabindex="0">
-        <div @class(['donation-details__comments', 'border-bottom-none' => $campaign->user_id == @$authUser->id])>
+        <div @class(['donation-details__comments', 'border-bottom-none' => $campaignData->user_id == @$authUser->id])>
             <h3 class="donation-details__subtitle">@lang('Comments') ({{ @$commentCount }})</h3>
 
             @if (count($comments))
@@ -77,17 +77,17 @@
 
             @if (count($comments) > 5)
                 <div class="text-center loadComment">
-                    <button type="button" class="btn btn--base loadCommentButton" data-url="{{ route('campaign.comment.fetch', $campaign->slug) }}">
+                    <button type="button" class="btn btn--base loadCommentButton" data-url="{{ route('campaign.comment.fetch', $campaignData->slug) }}">
                         @lang('Load More')
                     </button>
                 </div>
             @endif
         </div>
 
-        @if (request()->routeIs('campaign.show') && $campaign->user_id != @$authUser->id)
+        @if (request()->routeIs('campaign.show') && $campaignData->user_id != @$authUser->id)
             <div class="donation-details__post__comment">
                 <h3 class="donation-details__subtitle">@lang('Post a comment')</h3>
-                <form action="{{ route('campaign.comment', @$campaign->slug) }}" method="POST" class="row g-4">
+                <form action="{{ route('campaign.comment', @$campaignData->slug) }}" method="POST" class="row g-4">
                     @csrf
                     <div class="col-sm-6">
                         <input type="text" name="name" class="form--control" value="{{ old('name', @$authUser->fullname) }}" placeholder="Your Name*" required @readonly($authUser)>

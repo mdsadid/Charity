@@ -82,7 +82,7 @@ Route::middleware('admin')->group(function () {
         Route::get('done', 'done')->name('done');
         Route::get('cancelled', 'cancelled')->name('cancelled');
         Route::post('approve/{id}', 'approve')->name('approve');
-        Route::post('cancel', 'cancel')->name('cancel');
+        Route::post('reject/{id}', 'reject')->name('reject');
     });
 
     // User Management

@@ -83,7 +83,7 @@
                                                 @endif
 
                                                 <li>
-                                                    <button type="button" class="dropdown-item commentDeleteButton" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}">
+                                                    <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}">
                                                         <i class="las la-trash-alt fs-6 link-danger"></i> @lang('Delete')
                                                     </button>
                                                 </li>
@@ -120,8 +120,6 @@
     </div>
 
     <x-decisionModal />
-
-    @include('admin.partials.deleteComment')
 @endsection
 
 @push('breadcrumb')

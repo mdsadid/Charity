@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Gateway;
 use App\Constants\ManageStatus;
@@ -43,33 +44,6 @@ class DepositController extends Controller
         return view('admin.page.donations', compact('pageTitle', 'deposits'));
     }
 
-    function cancel() {
-        $this->validate(request(), [
-            'id'             => 'required|int|gt:0',
-            'admin_feedback' => 'required|max:255',
-        ]);
-
-        $deposit                 = Deposit::where('id', request('id'))->pending()->with('user')->firstOrFail();
-        $deposit->status         = ManageStatus::PAYMENT_CANCEL;
-        $deposit->admin_feedback = request('admin_feedback');
-        $deposit->save();
-
-        notify($deposit->user, 'DEPOSIT_REJECT', [
-            'method_name'       => $deposit->gatewayCurrency()->name,
-            'method_currency'   => $deposit->method_currency,
-            'method_amount'     => showAmount($deposit->final_amo),
-            'amount'            => showAmount($deposit->amount),
-            'charge'            => showAmount($deposit->charge),
-            'rate'              => showAmount($deposit->rate),
-            'trx'               => $deposit->trx,
-            'rejection_message' => request('admin_feedback')
-        ]);
-
-        $toast[] = ['success', 'Deposit cancellation success'];
-
-        return back()->withToasts($toast);
-    }
-
     protected function donationData($scope = null, $summary = false) {
         if ($scope) {
             $deposits = Deposit::has('donation')->with(['gateway', 'donation.campaign'])->$scope();
@@ -108,6 +82,47 @@ class DepositController extends Controller
         PaymentController::campaignDataUpdate($deposit, true);
 
         $toast[] = ['success', 'Donation approval success'];
+
+        return back()->withToasts($toast);
+    }
+
+    function reject($id) {
+        $this->validate(request(), [
+            'admin_feedback' => 'required|max:255',
+        ]);
+
+        $deposit                 = Deposit::where('id', $id)->pending()->with('user')->firstOrFail();
+        $deposit->status         = ManageStatus::PAYMENT_CANCEL;
+        $deposit->admin_feedback = request('admin_feedback');
+        $deposit->save();
+
+        $user = User::find($deposit->user_id);
+
+        if (!$user) {
+            $donationData = $deposit->donation;
+            $user         = [
+                'fullname' => $donationData->full_name,
+                'username' => $donationData->email,
+                'email'    => $donationData->email,
+                'mobile'   => $donationData->phone,
+            ];
+        }
+
+        $campaign = $deposit->donation->campaign;
+
+        notify($deposit->user, 'DONATION_REJECT', [
+            'method_name'       => $deposit->gatewayCurrency()->name,
+            'method_currency'   => $deposit->method_currency,
+            'method_amount'     => showAmount($deposit->final_amo),
+            'amount'            => showAmount($deposit->amount),
+            'charge'            => showAmount($deposit->charge),
+            'rate'              => showAmount($deposit->rate),
+            'trx'               => $deposit->trx,
+            'campaign_name'     => $campaign->name,
+            'rejection_message' => request('admin_feedback'),
+        ]);
+
+        $toast[] = ['success', 'Donation rejection success'];
 
         return back()->withToasts($toast);
     }

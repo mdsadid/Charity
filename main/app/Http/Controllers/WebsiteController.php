@@ -68,28 +68,28 @@ class WebsiteController extends Controller
 
     function campaignShow($slug) {
         $pageTitle        = 'Campaign Details';
-        $campaign         = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
+        $campaignData     = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
         $comments         = Comment::with('user')
-            ->where('campaign_id', $campaign->id)
+            ->where('campaign_id', $campaignData->id)
             ->approve()
             ->latest()
             ->limit(6)
             ->get();
-        $commentCount     = Comment::where('campaign_id', $campaign->id)->approve()->count();
+        $commentCount     = Comment::where('campaign_id', $campaignData->id)->approve()->count();
         $authUser         = auth()->user();
-        $relatedCampaigns = Campaign::where('category_id', $campaign->category_id)
-            ->whereNot('slug', $campaign->slug)
+        $relatedCampaigns = Campaign::where('category_id', $campaignData->category_id)
+            ->whereNot('slug', $campaignData->slug)
             ->approve()
             ->latest()
             ->limit(4)
             ->get();
 
-        $seoContents['keywords']           = $campaign->meta_keywords ?? [];
-        $seoContents['social_title']       = $campaign->name;
-        $seoContents['description']        = strLimit($campaign->description, 150);
-        $seoContents['social_description'] = strLimit($campaign->description, 150);
+        $seoContents['keywords']           = $campaignData->meta_keywords ?? [];
+        $seoContents['social_title']       = $campaignData->name;
+        $seoContents['description']        = strLimit($campaignData->description, 150);
+        $seoContents['social_description'] = strLimit($campaignData->description, 150);
         $imageSize                         = getFileSize('campaign');
-        $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaign->image, $imageSize);
+        $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaignData->image, $imageSize);
         $seoContents['image_size']         = $imageSize;
 
         $countries         = json_decode(file_get_contents(resource_path('views/partials/country.json')));
@@ -100,7 +100,7 @@ class WebsiteController extends Controller
             ->orderby('method_code')
             ->get();
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaign', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount', 'countries', 'gatewayCurrencies'));
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaignData', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount', 'countries', 'gatewayCurrencies'));
     }
 
     function storeCampaignComment($slug) {

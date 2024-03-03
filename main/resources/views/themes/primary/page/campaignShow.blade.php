@@ -31,7 +31,7 @@
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
                             <h3 class="post-sidebar__card__header">@lang('Make a Donation')</h3>
                             <div class="post-sidebar__card__body">
-                                <form action="{{ route('user.deposit.insert', $campaign->slug) }}" method="POST">
+                                <form action="{{ route('user.deposit.insert', $campaignData->slug) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="currency">
 
@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="d-flex flex-wrap gap-3">
-                                            @foreach ($campaign->preferred_amounts as $preferredAmount)
+                                            @foreach ($campaignData->preferred_amounts as $preferredAmount)
                                                 <div class="form--radio">
                                                     <input type="radio" class="form-check-input" id="{{ 'donationAmount_' . $loop->iteration }}" name="donationAmount" data-amount="{{ $preferredAmount }}">
                                                     <label class="form-check-label" for="{{ 'donationAmount_' . $loop->iteration }}">

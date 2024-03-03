@@ -162,7 +162,7 @@
                                                             <span class="fw-normal">{{ showDateTime($comment->created_at, 'd M, Y') }}</span>
                                                         </span>
                                                     </button>
-                                                    <button type="button" class="text-danger border-0 bg-transparent h-100 me-3 commentDeleteButton" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}">
+                                                    <button type="button" class="text-danger border-0 bg-transparent h-100 me-3 decisionBtn commentDeleteButton" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}">
                                                         <i class="las la-trash-alt"></i>
                                                     </button>
                                                 </div>
@@ -192,8 +192,6 @@
     </div>
 
     <x-decisionModal />
-
-    @include('admin.partials.deleteComment')
 @endsection
 
 @push('breadcrumb')

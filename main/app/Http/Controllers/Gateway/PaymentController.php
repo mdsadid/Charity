@@ -228,7 +228,7 @@ class PaymentController extends Controller
         $adminNotification->user_id   = $deposit->user->id ?? 0;
         $donor                        = $deposit->user->fullname ?? 'an anonymous user';
         $adminNotification->title     = "Deposit request from $donor for a campaign";
-        $adminNotification->click_url = urlPath('admin.deposit.pending');
+        $adminNotification->click_url = urlPath('admin.donations.pending');
         $adminNotification->save();
 
         if (!$deposit->user) {

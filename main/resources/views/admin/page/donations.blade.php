@@ -132,7 +132,7 @@
                                                         </button>
                                                     </li>
                                                     <li>
-                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to reject this comment?')" data-action="{{ route('admin.comments.status.update', [$deposit->id, 'reject']) }}">
+                                                        <button type="button" class="dropdown-item cancelBtn" data-action="{{ route('admin.donations.reject', $deposit->id) }}">
                                                             <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject')
                                                         </button>
                                                     </li>
@@ -194,6 +194,44 @@
     </div>
 
     <x-decisionModal />
+
+    <div class="modal-onboarding modal fade animate__animated" id="cancelModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="POST">
+                    @csrf
+                    <div class="modal-body p-0 text-center">
+                        <div class="onboarding-media">
+                            <div class="mx-2">
+                                <img src="{{ asset('assets/admin/images/light.png') }}" alt="light" width="100" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="onboarding-content mb-0">
+                            <h4 class="onboarding-title text-body">@lang('Make Your Decision')</h4>
+                            <div class="onboarding-info question">
+                                @lang('Do you want to reject this donation?')
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 mt-3">
+                                    <h5>@lang('Reason')</h5>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" name="admin_feedback" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 justify-content-center">
+                        <button type="submit" class="btn btn-primary">@lang('Yes')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('page-script')
@@ -214,6 +252,13 @@
                 $('#donor-email').text($(this).data('donor_email'))
                 $('#donor-phone').text($(this).data('donor_phone'))
                 $('#donor-country').text($(this).data('donor_country'))
+            })
+
+            $('.cancelBtn').on('click', function () {
+                let cancelModal = $('#cancelModal')
+
+                cancelModal.find('form').attr('action', $(this).data('action'))
+                cancelModal.modal('show')
             })
         })(jQuery)
     </script>
