@@ -115,7 +115,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-label-info donorViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-donor_type="{{ $deposit->donation->donorType }}" data-donor_name="{{ $deposit->donation->donorName }}" data-donor_email="{{ $deposit->donation->donorEmail }}" data-donor_phone="{{ $deposit->donation->donorPhone }}" data-donor_country="{{ $deposit->donation->donorCountry }}">
+                                        <button type="button" class="btn btn-sm btn-label-info donorViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-donor_type="{{ $deposit->donation->donorType }}" data-donor_name="{{ $deposit->donation->donorName }}" data-donor_email="{{ $deposit->donation->donorEmail }}" data-donor_phone="{{ $deposit->donation->donorPhone }}" data-donor_country="{{ $deposit->donation->donorCountry }}" data-user_data="{{ json_encode($deposit->detail) }}" data-admin_feedback="{{ $deposit->admin_feedback }}" data-url="{{ route('admin.file.download', ['filePath' => 'verify']) }}">
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </button>
 
@@ -163,34 +163,7 @@
         <div class="offcanvas-header">
             <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('Donor Information')</h5>
         </div>
-        <div class="offcanvas-body mx-0 flex-grow-0">
-            <div class="donorInfo">
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center" id="donor-type">
-                        <b>@lang('Donor Type')</b>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <b>@lang('Name')</b>
-                        <span id="donor-name"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <b>@lang('Email')</b>
-                        <span id="donor-email"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <b>@lang('Phone')</b>
-                        <span id="donor-phone"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <b>@lang('Country')</b>
-                        <span id="donor-country"></span>
-                    </li>
-                </ul>
-            </div>
-            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
-                @lang('Close')
-            </button>
-        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0"></div>
     </div>
 
     <x-decisionModal />
@@ -244,14 +217,84 @@
             })
 
             $('.donorViewBtn').on('click', function() {
-                if ($('#donor-type').find('.donor-badge').length <= 0) {
-                    $('#donor-type').append($(this).data('donor_type'))
+                let donorType    = $(this).data('donor_type')
+                let donorName    = $(this).data('donor_name')
+                let donorEmail   = $(this).data('donor_email')
+                let donorPhone   = $(this).data('donor_phone')
+                let donorCountry = $(this).data('donor_country')
+
+                let html = `<div class="donor-info">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>@lang('Donor Type')</b>
+                                        ${donorType}
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>@lang('Name')</b>
+                                        <span>${donorName}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>@lang('Email')</b>
+                                        <span>${donorEmail}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>@lang('Phone')</b>
+                                        <span>${donorPhone}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>@lang('Country')</b>
+                                        <span>${donorCountry}</span>
+                                    </li>
+                                </ul>
+                            </div>`
+
+                let userData = $(this).data('user_data')
+
+                if (userData) {
+                    let downloadURL = $(this).data('url')
+
+                    html += `<div class="mt-4 user-data">
+                                <h5 class="mb-4">@lang('Donation Related Data')</h5>
+                                <ul class="list-group">`
+
+                    userData.forEach(element => {
+                        if (!element.value) return
+
+                        if (element.type != 'file') {
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>${element.name}</b>
+                                        <span>${element.value}</span>
+                                    </li>`
+                        } else {
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>${element.name}</b>
+                                        <span>
+                                            <a href="${downloadURL}&fileName=${element.value}">
+                                                <i class="las la-arrow-circle-down"></i> @lang('Attachment')
+                                            </a>
+                                        </span>
+                                    </li>`
+                        }
+                    })
+
+                    html += `</ul>
+                        </div>`
                 }
 
-                $('#donor-name').text($(this).data('donor_name'))
-                $('#donor-email').text($(this).data('donor_email'))
-                $('#donor-phone').text($(this).data('donor_phone'))
-                $('#donor-country').text($(this).data('donor_country'))
+                let feedback = $(this).data('admin_feedback')
+
+                if (feedback) {
+                    html += `<div class="mt-4 admin-feedback">
+                                <h5>@lang('Admin Feedback')</h5>
+                                <p>${feedback}</p>
+                            </div>`
+                }
+
+                html += `<button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
+                            @lang('Close')
+                        </button>`
+
+                $('.offcanvas-body').html(html)
             })
 
             $('.cancelBtn').on('click', function () {
