@@ -97,9 +97,11 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-hand-holding-usd text-success"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Donations')</div>
-                {{-- @if ($pendingDepositsCount)
-                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
-                @endif --}}
+                @if ($pendingDonationsCount)
+                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">
+                        <i class="las la-exclamation"></i>
+                    </div>
+                @endif
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ navigationActive('admin.donations.index', 1) }}">
@@ -107,24 +109,24 @@
                         <div class="text-truncate">@lang('All')</div>
                     </a>
                 </li>
-                {{-- <li class="menu-item {{ navigationActive('admin.deposit.pending', 1) }}">
-                    <a href="{{ route('admin.deposit.pending') }}" class="menu-link">
+                <li class="menu-item {{ navigationActive('admin.donations.pending', 1) }}">
+                    <a href="{{ route('admin.donations.pending') }}" class="menu-link">
                         <div class="text-truncate text-nowrap d-inline-block">@lang('Pending')</div>
-                        @if ($pendingDepositsCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $pendingDepositsCount }}</div>
+                        @if ($pendingDonationsCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $pendingDonationsCount }}</div>
                         @endif
                     </a>
                 </li>
-                <li class="menu-item {{ navigationActive('admin.deposit.done', 1) }}">
-                    <a href="{{ route('admin.deposit.done') }}" class="menu-link">
+                <li class="menu-item {{ navigationActive('admin.donations.done', 1) }}">
+                    <a href="{{ route('admin.donations.done') }}" class="menu-link">
                         <div class="text-truncate">@lang('Done')</div>
                     </a>
                 </li>
-                <li class="menu-item {{ navigationActive('admin.deposit.canceled', 1) }}">
-                    <a href="{{ route('admin.deposit.canceled') }}" class="menu-link">
-                        <div class="text-truncate">@lang('Canceled')</div>
+                <li class="menu-item {{ navigationActive('admin.donations.cancelled', 1) }}">
+                    <a href="{{ route('admin.donations.cancelled') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Cancelled')</div>
                     </a>
-                </li> --}}
+                </li>
             </ul>
         </li>
 
@@ -194,7 +196,7 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-university text-pink"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Withdrawals')</div>
-                @if ($pendingWithdrawCount)
+                @if ($pendingWithdrawalsCount)
                     <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
                 @endif
             </a>
@@ -208,8 +210,8 @@
                 <li class="menu-item {{ navigationActive('admin.withdraw.pending', 1) }}">
                     <a href="{{ route('admin.withdraw.pending') }}" class="menu-link">
                         <div class="text-truncate text-nowrap d-inline-block">@lang('Pending')</div>
-                        @if ($pendingWithdrawCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $pendingWithdrawCount }}</div>
+                        @if ($pendingWithdrawalsCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $pendingWithdrawalsCount }}</div>
                         @endif
                     </a>
                 </li>

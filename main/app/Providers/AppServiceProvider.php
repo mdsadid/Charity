@@ -54,8 +54,8 @@ class AppServiceProvider extends ServiceProvider
                 'mobileUnconfirmedUsersCount' => User::mobileUnconfirmed()->count(),
                 'kycUnconfirmedUsersCount'    => User::kycUnconfirmed()->count(),
                 'kycPendingUsersCount'        => User::kycPending()->count(),
-                'pendingDepositsCount'        => Deposit::pending()->count(),
-                'pendingWithdrawCount'        => Withdrawal::pending()->count(),
+                'pendingDonationsCount'       => Deposit::has('donation')->pending()->count(),
+                'pendingWithdrawalsCount'     => Withdrawal::pending()->count(),
                 'unansweredContactsCount'     => Contact::where('status', ManageStatus::NO)->count(),
                 'pendingCampaignCount'        => Campaign::pending()->count(),
             ]);
@@ -75,9 +75,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        if ($setting->enforce_ssl) {
-            URL::forceScheme('https');
-        }
+        if ($setting->enforce_ssl) URL::forceScheme('https');
 
         Paginator::useBootstrapFour();
     }

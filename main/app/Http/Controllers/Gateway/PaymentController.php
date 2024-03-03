@@ -174,7 +174,7 @@ class PaymentController extends Controller
                 $adminNotification->save();
             }
 
-            notify($user, $isManual ? 'DEPOSIT_APPROVE' : 'DONATION_COMPLETE', [
+            notify($user, $isManual ? 'DONATION_APPROVE' : 'DONATION_COMPLETE', [
                 'method_name'     => $deposit->gatewayCurrency()->name,
                 'method_currency' => $deposit->method_currency,
                 'method_amount'   => showAmount($deposit->final_amo),

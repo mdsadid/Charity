@@ -48,7 +48,7 @@ class Deposit extends Model
         return $query->where('method_code', '>=' ,1000)->where('status', ManageStatus::PAYMENT_PENDING);
     }
 
-    public function scopeCanceled($query)
+    public function scopeCancelled($query)
     {
         return $query->where('method_code', '>=', 1000)->where('status', ManageStatus::PAYMENT_CANCEL);
     }

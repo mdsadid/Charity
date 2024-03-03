@@ -3,6 +3,51 @@
 @section('master')
     <div class="row">
         @if (request()->routeIs('admin.donations.index'))
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-widget-separator-wrapper">
+                        <div class="card-body card-widget-separator">
+                            <div class="row gy-4 gy-sm-1">
+                                <a href="{{ route('admin.donations.done') }}" class="col-sm-6 col-lg-4">
+                                    <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                        <div>
+                                            <h3 class="mb-1">{{ showAmount($done) . ' ' . __($setting->site_cur) }}</h3>
+                                            <p class="mb-0">@lang('Done Donation Amount')</p>
+                                        </div>
+                                        <span class="badge bg-label-success rounded p-2 me-sm-4">
+                                            <i class="las la-check-circle fs-3"></i>
+                                        </span>
+                                    </div>
+                                    <hr class="d-none d-sm-block d-lg-none me-4">
+                                </a>
+                                <a href="{{ route('admin.donations.pending') }}" class="col-sm-6 col-lg-4">
+                                    <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                        <div>
+                                            <h3 class="mb-1">{{ showAmount($pending) . ' ' . __($setting->site_cur) }}</h3>
+                                            <p class="mb-0">@lang('Pending Donation Amount')</p>
+                                        </div>
+                                        <span class="badge bg-label-warning rounded p-2 me-sm-4">
+                                            <i class="las la-spinner fs-3"></i>
+                                        </span>
+                                    </div>
+                                    <hr class="d-none d-sm-block d-lg-none me-4">
+                                </a>
+                                <a href="{{ route('admin.donations.cancelled') }}" class="col-sm-6 col-lg-4">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h3 class="mb-1">{{ showAmount($cancelled) . ' ' . __($setting->site_cur) }}</h3>
+                                            <p class="mb-0">@lang('Cancelled Donation Amount')</p>
+                                        </div>
+                                        <span class="badge bg-label-danger rounded p-2">
+                                            <i class="lar la-times-circle fs-3"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endif
 
         <div class="col-xxl">
@@ -82,7 +127,7 @@
 
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this comment?')" data-action="{{ route('admin.comments.status.update', [$deposit->id, 'approve']) }}">
+                                                        <button type="button" class="dropdown-item decisionBtn" data-question="@lang('Do you want to approve this donation?')" data-action="{{ route('admin.donations.approve', $deposit->id) }}">
                                                             <i class="las la-check-circle fs-6 link-success"></i> @lang('Approve')
                                                         </button>
                                                     </li>
@@ -147,11 +192,13 @@
             </button>
         </div>
     </div>
+
+    <x-decisionModal />
 @endsection
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict"
 
             $('[data-bs-toggle="tooltip"]').each(function(index, element) {

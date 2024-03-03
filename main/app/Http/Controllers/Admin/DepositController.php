@@ -14,44 +14,33 @@ class DepositController extends Controller
         $pageTitle   = 'All Donations';
         $depositData = $this->donationData(null, true);
         $deposits    = $depositData['data'];
-        $summery     = $depositData['summery'];
-        $done        = $summery['done'];
-        $pending     = $summery['pending'];
-        $canceled    = $summery['canceled'];
+        $summary     = $depositData['summary'];
+        $done        = $summary['done'];
+        $pending     = $summary['pending'];
+        $cancelled   = $summary['cancelled'];
 
-        return view('admin.page.donations', compact('pageTitle', 'deposits'));
-
-        // return view('admin.deposit.index', compact('pageTitle', 'deposits', 'done', 'pending', 'canceled'));
+        return view('admin.page.donations', compact('pageTitle', 'deposits', 'done', 'pending', 'cancelled'));
     }
 
     function pending() {
-        $pageTitle = 'Pending Deposits';
-        $deposits  = $this->depositData('pending');
+        $pageTitle = 'Pending Donations';
+        $deposits  = $this->donationData('pending');
 
-        return view('admin.deposit.index', compact('pageTitle', 'deposits'));
+        return view('admin.page.donations', compact('pageTitle', 'deposits'));
     }
 
     function done() {
-        $pageTitle = 'Done Deposits';
-        $deposits  = $this->depositData('done');
+        $pageTitle = 'Done Donations';
+        $deposits  = $this->donationData('done');
 
-        return view('admin.deposit.index', compact('pageTitle', 'deposits'));
+        return view('admin.page.donations', compact('pageTitle', 'deposits'));
     }
 
-    function canceled() {
-        $pageTitle = 'Canceled Deposits';
-        $deposits  = $this->depositData('canceled');
+    function cancelled() {
+        $pageTitle = 'Cancelled Donations';
+        $deposits  = $this->donationData('cancelled');
 
-        return view('admin.deposit.index', compact('pageTitle', 'deposits'));
-    }
-
-    function approve($id) {
-        $deposit = Deposit::where('id', $id)->pending()->firstOrFail();
-        PaymentController::campaignDataUpdate($deposit, true);
-
-        $toast[] = ['success', 'Deposit approval success'];
-
-        return back()->withToasts($toast);
+        return view('admin.page.donations', compact('pageTitle', 'deposits'));
     }
 
     function cancel() {
@@ -81,7 +70,7 @@ class DepositController extends Controller
         return back()->withToasts($toast);
     }
 
-    protected function donationData($scope = null, $summery = false) {
+    protected function donationData($scope = null, $summary = false) {
         if ($scope) {
             $deposits = Deposit::has('donation')->with(['gateway', 'donation.campaign'])->$scope();
         } else {
@@ -96,21 +85,30 @@ class DepositController extends Controller
             $deposits = $deposits->where('method_code', $method->code);
         }
 
-        if (!$summery) {
+        if (!$summary) {
             return $deposits->latest()->paginate(getPaginate());
         } else {
-            $doneSummery     = (clone $deposits)->done()->sum('amount');
-            $pendingSummery  = (clone $deposits)->pending()->sum('amount');
-            $canceledSummery = (clone $deposits)->canceled()->sum('amount');
+            $doneSummary      = (clone $deposits)->done()->sum('amount');
+            $pendingSummary   = (clone $deposits)->pending()->sum('amount');
+            $cancelledSummary = (clone $deposits)->cancelled()->sum('amount');
 
             return [
                 'data'    => $deposits->latest()->paginate(getPaginate()),
-                'summery' => [
-                    'done'     => $doneSummery,
-                    'pending'  => $pendingSummery,
-                    'canceled' => $canceledSummery
+                'summary' => [
+                    'done'      => $doneSummary,
+                    'pending'   => $pendingSummary,
+                    'cancelled' => $cancelledSummary,
                 ]
             ];
         }
+    }
+
+    function approve($id) {
+        $deposit = Deposit::where('id', $id)->pending()->firstOrFail();
+        PaymentController::campaignDataUpdate($deposit, true);
+
+        $toast[] = ['success', 'Donation approval success'];
+
+        return back()->withToasts($toast);
     }
 }
