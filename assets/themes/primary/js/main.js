@@ -381,13 +381,6 @@
     });
     // ========================= Campaign Donation Form End ==========
 
-    // ========================= Simple jQuery Datepicker Start ==========
-    $('.form--control.datepicker').datepicker({
-      autoHide: true,
-      format: 'dd-mm-yyyy',
-    });
-    // ========================= Simple jQuery Datepicker End ==========
-
     // ========================= Image Upload With Preview Start ==========
     function updatePreviewLogo(file) {
       if (file) {

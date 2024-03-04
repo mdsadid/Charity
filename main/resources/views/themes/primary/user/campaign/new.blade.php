@@ -76,14 +76,14 @@
                                     <label class="form--label required">@lang('Start Date')</label>
                                     <div class="input--group">
                                         <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                                        <input type="text" class="form--control datepicker" name="start_date" value="{{ old('start_date') }}" required autocomplete="off">
+                                        <input type="text" class="form--control date-picker" name="start_date" value="{{ old('start_date') }}" data-language="en" required autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('End Date')</label>
                                     <div class="input--group">
                                         <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                                        <input type="text" class="form--control datepicker" name="end_date" value="{{ old('end_date') }}" required autocomplete="off">
+                                        <input type="text" class="form--control date-picker" name="end_date" value="{{ old('end_date') }}" data-language="en" required autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -113,11 +113,12 @@
 
 @push('page-style-lib')
     <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/universal/css/datepicker.css') }}">
 @endpush
 
 @push('page-style')
     <style>
-        .datepicker {
+        .date-picker {
             caret-color: transparent;
             cursor: pointer;
         }
@@ -127,32 +128,14 @@
 @push('page-script-lib')
     <script src="{{ asset($activeThemeTrue . 'js/dropzone.min.js') }}"></script>
     <script src="{{ asset($activeThemeTrue . 'js/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/universal/js/datepicker.js') }}"></script>
+    <script src="{{ asset('assets/universal/js/datepicker.en.js') }}"></script>
 @endpush
 
 @push('page-script')
     <script type="text/javascript">
         (function($) {
             "use strict"
-
-            // Add More Preferred Amounts On Campaign Create Start
-            $('#addMoreAmounts').on('click', function () {
-                $('.add-more-amounts').append(`
-                    <div class="extra-amount d-flex gap-2 pt-2">
-                        <div class="input--group w-100">
-                            <span class="input-group-text">{{ $setting->cur_sym }}</span>
-                            <input type="number" step="any" min="0" class="form--control" name="preferred_amounts[]" required>
-                        </div>
-                        <a role="button" class="btn btn--danger px-3 d-flex align-items-center close-extra-amount">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </div>
-                `)
-            })
-
-            $(document).on('click', '.close-extra-amount', function () {
-                $(this).closest('.extra-amount').remove()
-            })
-            // Add More Preferred Amounts On Campaign Create End
 
             new Dropzone('.dropzone', {
                 thumbnailWidth: 200,
@@ -187,16 +170,33 @@
                 }
             })
 
-            $('.datepicker').on('input keyup keydown keypress', function() {
-                return false
+            // Add More Preferred Amounts On Campaign Create Start
+            $('#addMoreAmounts').on('click', function () {
+                $('.add-more-amounts').append(`
+                    <div class="extra-amount d-flex gap-2 pt-2">
+                        <div class="input--group w-100">
+                            <span class="input-group-text">{{ $setting->cur_sym }}</span>
+                            <input type="number" step="any" min="0" class="form--control" name="preferred_amounts[]" required>
+                        </div>
+                        <a role="button" class="btn btn--danger px-3 d-flex align-items-center close-extra-amount">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                `)
             })
 
-            // Prevent to pick the older date
-            $('.datepicker').on('pick.datepicker', function(e) {
-                if (e.date < new Date()) {
-                    e.preventDefault()
-                    showToasts('error', 'You can\'t pick older date')
-                }
+            $(document).on('click', '.close-extra-amount', function () {
+                $(this).closest('.extra-amount').remove()
+            })
+            // Add More Preferred Amounts On Campaign Create End
+
+            $('.date-picker').datepicker({
+                dateFormat: 'dd-mm-yyyy',
+                minDate: new Date(),
+            })
+
+            $('.date-picker').on('input keyup keydown keypress', function() {
+                return false
             })
         })(jQuery)
     </script>

@@ -13,7 +13,6 @@
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/slick.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/universal/css/line-awesome.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/lightbox.min.css') }}">
-        <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/datepicker.min.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/aos.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/main.css') }}">
         <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/custom.css') }}">
@@ -41,7 +40,6 @@
         <script src="{{ asset($activeThemeTrue . 'js/slick.min.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/viewport.jquery.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/lightbox.min.js') }}"></script>
-        <script src="{{ asset($activeThemeTrue . 'js/datepicker.min.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/aos.js') }}"></script>
         <script src="{{ asset($activeThemeTrue . 'js/main.js') }}"></script>
 

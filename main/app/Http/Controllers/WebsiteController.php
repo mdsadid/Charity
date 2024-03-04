@@ -12,6 +12,7 @@ use App\Constants\ManageStatus;
 use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
 use App\Models\Donation;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,6 +63,13 @@ class WebsiteController extends Controller
         })
             ->when(request()->has('name'), function ($query) {
                 $query->where('name', 'like', '%' . request('name') . '%');
+            })
+            ->when(request()->has('date_range'), function ($query) {
+                $dateArray = explode(' - ', request('date_range'));
+                $startDate = Carbon::parse($dateArray[0])->format('Y-m-d');
+                $endDate   = Carbon::parse($dateArray[1])->format('Y-m-d');
+
+                $query->whereDate('start_date', '>=', $startDate)->whereDate('end_date', '<=', $endDate);
             })
             ->campaignCheck()
             ->approve()
