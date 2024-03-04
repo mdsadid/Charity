@@ -184,53 +184,30 @@
                                     <a href="#" class="btn btn--sm btn--base w-100">Select Gift</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
+
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Kindness in Action</h3>
+                            <h3 class="post-sidebar__card__header">@lang('Kindness in Action')</h3>
                             <div class="post-sidebar__card__body">
                                 <ul class="d-flex flex-column gap-3">
-                                    <li>
-                                        <div class="donor__card">
-                                            <span class="donor__number"><i class="fa-solid fa-user"></i></span>
-                                            <span class="donor__txt">
-                                                <span class="donor__name">Mr. Donor Khan</span>
-                                                <span class="donor__amount">$12,001.23</span>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="donor__card">
-                                            <span class="donor__number"><i class="fa-solid fa-user"></i></span>
-                                            <span class="donor__txt">
-                                                <span class="donor__name">Mr. Donor Khan</span>
-                                                <span class="donor__amount">$12,001.23</span>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="donor__card">
-                                            <span class="donor__number"><i class="fa-solid fa-user"></i></span>
-                                            <span class="donor__txt">
-                                                <span class="donor__name">Mr. Donor Khan</span>
-                                                <span class="donor__amount">$12,001.23</span>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="donor__card">
-                                            <span class="donor__number"><i class="fa-solid fa-user"></i></span>
-                                            <span class="donor__txt">
-                                                <span class="donor__name">Mr. Donor Khan</span>
-                                                <span class="donor__amount">$12,001.23</span>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="btn btn--sm btn--base w-100">Load More</a>
-                                    </li>
+                                    @forelse ($donations as $donation)
+                                        <li>
+                                            <div class="donor__card">
+                                                <span class="donor__number"><i class="fa-solid fa-user"></i></span>
+                                                <span class="donor__txt">
+                                                    <span class="donor__name">{{ __($donation->donorName) }}</span>
+                                                    <span class="donor__amount">{{ $setting->cur_sym . showAmount($donation->deposit->amount) }}</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    @empty
+                                        <li>
+                                            {{ __($emptyMessage) }}
+                                        </li>
+                                    @endforelse
                                 </ul>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>

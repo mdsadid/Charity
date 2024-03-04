@@ -11,6 +11,7 @@ use App\Models\SiteData;
 use App\Constants\ManageStatus;
 use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
+use App\Models\Donation;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
@@ -100,7 +101,15 @@ class WebsiteController extends Controller
             ->orderby('method_code')
             ->get();
 
-        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaignData', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount', 'countries', 'gatewayCurrencies'));
+        $donations = Donation::where('campaign_id', $campaignData->id)
+            ->withWhereHas('deposit', function ($query) {
+                $query->done();
+            })
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        return view($this->activeTheme . 'page.campaignShow', compact('pageTitle', 'campaignData', 'relatedCampaigns', 'seoContents', 'authUser', 'comments', 'commentCount', 'countries', 'gatewayCurrencies', 'donations'));
     }
 
     function storeCampaignComment($slug) {
