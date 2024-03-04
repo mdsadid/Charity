@@ -52,19 +52,23 @@ class WebsiteController extends Controller
     }
 
     function campaigns() {
-        $pageTitle = 'Campaigns';
-        $campaigns = Campaign::when(request()->has('category'), function ($query) {
+        $pageTitle  = 'Campaigns';
+        $categories = Category::active()->select('name', 'slug')->get();
+        $campaigns  = Campaign::when(request()->has('category'), function ($query) {
             $categorySlug = request('category');
             $category     = Category::where('slug', $categorySlug)->active()->first();
 
             if ($category) $query->where('category_id', $category->id);
         })
+            ->when(request()->has('name'), function ($query) {
+                $query->where('name', 'like', '%' . request('name') . '%');
+            })
             ->campaignCheck()
             ->approve()
             ->latest()
             ->paginate(getPaginate(10));
 
-        return view($this->activeTheme . 'page.campaign', compact('pageTitle', 'campaigns'));
+        return view($this->activeTheme . 'page.campaign', compact('pageTitle', 'categories', 'campaigns'));
     }
 
     function campaignShow($slug) {

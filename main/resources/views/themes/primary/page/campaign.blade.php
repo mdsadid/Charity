@@ -7,66 +7,38 @@
                 <div class="col-lg-4">
                     <div class="post-sidebar">
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Filter by name</h3>
-                            <div class="post-sidebar__card__body">
-                                <form class="input--group">
-                                    <input type="search" class="form--control" placeholder="Campaign Name">
-                                    <button class="btn btn--base px-3"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Filter by situation</h3>
+                            <h3 class="post-sidebar__card__header">@lang('Filter by category')</h3>
                             <div class="post-sidebar__card__body">
                                 <ul class="d-flex flex-column gap-2">
-                                    <li>
-                                        <div class="form--radio">
-                                            <input class="form-check-input" type="radio" name="situationFilter" id="allSituation">
-                                            <label class="form-check-label" for="allSituation">
-                                                All
-                                            </label>
-                                        </div>
+                                    <li class="campaign-category" data-category_slug="all">
+                                        <a href="#" class="d-flex align-items-center gap-2">
+                                            <i class="fa-solid fa-arrow-left"></i> @lang('All')
+                                        </a>
                                     </li>
-                                    <li>
-                                        <div class="form--radio">
-                                            <input class="form-check-input" type="radio" name="situationFilter" id="urgentSituation">
-                                            <label class="form-check-label" for="urgentSituation">
-                                                Urgent Campaigns
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form--radio">
-                                            <input class="form-check-input" type="radio" name="situationFilter" id="featuredCampaign">
-                                            <label class="form-check-label" for="featuredCampaign">
-                                                Featured Campaigns
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form--radio">
-                                            <input class="form-check-input" type="radio" name="situationFilter" id="topCampaign">
-                                            <label class="form-check-label" for="topCampaign">
-                                                Top Campaigns
-                                            </label>
-                                        </div>
-                                    </li>
+
+                                    @foreach ($categories as $category)
+                                        <li class="campaign-category" data-category_slug="{{ $category->slug }}">
+                                            <a href="#" class="d-flex align-items-center gap-2">
+                                                <i class="fa-solid fa-arrow-right"></i> {{ __($category->name) }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Filter by category</h3>
+                            <h3 class="post-sidebar__card__header">@lang('Filter by name')</h3>
                             <div class="post-sidebar__card__body">
-                                <ul class="d-flex flex-column gap-2">
-                                    <li><a href="#" class="d-flex align-items-center gap-2"><i class="fa-solid fa-arrow-left"></i> All</a></li>
-                                    <li><a href="#" class="d-flex align-items-center gap-2"><i class="fa-solid fa-arrow-right"></i> Education</a></li>
-                                    <li><a href="#" class="d-flex align-items-center gap-2"><i class="fa-solid fa-arrow-right"></i> Winter Funding</a></li>
-                                    <li><a href="#" class="d-flex align-items-center gap-2"><i class="fa-solid fa-arrow-right"></i> Fundamental</a></li>
-                                </ul>
+                                <div class="input--group">
+                                    <input type="text" class="form--control" placeholder="Campaign Name" value="{{ request()->input('name') }}" id="campaign-name">
+                                    <button class="btn btn--base px-3 search-campaign">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Filter by date</h3>
+                            <h3 class="post-sidebar__card__header">@lang('Filter by date')</h3>
                             <div class="post-sidebar__card__body">
                                 <form>
                                     <input type="text" class="form--control datepicker">
@@ -103,4 +75,33 @@
     </div>
 
     @include($activeTheme . 'partials.basicPartner')
+
+    <form action="{{ route('campaign') }}" method="GET" class="d-none search-form">
+        <input type="hidden" name="category" value="{{ request()->input('category') }}">
+        <input type="hidden" name="name" value="{{ request()->input('name') }}">
+    </form>
 @endsection
+
+@push('page-script')
+    <script>
+        (function ($) {
+            'use strict'
+
+            $('.campaign-category').on('click', function (event) {
+                event.preventDefault()
+
+                let slug = $(this).data('category_slug')
+                $('input[name="category"]').val(slug)
+
+                $('.search-form').submit()
+            })
+
+            $('.search-campaign').on('click', function () {
+                let name = $('#campaign-name').val()
+                $('input[name="name"]').val(name)
+
+                $('.search-form').submit()
+            })
+        })(jQuery)
+    </script>
+@endpush
