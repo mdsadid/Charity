@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\AdminNotification;
-use App\Models\Deposit;
-use App\Models\Transaction;
-use App\Models\User;
-use App\Models\Withdrawal;
+use Exception;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Deposit;
+use App\Models\Withdrawal;
+use App\Models\Transaction;
+use App\Constants\ManageStatus;
+use App\Models\AdminNotification;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
@@ -28,15 +29,15 @@ class AdminController extends Controller
         }
 
         // User Info
-        $widget['totalUsers']  = User::count();
-        $widget['activeUsers'] = User::active()->count();
+        $widget['totalUsers']             = User::count();
+        $widget['activeUsers']            = User::active()->count();
         $widget['emailUnconfirmedUsers']  = User::emailUnconfirmed()->count();
         $widget['mobileUnconfirmedUsers'] = User::mobileUnconfirmed()->count();
 
         // Deposit Info
         $widget['depositDone']     = Deposit::done()->sum('amount');
         $widget['depositPending']  = Deposit::pending()->count();
-        $widget['depositCanceled'] = Deposit::canceled()->count();
+        $widget['depositCanceled'] = Deposit::cancelled()->count();
         $widget['depositCharge']   = Deposit::done()->sum('charge');
 
         // Withdraw Info
@@ -46,46 +47,53 @@ class AdminController extends Controller
         $widget['withdrawCharge']   = Withdrawal::done()->sum('charge');
 
         // Monthly Deposit & Withdraw Report Graph
-        $report['months'] = collect([]);
-        $report['deposit_month_amount'] = collect([]);
+        $report['months']                = collect([]);
+        $report['deposit_month_amount']  = collect([]);
         $report['withdraw_month_amount'] = collect([]);
 
         $depositsMonth = Deposit::where('created_at', '>=', Carbon::now()->subYear())
-                        ->where('status', ManageStatus::PAYMENT_SUCCESS)
-                        ->selectRaw("SUM( CASE WHEN status = ".ManageStatus::PAYMENT_SUCCESS." THEN amount END) as depositAmount")
-                        ->selectRaw("DATE_FORMAT(created_at,'%M-%Y') as months")
-                        ->orderBy('created_at')
-                        ->groupBy('months')->get();
+            ->where('status', ManageStatus::PAYMENT_SUCCESS)
+            ->selectRaw("SUM(CASE WHEN status = " . ManageStatus::PAYMENT_SUCCESS . " THEN amount END) as depositAmount")
+            ->selectRaw("DATE_FORMAT(created_at,'%M-%Y') as months")
+            ->orderBy('created_at')
+            ->groupBy('months')
+            ->get();
 
         $depositsMonth->map(function ($depositData) use ($report) {
             $report['months']->push($depositData->months);
             $report['deposit_month_amount']->push(getAmount($depositData->depositAmount));
         });
 
-        $withdrawalMonth = Withdrawal::where('created_at', '>=', Carbon::now()->subYear())->where('status', ManageStatus::PAYMENT_SUCCESS)
-            ->selectRaw("SUM( CASE WHEN status = ".ManageStatus::PAYMENT_SUCCESS." THEN amount END) as withdrawAmount")
+        $withdrawalMonth = Withdrawal::where('created_at', '>=', Carbon::now()->subYear())
+            ->where('status', ManageStatus::PAYMENT_SUCCESS)
+            ->selectRaw("SUM(CASE WHEN status = " . ManageStatus::PAYMENT_SUCCESS . " THEN amount END) as withdrawAmount")
             ->selectRaw("DATE_FORMAT(created_at,'%M-%Y') as months")
             ->orderBy('created_at')
-            ->groupBy('months')->get();
-        $withdrawalMonth->map(function ($withdrawData) use ($report){
-            if (!in_array($withdrawData->months,$report['months']->toArray())) {
+            ->groupBy('months')
+            ->get();
+
+        $withdrawalMonth->map(function ($withdrawData) use ($report) {
+            if (!in_array($withdrawData->months, $report['months']->toArray())) {
                 $report['months']->push($withdrawData->months);
             }
+
             $report['withdraw_month_amount']->push(getAmount($withdrawData->withdrawAmount));
         });
 
         $months = $report['months'];
 
-        for($i = 0; $i < $months->count(); ++$i) {
-            $monthVal      = Carbon::parse($months[$i]);
-            if(isset($months[$i+1])){
-                $monthValNext = Carbon::parse($months[$i+1]);
-                if($monthValNext < $monthVal){
-                    $temp = $months[$i];
-                    $months[$i]   = Carbon::parse($months[$i+1])->format('F-Y');
-                    $months[$i+1] = Carbon::parse($temp)->format('F-Y');
-                }else{
-                    $months[$i]   = Carbon::parse($months[$i])->format('F-Y');
+        for ($i = 0; $i < $months->count(); ++$i) {
+            $monthVal = Carbon::parse($months[$i]);
+
+            if (isset($months[$i + 1])) {
+                $monthValNext = Carbon::parse($months[$i + 1]);
+
+                if ($monthValNext < $monthVal) {
+                    $temp           = $months[$i];
+                    $months[$i]     = Carbon::parse($months[$i + 1])->format('F-Y');
+                    $months[$i + 1] = Carbon::parse($temp)->format('F-Y');
+                } else {
+                    $months[$i] = Carbon::parse($months[$i])->format('F-Y');
                 }
             }
         }
@@ -96,6 +104,7 @@ class AdminController extends Controller
     function profile() {
         $pageTitle = 'Profile';
         $admin     = auth('admin')->user();
+
         return view('admin.profile.details', compact('pageTitle', 'admin'));
     }
 
@@ -115,8 +124,9 @@ class AdminController extends Controller
             try {
                 $old          = $admin->image;
                 $admin->image = fileUploader(request('image'), getFilePath('adminProfile'), getFileSize('adminProfile'), $old);
-            } catch (\Exception $exp) {
+            } catch (Exception $exp) {
                 $toast[] = ['error', 'Image upload failed'];
+
                 return back()->withToasts($toast);
             }
         }
@@ -129,13 +139,14 @@ class AdminController extends Controller
         $admin->save();
 
         $toast[] = ['success', 'Profile update success'];
+
         return back()->withToasts($toast);
     }
 
     function password() {
         $pageTitle = 'Change Password';
         $admin     = auth('admin')->user();
-        
+
         return view('admin.profile.password', compact('pageTitle', 'admin'));
     }
 
@@ -154,7 +165,8 @@ class AdminController extends Controller
         $admin = auth('admin')->user();
 
         if (!Hash::check(request('current_password'), $admin->password)) {
-            $toast[] = ['error', 'Current password mismatched !!'];
+            $toast[] = ['error', 'Current password mismatched'];
+
             return back()->withToasts($toast);
         }
 
@@ -162,6 +174,7 @@ class AdminController extends Controller
         $admin->save();
 
         $toast[] = ['success', 'Password change success'];
+
         return back()->withToasts($toast);
     }
 
@@ -169,29 +182,28 @@ class AdminController extends Controller
         $notifications = AdminNotification::with('user')->orderBy('is_read')->paginate(getPaginate());
         $pageTitle     = 'Notifications';
 
-        return view('admin.page.notification',compact('pageTitle','notifications'));
+        return view('admin.page.notification', compact('pageTitle', 'notifications'));
     }
 
     function notificationRead($id) {
-        $notification = AdminNotification::findOrFail($id);
+        $notification          = AdminNotification::findOrFail($id);
         $notification->is_read = ManageStatus::YES;
         $notification->save();
 
         $url = $notification->click_url;
 
-        if ($url == '#') {
-            $url = url()->previous();
-        }
+        if ($url == '#') $url = url()->previous();
 
         return redirect($url);
     }
 
     function notificationReadAll() {
         AdminNotification::where('is_read', ManageStatus::NO)->update([
-            'is_read'=>ManageStatus::YES
+            'is_read' => ManageStatus::YES
         ]);
 
-        $toast[] = ['success', 'All notification marked as read success'];
+        $toast[] = ['success', 'All notifications marked as read'];
+
         return back()->withToasts($toast);
     }
 
@@ -199,29 +211,36 @@ class AdminController extends Controller
         $notification = AdminNotification::findOrFail($id);
         $notification->delete();
 
-        $toast[] = ['success', 'Notification removal success'];
+        $toast[] = ['success', 'Notification has removed'];
+
         return back()->withToasts($toast);
     }
 
-    function notificationRemoveAll(){
+    function notificationRemoveAll() {
         AdminNotification::truncate();
 
-        $toast[] = ['success', 'All notification remove success'];
+        $toast[] = ['success', 'All notification has removed'];
+
         return back()->withToasts($toast);
     }
 
     function transaction() {
         $pageTitle    = 'Transactions';
         $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
-        $transactions = Transaction::searchable(['trx', 'user:username'])->filter(['trx_type','remark'])->dateFilter()->latest()->with('user')->paginate(getPaginate());
+        $transactions = Transaction::searchable(['trx', 'user:username'])
+            ->filter(['trx_type', 'remark'])
+            ->dateFilter()
+            ->latest()
+            ->with('user')
+            ->paginate(getPaginate());
 
         return view('admin.page.transaction', compact('pageTitle', 'transactions', 'remarks'));
     }
 
     function fileDownload() {
         $path = request('filePath');
-        $file = fileManager()->$path()->path.'/'.request('fileName');
-        
+        $file = fileManager()->$path()->path . '/' . request('fileName');
+
         return response()->download($file);
     }
 }
