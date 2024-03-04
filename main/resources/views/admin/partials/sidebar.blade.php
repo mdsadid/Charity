@@ -132,7 +132,7 @@
 
         <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons las la-user-tie text-purple"></i>
+                <i class="menu-icon tf-icons las la-users text-purple"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Users')</div>
                 @if ($bannedUsersCount > 0 || $emailUnconfirmedUsersCount > 0 || $mobileUnconfirmedUsersCount > 0 || $kycUnconfirmedUsersCount > 0 || $kycPendingUsersCount > 0)
                     <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
@@ -254,7 +254,7 @@
 
         <li class="menu-item {{ navigationActive('admin.subscriber*', 1) }}">
             <a href="{{ route('admin.subscriber.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons las la-heartbeat text-success"></i>
+                <i class="menu-icon tf-icons las la-user-plus text-success"></i>
                 <div class="text-truncate">@lang('Subscribers')</div>
             </a>
         </li>

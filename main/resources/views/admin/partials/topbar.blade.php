@@ -38,13 +38,13 @@
                     </div>
                     <div class="dropdown-shortcuts-list scrollable-container">
                         <div class="row row-bordered overflow-visible g-0">
-                            {{-- <div class="dropdown-shortcuts-item col">
+                            <div class="dropdown-shortcuts-item col">
                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2 bg-label-warning">
-                                    <i class="las la-coins fs-4"></i>
+                                    <i class="las la-hand-holding-usd fs-4"></i>
                                 </span>
-                                <a href="{{ route('admin.deposit.pending') }}" class="stretched-link">@lang('Deposits')</a>
+                                <a href="{{ route('admin.donations.pending') }}" class="stretched-link">@lang('Donations')</a>
                                 <small class="text-muted mb-0">@lang('Pending')</small>
-                            </div> --}}
+                            </div>
                             <div class="dropdown-shortcuts-item col">
                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2 bg-label-warning">
                                     <i class="las la-university fs-4"></i>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="row row-bordered overflow-visible g-0">
                             <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2 bg-label-danger">
+                                <span class="dropdown-shortcuts-icon rounded-circle mb-2 bg-label-warning">
                                     <i class="las la-user-check fs-4"></i>
                                 </span>
                                 <a href="{{ route('admin.user.kyc.pending') }}" class="stretched-link">@lang('KYC')</a>
@@ -75,14 +75,14 @@
                                     <i class="las la-credit-card fs-4"></i>
                                 </span>
                                 <a href="{{ route('admin.gateway.automated.index') }}" class="stretched-link">@lang('Automated')</a>
-                                <small class="text-muted mb-0">@lang('Paymeny Gateway')</small>
+                                <small class="text-muted mb-0">@lang('Payment Gateway')</small>
                             </div>
                             <div class="dropdown-shortcuts-item col">
                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2 bg-label-primary">
                                     <i class="las la-credit-card fs-4"></i>
                                 </span>
                                 <a href="{{ route('admin.gateway.manual.index') }}" class="stretched-link">@lang('Manual')</a>
-                                <small class="text-muted mb-0">@lang('Paymeny Gateway')</small>
+                                <small class="text-muted mb-0">@lang('Payment Gateway')</small>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,9 @@
                     <li class="dropdown-menu-header border-bottom">
                         <div class="dropdown-header d-flex align-items-center py-3">
                             <h5 class="text-body mb-0 me-auto">@lang('Notification')</h5>
-                            <a href="{{ route('admin.system.notification.read.all') }}" class="dropdown-notifications-all text-body" title="@lang('Mark all as read')"><i class="las la-envelope-open-text fs-4"></i></a>
+                            <a href="{{ route('admin.system.notification.read.all') }}" class="dropdown-notifications-all text-body" title="@lang('Mark all as read')">
+                                <i class="las la-envelope-open-text fs-4"></i>
+                            </a>
                         </div>
                     </li>
                     <li class="dropdown-notifications-list scrollable-container">
