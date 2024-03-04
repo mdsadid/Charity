@@ -35,16 +35,16 @@ class AdminController extends Controller
         $widget['mobileUnconfirmedUsers'] = User::mobileUnconfirmed()->count();
 
         // Deposit Info
-        $widget['depositDone']     = Deposit::done()->sum('amount');
-        $widget['depositPending']  = Deposit::pending()->count();
-        $widget['depositCanceled'] = Deposit::cancelled()->count();
-        $widget['depositCharge']   = Deposit::done()->sum('charge');
+        $widget['depositDone']      = Deposit::done()->sum('amount');
+        $widget['depositPending']   = Deposit::pending()->count();
+        $widget['depositCancelled'] = Deposit::cancelled()->count();
+        $widget['depositCharge']    = Deposit::done()->sum('charge');
 
         // Withdraw Info
-        $widget['withdrawDone']     = Withdrawal::done()->sum('amount');
-        $widget['withdrawPending']  = Withdrawal::pending()->count();
-        $widget['withdrawCanceled'] = Withdrawal::canceled()->count();
-        $widget['withdrawCharge']   = Withdrawal::done()->sum('charge');
+        $widget['withdrawDone']      = Withdrawal::done()->sum('amount');
+        $widget['withdrawPending']   = Withdrawal::pending()->count();
+        $widget['withdrawCancelled'] = Withdrawal::canceled()->count();
+        $widget['withdrawCharge']    = Withdrawal::done()->sum('charge');
 
         // Monthly Deposit & Withdraw Report Graph
         $report['months']                = collect([]);

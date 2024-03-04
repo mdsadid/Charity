@@ -197,7 +197,9 @@
                 <i class="menu-icon tf-icons las la-university text-pink"></i>
                 <div class="text-truncate text-nowrap d-inline-block">@lang('Withdrawals')</div>
                 @if ($pendingWithdrawalsCount)
-                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
+                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">
+                        <i class="las la-exclamation"></i>
+                    </div>
                 @endif
             </a>
             <ul class="menu-sub">

@@ -49,7 +49,7 @@
                                         <p class="mb-0">@lang('Mobile Unconfirmed Users')</p>
                                     </div>
                                     <span class="badge bg-label-danger rounded p-2">
-                                        <i class="las la-comment-slash fs-3"></i>
+                                        <i class="las la-mobile-alt fs-3"></i>
                                     </span>
                                 </div>
                             </a>
@@ -60,37 +60,37 @@
         </div>
     </div>
 
-    {{-- <div class="row">
-        <a href="{{ route('admin.deposit.done') }}" class="col-lg-3 col-sm-6 mb-4">
-            <div class="card">
+    <div class="row">
+        <a href="{{ route('admin.donations.done') }}" class="col-lg-3 col-sm-6 mb-4">
+            <div class="card card-border-shadow-success">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="card-info">
-                            <p class="card-text text-success">@lang('Deposited')</p>
+                            <p class="card-text text-success">@lang('Donated')</p>
                             <div class="d-flex align-items-end mb-2">
                                 <h4 class="card-title mb-0 me-2">{{ $setting->cur_sym }}{{ showAmount($widget['depositDone']) }}</h4>
                             </div>
-                            <small>@lang('Total deposited amount')</small>
+                            <small>@lang('Total donated amount')</small>
                         </div>
                         <div class="card-icon">
                             <span class="badge bg-label-success rounded p-2">
-                                <i class='las la-wallet fs-3'></i>
+                                <i class="las la-hand-holding-usd fs-3"></i>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.deposit.pending') }}" class="col-lg-3 col-sm-6 mb-4">
-            <div class="card">
+        <a href="{{ route('admin.donations.pending') }}" class="col-lg-3 col-sm-6 mb-4">
+            <div class="card card-border-shadow-warning">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="card-warning">
                             <p class="card-text text-warning">@lang('Pending')</p>
                             <div class="d-flex align-items-end mb-2">
-                                <h4 class="card-title mb-0 me-2">{{ $setting->cur_sym }}{{ showAmount($widget['depositPending']) }}</h4>
+                                <h4 class="card-title mb-0 me-2">{{ $widget['depositPending'] }}</h4>
                             </div>
-                            <small>@lang('Total pending deposit count')</small>
+                            <small>@lang('Count of pending donations')</small>
                         </div>
                         <div class="card-icon">
                             <span class="badge bg-label-warning rounded p-2">
@@ -101,16 +101,16 @@
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.deposit.canceled') }}" class="col-lg-3 col-sm-6 mb-4">
-            <div class="card">
+        <a href="{{ route('admin.donations.cancelled') }}" class="col-lg-3 col-sm-6 mb-4">
+            <div class="card card-border-shadow-danger">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="card-danger">
-                            <p class="card-text text-danger">@lang('Canceled')</p>
+                            <p class="card-text text-danger">@lang('Cancelled')</p>
                             <div class="d-flex align-items-end mb-2">
-                                <h4 class="card-title mb-0 me-2">{{ $setting->cur_sym }}{{ showAmount($widget['depositCanceled']) }}</h4>
+                                <h4 class="card-title mb-0 me-2">{{ $widget['depositCancelled'] }}</h4>
                             </div>
-                            <small>@lang('Total canceled deposit count')</small>
+                            <small>@lang('Count of cancelled donations')</small>
                         </div>
                         <div class="card-icon">
                             <span class="badge bg-label-danger rounded p-2">
@@ -121,8 +121,8 @@
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.deposit.index') }}" class="col-lg-3 col-sm-6 mb-4">
-            <div class="card">
+        <a href="{{ route('admin.donations.index') }}" class="col-lg-3 col-sm-6 mb-4">
+            <div class="card card-border-shadow-info">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="card-info">
@@ -130,18 +130,18 @@
                             <div class="d-flex align-items-end mb-2">
                                 <h4 class="card-title mb-0 me-2">{{ $setting->cur_sym }}{{ showAmount($widget['depositCharge']) }}</h4>
                             </div>
-                            <small>@lang('Total charge for deposited amount')</small>
+                            <small>@lang('Total charge for donated amount')</small>
                         </div>
                         <div class="card-icon">
                             <span class="badge bg-label-info rounded p-2">
-                                <i class='las la-percent fs-3'></i>
+                                <i class="las la-money-bill fs-3"></i>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </a>
-    </div> --}}
+    </div>
 
     <div class="row">
         <a href="{{ route('admin.withdraw.done') }}" class="col-sm-6 col-lg-3 mb-4">
@@ -150,7 +150,7 @@
                     <div class="d-flex align-items-center mb-2 pb-1">
                         <div class="avatar me-2">
                             <span class="avatar-initial rounded bg-label-primary">
-                                <i class="las la-hand-holding-usd fs-3"></i>
+                                <i class="las la-university fs-3"></i>
                             </span>
                         </div>
                         <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawDone']) }}</h4>
@@ -162,34 +162,20 @@
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.withdraw.index') }}" class="col-sm-6 col-lg-3 mb-4">
-            <div class="card card-border-shadow-info h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-2 pb-1">
-                        <div class="avatar me-2">
-                            <span class="avatar-initial rounded bg-label-info"><i class='las la-percent fs-3'></i></span>
-                        </div>
-                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawCharge']) }}</h4>
-                    </div>
-                    <p class="mb-1 text-info">@lang('Charge')</p>
-                    <p class="mb-0">
-                        <small>@lang('Total charge for withdrawn amount')</small>
-                    </p>
-                </div>
-            </div>
-        </a>
         <a href="{{ route('admin.withdraw.pending') }}" class="col-sm-6 col-lg-3 mb-4">
             <div class="card card-border-shadow-warning h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-2 pb-1">
                         <div class="avatar me-2">
-                            <span class="avatar-initial rounded bg-label-warning"><i class='las la-circle-notch fs-3'></i></span>
+                            <span class="avatar-initial rounded bg-label-warning">
+                                <i class='las la-circle-notch fs-3'></i>
+                            </span>
                         </div>
-                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawPending']) }}</h4>
+                        <h4 class="ms-1 mb-0">{{ $widget['withdrawPending'] }}</h4>
                     </div>
                     <p class="mb-1 text-warning">@lang('Pending')</p>
                     <p class="mb-0">
-                        <small>@lang('Total pending withdrawal count')</small>
+                        <small>@lang('Count of pending withdrawal')</small>
                     </p>
                 </div>
             </div>
@@ -199,13 +185,33 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-2 pb-1">
                         <div class="avatar me-2">
-                            <span class="avatar-initial rounded bg-label-danger"><i class='las la-ban fs-3'></i></span>
+                            <span class="avatar-initial rounded bg-label-danger">
+                                <i class='las la-ban fs-3'></i>
+                            </span>
                         </div>
-                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawCanceled']) }}</h4>
+                        <h4 class="ms-1 mb-0">{{ $widget['withdrawCancelled'] }}</h4>
                     </div>
-                    <p class="mb-1 text-danger">@lang('Canceled')</p>
+                    <p class="mb-1 text-danger">@lang('Cancelled')</p>
                     <p class="mb-0">
-                        <small>@lang('Total canceled withdrawal count')</small>
+                        <small>@lang('Count of cancelled withdrawal')</small>
+                    </p>
+                </div>
+            </div>
+        </a>
+        <a href="{{ route('admin.withdraw.index') }}" class="col-sm-6 col-lg-3 mb-4">
+            <div class="card card-border-shadow-info h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2 pb-1">
+                        <div class="avatar me-2">
+                            <span class="avatar-initial rounded bg-label-info">
+                                <i class="las la-money-bill fs-3"></i>
+                            </span>
+                        </div>
+                        <h4 class="ms-1 mb-0">{{ $setting->cur_sym }}{{ showAmount($widget['withdrawCharge']) }}</h4>
+                    </div>
+                    <p class="mb-1 text-info">@lang('Charge')</p>
+                    <p class="mb-0">
+                        <small>@lang('Total charge for withdrawn amount')</small>
                     </p>
                 </div>
             </div>
@@ -217,7 +223,7 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">@lang('Deposit & Withdraw')</h5>
+                        <h5 class="m-0 me-2">@lang('Donation & Withdraw')</h5>
                         <small class="text-muted">@lang('Progress report for last 12 months')</small>
                     </div>
                 </div>
@@ -226,7 +232,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-6 mb-4 mb-md-0t">
             <div class="card">
                 <div class="table-responsive text-nowrap">
@@ -234,7 +239,7 @@
                         <thead>
                             <tr>
                                 <th>@lang('User')</th>
-                                <th>@lang('Email-Phone')</th>
+                                <th>@lang('Email | Phone')</th>
                                 <th>@lang('Country | Joined')</th>
                                 <th>@lang('Balance')</th>
                             </tr>
@@ -279,7 +284,7 @@
         </div>
     </div>
 
-    <div class="modal-onboarding modal fade animate__animated" id="passwordAletModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-onboarding modal fade animate__animated" id="passwordAlertModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content text-center">
                 <div class="modal-header border-0">
@@ -292,17 +297,21 @@
                         </div>
                     </div>
                     <div class="onboarding-content mb-0">
-                        <h4 class="onboarding-title text-body">@lang('Security Advisory')</h4>
+                        <h4 class="onboarding-title text-body">@lang('Security Advise')</h4>
                         <div class="onboarding-info">
-                            <b>@lang('Immediate Default Password and Username Change Required')</b>
+                            <b>@lang('Change your default username and password')</b>
                         </div>
                     </div>
                 </div>
                 <form action="" method="POST">
                     @csrf
                     <div class="modal-footer border-0 justify-content-center">
-                        <a href="{{ route('admin.profile') }}" class="btn btn-outline-primary">@lang('Change Username')</a>
-                        <a href="{{ route('admin.password') }}" class="btn btn-primary">@lang('Change Password')</a>
+                        <a href="{{ route('admin.profile') }}" class="btn btn-outline-primary">
+                            @lang('Change Username')
+                        </a>
+                        <a href="{{ route('admin.password') }}" class="btn btn-primary">
+                            @lang('Change Password')
+                        </a>
                     </div>
                 </form>
             </div>
@@ -321,14 +330,14 @@
 
         @if ($passwordAlert)
             (function($) {
-                let passwordAletModal = new bootstrap.Modal(document.getElementById('passwordAletModal'));
-                passwordAletModal.show();
+                let passwordAlertModal = new bootstrap.Modal(document.getElementById('passwordAlertModal'));
+                passwordAlertModal.show();
             })(jQuery);
         @endif
 
         var options = {
             series: [{
-                name: 'Total Deposit',
+                name: 'Total Donation',
                 data: [
                     @foreach ($months as $month)
                         {{ getAmount(@$depositsMonth->where('months', $month)->first()->depositAmount) }},
