@@ -4,12 +4,12 @@ namespace App\Http\Controllers\User;
 
 use Exception;
 use App\Models\Form;
+use App\Models\Deposit;
 use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use App\Constants\ManageStatus;
 use App\Lib\GoogleAuthenticator;
 use App\Http\Controllers\Controller;
-use App\Models\Deposit;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
@@ -19,8 +19,31 @@ class UserController extends Controller
     function home() {
         $pageTitle  = 'Dashboard';
         $kycContent = getSiteData('kyc.content', true);
+        $user       = auth()->user();
 
-        return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent'));
+        $user->loadCount(['campaigns', 'campaigns as pending_campaigns' => function ($query) {
+            $query->pending();
+        }, 'campaigns as approved_campaigns' => function ($query) {
+            $query->approve();
+        }, 'campaigns as rejected_campaigns' => function ($query) {
+            $query->reject();
+        }]);
+
+        $widgetData['campaignCount']         = $user->campaigns_count;
+        $widgetData['pendingCampaignCount']  = $user->pending_campaigns;
+        $widgetData['approvedCampaignCount'] = $user->approved_campaigns;
+        $widgetData['rejectedCampaignCount'] = $user->rejected_campaigns;
+
+        $campaigns                      = $user->campaigns()->pluck('id');
+        $widgetData['receivedDonation'] = Deposit::whereHas('donation', function ($query) use ($campaigns) {
+            $query->whereIn('campaign_id', $campaigns);
+        })
+            ->done()
+            ->sum('amount');
+
+        $widgetData['sendDonation'] = Deposit::has('donation')->where('user_id', $user->id)->done()->sum('amount');
+
+        return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent', 'user', 'widgetData'));
     }
 
     function kycForm() {

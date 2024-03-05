@@ -410,8 +410,8 @@
 
     // ========================= Apexcharts Start ==========
     if ($('#donationReport').length) {
-      var baseColorForChart = $('html').css('--danger');
-      var donationReportoptions = {
+      var baseColorForChart = $('html').css('--success');
+      var donationReportOptions = {
         series: [{
           name: 'Donation',
           color: "hsl(" + baseColorForChart + " / .5)",
@@ -489,13 +489,13 @@
         }]
       };
 
-      var donationReport = new ApexCharts(document.querySelector("#donationReport"), donationReportoptions);
+      var donationReport = new ApexCharts(document.querySelector("#donationReport"), donationReportOptions);
       donationReport.render();
     }
 
     if ($('#withdrawReport').length) {
       var baseColorForChart = $('html').css('--warning');
-      var withdrawReportoptions = {
+      var withdrawReportOptions = {
         series: [{
           name: 'Withdraw',
           color: "hsl(" + baseColorForChart + " / .5)",
@@ -573,7 +573,7 @@
         }]
       };
 
-      var withdrawReport = new ApexCharts(document.querySelector("#withdrawReport"), withdrawReportoptions);
+      var withdrawReport = new ApexCharts(document.querySelector("#withdrawReport"), withdrawReportOptions);
       withdrawReport.render();
     }
     // ========================= Apexcharts End ==========
