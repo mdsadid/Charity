@@ -68,7 +68,7 @@
 
                         @if ($campaigns->hasPages())
                             <div class="col-12" data-aos="fade-up" data-aos-duration="1500">
-                                {{ $campaigns->links() }}
+                                {{ paginateLinks($campaigns) }}
                             </div>
                         @endif
                     </div>

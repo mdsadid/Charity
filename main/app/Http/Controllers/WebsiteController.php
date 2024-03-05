@@ -55,16 +55,16 @@ class WebsiteController extends Controller
     function campaigns() {
         $pageTitle  = 'Campaigns';
         $categories = Category::active()->select('name', 'slug')->get();
-        $campaigns  = Campaign::when(request()->has('category'), function ($query) {
+        $campaigns  = Campaign::when(request()->filled('category'), function ($query) {
             $categorySlug = request('category');
             $category     = Category::where('slug', $categorySlug)->active()->first();
 
             if ($category) $query->where('category_id', $category->id);
         })
-            ->when(request()->has('name'), function ($query) {
+            ->when(request()->filled('name'), function ($query) {
                 $query->where('name', 'like', '%' . request('name') . '%');
             })
-            ->when(request()->has('date_range'), function ($query) {
+            ->when(request()->filled('date_range'), function ($query) {
                 $dateArray = explode(' - ', request('date_range'));
                 $startDate = Carbon::parse($dateArray[0])->format('Y-m-d');
                 $endDate   = Carbon::parse($dateArray[1])->format('Y-m-d');

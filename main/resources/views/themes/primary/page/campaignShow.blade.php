@@ -139,53 +139,6 @@
                                 </form>
                             </div>
                         </div>
-
-                        {{-- <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
-                            <h3 class="post-sidebar__card__header">Donate a Gift</h3>
-                            <div class="post-sidebar__card__body">
-                                <div class="gift-donation mb-4">
-                                    <div class="gift-donation__top">
-                                        <div class="gift-donation__img">
-                                            <img src="assets/images/thumbs/gift-donation-1.jpg" alt="Gift 1">
-                                        </div>
-                                        <div class="gift-donation__txt">
-                                            <span class="gift-donation__name">Victory Day</span>
-                                            <span class="gift-donation__desc">Celebrate triumph with a Victory Day gift.</span>
-                                        </div>
-                                    </div>
-                                    <div class="gift-donation__items">
-                                        <p>
-                                            Gifts:
-                                            <span class="badge badge--success">T-shirt</span>
-                                            <span class="badge badge--danger">Cap</span>
-                                            <span class="badge badge--warning">Badge</span>
-                                        </p>
-                                    </div>
-                                    <a href="#" class="btn btn--sm btn--base w-100">Select Gift</a>
-                                </div>
-                                <div class="gift-donation">
-                                    <div class="gift-donation__top">
-                                        <div class="gift-donation__img">
-                                            <img src="assets/images/thumbs/gift-donation-2.jpg" alt="Gift 1">
-                                        </div>
-                                        <div class="gift-donation__txt">
-                                            <span class="gift-donation__name">Victory Day</span>
-                                            <span class="gift-donation__desc">Celebrate triumph with a Victory Day gift.</span>
-                                        </div>
-                                    </div>
-                                    <div class="gift-donation__items">
-                                        <p>
-                                            Gifts:
-                                            <span class="badge badge--success">T-shirt</span>
-                                            <span class="badge badge--danger">Cap</span>
-                                            <span class="badge badge--warning">Badge</span>
-                                        </p>
-                                    </div>
-                                    <a href="#" class="btn btn--sm btn--base w-100">Select Gift</a>
-                                </div>
-                            </div>
-                        </div> --}}
-
                         <div class="post-sidebar__card" data-aos="fade-up" data-aos-duration="1500">
                             <h3 class="post-sidebar__card__header">@lang('Kindness in Action')</h3>
                             <div class="post-sidebar__card__body">
