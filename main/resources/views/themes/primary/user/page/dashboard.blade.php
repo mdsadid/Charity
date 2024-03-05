@@ -89,11 +89,11 @@
                 <div class="col-xl-3 col-md-4 col-sm-6 col-xsm-6">
                     <div class="dashboard-card">
                         <div class="dashboard-card__icon">
-                            <i class="las la-wallet"></i>
+                            <i class="las la-comment"></i>
                         </div>
                         <div class="dashboard-card__txt">
-                            <span class="dashboard-card__number">{{ $setting->cur_sym . showAmount(@$user->balance) }}</span>
-                            <span class="dashboard-card__title">@lang('Current Balance')</span>
+                            <span class="dashboard-card__number">{{ @$widgetData['commentCount'] }}</span>
+                            <span class="dashboard-card__title">@lang('Total Comment')</span>
                         </div>
                     </div>
                 </div>

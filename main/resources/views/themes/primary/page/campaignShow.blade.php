@@ -244,7 +244,7 @@
                 $('.final_amount').text(final_amount)
 
                 if (resource.currency != '{{ $setting->site_cur }}') {
-                    var rateElement = `<span>@lang('Conversion Rate')</span> <span><span class="fw-bold">1 {{ __($setting->site_cur) }} = <span class="rate">${rate}</span> <span class="method_currency">${resource.currency}</span></span></span>`;
+                    var rateElement = `<span>@lang('Conversion Rate')</span> <span class="fw-bold">1 {{ __($setting->site_cur) }} = <span class="rate">${rate}</span> <span class="method_currency">${resource.currency}</span></span>`;
 
                     $('.rate-element').html(rateElement)
                     $('.rate-element').removeClass('d-none')

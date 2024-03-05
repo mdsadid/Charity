@@ -20,7 +20,7 @@ class WithdrawController extends Controller
     }
 
     function methods() {
-        $pageTitle = 'Make Withdraw';
+        $pageTitle = 'Withdraw Money';
         $methods   = WithdrawMethod::active()->get();
 
         return view($this->activeTheme . 'user.withdraw.methods', compact('pageTitle', 'methods'));
@@ -29,7 +29,7 @@ class WithdrawController extends Controller
     function store() {
         $this->validate(request(), [
             'method_id' => 'required|int|gt:0',
-            'amount'    => 'required|numeric|gt:0'
+            'amount'    => 'required|numeric|gt:0',
         ]);
 
         $user   = auth()->user();
@@ -37,29 +37,29 @@ class WithdrawController extends Controller
         $method = WithdrawMethod::where('id', request('method_id'))->active()->firstOrFail();
 
         if ($amount < $method->min_amount) {
-            $toast[] = ['error', 'The requested amount is below the minimum allowable amount'];
+            $toast[] = ['error', 'Requested amount cannot be less than the minimum amount'];
 
             return back()->withToasts($toast);
         }
 
         if ($amount > $method->max_amount) {
-            $toast[] = ['error', 'The requested amount exceeds the maximum allowable amount'];
+            $toast[] = ['error', 'Requested amount cannot be greater than the maximum amount'];
 
             return back()->withToasts($toast);
         }
 
         if ($amount > $user->balance) {
-            $toast[] = ['error', 'You lack the necessary balance to process a withdrawal'];
+            $toast[] = ['error', 'You don\'t have enough amount to make this withdrawal'];
 
             return back()->withToasts($toast);
         }
 
-        $charge      = $method->fixed_charge + ($amount * $method->percent_charge / 100);
+        $charge      = $method->fixed_charge + (($amount * $method->percent_charge) / 100);
         $afterCharge = $amount - $charge;
         $finalAmount = $afterCharge * $method->rate;
 
         $withdraw               = new Withdrawal();
-        $withdraw->method_id    = $method->id; // wallet method ID
+        $withdraw->method_id    = $method->id;
         $withdraw->user_id      = $user->id;
         $withdraw->amount       = $amount;
         $withdraw->currency     = $method->currency;

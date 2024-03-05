@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use App\Constants\ManageStatus;
 use App\Lib\GoogleAuthenticator;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
@@ -42,6 +43,7 @@ class UserController extends Controller
             ->sum('amount');
 
         $widgetData['sendDonation'] = Deposit::has('donation')->where('user_id', $user->id)->done()->sum('amount');
+        $widgetData['commentCount'] = Comment::whereIn('campaign_id', $campaigns)->approve()->count();
 
         return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent', 'user', 'widgetData'));
     }

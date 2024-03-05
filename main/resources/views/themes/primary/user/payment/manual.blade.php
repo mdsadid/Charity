@@ -7,7 +7,7 @@
                 <div class="col-lg-7 col-md-10">
                     <div class="card custom--card" data-aos="fade-up" data-aos-duration="1500">
                         <div class="card-header">
-                            <h3 class="title">{{ __(@$gateway->name) }}</h3>
+                            <h3 class="title">@lang('Donation via') {{ __(@$gateway->name) }}</h3>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('user.deposit.manual.update') }}" method="POST" class="row g-3" enctype="multipart/form-data">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 04, 2024 at 12:50 PM
+-- Generation Time: Mar 05, 2024 at 01:00 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -346,7 +346,8 @@ INSERT INTO `forms` (`id`, `act`, `form_data`, `created_at`, `updated_at`) VALUE
 (4, 'manual_deposit', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"email\":{\"name\":\"Email\",\"label\":\"email\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"trx_number\":{\"name\":\"Trx Number\",\"label\":\"trx_number\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 07:07:31', '2024-02-28 10:35:26'),
 (5, 'manual_deposit', '{\"trx_number\":{\"name\":\"Trx Number\",\"label\":\"trx_number\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"},\"receipt\":{\"name\":\"Receipt\",\"label\":\"receipt\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png,pdf\",\"options\":[],\"type\":\"file\"}}', '2023-11-21 09:12:25', '2024-03-04 06:08:21'),
 (6, 'withdraw_method', '{\"full_name\":{\"name\":\"Full Name\",\"label\":\"full_name\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 11:15:53', '2024-02-29 05:42:09'),
-(7, 'withdraw_method', '{\"email\":{\"name\":\"Email\",\"label\":\"email\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 17:08:05', '2024-02-29 05:43:01');
+(7, 'withdraw_method', '{\"email\":{\"name\":\"Email\",\"label\":\"email\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"text\"}}', '2023-11-21 17:08:05', '2024-02-29 05:43:01'),
+(8, 'withdraw_method', '{\"receipt\":{\"name\":\"Receipt\",\"label\":\"receipt\",\"is_required\":\"required\",\"extensions\":\"jpg,jpeg,png\",\"options\":[],\"type\":\"file\"}}', '2024-03-05 11:54:18', '2024-03-05 11:54:18');
 
 -- --------------------------------------------------------
 
@@ -588,13 +589,6 @@ CREATE TABLE `password_resets` (
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `password_resets`
---
-
-INSERT INTO `password_resets` (`email`, `code`, `created_at`) VALUES
-('sadid.hasan14@gmail.com', '967255', '2024-01-30 09:12:54');
 
 -- --------------------------------------------------------
 
@@ -853,7 +847,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `image`, `firstname`, `lastname`, `username`, `email`, `country_code`, `country_name`, `mobile`, `ref_by`, `balance`, `password`, `address`, `status`, `kyc_data`, `kc`, `ec`, `sc`, `ver_code`, `ver_code_send_at`, `ts`, `tc`, `tsc`, `ban_reason`, `remember_token`, `created_at`, `updated_at`) VALUES
-(12, '65d466e8710181708418792.jpg', 'James', 'Marshall', 'james', 'james@gmail.com', 'US', 'United States', '817-290-8546', 0, 0.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":\"Louisiana\",\"zip\":\"70116\",\"city\":\"New Orleans\",\"address\":\"1003 Bourbon St\"}', 1, NULL, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-02-29 06:22:27'),
+(12, '65d466e8710181708418792.jpg', 'James', 'Marshall', 'james', 'james@gmail.com', 'US', 'United States', '817-290-8546', 0, 1650.00000000, '$2y$10$WgfK/bFU5aiJ0E1qvtfgjuDbJPBOXd77ksCTdims7H2t7tPYv/rka', '{\"state\":\"Louisiana\",\"zip\":\"70116\",\"city\":\"New Orleans\",\"address\":\"1003 Bourbon St\"}', 1, NULL, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-01-29 10:18:43', '2024-02-29 06:22:27'),
 (13, '65d46c259fae31708420133.jpg', 'David', 'Gonzalez', 'david', 'david@gmail.com', 'US', 'United States', '912-307-5602', 0, 0.00000000, '$2y$10$GCjStwEr6Nnr/lVd92dCMu.HpB0w1lsxbPoEmJ/t5Ft/SNHUx8x7y', '{\"state\":\"Texas\",\"zip\":\"75223\",\"city\":\"Dallas\",\"address\":\"515 S Peak St\"}', 1, NULL, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-14 12:15:55', '2024-02-29 06:25:04'),
 (14, NULL, 'John', 'Doe', 'johndoe', 'john@gmail.com', 'AX', 'Aland Islands', '358123456789', 0, 0.00000000, '$2y$10$jXQZDC90YT2pJ1rKfbOcy.9wH/Y/N5PmzS0.K46rDYpxpeeOiObAq', NULL, 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JOHN123456789\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdaf5424bcf1707978580.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 06:29:09', '2024-02-15 06:30:01'),
 (15, '65d46c908d6141708420240.jpg', 'Jane', 'Doe', 'janedoe', 'jane@gmail.com', 'AS', 'AmericanSamoa', '1684987654321', 0, 0.00000000, '$2y$10$KAT0wI0OgG2dV1yz0p0L9.ehVORSPMo1U9sYAUV3GKpBV2GLm5M5y', '{\"state\":null,\"zip\":null,\"city\":null,\"address\":null}', 1, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"John Doe\"},{\"name\":\"Voter Id\",\"type\":\"text\",\"value\":\"JANE987654321\"},{\"name\":\"NID Photo\",\"type\":\"file\",\"value\":\"2024\\/02\\/15\\/65cdb73f528841707980607.jpg\"}]', 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2024-02-15 07:03:04', '2024-02-20 09:10:41');
@@ -910,7 +904,8 @@ CREATE TABLE `withdraw_methods` (
 
 INSERT INTO `withdraw_methods` (`id`, `form_id`, `name`, `min_amount`, `max_amount`, `fixed_charge`, `rate`, `percent_charge`, `currency`, `guideline`, `status`, `created_at`, `updated_at`) VALUES
 (1, 6, 'EasyCashOut', 1.00000000, 1000.00000000, 0.00000000, 2.54000000, 1.00, 'PKR', '<p>To withdraw funds using EasyCashOut, log in, go to the \'Withdrawal\' section, choose EasyCashOut, enter the amount, and confirm. Funds will be transferred within 1-3 business days. Check for fees and ensure accurate account details.<br></p>', 1, '2023-11-21 11:15:53', '2024-02-29 05:42:09'),
-(2, 7, 'InstantCash', 1.00000000, 1000.00000000, 0.00000000, 0.67000000, 1.00, 'AFN', '<p>To withdraw funds using InstantCash, log in, go to the \'Withdrawal\' section, choose InstantCash, enter the amount, and confirm. Funds will be transferred within 1-3 business days. Check for fees and ensure accurate account details.<br></p>', 1, '2023-11-21 17:08:05', '2024-02-29 05:43:01');
+(2, 7, 'InstantCash', 1.00000000, 1000.00000000, 0.00000000, 0.67000000, 1.00, 'AFN', '<p>To withdraw funds using InstantCash, log in, go to the \'Withdrawal\' section, choose InstantCash, enter the amount, and confirm. Funds will be transferred within 1-3 business days. Check for fees and ensure accurate account details.<br></p>', 1, '2023-11-21 17:08:05', '2024-02-29 05:43:01'),
+(3, 8, 'TurboCashOut', 10.00000000, 900.00000000, 1.00000000, 0.04300000, 1.00, 'MYR', '<p>To withdraw funds using TurboCashOut, log in, go to the \'Withdrawal\' section, choose TurboCashOut, enter the amount, and confirm. Funds will be transferred within 1-3 business days. Check for fees and ensure accurate account details.<br></p>', 1, '2024-03-05 11:54:18', '2024-03-05 11:54:18');
 
 --
 -- Indexes for dumped tables
@@ -1143,13 +1138,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `deposits`
 --
 ALTER TABLE `deposits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1161,7 +1156,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `galleries`
@@ -1245,13 +1240,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `withdrawals`
 --
 ALTER TABLE `withdrawals`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `withdraw_methods`
 --
 ALTER TABLE `withdraw_methods`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

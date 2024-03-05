@@ -42,22 +42,22 @@
 
                         @if (!request()->routeIs('user.*'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">@lang('Home')</a>
+                                <a href="{{ route('home') }}" class="nav-link">@lang('Home')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('about.us') }}">@lang('About Us')</a>
+                                <a href="{{ route('about.us') }}" class="nav-link">@lang('About Us')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('faq') }}">@lang('FAQ')</a>
+                                <a href="{{ route('faq') }}" class="nav-link">@lang('FAQ')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('campaign') }}">@lang('Campaigns')</a>
+                                <a href="{{ route('campaign') }}" class="nav-link">@lang('Campaigns')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('event') }}">@lang('Events')</a>
+                                <a href="{{ route('event') }}" class="nav-link">@lang('Events')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('contact') }}">@lang('Contact')</a>
+                                <a href="{{ route('contact') }}" class="nav-link">@lang('Contact')</a>
                             </li>
                         @else
                             @auth
@@ -82,12 +82,30 @@
                                             <a href="{{ route('user.campaign.rejected') }}" class="dropdown-menu__link">@lang('Rejected Campaigns')</a>
                                         </li>
                                         <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.donation.history') }}" class="dropdown-menu__link">@lang('My Donations')</a>
-                                        </li>
-                                        <li class="dropdown-menu__list">
                                             <a href="{{ route('user.donation.received') }}" class="dropdown-menu__link">@lang('Received Donations')</a>
                                         </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.donation.history') }}" class="dropdown-menu__link">@lang('My Donations')</a>
+                                        </li>
                                     </ul>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @lang('Withdraw')
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-menu__list">
+                                            <a href="{{ route('user.withdraw.methods') }}" class="dropdown-menu__link">@lang('Withdraw Money')</a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a href="#" class="dropdown-menu__link">@lang('Withdraw Log')</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="transaction-log.html" class="nav-link">@lang('Transactions')</a>
                                 </li>
 
                                 <li class="nav-item dropdown">
@@ -107,7 +125,6 @@
                                         <li class="dropdown-menu__list">
                                             <a href="{{ route('user.twofactor.form') }}" class="dropdown-menu__link">@lang('2FA Settings')</a>
                                         </li>
-                                        <li class="dropdown-menu__list"><a class="dropdown-menu__link" href="transaction-log.html">Transactions Log</a></li>
                                         <li class="dropdown-menu__list">
                                             <a href="{{ route('user.logout') }}" class="dropdown-menu__link">@lang('Log Out')</a>
                                         </li>
