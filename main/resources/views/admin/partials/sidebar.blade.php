@@ -25,6 +25,70 @@
             </a>
         </li>
 
+        <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons las la-users text-purple"></i>
+                <div class="text-truncate text-nowrap d-inline-block">@lang('Users')</div>
+                @if ($bannedUsersCount > 0 || $emailUnconfirmedUsersCount > 0 || $mobileUnconfirmedUsersCount > 0 || $kycUnconfirmedUsersCount > 0 || $kycPendingUsersCount > 0)
+                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">
+                        <i class="las la-exclamation"></i>
+                    </div>
+                @endif
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ navigationActive('admin.user.index', 1) }}">
+                    <a href="{{ route('admin.user.index') }}" class="menu-link">
+                        <div class="text-truncate">@lang('All')</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.user.active', 1) }}">
+                    <a href="{{ route('admin.user.active') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Active')</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.user.banned', 1) }}">
+                    <a href="{{ route('admin.user.banned') }}" class="menu-link">
+                        <div class="text-truncate text-nowrap d-inline-block">@lang('Banned')</div>
+                        @if ($bannedUsersCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $bannedUsersCount }}</div>
+                        @endif
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.user.kyc.pending', 1) }}">
+                    <a href="{{ route('admin.user.kyc.pending') }}" class="menu-link">
+                        <div class="text-truncate text-nowrap d-inline-block">@lang('KYC Pending')</div>
+                        @if ($kycPendingUsersCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $kycPendingUsersCount }}</div>
+                        @endif
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.user.kyc.unconfirmed', 1) }}">
+                    <a href="{{ route('admin.user.kyc.unconfirmed') }}" class="menu-link">
+                        <div class="text-truncate text-nowrap d-inline-block">@lang('KYC Unconfirmed')</div>
+                        @if ($kycUnconfirmedUsersCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $kycUnconfirmedUsersCount }}</div>
+                        @endif
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.user.email.unconfirmed', 1) }}">
+                    <a href="{{ route('admin.user.email.unconfirmed') }}" class="menu-link">
+                        <div class="text-truncate text-nowrap d-inline-block">@lang('Email Unconfirmed')</div>
+                        @if ($emailUnconfirmedUsersCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $emailUnconfirmedUsersCount }}</div>
+                        @endif
+                    </a>
+                </li>
+                <li class="menu-item {{ navigationActive('admin.user.mobile.unconfirmed', 1) }}">
+                    <a href="{{ route('admin.user.mobile.unconfirmed') }}" class="menu-link">
+                        <div class="text-truncate text-nowrap d-inline-block">@lang('Mobile Unconfirmed')</div>
+                        @if ($mobileUnconfirmedUsersCount)
+                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $mobileUnconfirmedUsersCount }}</div>
+                        @endif
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         <li class="menu-item {{ navigationActive('admin.gateway*', 2) }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-credit-card text-info"></i>
@@ -130,68 +194,6 @@
             </ul>
         </li>
 
-        <li class="menu-item {{ navigationActive('admin.user*', 2) }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons las la-users text-purple"></i>
-                <div class="text-truncate text-nowrap d-inline-block">@lang('Users')</div>
-                @if ($bannedUsersCount > 0 || $emailUnconfirmedUsersCount > 0 || $mobileUnconfirmedUsersCount > 0 || $kycUnconfirmedUsersCount > 0 || $kycPendingUsersCount > 0)
-                    <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto"><i class="las la-exclamation"></i></div>
-                @endif
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ navigationActive('admin.user.index', 1) }}">
-                    <a href="{{ route('admin.user.index') }}" class="menu-link">
-                        <div class="text-truncate">@lang('All')</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.user.active', 1) }}">
-                    <a href="{{ route('admin.user.active') }}" class="menu-link">
-                        <div class="text-truncate">@lang('Active')</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.user.banned', 1) }}">
-                    <a href="{{ route('admin.user.banned') }}" class="menu-link">
-                        <div class="text-truncate text-nowrap d-inline-block">@lang('Banned')</div>
-                        @if ($bannedUsersCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $bannedUsersCount }}</div>
-                        @endif
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.user.kyc.pending', 1) }}">
-                    <a href="{{ route('admin.user.kyc.pending') }}" class="menu-link">
-                        <div class="text-truncate text-nowrap d-inline-block">@lang('KYC Pending')</div>
-                        @if ($kycPendingUsersCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $kycPendingUsersCount }}</div>
-                        @endif
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.user.kyc.unconfirmed', 1) }}">
-                    <a href="{{ route('admin.user.kyc.unconfirmed') }}" class="menu-link">
-                        <div class="text-truncate text-nowrap d-inline-block">@lang('KYC Unconfirmed')</div>
-                        @if ($kycUnconfirmedUsersCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $kycUnconfirmedUsersCount }}</div>
-                        @endif
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.user.email.unconfirmed', 1) }}">
-                    <a href="{{ route('admin.user.email.unconfirmed') }}" class="menu-link">
-                        <div class="text-truncate text-nowrap d-inline-block">@lang('Email Unconfirmed')</div>
-                        @if ($emailUnconfirmedUsersCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $emailUnconfirmedUsersCount }}</div>
-                        @endif
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.user.mobile.unconfirmed', 1) }}">
-                    <a href="{{ route('admin.user.mobile.unconfirmed') }}" class="menu-link">
-                        <div class="text-truncate text-nowrap d-inline-block">@lang('Mobile Unconfirmed')</div>
-                        @if ($mobileUnconfirmedUsersCount)
-                            <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">{{ $mobileUnconfirmedUsersCount }}</div>
-                        @endif
-                    </a>
-                </li>
-            </ul>
-        </li>
-
         <li class="menu-item {{ navigationActive('admin.withdraw*', 2) }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons las la-university text-pink"></i>
@@ -209,6 +211,11 @@
                     </a>
                 </li>
 
+                <li class="menu-item {{ navigationActive('admin.withdraw.index', 1) }}">
+                    <a href="{{ route('admin.withdraw.index') }}" class="menu-link">
+                        <div class="text-truncate">@lang('All')</div>
+                    </a>
+                </li>
                 <li class="menu-item {{ navigationActive('admin.withdraw.pending', 1) }}">
                     <a href="{{ route('admin.withdraw.pending') }}" class="menu-link">
                         <div class="text-truncate text-nowrap d-inline-block">@lang('Pending')</div>
@@ -222,14 +229,9 @@
                         <div class="text-truncate">@lang('Done')</div>
                     </a>
                 </li>
-                <li class="menu-item {{ navigationActive('admin.withdraw.canceled', 1) }}">
-                    <a href="{{ route('admin.withdraw.canceled') }}" class="menu-link">
-                        <div class="text-truncate">@lang('Canceled')</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ navigationActive('admin.withdraw.index', 1) }}">
-                    <a href="{{ route('admin.withdraw.index') }}" class="menu-link">
-                        <div class="text-truncate">@lang('All')</div>
+                <li class="menu-item {{ navigationActive('admin.withdraw.cancelled', 1) }}">
+                    <a href="{{ route('admin.withdraw.cancelled') }}" class="menu-link">
+                        <div class="text-truncate">@lang('Cancelled')</div>
                     </a>
                 </li>
             </ul>

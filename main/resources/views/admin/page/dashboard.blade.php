@@ -180,7 +180,7 @@
                 </div>
             </div>
         </a>
-        <a href="{{ route('admin.withdraw.canceled') }}" class="col-sm-6 col-lg-3 mb-4">
+        <a href="{{ route('admin.withdraw.cancelled') }}" class="col-sm-6 col-lg-3 mb-4">
             <div class="card card-border-shadow-danger h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-2 pb-1">

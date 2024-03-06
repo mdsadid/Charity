@@ -6,11 +6,11 @@
             <div class="col-md-4 col-xxl-3 col-sm-6">
                 <div class="card h-100 text-center">
                     <div class="card-body px-3">
-                        <h4 class="card-title">{{$loop->iteration}}. {{ __($method->name) }}</h4>
+                        <h4 class="card-title">{{ $loop->iteration }}. {{ __($method->name) }}</h4>
                         <hr>
                         <p class="card-text mb-0">@lang('Currency') : {{ __($method->currency) }}</p>
-                        <p class="card-text mb-1">@lang('Limit') : {{ $method->min_amount + 0 }} - {{ $method->max_amount + 0 }} {{__($setting->site_cur) }}</p>
-                        <p class="card-text mb-1">@lang('Charge') : {{ showAmount($method->fixed_charge)}} {{__($setting->site_cur) }} {{ (0 < $method->percent_charge) ? ' + '. showAmount($method->percent_charge) .' %' : '' }}</p>
+                        <p class="card-text mb-1">@lang('Limit') : {{ $method->min_amount + 0 }} - {{ $method->max_amount + 0 }} {{ __($setting->site_cur) }}</p>
+                        <p class="card-text mb-1">@lang('Charge') : {{ showAmount($method->fixed_charge) }} {{ __($setting->site_cur) }} {{ 0 < $method->percent_charge ? ' + ' . showAmount($method->percent_charge) . ' %' : '' }}</p>
                         <p class="card-text">@php echo $method->statusBadge @endphp</p>
 
                         <div class="d-flex gap-2 flex-wrap justify-content-center">

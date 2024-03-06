@@ -35,7 +35,7 @@ class Withdrawal extends Model
         return $query->where('status', ManageStatus::PAYMENT_PENDING);
     }
 
-    public function scopeCanceled($query)
+    public function scopeCancelled($query)
     {
         return $query->where('status', ManageStatus::PAYMENT_CANCEL);
     }

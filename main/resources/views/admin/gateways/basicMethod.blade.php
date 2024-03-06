@@ -30,7 +30,7 @@
                                 <label class="col-md-4 col-form-label required">@lang('Rate')</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <span class="input-group-text">1 {{ __($setting->site_cur ) }} =</span>
+                                        <span class="input-group-text">1 {{ __($setting->site_cur) }} =</span>
                                         <input type="number" step="any" min="0" class="form-control" name="rate" value="{{ $method ? getAmount(@$methodRelation->rate) : old('rate') }}" required>
                                         <span class="input-group-text currencySymbol">{{ @$methodRelation->currency }}</span>
                                     </div>
@@ -47,7 +47,7 @@
                                         <label class="col-md-4 col-form-label required">@lang('Minimum Amount')</label>
                                         <div class="col-md-8">
                                             <div class="input-group">
-                                                <input type="number" step="any" min="0" class="form-control" name="min_amount" value="{{ $method ? getAmount(@$methodRelation->min_amount) : old('min_amount') }}"  required>
+                                                <input type="number" step="any" min="0" class="form-control" name="min_amount" value="{{ $method ? getAmount(@$methodRelation->min_amount) : old('min_amount') }}" required>
                                                 <span class="input-group-text cursor-pointer">{{ __($setting->site_cur) }}</span>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                 <h5 class="card-header  border-bottom">@lang('Guidelines')</h5>
                                 <div class="card-body">
                                     <div class="mt-4 mb-4">
-                                        <textarea class="form-control nicEdit" rows="8" name="guideline">{{ @$method->guideline  }}</textarea>
+                                        <textarea class="form-control nicEdit" rows="8" name="guideline">{{ @$method->guideline }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -131,21 +131,25 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('[name=currency]').on('input', function () {
+            $('[name=currency]').on('input', function() {
                 $('.currencySymbol').text($(this).val());
             });
 
-            @if(old('currency'))
+            @if (old('currency'))
                 $('[name=currency]').trigger('input');
             @endif
 
             bkLib.onDomLoaded(function() {
-                $( ".nicEdit" ).each(function( index ) {
-                    $(this).attr("id","nicEditor"+index);
-                    new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
+                $(".nicEdit").each(function(index) {
+                    $(this).attr("id", "nicEditor" + index);
+                    new nicEditor({
+                        fullPanel: true
+                    }).panelInstance('nicEditor' + index, {
+                        hasPanel: true
+                    });
                 });
             });
         })(jQuery);

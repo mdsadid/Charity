@@ -32,7 +32,7 @@
                                     </div>
                                     <hr class="d-none d-sm-block d-lg-none me-4">
                                 </a>
-                                <a href="{{ route('admin.withdraw.canceled') }}" class="col-sm-6 col-lg-4">
+                                <a href="{{ route('admin.withdraw.cancelled') }}" class="col-sm-6 col-lg-4">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <h3 class="mb-1">{{ showAmount($canceled) }} {{ __($setting->site_cur) }}</h3>
@@ -104,7 +104,6 @@
                                             <span class="badge bg-label-danger">@lang('Canceled')</span>
                                         @endif
                                     </td>
-
                                     <td>
                                         <button type="button" class="btn btn-sm btn-label-info detailBtn"
                                             data-bs-toggle      = "offcanvas"
@@ -138,7 +137,7 @@
 
                                                     <li>
                                                         <button type="button" class="dropdown-item cancelBtn" data-id="{{ $withdraw->id }}">
-                                                            <i class="lar la-times-circle fs-6 link-warning"></i> @lang('Cancel')
+                                                            <i class="lar la-times-circle fs-6 link-danger"></i> @lang('Reject')
                                                         </button>
                                                     </li>
                                                 </ul>
@@ -167,9 +166,8 @@
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('Withdraw Details')</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+        <div class="offcanvas-body mx-0 flex-grow-0">
             <div class="basicData"></div>
             <div class="userData"></div>
             <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">@lang('Cancel')</button>
@@ -195,14 +193,14 @@
                         </div>
                         <div class="onboarding-content mb-0">
                             <h4 class="onboarding-title text-body">@lang('Approve Withdrawal Confirmation')</h4>
-                            <div class="onboarding-info question">@lang('Have you sent')
-                                <span class="fw-bold withdraw-amount text-primary"></span>?
+                            <div class="onboarding-info question">
+                                @lang('Have you sent') <span class="fw-bold withdraw-amount text-primary"></span>?
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 mt-3">
                                     <div class="mb-3">
-                                        <textarea class="form-control" name="admin_feedback" placeholder="@lang('Furnish the specifics, such as the transaction number, for example')" rows="3"></textarea>
+                                        <textarea class="form-control" name="admin_feedback" placeholder="@lang('For example, furnish the specifics, such as the transaction number.')" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -236,11 +234,11 @@
                             </div>
                         </div>
                         <div class="onboarding-content mb-0">
-                            <h4 class="onboarding-title text-body">@lang('Cancel Withdrawal Confirmation')</h4>
-                            <div class="onboarding-info question">@lang('Reason')</div>
+                            <h4 class="onboarding-title text-body">@lang('Reject Withdrawal Confirmation')</h4>
 
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 mt-3">
+                                    <h5>@lang('Reason')</h5>
                                     <div class="mb-3">
                                         <textarea class="form-control" name="admin_feedback" rows="3" required></textarea>
                                     </div>
@@ -268,9 +266,9 @@
         (function($) {
             "use strict";
 
-            $('.detailBtn').on('click', function () {
+            $('.detailBtn').on('click', function() {
                 let userData   = $(this).data('user_data');
-                let statusHtml =  ``;
+                let statusHtml = ``;
 
                 if ($(this).data('status') == 1) {
                     statusHtml += `<span class="badge bg-label-success">@lang('Done')</span>`;
@@ -327,7 +325,7 @@
                 if ($(this).data('admin_feedback')) {
                     basicHtml += `<li class="list-group-item align-items-center">
                                     <b class="text-primary">@lang('Admin Feedback')</b>
-                                    <p class="mt-2 d-none d-sm-block">${$(this).data('admin_feedback')}</p>
+                                    <p class="mt-2 mb-0 d-none d-sm-block">${$(this).data('admin_feedback')}</p>
                                 </li>`;
                 }
 
@@ -338,14 +336,12 @@
 
                 if (userData) {
                     let fileDownloadUrl = '{{ route('admin.file.download', ['filePath' => 'verify']) }}';
-                    let infoHtml        = `<div class="mt-3">
-                                                <h5>@lang('Withdrawal User Data')</h5>
-                                                <ul class="list-group">`;
+                    let infoHtml = `<div class="mt-3">
+                                        <h5>@lang('Withdrawal Related Data')</h5>
+                                        <ul class="list-group">`;
 
                     userData.forEach(element => {
-                        if (!element.value) {
-                            return;
-                        }
+                        if (!element.value) return;
 
                         if (element.type != 'file') {
                             infoHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">

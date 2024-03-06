@@ -43,7 +43,7 @@ class AdminController extends Controller
         // Withdraw Info
         $widget['withdrawDone']      = Withdrawal::done()->sum('amount');
         $widget['withdrawPending']   = Withdrawal::pending()->count();
-        $widget['withdrawCancelled'] = Withdrawal::canceled()->count();
+        $widget['withdrawCancelled'] = Withdrawal::cancelled()->count();
         $widget['withdrawCharge']    = Withdrawal::done()->sum('charge');
 
         // Monthly Deposit & Withdraw Report Graph

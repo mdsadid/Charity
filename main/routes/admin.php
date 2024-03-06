@@ -144,7 +144,7 @@ Route::middleware('admin')->group(function () {
             Route::get('index', 'index')->name('index');
             Route::get('pending', 'pending')->name('pending');
             Route::get('done', 'done')->name('done');
-            Route::get('canceled', 'canceled')->name('canceled');
+            Route::get('cancelled', 'cancelled')->name('cancelled');
             Route::post('approve', 'approve')->name('approve');
             Route::post('cancel', 'cancel')->name('cancel');
         });
