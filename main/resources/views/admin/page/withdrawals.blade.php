@@ -113,10 +113,10 @@
                                             data-trx            = "{{ $withdraw->trx }}"
                                             data-username       = "{{ @$withdraw->user->username }}"
                                             data-method         = "{{ __(@$withdraw->method->name) }}"
-                                            data-amount         = "{{ $withdraw->amount }} {{ __($setting->site_cur) }}"
-                                            data-charge         = "{{ showAmount($withdraw->charge ) }} {{ __($setting->site_cur) }}"
-                                            data-after_charge   = "{{ showAmount($withdraw->after_charge ) }} {{ __($setting->site_cur) }}"
-                                            data-rate           = "1 {{ __($setting->site_cur) }} = {{ showAmount($withdraw->rate ) }} {{ __($withdraw->currency) }}"
+                                            data-amount         = "{{ showAmount($withdraw->amount) }} {{ __($setting->site_cur) }}"
+                                            data-charge         = "{{ showAmount($withdraw->charge) }} {{ __($setting->site_cur) }}"
+                                            data-after_charge   = "{{ showAmount($withdraw->after_charge) }} {{ __($setting->site_cur) }}"
+                                            data-rate           = "1 {{ __($setting->site_cur) }} = {{ showAmount($withdraw->rate) }} {{ __($withdraw->currency) }}"
                                             data-payable        = "{{ showAmount($withdraw->final_amount) }} {{ __($withdraw->currency) }}"
                                             data-status         = "{{ $withdraw->status }}"
                                             data-user_data      = "{{ json_encode($withdraw->withdraw_information) }}"
@@ -170,7 +170,9 @@
         <div class="offcanvas-body mx-0 flex-grow-0">
             <div class="basicData"></div>
             <div class="userData"></div>
-            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">@lang('Cancel')</button>
+            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
+                @lang('Cancel')
+            </button>
         </div>
     </div>
 
@@ -323,7 +325,7 @@
                                         </li>`;
 
                 if ($(this).data('admin_feedback')) {
-                    basicHtml += `<li class="list-group-item align-items-center">
+                    basicHtml += `<li class="list-group-item">
                                     <b class="text-primary">@lang('Admin Feedback')</b>
                                     <p class="mt-2 mb-0 d-none d-sm-block">${$(this).data('admin_feedback')}</p>
                                 </li>`;
@@ -369,6 +371,7 @@
 
             $('.approveBtn').on('click', function() {
                 let modal = $('#approveModal');
+
                 modal.find('[name=id]').val($(this).data('id'));
                 modal.find('.withdraw-amount').text($(this).data('amount'));
                 modal.modal('show');
@@ -376,6 +379,7 @@
 
             $('.cancelBtn').on('click', function() {
                 let modal = $('#cancelModal');
+
                 modal.find('[name=id]').val($(this).data('id'));
                 modal.modal('show');
             });

@@ -161,9 +161,15 @@
 
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('Donor Information')</h5>
+            <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('Donation Details')</h5>
         </div>
-        <div class="offcanvas-body mx-0 flex-grow-0"></div>
+        <div class="offcanvas-body mx-0 flex-grow-0">
+            <div class="basicData"></div>
+            <div class="userData"></div>
+            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
+                @lang('Cancel')
+            </button>
+        </div>
     </div>
 
     <x-decisionModal />
@@ -227,7 +233,8 @@
                 let donorPhone   = $(this).data('donor_phone')
                 let donorCountry = $(this).data('donor_country')
 
-                let html = `<div class="donor-info">
+                let html = `<div class="mb-4">
+                                <h5>@lang('Basic Information')</h5>
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <b>@lang('Donor Type')</b>
@@ -248,57 +255,56 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <b>@lang('Country')</b>
                                         <span>${donorCountry}</span>
-                                    </li>
-                                </ul>
-                            </div>`
+                                    </li>`
+
+                let feedback = $(this).data('admin_feedback')
+
+                if (feedback) {
+                    html += `<li class="list-group-item">
+                                <b class="text-primary">@lang('Admin Feedback')</b>
+                                <p class="mt-2 mb-0 d-none d-sm-block">${feedback}</p>
+                            </li>`
+                }
+
+                html += `</ul>
+                    </div>`
+
+                $('.basicData').html(html)
 
                 let userData = $(this).data('user_data')
 
                 if (userData) {
                     let downloadURL = $(this).data('url')
 
-                    html += `<div class="mt-4 user-data">
-                                <h5 class="mb-4">@lang('Donation Related Data')</h5>
-                                <ul class="list-group">`
+                    let infoHtml = `<div class="mt-4">
+                                        <h5>@lang('Donation Related Data')</h5>
+                                        <ul class="list-group">`
 
                     userData.forEach(element => {
                         if (!element.value) return
 
                         if (element.type != 'file') {
-                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <b>${element.name}</b>
-                                        <span>${element.value}</span>
-                                    </li>`
+                            infoHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <b>${element.name}</b>
+                                            <span>${element.value}</span>
+                                        </li>`
                         } else {
-                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <b>${element.name}</b>
-                                        <span>
-                                            <a href="${downloadURL}&fileName=${element.value}">
-                                                <i class="las la-arrow-circle-down"></i> @lang('Attachment')
-                                            </a>
-                                        </span>
-                                    </li>`
+                            infoHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <b>${element.name}</b>
+                                            <span>
+                                                <a href="${downloadURL}&fileName=${element.value}">
+                                                    <i class="las la-arrow-circle-down"></i> @lang('Attachment')
+                                                </a>
+                                            </span>
+                                        </li>`
                         }
                     })
 
-                    html += `</ul>
-                        </div>`
-                }
-
-                let feedback = $(this).data('admin_feedback')
-
-                if (feedback) {
-                    html += `<div class="mt-4 admin-feedback">
-                                <h5>@lang('Admin Feedback')</h5>
-                                <p>${feedback}</p>
+                    infoHtml += `</ul>
                             </div>`
+
+                    $('.userData').html(infoHtml)
                 }
-
-                html += `<button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
-                            @lang('Close')
-                        </button>`
-
-                $('.offcanvas-body').html(html)
             })
 
             $('.cancelBtn').on('click', function () {
