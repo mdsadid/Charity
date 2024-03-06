@@ -2,11 +2,10 @@
 
 namespace App\Lib;
 
-use App\Constants\ManageStatus;
 use App\Models\Plugin;
 
-class Captcha{
-
+class Captcha
+{
     /*
     |--------------------------------------------------------------------------
     | Captcha
@@ -19,46 +18,45 @@ class Captcha{
     */
 
     /**
-    * Google recaptcha2 script
-    *
-    * @return string
-    */
-    public static function reCaptcha(){
+     * Google recaptcha2 script
+     *
+     * @return string
+     */
+    public static function reCaptcha()
+    {
         $reCaptcha = Plugin::where('act', 'google-recaptcha2')->active()->first();
+
         return $reCaptcha ? $reCaptcha->generateScript() : null;
     }
 
     /**
-    * Custom captcha script
-    *
-    * @return string
-    */
-
-    /**
-    * Verify all captcha
-    *
-    * @return boolean
-    */
-    public static function verify(){
+     * Verify all captcha
+     *
+     * @return boolean
+     */
+    public static function verify()
+    {
         $gCaptchaPass = self::verifyGoogleCaptcha();
+
         return $gCaptchaPass ? true : false;
     }
 
     /**
-    * Verify google recaptcha2
-    *
-    * @return boolean
-    */
-    public static function verifyGoogleCaptcha(){
-        $pass = true;
+     * Verify google recaptcha2
+     *
+     * @return boolean
+     */
+    public static function verifyGoogleCaptcha()
+    {
+        $pass          = true;
         $googleCaptcha = Plugin::where('act', 'google-recaptcha2')->active()->first();
+
         if ($googleCaptcha) {
-            $resp = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$googleCaptcha->shortcode->secret_key->value."&response=".request()['g-recaptcha-response']."&remoteip=".getRealIP()), true);
-            if (!$resp['success']) {
-                $pass = false;
-            }
+            $resp = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $googleCaptcha->shortcode->secret_key->value . "&response=" . request()['g-recaptcha-response'] . "&remoteip=" . getRealIP()), true);
+
+            if (!$resp['success']) $pass = false;
         }
+
         return $pass;
     }
-
 }

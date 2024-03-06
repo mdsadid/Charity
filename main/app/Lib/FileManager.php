@@ -2,6 +2,8 @@
 
 namespace App\Lib;
 
+use Exception;
+use InvalidArgumentException;
 use App\Constants\FileDetails;
 use Intervention\Image\Facades\Image;
 
@@ -88,23 +90,19 @@ class FileManager
     {
         //create the directory if doesn't exists
         $path = $this->makeDirectory();
-        if (!$path) throw new \Exception('File could not been created.');
+
+        if (!$path) throw new Exception('File could not be created.');
 
         //remove the old file if exist
-        if ($this->old) {
-            $this->removeFile();
-        }
+        if ($this->old) $this->removeFile();
 
         //get the filename
         $filename       = $this->getFileName();
         $this->filename = $filename;
 
         //upload file or image
-        if ($this->isImage == true) {
-            $this->uploadImage();
-        } else {
-            $this->uploadFile();
-        }
+        if ($this->isImage == true) $this->uploadImage();
+        else $this->uploadFile();
     }
 
     /**
@@ -121,14 +119,14 @@ class FileManager
             $size = explode('x', strtolower($this->size));
             $image->resize($size[0], $size[1]);
         }
+
         //save the image
         $image->save($this->path . '/' . $this->filename);
 
         //save the image as thumbnail version
         if ($this->thumb) {
-            if ($this->old) {
-                $this->removeFile($this->path . '/thumb_' . $this->old);
-            }
+            if ($this->old) $this->removeFile($this->path . '/thumb_' . $this->old);
+
             $thumb = explode('x', $this->thumb);
             Image::make($this->file)->resize($thumb[0], $thumb[1])->save($this->path . '/thumb_' . $this->filename);
         }
@@ -155,6 +153,7 @@ class FileManager
     {
         if (!$location) $location = $this->path;
         if (file_exists($location)) return true;
+
         return mkdir($location, 0755, true);
     }
 
@@ -168,20 +167,18 @@ class FileManager
     function removeDirectory($location = null)
     {
         if (!$location) $location = $this->path;
-        if (!is_dir($location)) {
-            throw new \InvalidArgumentException("$location must be a directory");
-        }
-        if (substr($location, strlen($location) - 1, 1) != '/') {
-            $location .= '/';
-        }
+
+        if (!is_dir($location)) throw new InvalidArgumentException("$location must be a directory");
+
+        if (substr($location, strlen($location) - 1, 1) != '/') $location .= '/';
+
         $files = glob($location . '*', GLOB_MARK);
+
         foreach ($files as $file) {
-            if (is_dir($file)) {
-                static::removeDirectory($file);
-            } else {
-                unlink($file);
-            }
+            if (is_dir($file)) static::removeDirectory($file);
+            else unlink($file);
         }
+
         rmdir($location);
     }
 
@@ -200,6 +197,7 @@ class FileManager
 
         if ($this->thumb) {
             if (!$path) $path = $this->path . '/thumb_' . $this->old;
+
             file_exists($path) && is_file($path) ? @unlink($path) : false;
         }
     }
@@ -227,6 +225,7 @@ class FileManager
 
         if (array_key_exists($method, $filePaths)) {
             $path = json_decode(json_encode($filePaths[$method]));
+
             return $path;
         } else {
             $this->$method(...$args);

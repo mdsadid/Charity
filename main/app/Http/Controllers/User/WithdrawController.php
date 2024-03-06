@@ -90,7 +90,6 @@ class WithdrawController extends Controller
         $withdraw = Withdrawal::with('method', 'user')
             ->where('trx', session()->get('wtrx'))
             ->initiate()
-            ->latest()
             ->firstOrFail();
 
         $method = $withdraw->method;
