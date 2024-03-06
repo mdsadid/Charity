@@ -103,8 +103,8 @@
                             <i class="las la-money-bill-wave"></i>
                         </div>
                         <div class="dashboard-card__txt">
-                            <span class="dashboard-card__number">21</span>
-                            <span class="dashboard-card__title">@lang('Total Withdraw')</span>
+                            <span class="dashboard-card__number">{{ $setting->cur_sym . showAmount(@$widgetData['withdrawalAmount']) }}</span>
+                            <span class="dashboard-card__title">@lang('Withdrawal Amount')</span>
                         </div>
                     </div>
                 </div>

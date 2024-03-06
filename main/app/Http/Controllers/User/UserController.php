@@ -42,8 +42,9 @@ class UserController extends Controller
             ->done()
             ->sum('amount');
 
-        $widgetData['sendDonation'] = Deposit::has('donation')->where('user_id', $user->id)->done()->sum('amount');
-        $widgetData['commentCount'] = Comment::whereIn('campaign_id', $campaigns)->approve()->count();
+        $widgetData['sendDonation']     = Deposit::has('donation')->where('user_id', $user->id)->done()->sum('amount');
+        $widgetData['commentCount']     = Comment::whereIn('campaign_id', $campaigns)->approve()->count();
+        $widgetData['withdrawalAmount'] = $user->withdrawals()->done()->sum('amount');
 
         return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent', 'user', 'widgetData'));
     }
