@@ -139,10 +139,7 @@ class PaymentController extends Controller
 
             $user = User::find($deposit->user_id);
 
-            if ($user) {
-                $user->balance += $deposit->amount;
-                $user->save();
-            } else {
+            if (!$user) {
                 $donationData = $deposit->donation;
                 $user         = [
                     'fullname' => $donationData->full_name,
@@ -155,6 +152,10 @@ class PaymentController extends Controller
             $campaign                 = $deposit->donation->campaign;
             $campaign->raised_amount += $deposit->amount;
             $campaign->save();
+
+            $campaignAuthor           = $campaign->user;
+            $campaignAuthor->balance += $deposit->amount;
+            $campaignAuthor->save();
 
             $transaction                        = new Transaction();
             $transaction->user_id               = $deposit->user_id;

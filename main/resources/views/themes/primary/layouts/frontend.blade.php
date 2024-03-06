@@ -99,7 +99,7 @@
                                             <a href="{{ route('user.withdraw.methods') }}" class="dropdown-menu__link">@lang('Withdraw Money')</a>
                                         </li>
                                         <li class="dropdown-menu__list">
-                                            <a href="#" class="dropdown-menu__link">@lang('Withdraw Log')</a>
+                                            <a href="{{ route('user.withdraw.index') }}" class="dropdown-menu__link">@lang('Withdraw History')</a>
                                         </li>
                                     </ul>
                                 </li>

@@ -6,7 +6,7 @@
             <div class="card custom--card">
                 <div class="card-body">
                     <div class="d-flex justify-content-end mb-3">
-                        <form action="" class="input--group">
+                        <form action="" method="GET" class="input--group">
                             <input type="text" class="form--control" name="search" value="{{ request('search') }}" placeholder="@lang('Search by transaction')">
                             <button type="submit" class="btn btn--sm btn--base">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -106,21 +106,19 @@
     </div>
 
     {{-- Details Modal --}}
-    <div id="detailsModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal custom--modal fade" id="detailsModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title details-modal-title">@lang('Provided Information')</h5>
-                    <span type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="las la-times"></i>
-                    </span>
+                    <h5 class="modal-title fs-5">@lang('Provided Information')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <ul class="list-group userData"></ul>
                     <div class="feedback"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">@lang('Close')</button>
+                    <button type="button" class="btn btn--sm btn--secondary" data-bs-dismiss="modal">@lang('Close')</button>
                 </div>
             </div>
         </div>
@@ -129,10 +127,6 @@
 
 @push('page-style')
     <style>
-        .details-modal-title {
-            color: hsl(var(--black) / 0.6);
-        }
-
         .feedback-heading {
             font-family: var(--body-font);
             font-size: 1.5rem;

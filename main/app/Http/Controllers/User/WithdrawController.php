@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
 use App\Lib\FormProcessor;
-use App\Models\AdminNotification;
-use App\Models\Transaction;
 use App\Models\Withdrawal;
+use App\Models\Transaction;
 use App\Models\WithdrawMethod;
+use App\Constants\ManageStatus;
+use App\Models\AdminNotification;
+use App\Http\Controllers\Controller;
 
 class WithdrawController extends Controller
 {
     function index() {
-        $pageTitle = 'Withdraw History';
-        $withdraws = Withdrawal::where('user_id', auth()->id())->searchable(['trx'])->index()->with('method')->latest()->paginate(getPaginate());
+        $pageTitle   = 'Withdraw History';
+        $withdrawals = Withdrawal::where('user_id', auth()->id())
+            ->with('method')
+            ->index()
+            ->searchable(['trx'])
+            ->latest()
+            ->paginate(getPaginate());
 
-        return view($this->activeTheme . 'user.withdraw.index', compact('pageTitle', 'withdraws'));
+        return view($this->activeTheme . 'user.withdraw.index', compact('pageTitle', 'withdrawals'));
     }
 
     function methods() {
@@ -116,7 +121,7 @@ class WithdrawController extends Controller
         }
 
         if ($withdraw->amount > $user->balance) {
-            $toast[] = ['error', 'Your requested amount exceeds your current balance'];
+            $toast[] = ['error', 'Your requested amount exceeds the current balance'];
 
             return back()->withToasts($toast);
         }
@@ -134,7 +139,7 @@ class WithdrawController extends Controller
         $transaction->post_balance = $user->balance;
         $transaction->charge       = $withdraw->charge;
         $transaction->trx_type     = '-';
-        $transaction->details      = showAmount($withdraw->final_amount) . ' ' . $withdraw->currency . ' Withdraw Via ' . $withdraw->method->name;
+        $transaction->details      = showAmount($withdraw->final_amount) . ' ' . $withdraw->currency . ' Withdraw via ' . $withdraw->method->name;
         $transaction->trx          = $withdraw->trx;
         $transaction->remark       = 'withdraw';
         $transaction->save();
@@ -156,7 +161,7 @@ class WithdrawController extends Controller
             'post_balance'    => showAmount($user->balance),
         ]);
 
-        $toast[] = ['success', 'Withdraw request sent success'];
+        $toast[] = ['success', 'Withdrawal request has submitted'];
 
         return to_route('user.withdraw.index')->withToasts($toast);
     }
