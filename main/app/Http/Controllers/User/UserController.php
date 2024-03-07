@@ -260,7 +260,7 @@ class UserController extends Controller
         return view($this->activeTheme . 'user.donation.receivedLog', compact('pageTitle', 'donations'));
     }
 
-    public function transactions() {
+    function transactions() {
         $pageTitle    = 'Transactions';
         $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
         $transactions = Transaction::where('user_id', auth()->id())

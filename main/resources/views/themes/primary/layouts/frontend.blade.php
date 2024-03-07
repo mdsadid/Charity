@@ -105,7 +105,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="transaction-log.html" class="nav-link">@lang('Transactions')</a>
+                                    <a href="{{ route('user.transactions') }}" class="nav-link">@lang('Transactions')</a>
                                 </li>
 
                                 <li class="nav-item dropdown">
