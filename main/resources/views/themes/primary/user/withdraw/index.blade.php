@@ -18,7 +18,7 @@
                             <tr>
                                 <th>@lang('S.N.')</th>
                                 <th>@lang('Gateway') | @lang('Transaction')</th>
-                                <th>@lang('Date')</th>
+                                <th>@lang('Initiated')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Conversion')</th>
                                 <th>@lang('Status')</th>

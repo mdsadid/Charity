@@ -122,7 +122,7 @@ class WithdrawController extends Controller
         $transaction->post_balance = $user->balance;
         $transaction->charge       = 0;
         $transaction->trx_type     = '+';
-        $transaction->details      = showAmount($withdraw->amount) . ' ' . bs('cur_text') . ' Refunded from withdrawal cancellation';
+        $transaction->details      = showAmount($withdraw->amount) . ' ' . bs('site_cur') . ' refunded from withdrawal cancellation';
         $transaction->trx          = $withdraw->trx;
         $transaction->remark       = 'withdraw_reject';
         $transaction->save();

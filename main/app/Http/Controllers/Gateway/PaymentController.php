@@ -162,8 +162,6 @@ class PaymentController extends Controller
             $transaction->amount                = $deposit->amount;
             $transaction->charge                = $deposit->charge;
             $transaction->post_balance          = $user->balance ?? 0;
-            $transaction->campaign_id           = $campaign->id;
-            $transaction->campaign_post_balance = $campaign->raised_amount;
             $transaction->trx_type              = '+';
             $transaction->details               = 'Donation Via ' . $deposit->gatewayCurrency()->name;
             $transaction->trx                   = $deposit->trx;

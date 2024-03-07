@@ -11,6 +11,7 @@ use App\Models\SiteData;
 use App\Constants\ManageStatus;
 use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
+use App\Models\Deposit;
 use App\Models\Donation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
@@ -113,10 +114,8 @@ class WebsiteController extends Controller
             ->orderby('method_code')
             ->get();
 
-        $donations = Donation::where('campaign_id', $campaignData->id)
-            ->withWhereHas('deposit', function ($query) {
-                $query->done();
-            })
+        $donations = Deposit::where('campaign_id', $campaignData->id)
+            ->done()
             ->latest()
             ->limit(5)
             ->get();

@@ -50,11 +50,11 @@ class Campaign extends Model
     }
 
     /**
-     * Get the donations for the campaign.
+     * Get the deposits for the campaign.
      */
-    public function donations()
+    public function deposits()
     {
-        return $this->hasMany(Donation::class);
+        return $this->hasMany(Deposit::class);
     }
 
     /**
@@ -131,16 +131,14 @@ class Campaign extends Model
     {
         return Attribute::make(
             get: function () {
-                if ($this->status == ManageStatus::CAMPAIGN_PENDING) {
-                    $html = '<span class="badge bg-label-warning">' . trans('Pending') . '</span>';
-                } else if ($this->status == ManageStatus::CAMPAIGN_REJECTED) {
-                    $html = '<span>-</span>';
+                if ($this->status == ManageStatus::CAMPAIGN_PENDING || $this->status == ManageStatus::CAMPAIGN_REJECTED) {
+                    $html = '<span>N/A</span>';
                 } else if ($this->isRunning()) {
                     $html = '<span class="badge bg-label-success">' . trans('Running') . '</span>';
                 } else if ($this->isExpired()) {
                     $html = '<span class="badge bg-label-secondary">' . trans('Expired') . '</span>';
                 } else {
-                    $html = '<span class="badge bg-label-info">' . trans('Not Started Yet') . '</span>';
+                    $html = '<span class="badge bg-label-info">' . trans('Upcoming') . '</span>';
                 }
 
                 return $html;

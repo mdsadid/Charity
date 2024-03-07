@@ -19,11 +19,11 @@
                                 </div>
                                 <hr class="d-none d-sm-block d-lg-none me-4">
                             </a>
-                            <a href="{{ route('admin.deposit.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
+                            <a href="{{ route('admin.donations.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
                                 <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
-                                        <h3 class="mb-1">{{ showAmount($totalDeposit) }} {{ __($setting->site_cur) }}</h3>
-                                        <p class="mb-0">@lang('Total Deposits')</p>
+                                        <h3 class="mb-1">{{ showAmount($totalReceivedDonation) }} {{ __($setting->site_cur) }}</h3>
+                                        <p class="mb-0">@lang('Total Received Donation')</p>
                                     </div>
                                     <span class="badge bg-label-success rounded p-2 me-sm-4">
                                         <i class="las la-wallet fs-3"></i>
@@ -68,7 +68,7 @@
                 <div class="card-body">
                     <div class="row g-2">
                         <div class="col-lg-3 col-sm-6">
-                            <a href="{{route('admin.user.login', $user->id)}}" target="_blank" class="btn btn-label-info w-100">
+                            <a href="{{ route('admin.user.login', $user->id) }}" target="_blank" class="btn btn-label-info w-100">
                                 <span class="las la-sign-in-alt me-1"></span>@lang('Login as User')
                             </a>
                         </div>
@@ -102,7 +102,7 @@
     <div class="row">
         <div class="col-xxl">
             <div class="card mb-4">
-                <h5 class="card-header">@lang('Information About')  {{ $user->fullname }}</h5>
+                <h5 class="card-header">@lang('Information About') {{ $user->fullname }}</h5>
                 <hr class="mt-0">
                 <form class="card-body" action="{{ route('admin.user.update', $user->id) }}" method="POST">
                     @csrf
@@ -141,7 +141,7 @@
                                 <label class="col-lg-3 col-sm-4 col-form-label required">@lang('Country')</label>
                                 <div class="col-lg-9 col-sm-8">
                                     <select class="form-select" name="country" required>
-                                        @foreach($countries as $key => $country)
+                                        @foreach ($countries as $key => $country)
                                             <option data-mobile_code="{{ $country->dial_code }}" value="{{ $key }}">{{ __($country->country) }}</option>
                                         @endforeach
                                     </select>
@@ -174,7 +174,7 @@
                                 <label class="col-8 col-form-label required">@lang('Email Confirmation')</label>
                                 <div class="col-4 d-flex justify-content-end">
                                     <label class="switch me-0">
-                                        <input type="checkbox" class="switch-input" name="ec" @if($user->ec) checked @endif>
+                                        <input type="checkbox" class="switch-input" name="ec" @if ($user->ec) checked @endif>
                                         @include('admin.partials.switcher')
                                     </label>
                                 </div>
@@ -186,7 +186,7 @@
                                 <label class="col-8 col-form-label required">@lang('Mobile Confirmation')</label>
                                 <div class="col-4 d-flex justify-content-end">
                                     <label class="switch me-0">
-                                        <input type="checkbox" class="switch-input" name="sc" @if($user->sc) checked @endif>
+                                        <input type="checkbox" class="switch-input" name="sc" @if ($user->sc) checked @endif>
                                         @include('admin.partials.switcher')
                                     </label>
                                 </div>
@@ -198,7 +198,7 @@
                                 <label class="col-8 col-form-label required">@lang('2FA Confirmation')</label>
                                 <div class="col-4 d-flex justify-content-end">
                                     <label class="switch me-0">
-                                        <input type="checkbox" class="switch-input" name="ts" @if($user->ts) checked @endif>
+                                        <input type="checkbox" class="switch-input" name="ts" @if ($user->ts) checked @endif>
                                         @include('admin.partials.switcher')
                                     </label>
                                 </div>
@@ -210,7 +210,7 @@
                                 <label class="col-8 col-form-label required">@lang('KYC Confirmation')</label>
                                 <div class="col-4 d-flex justify-content-end">
                                     <label class="switch me-0">
-                                        <input type="checkbox" class="switch-input" name="kc" @if($user->kc == ManageStatus::VERIFIED) checked @endif>
+                                        <input type="checkbox" class="switch-input" name="kc" @if ($user->kc == ManageStatus::VERIFIED) checked @endif>
                                         @include('admin.partials.switcher')
                                     </label>
                                 </div>
@@ -218,7 +218,7 @@
                             <hr class="d-none d-sm-block d-lg-none me-4">
                         </div>
                     </div>
-                    
+
                     <div class="row pt-4">
                         <div class="col-12 text-center">
                             <button type="submit" class="btn btn-primary me-2">@lang('Submit')</button>
@@ -231,7 +231,7 @@
     </div>
 
     <div class="modal fade" id="balanceUpdateModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">   
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <form class="modal-content" action="{{ route('admin.user.add.sub.balance', $user->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="act">
@@ -309,7 +309,7 @@
                             @endif
                         </div>
                     </div>
-    
+
                     <div class="modal-footer border-0 justify-content-center">
                         <button type="submit" class="btn btn-primary">@lang('Yes')</button>
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
@@ -321,40 +321,40 @@
 @endsection
 
 @push('page-script')
-<script>
-    (function($){
-        "use strict";
+    <script>
+        (function($) {
+            "use strict";
 
-        $('.balanceUpdateBtn').on('click', function () {
-            let modal = $('#balanceUpdateModal');
-            let act   = $(this).data('act');
+            $('.balanceUpdateBtn').on('click', function() {
+                let modal = $('#balanceUpdateModal');
+                let act = $(this).data('act');
 
-            modal.find('[name=act]').val(act);
+                modal.find('[name=act]').val(act);
 
-            if (act == 'add') {
-                modal.find('.modal-title').text(`@lang('Add Balance')`);
-            }else{
-                modal.find('.modal-title').text(`@lang('Subtract Balance')`);
-            }
+                if (act == 'add') {
+                    modal.find('.modal-title').text(`@lang('Add Balance')`);
+                } else {
+                    modal.find('.modal-title').text(`@lang('Subtract Balance')`);
+                }
 
-            modal.modal('show');
-        });
+                modal.modal('show');
+            });
 
-        let mobileElement = $('.mobile-code');
+            let mobileElement = $('.mobile-code');
 
-        $('[name=country]').change(function() {
-            mobileElement.text(`+${$('[name=country] :selected').data('mobile_code')}`);
-        });
+            $('[name=country]').change(function() {
+                mobileElement.text(`+${$('[name=country] :selected').data('mobile_code')}`);
+            });
 
-        $('[name=country]').val('{{@$user->country_code}}');
+            $('[name=country]').val('{{ @$user->country_code }}');
 
-        let dialCode     = $('[name=country] :selected').data('mobile_code');
-        let mobileNumber = `{{ $user->mobile }}`;
-        mobileNumber     = mobileNumber.replace(dialCode,'');
+            let dialCode = $('[name=country] :selected').data('mobile_code');
+            let mobileNumber = `{{ $user->mobile }}`;
+            mobileNumber = mobileNumber.replace(dialCode, '');
 
-        $('[name=mobile]').val(mobileNumber);
+            $('[name=mobile]').val(mobileNumber);
 
-        mobileElement.text(`+${dialCode}`);
-    })(jQuery);
-</script>
+            mobileElement.text(`+${dialCode}`);
+        })(jQuery);
+    </script>
 @endpush

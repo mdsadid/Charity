@@ -62,14 +62,20 @@ class UserController extends Controller
     }
 
     function details($id) {
-        $user              = User::findOrFail($id);
-        $pageTitle         = 'Details - ' . $user->username;
-        $totalDeposit      = Deposit::where('user_id', $user->id)->done()->sum('amount');
-        $totalWithdrawal   = Withdrawal::where('user_id', $user->id)->done()->sum('amount');
-        $totalTransactions = Transaction::where('user_id', $user->id)->count();
-        $countries         = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $user                  = User::with(['campaigns', 'withdrawals', 'transactions'])->findOrFail($id);
+        $pageTitle             = 'Details - ' . $user->username;
+        $campaigns             = $user->campaigns->pluck('id');
+        $totalReceivedDonation = Deposit::whereHas('donation', function ($query) use ($campaigns) {
+            $query->whereIn('campaign_id', $campaigns);
+        })
+            ->done()
+            ->sum('amount');
 
-        return view('admin.user.detail', compact('pageTitle', 'user', 'totalDeposit', 'totalWithdrawal', 'totalTransactions', 'countries'));
+        $totalWithdrawal       = $user->withdrawals()->done()->sum('amount');
+        $totalTransactions     = $user->transactions->count();
+        $countries             = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+
+        return view('admin.user.detail', compact('pageTitle', 'user', 'totalReceivedDonation', 'totalWithdrawal', 'totalTransactions', 'countries'));
     }
 
     function update($id) {

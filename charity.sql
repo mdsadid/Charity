@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 07, 2024 at 07:58 AM
+-- Generation Time: Mar 07, 2024 at 12:52 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.2
 
@@ -245,15 +245,22 @@ CREATE TABLE `contacts` (
 
 CREATE TABLE `deposits` (
   `id` bigint UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `campaign_id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL DEFAULT '0' COMMENT 'this user is actually the donor',
+  `donor_type` tinyint UNSIGNED NOT NULL COMMENT '1 -> known donor, 0 -> anonymous donor',
+  `full_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `receiver_id` int UNSIGNED NOT NULL,
   `method_code` int UNSIGNED NOT NULL DEFAULT '0',
   `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `method_currency` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `rate` decimal(28,8) NOT NULL DEFAULT '0.00000000',
-  `final_amo` decimal(28,8) NOT NULL DEFAULT '0.00000000',
-  `detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `btc_amo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `final_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `btc_amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `btc_wallet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trx` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_try` int NOT NULL DEFAULT '0',
@@ -268,50 +275,16 @@ CREATE TABLE `deposits` (
 -- Dumping data for table `deposits`
 --
 
-INSERT INTO `deposits` (`id`, `user_id`, `method_code`, `amount`, `method_currency`, `charge`, `rate`, `final_amo`, `detail`, `btc_amo`, `btc_wallet`, `trx`, `payment_try`, `status`, `from_api`, `admin_feedback`, `created_at`, `updated_at`) VALUES
-(117, 12, 111, 100.00000000, 'AUD', 10.00000000, 0.01400000, 1.54000000, NULL, '0', '', '9J4RK1Q4RRQM', 0, 1, 0, NULL, '2024-02-29 07:34:30', '2024-02-29 07:35:31'),
-(119, 12, 1002, 400.00000000, 'TRY', 5.00000000, 0.28000000, 113.40000000, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"James Marshall\"},{\"name\":\"Email\",\"type\":\"text\",\"value\":\"james@gmail.com\"},{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"ABC123\"}]', '0', '', 'XQKOSCZ6DATE', 0, 1, 0, NULL, '2024-02-29 09:24:55', '2024-03-03 06:18:37'),
-(120, 0, 111, 1000.00000000, 'USD', 11.00000000, 0.00910000, 9.20010000, NULL, '0', '', 'X6YBGBMXSD1F', 0, 1, 0, NULL, '2024-02-29 10:43:36', '2024-02-29 10:45:09'),
-(124, 13, 1003, 700.00000000, 'IRR', 0.00000000, 382.53000000, 267771.00000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"XYZ369\"}]', '0', '', '174YZK1OO5P4', 0, 3, 0, 'Your recent donation has been rejected due to discrepancies in the payment details provided.', '2024-03-03 09:25:35', '2024-03-03 10:23:46'),
-(125, 13, 1000, 900.00000000, 'USD', 46.00000000, 0.01000000, 9.46000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"IJK159\"},{\"name\":\"Gender\",\"type\":\"select\",\"value\":\"Male\"}]', '0', '', 'OCKWHHUJHHRX', 0, 1, 0, NULL, '2024-03-03 10:38:41', '2024-03-03 10:41:07'),
-(126, 13, 1000, 300.00000000, 'USD', 16.00000000, 0.01000000, 3.16000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"MNO357\"},{\"name\":\"Gender\",\"type\":\"select\",\"value\":\"Male\"}]', '0', '', '87J9OX9R6TM9', 0, 3, 0, 'Unfortunately, your donation has been rejected due to insufficient funds in the provided payment account.', '2024-03-03 10:49:55', '2024-03-03 10:56:40'),
-(127, 13, 1002, 800.00000000, 'TRY', 9.00000000, 0.28000000, 226.52000000, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"David Gonzalez\"},{\"name\":\"Email\",\"type\":\"text\",\"value\":\"david@gmail.com\"},{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"QAZXSW258741\"}]', '0', '', 'XYH3PQV9YUUZ', 0, 2, 0, NULL, '2024-03-03 11:00:12', '2024-03-03 11:01:31'),
-(128, 13, 1003, 250.00000000, 'IRR', 0.00000000, 382.53000000, 95632.50000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"LKJHGFDSA\"},{\"name\":\"Receipt\",\"type\":\"file\",\"value\":\"2024\\/03\\/04\\/65e566636292a1709532771.png\"}]', '0', '', 'KQBY91YFMZH1', 0, 1, 0, NULL, '2024-03-04 06:11:15', '2024-03-04 06:15:07'),
-(131, 0, 111, 600.00000000, 'USD', 7.00000000, 0.00910000, 5.52370000, NULL, '0', '', 'NMD15VWBSQ2K', 0, 1, 0, NULL, '2024-03-07 07:24:45', '2024-03-07 07:25:03');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `donations`
---
-
-CREATE TABLE `donations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `deposit_id` bigint UNSIGNED NOT NULL,
-  `campaign_id` bigint UNSIGNED NOT NULL,
-  `type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `full_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `donations`
---
-
-INSERT INTO `donations` (`id`, `deposit_id`, `campaign_id`, `type`, `full_name`, `email`, `phone`, `country`, `created_at`, `updated_at`) VALUES
-(87, 117, 14, 'known', 'James Marshall', 'james@gmail.com', '+817-290-8546', 'United States', '2024-02-29 07:34:30', '2024-02-29 07:34:30'),
-(89, 119, 13, 'known', 'James Marshall', 'james@gmail.com', '+817-290-8546', 'United States', '2024-02-29 09:24:55', '2024-02-29 09:24:55'),
-(90, 120, 17, 'known', 'Camryn Morar', 'camryn@gmail.com', '(619) 561-1846', 'United States', '2024-02-29 10:43:36', '2024-02-29 10:43:36'),
-(93, 124, 18, 'known', 'David Gonzalez', 'david@gmail.com', '+912-307-5602', 'United States', '2024-03-03 09:25:35', '2024-03-03 09:25:35'),
-(94, 125, 18, 'known', 'David Gonzalez', 'david@gmail.com', '+912-307-5602', 'United States', '2024-03-03 10:38:41', '2024-03-03 10:38:41'),
-(95, 126, 14, 'known', 'David Gonzalez', 'david@gmail.com', '+912-307-5602', 'United States', '2024-03-03 10:49:55', '2024-03-03 10:49:55'),
-(96, 127, 13, 'known', 'David Gonzalez', 'david@gmail.com', '+912-307-5602', 'United States', '2024-03-03 11:00:12', '2024-03-03 11:00:12'),
-(97, 128, 13, 'known', 'David Gonzalez', 'david@gmail.com', '+912-307-5602', 'United States', '2024-03-04 06:11:15', '2024-03-04 06:11:15'),
-(100, 131, 17, 'known', 'Joseph Weiss', 'joseph@gmail.com', '321-412-0628', 'United Kingdom', '2024-03-07 07:24:45', '2024-03-07 07:24:45');
+INSERT INTO `deposits` (`id`, `campaign_id`, `user_id`, `donor_type`, `full_name`, `email`, `phone`, `country`, `receiver_id`, `method_code`, `amount`, `method_currency`, `charge`, `rate`, `final_amount`, `details`, `btc_amount`, `btc_wallet`, `trx`, `payment_try`, `status`, `from_api`, `admin_feedback`, `created_at`, `updated_at`) VALUES
+(117, 0, 12, 0, NULL, NULL, NULL, NULL, 0, 111, 100.00000000, 'AUD', 10.00000000, 0.01400000, 1.54000000, NULL, '0', '', '9J4RK1Q4RRQM', 0, 1, 0, NULL, '2024-02-29 07:34:30', '2024-02-29 07:35:31'),
+(119, 0, 12, 0, NULL, NULL, NULL, NULL, 0, 1002, 400.00000000, 'TRY', 5.00000000, 0.28000000, 113.40000000, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"James Marshall\"},{\"name\":\"Email\",\"type\":\"text\",\"value\":\"james@gmail.com\"},{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"ABC123\"}]', '0', '', 'XQKOSCZ6DATE', 0, 1, 0, NULL, '2024-02-29 09:24:55', '2024-03-03 06:18:37'),
+(120, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 111, 1000.00000000, 'USD', 11.00000000, 0.00910000, 9.20010000, NULL, '0', '', 'X6YBGBMXSD1F', 0, 1, 0, NULL, '2024-02-29 10:43:36', '2024-02-29 10:45:09'),
+(124, 0, 13, 0, NULL, NULL, NULL, NULL, 0, 1003, 700.00000000, 'IRR', 0.00000000, 382.53000000, 267771.00000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"XYZ369\"}]', '0', '', '174YZK1OO5P4', 0, 3, 0, 'Your recent donation has been rejected due to discrepancies in the payment details provided.', '2024-03-03 09:25:35', '2024-03-03 10:23:46'),
+(125, 0, 13, 0, NULL, NULL, NULL, NULL, 0, 1000, 900.00000000, 'USD', 46.00000000, 0.01000000, 9.46000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"IJK159\"},{\"name\":\"Gender\",\"type\":\"select\",\"value\":\"Male\"}]', '0', '', 'OCKWHHUJHHRX', 0, 1, 0, NULL, '2024-03-03 10:38:41', '2024-03-03 10:41:07'),
+(126, 0, 13, 0, NULL, NULL, NULL, NULL, 0, 1000, 300.00000000, 'USD', 16.00000000, 0.01000000, 3.16000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"MNO357\"},{\"name\":\"Gender\",\"type\":\"select\",\"value\":\"Male\"}]', '0', '', '87J9OX9R6TM9', 0, 3, 0, 'Unfortunately, your donation has been rejected due to insufficient funds in the provided payment account.', '2024-03-03 10:49:55', '2024-03-03 10:56:40'),
+(127, 0, 13, 0, NULL, NULL, NULL, NULL, 0, 1002, 800.00000000, 'TRY', 9.00000000, 0.28000000, 226.52000000, '[{\"name\":\"Full Name\",\"type\":\"text\",\"value\":\"David Gonzalez\"},{\"name\":\"Email\",\"type\":\"text\",\"value\":\"david@gmail.com\"},{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"QAZXSW258741\"}]', '0', '', 'XYH3PQV9YUUZ', 0, 2, 0, NULL, '2024-03-03 11:00:12', '2024-03-03 11:01:31'),
+(128, 0, 13, 0, NULL, NULL, NULL, NULL, 0, 1003, 250.00000000, 'IRR', 0.00000000, 382.53000000, 95632.50000000, '[{\"name\":\"Trx Number\",\"type\":\"text\",\"value\":\"LKJHGFDSA\"},{\"name\":\"Receipt\",\"type\":\"file\",\"value\":\"2024\\/03\\/04\\/65e566636292a1709532771.png\"}]', '0', '', 'KQBY91YFMZH1', 0, 1, 0, NULL, '2024-03-04 06:11:15', '2024-03-04 06:15:07'),
+(131, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 111, 600.00000000, 'USD', 7.00000000, 0.00910000, 5.52370000, NULL, '0', '', 'NMD15VWBSQ2K', 0, 1, 0, NULL, '2024-03-07 07:24:45', '2024-03-07 07:25:03');
 
 -- --------------------------------------------------------
 
@@ -536,8 +509,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (39, '2024_02_04_152936_create_galleries_table', 19),
 (43, '2024_02_14_150246_create_comments_table', 20),
 (45, '2024_02_22_110001_add_preferred_amounts_to_campaigns_table', 21),
-(49, '2024_02_22_132250_create_donations_table', 22),
-(51, '2024_02_25_114249_alter_transactions_table', 23);
+(53, '2024_03_07_173101_alter_deposits_table', 22);
 
 -- --------------------------------------------------------
 
@@ -794,8 +766,6 @@ CREATE TABLE `transactions` (
   `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `post_balance` decimal(28,8) NOT NULL DEFAULT '0.00000000',
-  `campaign_id` int UNSIGNED DEFAULT NULL,
-  `campaign_post_balance` decimal(28,8) UNSIGNED NOT NULL DEFAULT '0.00000000',
   `trx_type` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trx` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `details` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -808,20 +778,20 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `user_id`, `amount`, `charge`, `post_balance`, `campaign_id`, `campaign_post_balance`, `trx_type`, `trx`, `details`, `remark`, `created_at`, `updated_at`) VALUES
-(36, 12, 100.00000000, 10.00000000, 0.00000000, 14, 100.00000000, '+', '9J4RK1Q4RRQM', 'Donation Via Stripe Storefront - AUD', 'deposit', '2024-02-29 07:35:31', '2024-02-29 07:35:31'),
-(37, 0, 1000.00000000, 11.00000000, 0.00000000, 17, 1000.00000000, '+', 'X6YBGBMXSD1F', 'Donation Via Stripe Storefront - USD', 'deposit', '2024-02-29 10:45:09', '2024-02-29 10:45:09'),
-(38, 12, 400.00000000, 5.00000000, 0.00000000, 13, 400.00000000, '+', 'XQKOSCZ6DATE', 'Donation Via Manual Gateway Three', 'deposit', '2024-03-03 06:18:37', '2024-03-03 06:18:37'),
-(39, 13, 900.00000000, 46.00000000, 0.00000000, 18, 900.00000000, '+', 'OCKWHHUJHHRX', 'Donation Via Manual Gateway One', 'deposit', '2024-03-03 10:41:07', '2024-03-03 10:41:07'),
-(40, 13, 250.00000000, 0.00000000, 0.00000000, 13, 650.00000000, '+', 'KQBY91YFMZH1', 'Donation Via Manual Gateway Four', 'deposit', '2024-03-04 06:15:07', '2024-03-04 06:15:07'),
-(41, 12, 100.00000000, 1.00000000, 1550.00000000, NULL, 0.00000000, '-', 'GWEC7XJ4WG9S', '66.33 AFN Withdraw via InstantCash', 'withdraw', '2024-03-06 06:44:56', '2024-03-06 06:44:56'),
-(42, 12, 150.00000000, 1.50000000, 1400.00000000, NULL, 0.00000000, '-', 'DDA38KA98HM1', '377.19 PKR Withdraw via EasyCashOut', 'withdraw', '2024-03-06 11:01:14', '2024-03-06 11:01:14'),
-(43, 12, 300.00000000, 4.00000000, 1100.00000000, NULL, 0.00000000, '-', 'FYMH3DACAO9N', '12.73 MYR Withdraw via TurboCashOut', 'withdraw', '2024-03-06 11:04:19', '2024-03-06 11:04:19'),
-(44, 12, 300.00000000, 0.00000000, 1400.00000000, NULL, 0.00000000, '+', 'FYMH3DACAO9N', '300.00  Refunded from withdrawal cancellation', 'withdraw_reject', '2024-03-06 11:07:41', '2024-03-06 11:07:41'),
-(46, 0, 600.00000000, 7.00000000, 0.00000000, 17, 1600.00000000, '+', 'NMD15VWBSQ2K', 'Donation Via Stripe Storefront - USD', 'deposit', '2024-03-07 07:25:03', '2024-03-07 07:25:03'),
-(47, 13, 400.00000000, 5.00000000, 1200.00000000, NULL, 0.00000000, '-', 'Q9CMAWJ3ROXP', '16.99 MYR Withdraw via TurboCashOut', 'withdraw', '2024-03-07 07:28:40', '2024-03-07 07:28:40'),
-(48, 13, 300.00000000, 3.00000000, 900.00000000, NULL, 0.00000000, '-', 'Z1HO4ROCK8R1', '198.99 AFN Withdraw via InstantCash', 'withdraw', '2024-03-07 07:34:59', '2024-03-07 07:34:59'),
-(49, 13, 300.00000000, 0.00000000, 1200.00000000, NULL, 0.00000000, '+', 'Z1HO4ROCK8R1', '300.00  Refunded from withdrawal cancellation', 'withdraw_reject', '2024-03-07 07:37:03', '2024-03-07 07:37:03');
+INSERT INTO `transactions` (`id`, `user_id`, `amount`, `charge`, `post_balance`, `trx_type`, `trx`, `details`, `remark`, `created_at`, `updated_at`) VALUES
+(36, 12, 100.00000000, 10.00000000, 0.00000000, '+', '9J4RK1Q4RRQM', 'Donation Via Stripe Storefront - AUD', 'deposit', '2024-02-29 07:35:31', '2024-02-29 07:35:31'),
+(37, 0, 1000.00000000, 11.00000000, 0.00000000, '+', 'X6YBGBMXSD1F', 'Donation Via Stripe Storefront - USD', 'deposit', '2024-02-29 10:45:09', '2024-02-29 10:45:09'),
+(38, 12, 400.00000000, 5.00000000, 0.00000000, '+', 'XQKOSCZ6DATE', 'Donation Via Manual Gateway Three', 'deposit', '2024-03-03 06:18:37', '2024-03-03 06:18:37'),
+(39, 13, 900.00000000, 46.00000000, 0.00000000, '+', 'OCKWHHUJHHRX', 'Donation Via Manual Gateway One', 'deposit', '2024-03-03 10:41:07', '2024-03-03 10:41:07'),
+(40, 13, 250.00000000, 0.00000000, 1150.00000000, '+', 'KQBY91YFMZH1', 'Donation Via Manual Gateway Four', 'deposit', '2024-03-04 06:15:07', '2024-03-04 06:15:07'),
+(41, 12, 100.00000000, 1.00000000, 1550.00000000, '-', 'GWEC7XJ4WG9S', '66.33 AFN Withdraw via InstantCash', 'withdraw', '2024-03-06 06:44:56', '2024-03-06 06:44:56'),
+(42, 12, 150.00000000, 1.50000000, 1400.00000000, '-', 'DDA38KA98HM1', '377.19 PKR Withdraw via EasyCashOut', 'withdraw', '2024-03-06 11:01:14', '2024-03-06 11:01:14'),
+(43, 12, 300.00000000, 4.00000000, 1100.00000000, '-', 'FYMH3DACAO9N', '12.73 MYR Withdraw via TurboCashOut', 'withdraw', '2024-03-06 11:04:19', '2024-03-06 11:04:19'),
+(44, 12, 300.00000000, 0.00000000, 1400.00000000, '+', 'FYMH3DACAO9N', '300.00  Refunded from withdrawal cancellation', 'withdraw_reject', '2024-03-06 11:07:41', '2024-03-06 11:07:41'),
+(46, 0, 600.00000000, 7.00000000, 0.00000000, '+', 'NMD15VWBSQ2K', 'Donation Via Stripe Storefront - USD', 'deposit', '2024-03-07 07:25:03', '2024-03-07 07:25:03'),
+(47, 13, 400.00000000, 5.00000000, 1200.00000000, '-', 'Q9CMAWJ3ROXP', '16.99 MYR Withdraw via TurboCashOut', 'withdraw', '2024-03-07 07:28:40', '2024-03-07 07:28:40'),
+(48, 13, 300.00000000, 3.00000000, 900.00000000, '-', 'Z1HO4ROCK8R1', '198.99 AFN Withdraw via InstantCash', 'withdraw', '2024-03-07 07:34:59', '2024-03-07 07:34:59'),
+(49, 13, 300.00000000, 0.00000000, 1200.00000000, '+', 'Z1HO4ROCK8R1', '300.00  Refunded from withdrawal cancellation', 'withdraw_reject', '2024-03-07 07:37:03', '2024-03-07 07:37:03');
 
 -- --------------------------------------------------------
 
@@ -995,14 +965,6 @@ ALTER TABLE `deposits`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `donations`
---
-ALTER TABLE `donations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `donations_deposit_id_foreign` (`deposit_id`),
-  ADD KEY `donations_campaign_id_foreign` (`campaign_id`);
-
---
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -1169,12 +1131,6 @@ ALTER TABLE `deposits`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
--- AUTO_INCREMENT for table `donations`
---
-ALTER TABLE `donations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
---
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -1214,7 +1170,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1293,13 +1249,6 @@ ALTER TABLE `campaigns`
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_campaign_id_foreign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`),
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `donations`
---
-ALTER TABLE `donations`
-  ADD CONSTRAINT `donations_campaign_id_foreign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`),
-  ADD CONSTRAINT `donations_deposit_id_foreign` FOREIGN KEY (`deposit_id`) REFERENCES `deposits` (`id`);
 
 --
 -- Constraints for table `galleries`

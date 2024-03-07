@@ -19,7 +19,7 @@
                                 <th>@lang('S.N.')</th>
                                 <th>@lang('Campaign')</th>
                                 <th>@lang('Gateway') | @lang('Trx')</th>
-                                <th>@lang('Date')</th>
+                                <th>@lang('Initiated')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Conversion')</th>
                                 <th>@lang('Action')</th>
