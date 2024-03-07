@@ -93,6 +93,7 @@ class WithdrawController extends Controller
             'rate'            => showAmount($withdraw->rate),
             'trx'             => $withdraw->trx,
             'admin_details'   => request('admin_feedback'),
+            'post_balance'    => showAmount($withdraw->user->balance),
         ]);
 
         $toast[] = ['success', 'Withdrawal approval success'];

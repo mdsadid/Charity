@@ -77,15 +77,15 @@
                                         <div>
                                             <span class="text-primary">{{ __($deposit->gateway->name) }}</span>
                                             <br>
-                                            <small data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="@lang('Transaction Number')">
+                                            <small title="@lang('Transaction Number')">
                                                 {{ $deposit->trx }}
                                             </small>
                                         </div>
                                     </td>
                                     <td>
-                                        {{ $setting->cur_sym . showAmount($deposit->amount) }} + <span class="text-success" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="@lang('Charge')">{{ showAmount($deposit->charge) }}</span>
+                                        {{ $setting->cur_sym . showAmount($deposit->amount) }} + <span class="text-danger" title="@lang('Charge')">{{ showAmount($deposit->charge) }}</span>
                                         <br>
-                                        <strong data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="@lang('Amount With Charge')">
+                                        <strong title="@lang('Amount With Charge')">
                                             {{ showAmount($deposit->amount + $deposit->charge) . ' ' . __($setting->site_cur) }}
                                         </strong>
                                     </td>
@@ -221,10 +221,6 @@
     <script>
         (function($) {
             "use strict"
-
-            $('[data-bs-toggle="tooltip"]').each(function(index, element) {
-                new bootstrap.Tooltip(element)
-            })
 
             $('.donorViewBtn').on('click', function() {
                 let donorType    = $(this).data('donor_type')

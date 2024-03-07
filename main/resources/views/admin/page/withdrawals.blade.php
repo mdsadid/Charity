@@ -69,9 +69,11 @@
                             @forelse ($withdrawals as $withdraw)
                                 <tr>
                                     <td>
-                                        <span class="fw-bold"> <a href="{{ appendQuery('method', @$withdraw->method->id) }}">{{ __(@$withdraw->method->name) }}</a> </span>
+                                        <span class="fw-bold">
+                                            <a href="{{ appendQuery('method', @$withdraw->method->id) }}">{{ __(@$withdraw->method->name) }}</a>
+                                        </span>
                                         <br>
-                                        <small> {{ $withdraw->trx }} </small>
+                                        <small title="@lang('Transaction Number')">{{ $withdraw->trx }}</small>
                                     </td>
                                     <td>
                                         {{ showDateTime($withdraw->created_at) }}<br>
@@ -84,9 +86,9 @@
                                         </span>
                                     </td>
                                     <td>
-                                        {{ __($setting->cur_sym) }}{{ showAmount($withdraw->amount) }} + <span class="text-danger" title="@lang('Charge')">{{ showAmount($withdraw->charge) }} </span>
+                                        {{ __($setting->cur_sym) }}{{ showAmount($withdraw->amount) }} - <span class="text-danger" title="@lang('Charge')">{{ showAmount($withdraw->charge) }}</span>
                                         <br>
-                                        <strong title="@lang('Amount after charge')">
+                                        <strong title="@lang('Amount Without Charge')">
                                             {{ showAmount($withdraw->amount - $withdraw->charge) }} {{ __($setting->site_cur) }}
                                         </strong>
                                     </td>

@@ -110,12 +110,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fs-5">@lang('Provided Information')</h5>
+                    <h5 class="modal-title fs-5">@lang('Details')</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <ul class="list-group userData"></ul>
-                    <div class="feedback"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--sm btn--secondary" data-bs-dismiss="modal">@lang('Close')</button>
@@ -124,16 +123,6 @@
         </div>
     </div>
 @endsection
-
-@push('page-style')
-    <style>
-        .feedback-heading {
-            font-family: var(--body-font);
-            font-size: 1.5rem;
-            color: hsl(var(--secondary));
-        }
-    </style>
-@endpush
 
 @push('page-script')
     <script>
@@ -173,19 +162,14 @@
                     })
                 }
 
-                modal.find('.userData').html(html)
-                let adminFeedback = ''
-
                 if ($(this).data('admin_feedback') != undefined) {
-                    adminFeedback += `<div class="mt-4">
-                                        <h5 class="mb-2 feedback-heading">@lang('Admin Feedback')</h5>
-                                        <p class="mb-0">${$(this).data('admin_feedback')}</p>
-                                    </div>`
-                } else {
-                    adminFeedback += ''
+                    html += `<li class="list-group-item">
+                                <span class="text--base">@lang('Admin Feedback')</span>
+                                <p class="mt-2 mb-0 fs-16">${$(this).data('admin_feedback')}</p>
+                            </li>`
                 }
 
-                modal.find('.feedback').html(adminFeedback)
+                modal.find('.userData').html(html)
                 modal.modal('show')
             })
         })(jQuery)

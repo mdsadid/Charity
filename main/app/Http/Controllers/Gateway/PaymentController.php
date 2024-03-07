@@ -174,7 +174,7 @@ class PaymentController extends Controller
                 $adminNotification            = new AdminNotification();
                 $adminNotification->user_id   = $deposit->user_id;
                 $adminNotification->title     = 'Deposit successful via ' . $deposit->gatewayCurrency()->name . ' for a campaign';
-                $adminNotification->click_url = urlPath('admin.deposit.done');
+                $adminNotification->click_url = urlPath('admin.donations.done');
                 $adminNotification->save();
             }
 
