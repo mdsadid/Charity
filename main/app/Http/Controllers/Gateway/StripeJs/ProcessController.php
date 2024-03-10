@@ -18,9 +18,9 @@ class ProcessController extends Controller
     {
         $stripeJSAcc        = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $val['key']         = $stripeJSAcc->publishable_key;
-        $val['name']        = $deposit->user->fullname ?? $deposit->donation->name;
+        $val['name']        = $deposit->user_id ? $deposit->user->fullname : $deposit->full_name;
         $val['description'] = "Payment with Stripe";
-        $val['amount']      = round($deposit->final_amo, 2) * 100;
+        $val['amount']      = round($deposit->final_amount, 2) * 100;
         $val['currency']    = $deposit->method_currency;
         $send['val']        = $val;
         $alias              = $deposit->gateway->alias;
@@ -64,7 +64,7 @@ class ProcessController extends Controller
             $charge = Charge::create([
                 'customer'    => $customer->id,
                 'description' => 'Payment with Stripe',
-                'amount'      => round($deposit->final_amo, 2) * 100,
+                'amount'      => round($deposit->final_amount, 2) * 100,
                 'currency'    => $deposit->method_currency,
             ]);
         } catch (Exception $e) {

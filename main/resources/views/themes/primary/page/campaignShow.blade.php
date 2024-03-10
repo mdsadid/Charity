@@ -149,7 +149,7 @@
                                                 <span class="donor__number"><i class="fa-solid fa-user"></i></span>
                                                 <span class="donor__txt">
                                                     <span class="donor__name">{{ __($donation->donorName) }}</span>
-                                                    <span class="donor__amount">{{ $setting->cur_sym . showAmount($donation->deposit->amount) }}</span>
+                                                    <span class="donor__amount">{{ $setting->cur_sym . showAmount($donation->amount) }}</span>
                                                 </span>
                                             </div>
                                         </li>

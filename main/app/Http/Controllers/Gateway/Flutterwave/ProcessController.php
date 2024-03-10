@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Gateway\Flutterwave;
 
-use App\Constants\ManageStatus;
 use App\Models\Deposit;
+use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
 
@@ -15,9 +15,9 @@ class ProcessController extends Controller
 
         $send['API_publicKey']  = $flutterAcc->public_key;
         $send['encryption_key'] = $flutterAcc->encryption_key;
-        $send['customer_email'] = $deposit->user->email ?? $deposit->donation->email;
-        $send['amount']         = round($deposit->final_amo, 2);
-        $send['customer_phone'] = $deposit->user->mobile ?? $deposit->donation->phone;
+        $send['customer_email'] = $deposit->user_id ? $deposit->user->email : $deposit->email;
+        $send['amount']         = round($deposit->final_amount, 2);
+        $send['customer_phone'] = $deposit->user_id ? $deposit->user->mobile : $deposit->phone;
         $send['currency']       = $deposit->method_currency;
         $send['txref']          = $deposit->trx;
         $send['notify_url']     = url('ipn/flutterwave');
@@ -84,7 +84,7 @@ class ProcessController extends Controller
             return to_route(gatewayRedirectUrl())->withToasts($toast);
         }
 
-        if ($response->data->status == "successful" && $response->data->chargecode == "00" && $deposit->final_amo == $response->data->amount && $deposit->method_currency == $response->data->currency && $deposit->status == ManageStatus::PAYMENT_INITIATE) {
+        if ($response->data->status == "successful" && $response->data->chargecode == "00" && $deposit->final_amount == $response->data->amount && $deposit->method_currency == $response->data->currency && $deposit->status == ManageStatus::PAYMENT_INITIATE) {
             PaymentController::campaignDataUpdate($deposit);
 
             $message     = 'Transaction was successful, Ref: ' . $track;

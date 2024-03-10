@@ -16,7 +16,7 @@ class ProcessController extends Controller
     {
         $coinPayAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
-        if ($deposit->btc_amo == 0 || $deposit->btc_wallet == "") {
+        if ($deposit->btc_amount == 0 || $deposit->btc_wallet == "") {
             try {
                 $cps = new CoinPaymentHosted();
             } catch (Exception $e) {
@@ -30,11 +30,11 @@ class ProcessController extends Controller
             $callbackUrl = route('ipn.' . $deposit->gateway->alias);
 
             $req = array(
-                'amount'      => $deposit->final_amo,
+                'amount'      => $deposit->final_amount,
                 'currency1'   => 'USD',
                 'currency2'   => $deposit->method_currency,
                 'custom'      => $deposit->trx,
-                'buyer_email' => $deposit->user->email ?? $deposit->donation->email,
+                'buyer_email' => $deposit->user_id ? $deposit->user->email : $deposit->email,
                 'ipn_url'     => $callbackUrl,
             );
 
@@ -43,7 +43,7 @@ class ProcessController extends Controller
             if ($result['error'] == 'ok') {
                 $bCoin                 = sprintf('%.08f', $result['result']['amount']);
                 $sendAdd               = $result['result']['address'];
-                $deposit['btc_amo']    = $bCoin;
+                $deposit['btc_amount'] = $bCoin;
                 $deposit['btc_wallet'] = $sendAdd;
                 $deposit->update();
             } else {
@@ -52,7 +52,7 @@ class ProcessController extends Controller
             }
         }
 
-        $send['amount']   = $deposit->btc_amo;
+        $send['amount']   = $deposit->btc_amount;
         $send['sendTo']   = $deposit->btc_wallet;
         $send['img']      = cryptoQR($deposit->btc_wallet);
         $send['currency'] = "$deposit->method_currency";
@@ -73,7 +73,7 @@ class ProcessController extends Controller
 
             if (
                 $deposit->method_currency == $request->currency2 && 
-                $deposit->btc_amo <= $amount2 && 
+                $deposit->btc_amount <= $amount2 && 
                 $coinPayAcc->merchant_id == $request->merchant && 
                 $deposit->status == ManageStatus::PAYMENT_INITIATE
             ) {

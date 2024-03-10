@@ -15,7 +15,7 @@
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>@lang('You have to pay'):</span>
-                                        <span class="fw-bold">{{ showAmount($deposit->final_amo) . ' ' . __($deposit->method_currency) }}</span>
+                                        <span class="fw-bold">{{ showAmount($deposit->final_amount) . ' ' . __($deposit->method_currency) }}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>@lang('Your donation amount will be'):</span>

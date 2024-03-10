@@ -18,7 +18,7 @@ class ProcessController extends Controller
             'li_0_type'       => 'product',
             'li_0_name'       => $deposit->trx ?? bs('site_name'),
             'li_0_product_id' => "{$deposit->trx}",
-            'li_0_price'      => round($deposit->final_amo, 2),
+            'li_0_price'      => round($deposit->final_amount, 2),
             'li_0_quantity'   => "1",
             'li_0_tangible'   => "N",
             'currency_code'   => $deposit->method_currency,
@@ -38,7 +38,7 @@ class ProcessController extends Controller
 
         if ($deposit) {
             $configuration = json_decode($deposit->gatewayCurrency()->gateway_parameter);
-            $hash          = strtoupper(md5($configuration->secret_key . $configuration->merchant_code . $request->order_number . round($deposit->final_amo, 2)));
+            $hash          = strtoupper(md5($configuration->secret_key . $configuration->merchant_code . $request->order_number . round($deposit->final_amount, 2)));
 
             if ($hash == $request->key) PaymentController::campaignDataUpdate($deposit);
         }

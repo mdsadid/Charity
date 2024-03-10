@@ -16,8 +16,8 @@ class ProcessController extends Controller
         $alias       = $deposit->gateway->alias;
 
         $send['key']      = $paystackAcc->public_key;
-        $send['email']    = $deposit->user->email ?? $deposit->donation->email;
-        $send['amount']   = $deposit->final_amo * 100;
+        $send['email']    = $deposit->user_id ? $deposit->user->email : $deposit->email;
+        $send['amount']   = $deposit->final_amount * 100;
         $send['currency'] = $deposit->method_currency;
         $send['ref']      = $deposit->trx;
         $send['view']     = 'user.payment.' . $alias;
@@ -51,12 +51,12 @@ class ProcessController extends Controller
 
             if ($result) {
                 if ($result['data']) {
-                    $deposit->detail = $result['data'];
+                    $deposit->details = $result['data'];
                     $deposit->save();
 
                     if ($result['data']['status'] == 'success') {
                         $am  = $result['data']['amount'] / 100;
-                        $sam = round($deposit->final_amo, 2);
+                        $sam = round($deposit->final_amount, 2);
 
                         if ($am == $sam && $result['data']['currency'] == $deposit->method_currency && $deposit->status == ManageStatus::PAYMENT_INITIATE) {
                             PaymentController::campaignDataUpdate($deposit);

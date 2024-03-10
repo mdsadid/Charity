@@ -29,11 +29,11 @@ class Deposit extends Model
     }
 
     /**
-     * Get the campaign that owns the donation.
+     * Get the campaign that owns the deposit.
      */
     public function campaign()
     {
-        return $this->belongsTo(Campaign::class);
+        return $this->belongsTo(Campaign::class, 'campaign_id', 'id');
     }
 
     // Scope

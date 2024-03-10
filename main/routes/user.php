@@ -119,6 +119,8 @@ Route::middleware('auth')->name('user.')->namespace('User')->group(function () {
 Route::prefix('deposit')->name('user.deposit.')->controller('Gateway\PaymentController')->group(function () {
     Route::post('insert/{slug}', 'depositInsert')->name('insert');
     Route::get('confirm', 'depositConfirm')->name('confirm');
-    Route::get('manual', 'manualDepositConfirm')->name('manual.confirm');
-    Route::post('manual', 'manualDepositUpdate')->name('manual.update');
+    Route::prefix('manual')->name('manual.')->group(function () {
+        Route::get('', 'manualDepositConfirm')->name('confirm');
+        Route::post('', 'manualDepositUpdate')->name('update');
+    });
 });

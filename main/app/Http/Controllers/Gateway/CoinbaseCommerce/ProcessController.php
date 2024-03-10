@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Gateway\CoinbaseCommerce;
 
-use App\Constants\ManageStatus;
 use App\Models\Deposit;
+use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
 
@@ -14,18 +14,18 @@ class ProcessController extends Controller
         $coinbaseAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $url         = 'https://api.commerce.coinbase.com/charges';
         $array       = [
-            'name'         => auth()->user()->username,
+            'name'         => $deposit->user_id ? $deposit->user->fullname : $deposit->full_name,
             'description'  => "Pay to " . bs('site_name'),
             'local_price'  => [
-                'amount'   => $deposit->final_amo,
-                'currency' => $deposit->method_currency
+                'amount'   => $deposit->final_amount,
+                'currency' => $deposit->method_currency,
             ],
             'metadata'     => [
-                'trx' => $deposit->trx
+                'trx' => $deposit->trx,
             ],
             'pricing_type' => "fixed_price",
             'redirect_url' => route(gatewayRedirectUrl(true)),
-            'cancel_url'   => route(gatewayRedirectUrl())
+            'cancel_url'   => route(gatewayRedirectUrl()),
         ];
 
         $jsonData = json_encode($array);

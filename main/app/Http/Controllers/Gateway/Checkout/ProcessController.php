@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Gateway\Checkout;
 
-use App\Constants\ManageStatus;
 use App\Models\Deposit;
 use App\Lib\CurlRequest;
 use Illuminate\Http\Request;
+use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
 
@@ -79,16 +79,16 @@ class ProcessController extends Controller
                 "type"  => "token",
                 "token" => $cardToken,
             ),
-            "amount"                => (int)(round($deposit->final_amo, 2) * 100),
+            "amount"                => (int)(round($deposit->final_amount, 2) * 100),
             "currency"              => $deposit->method_currency,
             "processing_channel_id" => $processingChannelId,
             "reference"             => $deposit->trx,
             "capture"               => true,
             "customer"              => array(
-                "email" => @$deposit->user->email ?? @$deposit->donation->email,
-                "name"  => @$deposit->user->fullname ?? @$deposit->donation->full_name,
+                "email" => $deposit->user_id ? $deposit->user->email : $deposit->email,
+                "name"  => $deposit->user_id ? $deposit->user->fullname : $deposit->full_name,
                 "phone" => array(
-                    "number" => @$deposit->user->mobile ?? @$deposit->donation->phone,
+                    "number" => $deposit->user_id ? $deposit->user->mobile : $deposit->phone,
                 ),
             ),
         );

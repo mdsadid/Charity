@@ -21,7 +21,7 @@ class ProcessController extends Controller
         $client = new Invoice($btcPay->server_name, $btcPay->api_key);
 
         try {
-            $amount  = PreciseNumber::parseFloat($deposit->final_amo);
+            $amount  = PreciseNumber::parseFloat($deposit->final_amount);
             $invoice = $client->createInvoice(
                 $btcPay->store_id,
                 bs('site_cur'),

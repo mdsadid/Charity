@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Gateway\NowPaymentsCheckout;
 
-use App\Constants\ManageStatus;
 use App\Models\Deposit;
 use App\Models\Gateway;
 use App\Lib\CurlRequest;
+use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
 
@@ -15,7 +15,7 @@ class ProcessController extends Controller
     {
         $nowPaymentsAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
         $response       = CurlRequest::curlPostContent('https://api.nowpayments.io/v1/invoice', json_encode([
-            'price_amount'     => $deposit->final_amo,
+            'price_amount'     => $deposit->final_amount,
             'price_currency'   => bs('site_cur'),
             'ipn_callback_url' => route('ipn.NowPaymentsCheckout'),
             'success_url'      => route(gatewayRedirectUrl(true)),

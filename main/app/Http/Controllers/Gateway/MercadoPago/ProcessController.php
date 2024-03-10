@@ -16,8 +16,8 @@ class ProcessController extends Controller
         $alias           = $deposit->gateway->alias;
         $gatewayAcc      = json_decode($gatewayCurrency->gateway_parameter);
         $curl            = curl_init();
-        $userFullName    = $deposit->user->fullname ?? $deposit->donation->name;
-        $userEmail       = $deposit->user->email ?? $deposit->donation->email;
+        $userFullName    = $deposit->user_id ? $deposit->user->fullname : $deposit->full_name;
+        $userEmail       = $deposit->user_id ? $deposit->user->email : $deposit->email;
         $preferenceData  = [
             'items'            => [
                 [
@@ -26,7 +26,7 @@ class ProcessController extends Controller
                     'description' => 'Donation from ' . $userFullName,
                     'quantity'    => 1,
                     'currency_id' => $gatewayCurrency->currency,
-                    'unit_price'  => $deposit->final_amo,
+                    'unit_price'  => $deposit->final_amount,
                 ]
             ],
             'payer'            => [

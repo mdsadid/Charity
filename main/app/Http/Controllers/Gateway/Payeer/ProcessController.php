@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Gateway\Payeer;
 
-use App\Constants\ManageStatus;
 use App\Models\Deposit;
+use Illuminate\Http\Request;
+use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Gateway\PaymentController;
-use Illuminate\Http\Request;
 
 class ProcessController extends Controller
 {
@@ -16,7 +16,7 @@ class ProcessController extends Controller
         $setting          = bs();
         $val['m_shop']    = trim($payeerAcc->merchant_id);
         $val['m_orderid'] = $deposit->trx;
-        $val['m_amount']  = number_format($deposit->final_amo, 2, '.', '');
+        $val['m_amount']  = number_format($deposit->final_amount, 2, '.', '');
         $val['m_curr']    = $deposit->method_currency;
         $val['m_desc']    = base64_encode("Pay To $setting->site_name");
         $arHash           = [$val['m_shop'], $val['m_orderid'], $val['m_amount'], $val['m_curr'], $val['m_desc']];
@@ -53,7 +53,7 @@ class ProcessController extends Controller
                 $toast[] = ['error', 'The digital signature did not matched'];
             } else {
                 if (
-                    $request->m_amount == getAmount($deposit->final_amo) && 
+                    $request->m_amount == getAmount($deposit->final_amount) && 
                     $request->m_curr == $deposit->method_currency && 
                     $request->m_status == 'success' && 
                     $deposit->status == ManageStatus::PAYMENT_INITIATE

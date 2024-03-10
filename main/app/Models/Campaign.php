@@ -54,7 +54,7 @@ class Campaign extends Model
      */
     public function deposits()
     {
-        return $this->hasMany(Deposit::class);
+        return $this->hasMany(Deposit::class, 'campaign_id', 'id');
     }
 
     /**

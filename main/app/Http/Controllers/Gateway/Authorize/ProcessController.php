@@ -66,7 +66,7 @@ class ProcessController extends Controller
         // Create a transaction
         $transactionRequestType = new TransactionRequestType();
         $transactionRequestType->setTransactionType("authCaptureTransaction");
-        $transactionRequestType->setAmount($deposit->final_amo);
+        $transactionRequestType->setAmount($deposit->final_amount);
         $transactionRequestType->setPayment($paymentOne);
 
         $transactionRequest = new CreateTransactionRequest();

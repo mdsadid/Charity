@@ -17,14 +17,14 @@ class ProcessController extends Controller
         $val['PAYEE_ACCOUNT']        = trim($perfectAcc->wallet_id);
         $val['PAYEE_NAME']           = bs('site_name');
         $val['PAYMENT_ID']           = "$deposit->trx";
-        $val['PAYMENT_AMOUNT']       = round($deposit->final_amo, 2);
+        $val['PAYMENT_AMOUNT']       = round($deposit->final_amount, 2);
         $val['PAYMENT_UNITS']        = "$deposit->method_currency";
         $val['STATUS_URL']           = route('ipn.' . $deposit->gateway->alias);
         $val['PAYMENT_URL']          = route(gatewayRedirectUrl(true));
         $val['PAYMENT_URL_METHOD']   = 'POST';
         $val['NOPAYMENT_URL']        = route(gatewayRedirectUrl());
         $val['NOPAYMENT_URL_METHOD'] = 'POST';
-        $val['SUGGESTED_MEMO']       = $deposit->user->email ?? $deposit->donation->email;
+        $val['SUGGESTED_MEMO']       = $deposit->user_id ? $deposit->user->email : $deposit->email;
         $val['BAGGAGE_FIELDS']       = 'IDENT';
 
         $send['val']    = $val;
@@ -57,7 +57,7 @@ class ProcessController extends Controller
         if ($hash == $hash2) {
             foreach ($_POST as $key => $value) $details[$key] = $value;
 
-            $deposit->detail = $details;
+            $deposit->details = $details;
             $deposit->save();
 
             $amo  = $_POST['PAYMENT_AMOUNT'];
@@ -66,7 +66,7 @@ class ProcessController extends Controller
             if (
                 $_POST['PAYEE_ACCOUNT'] == $pmAcc->wallet_id && 
                 $unit == $deposit->method_currency && 
-                $amo == round($deposit->final_amo, 2) && 
+                $amo == round($deposit->final_amount, 2) && 
                 $deposit->status == ManageStatus::PAYMENT_INITIATE
             ) {
                 PaymentController::campaignDataUpdate($deposit);

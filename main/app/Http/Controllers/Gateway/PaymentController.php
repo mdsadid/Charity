@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Gateway;
 use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Campaign;
-use App\Models\Donation;
 use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use App\Constants\ManageStatus;
@@ -50,29 +49,17 @@ class PaymentController extends Controller
             return back()->withToasts($toast);
         }
 
-        if ($gatewayData->min_amount > request('amount') || $gatewayData->max_amount < request('amount')) {
+        $amount = request('amount');
+
+        if ($gatewayData->min_amount > $amount || $gatewayData->max_amount < $amount) {
             $toast[] = ['error', 'Please follow donation limit'];
 
             return back()->withToasts($toast);
         }
 
-        $charge       = $gatewayData->fixed_charge + (request('amount') * $gatewayData->percent_charge / 100);
-        $payable      = request('amount') + $charge;
+        $charge       = $gatewayData->fixed_charge + (($amount * $gatewayData->percent_charge) / 100);
+        $payable      = $amount + $charge;
         $final_amount = $payable * $gatewayData->rate;
-
-        // Save data in deposit table
-        $deposit                  = new Deposit();
-        $deposit->user_id         = auth()->check() ? auth()->id() : 0;
-        $deposit->method_code     = $gatewayData->method_code;
-        $deposit->method_currency = strtoupper($gatewayData->currency);
-        $deposit->amount          = request('amount');
-        $deposit->charge          = $charge;
-        $deposit->rate            = $gatewayData->rate;
-        $deposit->final_amo       = $final_amount;
-        $deposit->btc_amo         = 0;
-        $deposit->btc_wallet      = "";
-        $deposit->trx             = getTrx();
-        $deposit->save();
 
         if (auth()->check()) {
             $userFullName = auth()->user()->fullname;
@@ -86,16 +73,26 @@ class PaymentController extends Controller
             $userCountry  = request('country');
         }
 
-        // Save data in donation table
-        $donation              = new Donation();
-        $donation->deposit_id  = $deposit->id;
-        $donation->campaign_id = $campaign->id;
-        $donation->type        = request('anonymousDonation') == 'on' ? Donation::ANONYMOUS_DONATION : Donation::KNOWN_DONATION;
-        $donation->full_name   = $userFullName;
-        $donation->email       = $userEmail;
-        $donation->phone       = $userPhone;
-        $donation->country     = $userCountry;
-        $donation->save();
+        // Save data in deposit table
+        $deposit                  = new Deposit();
+        $deposit->campaign_id     = $campaign->id;
+        $deposit->user_id         = auth()->check() ? auth()->id() : 0;
+        $deposit->donor_type      = request('anonymousDonation') == 'on' ? 0 : 1;
+        $deposit->full_name       = $userFullName;
+        $deposit->email           = $userEmail;
+        $deposit->phone           = $userPhone;
+        $deposit->country         = $userCountry;
+        $deposit->receiver_id     = $campaign->user->id;
+        $deposit->method_code     = $gatewayData->method_code;
+        $deposit->amount          = $amount;
+        $deposit->method_currency = strtoupper($gatewayData->currency);
+        $deposit->charge          = $charge;
+        $deposit->rate            = $gatewayData->rate;
+        $deposit->final_amount    = $final_amount;
+        $deposit->btc_amount      = 0;
+        $deposit->btc_wallet      = "";
+        $deposit->trx             = getTrx();
+        $deposit->save();
 
         session()->put('Track', $deposit->trx);
 
@@ -104,7 +101,7 @@ class PaymentController extends Controller
 
     function depositConfirm() {
         $track   = session()->get('Track');
-        $deposit = Deposit::where('trx', $track)->initiate()->orderBy('id', 'DESC')->with('gateway')->firstOrFail();
+        $deposit = Deposit::with('gateway')->where('trx', $track)->initiate()->firstOrFail();
 
         if ($deposit->method_code >= 1000) return to_route('user.deposit.manual.confirm');
 
@@ -140,16 +137,15 @@ class PaymentController extends Controller
             $user = User::find($deposit->user_id);
 
             if (!$user) {
-                $donationData = $deposit->donation;
-                $user         = [
-                    'fullname' => $donationData->full_name,
-                    'username' => $donationData->email,
-                    'email'    => $donationData->email,
-                    'mobile'   => $donationData->phone,
+                $user = [
+                    'fullname' => $deposit->full_name,
+                    'username' => $deposit->email,
+                    'email'    => $deposit->email,
+                    'mobile'   => $deposit->phone,
                 ];
             }
 
-            $campaign                 = $deposit->donation->campaign;
+            $campaign                 = $deposit->campaign;
             $campaign->raised_amount += $deposit->amount;
             $campaign->save();
 
@@ -157,15 +153,15 @@ class PaymentController extends Controller
             $campaignAuthor->balance += $deposit->amount;
             $campaignAuthor->save();
 
-            $transaction                        = new Transaction();
-            $transaction->user_id               = $deposit->user_id;
-            $transaction->amount                = $deposit->amount;
-            $transaction->charge                = $deposit->charge;
-            $transaction->post_balance          = $user->balance ?? 0;
-            $transaction->trx_type              = '+';
-            $transaction->details               = 'Donation Via ' . $deposit->gatewayCurrency()->name;
-            $transaction->trx                   = $deposit->trx;
-            $transaction->remark                = 'deposit';
+            $transaction               = new Transaction();
+            $transaction->user_id      = $deposit->user_id;
+            $transaction->amount       = $deposit->amount;
+            $transaction->charge       = $deposit->charge;
+            $transaction->post_balance = $user->balance ?? 0;
+            $transaction->trx_type     = '+';
+            $transaction->trx          = $deposit->trx;
+            $transaction->details      = 'Donation Via ' . $deposit->gatewayCurrency()->name;
+            $transaction->remark       = 'deposit';
             $transaction->save();
 
             if (!$isManual) {
@@ -179,7 +175,7 @@ class PaymentController extends Controller
             notify($user, $isManual ? 'DONATION_APPROVE' : 'DONATION_COMPLETE', [
                 'method_name'     => $deposit->gatewayCurrency()->name,
                 'method_currency' => $deposit->method_currency,
-                'method_amount'   => showAmount($deposit->final_amo),
+                'method_amount'   => showAmount($deposit->final_amount),
                 'amount'          => showAmount($deposit->amount),
                 'charge'          => showAmount($deposit->charge),
                 'rate'            => showAmount($deposit->rate),
@@ -191,7 +187,7 @@ class PaymentController extends Controller
 
     function manualDepositConfirm() {
         $track   = session()->get('Track');
-        $deposit = Deposit::with('gateway')->initiate()->where('trx', $track)->first();
+        $deposit = Deposit::with('gateway')->where('trx', $track)->initiate()->first();
 
         if (!$deposit) return to_route(gatewayRedirectUrl());
 
@@ -208,7 +204,7 @@ class PaymentController extends Controller
 
     function manualDepositUpdate() {
         $track   = session()->get('Track');
-        $deposit = Deposit::with('gateway')->initiate()->where('trx', $track)->first();
+        $deposit = Deposit::with('gateway')->where('trx', $track)->initiate()->first();
 
         if (!$deposit) return to_route(gatewayRedirectUrl());
 
@@ -222,24 +218,23 @@ class PaymentController extends Controller
         request()->validate($validationRule);
         $userData = $formProcessor->processFormData(request(), $formData);
 
-        $deposit->detail = $userData;
-        $deposit->status = ManageStatus::PAYMENT_PENDING;
+        $deposit->details = $userData;
+        $deposit->status  = ManageStatus::PAYMENT_PENDING;
         $deposit->save();
 
         $adminNotification            = new AdminNotification();
         $adminNotification->user_id   = $deposit->user->id ?? 0;
-        $donor                        = $deposit->user->fullname ?? 'an anonymous user';
+        $donor                        = $deposit->user->id ? $deposit->user->fullname : $deposit->full_name;
         $adminNotification->title     = "Deposit request from $donor for a campaign";
         $adminNotification->click_url = urlPath('admin.donations.pending');
         $adminNotification->save();
 
         if (!$deposit->user) {
-            $donationData = $deposit->donation;
-            $user         = [
-                'fullname' => $donationData->full_name,
-                'username' => $donationData->email,
-                'email'    => $donationData->email,
-                'mobile'   => $donationData->phone,
+            $user = [
+                'fullname' => $deposit->full_name,
+                'username' => $deposit->email,
+                'email'    => $deposit->email,
+                'mobile'   => $deposit->phone,
             ];
         } else {
             $user = $deposit->user;
@@ -248,12 +243,12 @@ class PaymentController extends Controller
         notify($user, 'DONATION_REQUEST', [
             'method_name'     => $deposit->gatewayCurrency()->name,
             'method_currency' => $deposit->method_currency,
-            'method_amount'   => showAmount($deposit->final_amo),
+            'method_amount'   => showAmount($deposit->final_amount),
             'amount'          => showAmount($deposit->amount),
             'charge'          => showAmount($deposit->charge),
             'rate'            => showAmount($deposit->rate),
             'trx'             => $deposit->trx,
-            'campaign_name'   => $deposit->donation->campaign->name,
+            'campaign_name'   => $deposit->campaign->name,
         ]);
 
         $toast[] = ['success', 'Your donation request has been taken. Please wait for admin response'];

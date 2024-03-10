@@ -31,7 +31,7 @@ class ProcessController extends Controller
                 [
                     "reference_id" => $deposit->trx,
                     "amount"       => [
-                        "value"         => round($deposit->final_amo, 2),
+                        "value"         => round($deposit->final_amount, 2),
                         "currency_code" => $deposit->method_currency,
                     ],
                 ],
@@ -72,7 +72,7 @@ class ProcessController extends Controller
             $response     = $client->execute($request);
 
             if (@$response->result->status == 'COMPLETED') {
-                $deposit->detail = json_decode(json_encode($response->result->payer));
+                $deposit->details = json_decode(json_encode($response->result->payer));
                 $deposit->save();
 
                 PaymentController::campaignDataUpdate($deposit);

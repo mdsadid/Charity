@@ -31,7 +31,7 @@ class ProcessController extends Controller
                         'name'        => bs('site_name'),
                         'description' => 'Donation with Stripe',
                         'images'      => [asset('assets/universal/images/logoFavicon/logo_dark.png')],
-                        'amount'      => round($deposit->final_amo, 2) * 100,
+                        'amount'      => round($deposit->final_amount, 2) * 100,
                         'currency'    => "$deposit->method_currency",
                         'quantity'    => 1,
                     ]
