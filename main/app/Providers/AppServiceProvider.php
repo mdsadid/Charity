@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
                 'mobileUnconfirmedUsersCount' => User::mobileUnconfirmed()->count(),
                 'kycUnconfirmedUsersCount'    => User::kycUnconfirmed()->count(),
                 'kycPendingUsersCount'        => User::kycPending()->count(),
-                'pendingDonationsCount'       => Deposit::has('donation')->pending()->count(),
+                'pendingDonationsCount'       => Deposit::pending()->count(),
                 'pendingWithdrawalsCount'     => Withdrawal::pending()->count(),
                 'unansweredContactsCount'     => Contact::where('status', ManageStatus::NO)->count(),
                 'pendingCampaignCount'        => Campaign::pending()->count(),

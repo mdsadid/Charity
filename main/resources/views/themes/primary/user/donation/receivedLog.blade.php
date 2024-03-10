@@ -32,9 +32,9 @@
                                         {{ @$donations->firstItem() + $loop->index }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('campaign.show', @$donation->donation->campaign->slug) }}">
+                                        <a href="{{ route('campaign.show', @$donation->campaign->slug) }}">
                                             <span class="text-overflow-1 text--base">
-                                                {{ __(@$donation->donation->campaign->name) }}
+                                                {{ __(@$donation->campaign->name) }}
                                             </span>
                                         </a>
                                     </td>
@@ -57,11 +57,11 @@
                                         1 {{ $setting->site_cur }} = {{ showAmount(@$donation->rate, 4) . ' ' . __(@$donation->method_currency) }}
                                         <br>
                                         <strong>
-                                            {{ showAmount(@$donation->final_amo) . ' ' . __(@$donation->method_currency) }}
+                                            {{ showAmount(@$donation->final_amount) . ' ' . __(@$donation->method_currency) }}
                                         </strong>
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0)" class="btn btn--icon btn--base detailsBtn" data-campaign="{{ @$donation->donation->campaign->name }}" data-campaign_url="{{ route('campaign.show', @$donation->donation->campaign->slug) }}" data-donor_name="{{ @$donation->donation->donorName }}" data-donor_email="{{ @$donation->donation->donorEmail }}" data-donor_phone="{{ @$donation->donation->donorPhone }}" data-donor_country="{{ @$donation->donation->donorCountry }}">
+                                        <a href="javascript:void(0)" class="btn btn--icon btn--base detailsBtn" data-campaign="{{ @$donation->campaign->name }}" data-campaign_url="{{ route('campaign.show', @$donation->campaign->slug) }}" data-donor_name="{{ @$donation->donorName }}" data-donor_email="{{ @$donation->donorEmail }}" data-donor_phone="{{ @$donation->donorPhone }}" data-donor_country="{{ @$donation->donorCountry }}">
                                             <i class="fa-regular fa-eye"></i>
                                         </a>
                                     </td>

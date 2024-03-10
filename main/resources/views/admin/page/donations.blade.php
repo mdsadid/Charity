@@ -69,8 +69,8 @@
                             @forelse ($deposits as $deposit)
                                 <tr>
                                     <td>
-                                        <a href="{{ route('admin.campaigns.details', $deposit->donation->campaign->id) }}" target="_blank">
-                                            {{ __(strLimit($deposit->donation->campaign->name, 30)) }}
+                                        <a href="{{ route('admin.campaigns.details', $deposit->campaign->id) }}" target="_blank">
+                                            {{ __(strLimit($deposit->campaign->name, 30)) }}
                                         </a>
                                     </td>
                                     <td>
@@ -93,7 +93,7 @@
                                         1 {{ $setting->site_cur }} = {{ showAmount($deposit->rate, 4) . ' ' . __($deposit->method_currency) }}
                                         <br>
                                         <strong>
-                                            {{ showAmount($deposit->final_amo) . ' ' . __($deposit->method_currency) }}
+                                            {{ showAmount($deposit->final_amount) . ' ' . __($deposit->method_currency) }}
                                         </strong>
                                     </td>
                                     <td>
@@ -115,7 +115,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-label-info donorViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-donor_type="{{ $deposit->donation->donorType }}" data-donor_name="{{ $deposit->donation->donorName }}" data-donor_email="{{ $deposit->donation->donorEmail }}" data-donor_phone="{{ $deposit->donation->donorPhone }}" data-donor_country="{{ $deposit->donation->donorCountry }}" data-user_data="{{ json_encode($deposit->detail) }}" data-admin_feedback="{{ $deposit->admin_feedback }}" data-url="{{ route('admin.file.download', ['filePath' => 'verify']) }}">
+                                        <button type="button" class="btn btn-sm btn-label-info donorViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-donor_type="{{ $deposit->donor_type }}" data-donor_name="{{ $deposit->donorName }}" data-donor_email="{{ $deposit->donorEmail }}" data-donor_phone="{{ $deposit->donorPhone }}" data-donor_country="{{ $deposit->donorCountry }}" data-user_data="{{ json_encode($deposit->details) }}" data-admin_feedback="{{ $deposit->admin_feedback }}" data-url="{{ route('admin.file.download', ['filePath' => 'verify']) }}">
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </button>
 
@@ -161,13 +161,13 @@
 
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('Donation Details')</h5>
+            <h3 id="offcanvasBothLabel" class="offcanvas-title">@lang('Donation Details')</h3>
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0">
             <div class="basicData"></div>
             <div class="userData"></div>
             <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
-                @lang('Cancel')
+                @lang('Close')
             </button>
         </div>
     </div>
@@ -223,7 +223,14 @@
             "use strict"
 
             $('.donorViewBtn').on('click', function() {
-                let donorType    = $(this).data('donor_type')
+                let donorType
+
+                if ($(this).data('donor_type')) {
+                    donorType = '<span class="badge bg-label-success">@lang("Known")</span>';
+                } else {
+                    donorType = '<span class="badge bg-label-success">@lang("Anonymous")</span>';
+                }
+
                 let donorName    = $(this).data('donor_name')
                 let donorEmail   = $(this).data('donor_email')
                 let donorPhone   = $(this).data('donor_phone')

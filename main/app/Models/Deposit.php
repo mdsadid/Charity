@@ -75,7 +75,7 @@ class Deposit extends Model
     /**
      * Get the donor's full name.
      */
-    public function donorName(): Attribute
+    protected function donorName(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->donor_type ? ($this->user_id ? $this->user->fullname : $this->full_name) : 'Anonymous User',
@@ -85,7 +85,7 @@ class Deposit extends Model
     /**
      * Get the donor's email.
      */
-    public function donorEmail(): Attribute
+    protected function donorEmail(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->donor_type ? ($this->user_id ? $this->user->email : $this->email) : '-',
@@ -95,7 +95,7 @@ class Deposit extends Model
     /**
      * Get the donor's phone.
      */
-    public function donorPhone(): Attribute
+    protected function donorPhone(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->donor_type ? ($this->user_id ? $this->user->mobile : $this->phone) : '-',
@@ -105,28 +105,10 @@ class Deposit extends Model
     /**
      * Get the donor's country.
      */
-    public function donorCountry(): Attribute
+    protected function donorCountry(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->donor_type ? ($this->user_id ? $this->user->country_name : $this->country) : '-',
-        );
-    }
-
-    /**
-     * Get the donor's type.
-     */
-    public function donorType(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                if (!$this->donor_type) {
-                    $html = '<span class="badge bg-label-warning donor-badge">' . trans('Anonymous') . '</span>';
-                } else {
-                    $html = '<span class="badge bg-label-success donor-badge">' . trans('Known') . '</span>';
-                }
-
-                return $html;
-            },
         );
     }
 }

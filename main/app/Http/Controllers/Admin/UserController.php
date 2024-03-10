@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Models\Withdrawal;
+use App\Constants\ManageStatus;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -65,12 +64,7 @@ class UserController extends Controller
         $user                  = User::with(['campaigns', 'withdrawals', 'transactions'])->findOrFail($id);
         $pageTitle             = 'Details - ' . $user->username;
         $campaigns             = $user->campaigns->pluck('id');
-        $totalReceivedDonation = Deposit::whereHas('donation', function ($query) use ($campaigns) {
-            $query->whereIn('campaign_id', $campaigns);
-        })
-            ->done()
-            ->sum('amount');
-
+        $totalReceivedDonation = Deposit::whereIn('campaign_id', $campaigns) ->done()->sum('amount');
         $totalWithdrawal       = $user->withdrawals()->done()->sum('amount');
         $totalTransactions     = $user->transactions->count();
         $countries             = json_decode(file_get_contents(resource_path('views/partials/country.json')));

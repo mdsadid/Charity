@@ -153,15 +153,28 @@ class PaymentController extends Controller
             $campaignAuthor->balance += $deposit->amount;
             $campaignAuthor->save();
 
+            // donor transaction
             $transaction               = new Transaction();
             $transaction->user_id      = $deposit->user_id;
             $transaction->amount       = $deposit->amount;
             $transaction->charge       = $deposit->charge;
             $transaction->post_balance = $user->balance ?? 0;
-            $transaction->trx_type     = '+';
+            $transaction->trx_type     = '-';
             $transaction->trx          = $deposit->trx;
             $transaction->details      = 'Donation Via ' . $deposit->gatewayCurrency()->name;
-            $transaction->remark       = 'deposit';
+            $transaction->remark       = 'donation_given';
+            $transaction->save();
+
+            // receiver transaction
+            $transaction               = new Transaction();
+            $transaction->user_id      = $campaignAuthor->id;
+            $transaction->amount       = $deposit->amount;
+            $transaction->charge       = 0;
+            $transaction->post_balance = $campaignAuthor->balance ?? 0;
+            $transaction->trx_type     = '+';
+            $transaction->trx          = $deposit->trx;
+            $transaction->details      = 'Donation received for "' . $campaign->name . '" campaign';
+            $transaction->remark       = 'donation_received';
             $transaction->save();
 
             if (!$isManual) {

@@ -167,13 +167,13 @@
 
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('Withdraw Details')</h5>
+            <h3 id="offcanvasBothLabel" class="offcanvas-title">@lang('Withdraw Details')</h3>
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0">
             <div class="basicData"></div>
             <div class="userData"></div>
             <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
-                @lang('Cancel')
+                @lang('Close')
             </button>
         </div>
     </div>

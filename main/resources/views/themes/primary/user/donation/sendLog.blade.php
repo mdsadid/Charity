@@ -33,9 +33,9 @@
                                         {{ @$deposits->firstItem() + $loop->index }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('campaign.show', @$deposit->donation->campaign->slug) }}">
+                                        <a href="{{ route('campaign.show', @$deposit->campaign->slug) }}">
                                             <span class="text-overflow-1 text--base">
-                                                {{ __(@$deposit->donation->campaign->name) }}
+                                                {{ __(@$deposit->campaign->name) }}
                                             </span>
                                         </a>
                                     </td>
@@ -62,7 +62,7 @@
                                         1 {{ $setting->site_cur }} = {{ showAmount(@$deposit->rate, 4) . ' ' . __(@$deposit->method_currency) }}
                                         <br>
                                         <strong>
-                                            {{ showAmount(@$deposit->final_amo) . ' ' . __(@$deposit->method_currency) }}
+                                            {{ showAmount(@$deposit->final_amount) . ' ' . __(@$deposit->method_currency) }}
                                         </strong>
                                     </td>
                                     <td>
@@ -78,7 +78,7 @@
                                     </td>
 
                                     @php
-                                        $details = $deposit->detail != null ? json_encode($deposit->detail) : null;
+                                        $details = $deposit->details != null ? json_encode($deposit->details) : null;
                                     @endphp
 
                                     <td>

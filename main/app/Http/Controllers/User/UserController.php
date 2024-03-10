@@ -33,16 +33,10 @@ class UserController extends Controller
         $widgetData['pendingCampaignCount']  = $user->pending_campaigns;
         $widgetData['approvedCampaignCount'] = $user->approved_campaigns;
         $widgetData['rejectedCampaignCount'] = $user->rejected_campaigns;
-
-        $campaigns                      = $user->campaigns()->pluck('id');
-        $widgetData['receivedDonation'] = Deposit::whereHas('donation', function ($query) use ($campaigns) {
-            $query->whereIn('campaign_id', $campaigns);
-        })
-            ->done()
-            ->sum('amount');
-
-        $widgetData['sendDonation']     = Deposit::has('donation')->where('user_id', $user->id)->done()->sum('amount');
-        $widgetData['withdrawalAmount'] = $user->withdrawals()->done()->sum('amount');
+        $campaigns                           = $user->campaigns()->pluck('id');
+        $widgetData['receivedDonation']      = Deposit::whereIn('campaign_id', $campaigns)->done()->sum('amount');
+        $widgetData['sendDonation']          = Deposit::where('user_id', $user->id)->done()->sum('amount');
+        $widgetData['withdrawalAmount']      = $user->withdrawals()->done()->sum('amount');
 
         return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent', 'user', 'widgetData'));
     }
@@ -235,7 +229,7 @@ class UserController extends Controller
     function donationHistory() {
         $pageTitle = 'My Donations';
         $deposits  = auth()->user()->deposits()
-            ->with(['gateway', 'donation.campaign'])
+            ->with(['gateway', 'campaign'])
             ->searchable(['trx'])
             ->index()
             ->latest()
@@ -247,10 +241,8 @@ class UserController extends Controller
     function donationReceived() {
         $pageTitle = 'Received Donations';
         $campaigns = auth()->user()->campaigns()->pluck('id');
-        $donations = Deposit::whereHas('donation', function ($query) use ($campaigns) {
-            $query->whereIn('campaign_id', $campaigns);
-        })
-            ->with(['user', 'gateway', 'donation.campaign'])
+        $donations = Deposit::whereIn('campaign_id', $campaigns)
+            ->with(['user', 'gateway', 'campaign'])
             ->done()
             ->latest()
             ->paginate(getPaginate());
@@ -263,7 +255,7 @@ class UserController extends Controller
         $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
         $transactions = Transaction::where('user_id', auth()->id())
             ->searchable(['trx'])
-            ->filter(['trx_type', 'remark'])
+            ->filter(['remark'])
             ->orderBy('id', 'desc')
             ->paginate(getPaginate());
 

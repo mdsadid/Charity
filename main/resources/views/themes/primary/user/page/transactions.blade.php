@@ -7,19 +7,11 @@
                 <div class="card-body">
                     <form action="" method="GET">
                         <div class="row gy-3 align-items-end mb-4">
-                            <div class="col-xl-4 col-lg-3 col-sm-6 col-xsm-6">
+                            <div class="col-xl-6 col-lg-5 col-sm-6 col-xsm-6">
                                 <label class="form--label">@lang('Transaction Number')</label>
                                 <input type="text" class="form--control" name="search" value="{{ request('search') }}">
                             </div>
-                            <div class="col-xl-3 col-lg-3 col-sm-6 col-xsm-6">
-                                <label class="form--label">@lang('Type')</label>
-                                <select class="form--control form-select" name="trx_type">
-                                    <option value="">@lang('All')</option>
-                                    <option value="+" @selected(request('trx_type') == '+')>@lang('Plus')</option>
-                                    <option value="-" @selected(request('trx_type') == '-')>@lang('Minus')</option>
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-sm-6 col-xsm-6">
+                            <div class="col-xl-4 col-lg-4 col-sm-6 col-xsm-6">
                                 <label class="form--label">@lang('Remark')</label>
                                 <select class="form--control form-select" name="remark">
                                     <option value="">@lang('Any')</option>
@@ -31,7 +23,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-xl-2 col-lg-3 col-sm-6 col-xsm-6">
+                            <div class="col-xl-2 col-lg-3">
                                 <button type="submit" class="btn btn--base w-100">@lang('Filter')</button>
                             </div>
                         </div>
@@ -62,7 +54,7 @@
                                     </td>
                                     <td>
                                         <span class="@if ($transaction->trx_type == '+') text--success @else text--danger @endif">
-                                            {{ @$transaction->trx_type . ' ' . showAmount(@$transaction->amount) . ' ' . __($setting->site_cur) }}
+                                            {{ showAmount(@$transaction->amount) . ' ' . __($setting->site_cur) }}
                                         </span>
                                     </td>
                                     <td>{{ showAmount(@$transaction->post_balance) . ' ' . __($setting->site_cur) }}</td>

@@ -24,9 +24,7 @@ class AdminController extends Controller
         $admin         = Admin::first();
         $passwordAlert = false;
 
-        if (Hash::check('admin', $admin->password) || $admin->username == 'admin') {
-            $passwordAlert = true;
-        }
+        if (Hash::check('admin', $admin->password) || $admin->username == 'admin') $passwordAlert = true;
 
         // User Info
         $widget['totalUsers']             = User::count();
