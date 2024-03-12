@@ -21,13 +21,11 @@ class UserController extends Controller
         $kycContent = getSiteData('kyc.content', true);
         $user       = auth()->user();
 
-        $user->loadCount(['campaigns', 'campaigns as pending_campaigns' => function ($query) {
-            $query->pending();
-        }, 'campaigns as approved_campaigns' => function ($query) {
-            $query->approve();
-        }, 'campaigns as rejected_campaigns' => function ($query) {
-            $query->reject();
-        }]);
+        $user->loadCount(['campaigns', 
+            'campaigns as pending_campaigns'  => fn ($query) => $query->pending(), 
+            'campaigns as approved_campaigns' => fn ($query) => $query->approve(), 
+            'campaigns as rejected_campaigns' => fn ($query) => $query->reject()
+        ]);
 
         $widgetData['campaignCount']         = $user->campaigns_count;
         $widgetData['pendingCampaignCount']  = $user->pending_campaigns;

@@ -10,19 +10,19 @@
                             <a href="{{ route('admin.transaction.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
                                 <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
-                                        <h3 class="mb-1">{{ showAmount($user->balance) }} {{ __($setting->site_cur) }}</h3>
+                                        <h3 class="mb-1">{{ showAmount($user->balance) . ' ' . __($setting->site_cur) }}</h3>
                                         <p class="mb-0">@lang('Balance')</p>
                                     </div>
-                                    <span class="badge bg-label-primary rounded p-2 me-sm-4">
+                                    <span class="badge bg-label-info rounded p-2 me-sm-4">
                                         <i class="las la-coins fs-3"></i>
                                     </span>
                                 </div>
                                 <hr class="d-none d-sm-block d-lg-none me-4">
                             </a>
-                            <a href="{{ route('admin.donations.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
+                            <a href="{{ route('admin.donations.index') }}?search={{ $user->id }}" class="col-sm-6 col-lg-3">
                                 <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
-                                        <h3 class="mb-1">{{ showAmount($totalReceivedDonation) }} {{ __($setting->site_cur) }}</h3>
+                                        <h3 class="mb-1">{{ showAmount($totalReceivedDonation) . ' ' . __($setting->site_cur) }}</h3>
                                         <p class="mb-0">@lang('Total Received Donation')</p>
                                     </div>
                                     <span class="badge bg-label-success rounded p-2 me-sm-4">
@@ -34,23 +34,74 @@
                             <a href="{{ route('admin.withdraw.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
                                 <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
-                                        <h3 class="mb-1">{{ showAmount($totalWithdrawal) }} {{ __($setting->site_cur) }}</h3>
+                                        <h3 class="mb-1">{{ showAmount($totalWithdrawal) . ' ' . __($setting->site_cur) }}</h3>
                                         <p class="mb-0">@lang('Total Withdrawals')</p>
                                     </div>
-                                    <span class="badge bg-label-info rounded p-2 me-sm-4">
-                                        <i class="las la-file-invoice-dollar fs-3"></i>
+                                    <span class="badge bg-label-warning rounded p-2 me-sm-4">
+                                        <i class="las la-money-bill-wave fs-3"></i>
                                     </span>
                                 </div>
                                 <hr class="d-none d-sm-block d-lg-none me-4">
                             </a>
-                            <a href="{{ route('admin.transaction.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
+                            <a href="{{ route('admin.donations.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
                                 <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h3 class="mb-1">{{ showAmount($totalGivenDonation) . ' ' . __($setting->site_cur) }}</h3>
+                                        <p class="mb-0">@lang('Total Given Donation')</p>
+                                    </div>
+                                    <span class="badge bg-label-info rounded p-2">
+                                        <i class="las la-hand-holding-usd fs-3"></i>
+                                    </span>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none me-4">
+                            </a>
+                        </div>
+                        <hr>
+                        <div class="row gy-4 gy-sm-1">
+                            <a href="{{ route('admin.transaction.index') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
+                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
                                         <h3 class="mb-1">{{ $totalTransactions }}</h3>
                                         <p class="mb-0">@lang('Total Transactions')</p>
                                     </div>
-                                    <span class="badge bg-label-primary rounded p-2">
+                                    <span class="badge bg-label-primary rounded p-2 me-sm-4">
                                         <i class="las la-exchange-alt fs-3"></i>
+                                    </span>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none me-4">
+                            </a>
+                            <a href="{{ route('admin.campaigns.pending') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
+                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                    <div>
+                                        <h3 class="mb-1">{{ $totalPendingCampaigns }}</h3>
+                                        <p class="mb-0">@lang('Total Pending Campaigns')</p>
+                                    </div>
+                                    <span class="badge bg-label-warning rounded p-2 me-sm-4">
+                                        <i class="las la-hourglass-half fs-3"></i>
+                                    </span>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none me-4">
+                            </a>
+                            <a href="{{ route('admin.campaigns.approved') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
+                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                    <div>
+                                        <h3 class="mb-1">{{ $totalApprovedCampaigns }}</h3>
+                                        <p class="mb-0">@lang('Total Approved Campaigns')</p>
+                                    </div>
+                                    <span class="badge bg-label-success rounded p-2 me-sm-4">
+                                        <i class="las la-check-circle fs-3"></i>
+                                    </span>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none me-4">
+                            </a>
+                            <a href="{{ route('admin.campaigns.rejected') }}?search={{ $user->username }}" class="col-sm-6 col-lg-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h3 class="mb-1">{{ $totalRejectedCampaigns }}</h3>
+                                        <p class="mb-0">@lang('Total Rejected Campaigns')</p>
+                                    </div>
+                                    <span class="badge bg-label-danger rounded p-2">
+                                        <i class="las la-times-circle fs-3"></i>
                                     </span>
                                 </div>
                                 <hr class="d-none d-sm-block d-lg-none me-4">
@@ -78,13 +129,13 @@
                             </button>
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <button type="button" class="btn btn-label-warning w-100 balanceUpdateBtn" data-act="sub">
+                            <button type="button" class="btn btn-label-danger w-100 balanceUpdateBtn" data-act="sub">
                                 <span class="las la-minus-circle me-1"></span>@lang('Sub Balance')
                             </button>
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             @if ($user->status)
-                                <button type="button" class="btn btn-label-danger w-100" data-bs-toggle="modal" data-bs-target="#statusModal">
+                                <button type="button" class="btn btn-label-warning w-100" data-bs-toggle="modal" data-bs-target="#statusModal">
                                     <span class="las la-user-slash me-1"></span>@lang('Ban User')
                                 </button>
                             @else
@@ -131,7 +182,7 @@
                                 <div class="col-lg-9 col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text mobile-code"></span>
-                                        <input type="number" class="form-control" name="mobile" id="mobile" value="" required>
+                                        <input type="text" class="form-control" name="mobile" id="mobile" value="{{ $user->mobile }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-lg-3 col-sm-4 col-form-label">@lang('Zip Coce')</label>
+                                <label class="col-lg-3 col-sm-4 col-form-label">@lang('Zip Code')</label>
                                 <div class="col-lg-9 col-sm-8">
                                     <input type="text" class="form-control" name="zip" value="{{ @$user->address->zip }}">
                                 </div>
@@ -195,7 +246,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="row mb-3 d-flex align-items-center border-end">
-                                <label class="col-8 col-form-label required">@lang('2FA Confirmation')</label>
+                                <label class="col-8 col-form-label required">@lang('2FA Status')</label>
                                 <div class="col-4 d-flex justify-content-end">
                                     <label class="switch me-0">
                                         <input type="checkbox" class="switch-input" name="ts" @if ($user->ts) checked @endif>

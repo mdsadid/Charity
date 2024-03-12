@@ -46,14 +46,14 @@ class DepositController extends Controller
 
     protected function donationData($scope = null, $summary = false) {
         if ($scope) {
-            $deposits = Deposit::with(['gateway', 'campaign'])->$scope();
+            $deposits = Deposit::with(['gateway', 'campaign', 'user'])->$scope();
         } else {
-            $deposits = Deposit::with(['gateway', 'campaign']);
+            $deposits = Deposit::with(['gateway', 'campaign', 'user']);
         }
 
-        $deposits = $deposits->searchable(['trx', 'user:username'])->dateFilter();
+        $deposits = $deposits->searchable(['receiver_id', 'trx', 'user:username'])->dateFilter();
 
-        // Filter By Payment Method
+        // Filter by payment method
         if (request('method')) {
             $method   = Gateway::where('alias', request('method'))->firstOrFail();
             $deposits = $deposits->where('method_code', $method->code);

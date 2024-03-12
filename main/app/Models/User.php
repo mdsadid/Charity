@@ -54,16 +54,6 @@ class User extends Authenticatable
         );
     }
 
-    /**
-     * Get the user's mobile number.
-     */
-    protected function mobile(): Attribute
-    {
-        return Attribute::make(
-            get: fn (string $value) => '+' . $value,
-        );
-    }
-
     public function deposits()
     {
         return $this->hasMany(Deposit::class)->where('status', '!=' , ManageStatus::PAYMENT_INITIATE);

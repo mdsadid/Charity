@@ -228,7 +228,7 @@
                 if ($(this).data('donor_type')) {
                     donorType = '<span class="badge bg-label-success">@lang("Known")</span>';
                 } else {
-                    donorType = '<span class="badge bg-label-success">@lang("Anonymous")</span>';
+                    donorType = '<span class="badge bg-label-warning">@lang("Anonymous")</span>';
                 }
 
                 let donorName    = $(this).data('donor_name')
@@ -307,6 +307,8 @@
                             </div>`
 
                     $('.userData').html(infoHtml)
+                } else {
+                    $('.userData').html('')
                 }
             })
 

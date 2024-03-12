@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-end mb-3">
                         <form action="" class="input--group">
-                            <input type="text" class="form--control" name="search" value="{{ request('search') }}" placeholder="@lang('Search by campaign/category name')">
+                            <input type="text" class="form--control" name="search" value="{{ request('search') }}" placeholder="@lang('Campaign/Category...')">
                             <button type="submit" class="btn btn--sm btn--base">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>

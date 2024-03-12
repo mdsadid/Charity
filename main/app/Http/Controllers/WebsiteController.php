@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Comment;
 use App\Models\Contact;
+use App\Models\Deposit;
 use App\Models\Campaign;
 use App\Models\Category;
 use App\Models\Language;
@@ -11,9 +13,6 @@ use App\Models\SiteData;
 use App\Constants\ManageStatus;
 use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
-use App\Models\Deposit;
-use App\Models\Donation;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
@@ -114,7 +113,8 @@ class WebsiteController extends Controller
             ->orderby('method_code')
             ->get();
 
-        $donations = Deposit::where('campaign_id', $campaignData->id)
+        $donations = Deposit::with('user')
+            ->where('campaign_id', $campaignData->id)
             ->done()
             ->latest()
             ->limit(5)

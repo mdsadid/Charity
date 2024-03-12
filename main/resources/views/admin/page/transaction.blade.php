@@ -9,24 +9,18 @@
                         <div data-repeater-list="group-a">
                             <div data-repeater-item>
                                 <div class="row gx-3">
-                                    <div class="col-xl-4 col-xxl-2 col-sm-6 mb-0">
+                                    <div class="col-xl-8 col-xxl-4 col-sm-6 mb-0">
                                         <label class="form-label" for="form-repeater-1-1">@lang('TRX/Username')</label>
-                                        <input class="form-control" name="search" value="{{ request()->search }}" >
-                                    </div>
-                                    <div class="col-xl-4 col-xxl-2 col-sm-6 mb-0">
-                                        <label class="form-label" for="form-repeater-1-4">@lang('Type')</label>
-                                        <select class="form-select" name="trx_type">
-                                            <option value="">@lang('All')</option>
-                                            <option value="+" @selected(request()->trx_type == '+')>@lang('Plus')</option>
-                                            <option value="-" @selected(request()->trx_type == '-')>@lang('Minus')</option>
-                                        </select>
+                                        <input class="form-control" name="search" value="{{ request()->search }}">
                                     </div>
                                     <div class="col-xl-4 col-xxl-3 col-sm-6 mb-0">
                                         <label class="form-label">@lang('Remark')</label>
                                         <select class="form-select" name="remark">
                                             <option value="">@lang('Any')</option>
-                                            @foreach($remarks as $remark)
-                                                <option value="{{ $remark->remark }}" @selected(request()->remark == $remark->remark)>{{ __(keyToTitle($remark->remark)) }}</option>
+                                            @foreach ($remarks as $remark)
+                                                <option value="{{ $remark->remark }}" @selected(request()->remark == $remark->remark)>
+                                                    {{ __(keyToTitle($remark->remark)) }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -36,8 +30,8 @@
                                     </div>
                                     <div class="col-xl-2 d-flex align-items-center mb-0">
                                         <button class="btn btn-label-primary mt-4 w-100" type="submit" data-repeater-delete>
-                                        <i class="las la-filter me-1"></i>
-                                        <span class="align-middle">@lang('Filter')</span>
+                                            <i class="las la-filter me-1"></i>
+                                            <span class="align-middle">@lang('Filter')</span>
                                         </button>
                                     </div>
                                 </div>
@@ -70,32 +64,49 @@
                                 <tr>
                                     <td>
                                         <div>
-                                            <span class="fw-bold">{{ $transaction->user->fullname }}</span>
+                                            <span class="fw-bold">{{ $transaction->user ? $transaction->user->fullname : $transaction->sender_name }}</span>
                                             <br>
-                                            <span class="small"> <a href="{{ appendQuery('search', $transaction->user->username) }}"><span>@</span>{{ $transaction->user->username }}</a> </span>
+                                            <span class="small">
+                                                @if ($transaction->user)
+                                                    <a href="{{ appendQuery('search', $transaction->user->username) }}">
+                                                        <span>@</span>{{ $transaction->user->username }}
+                                                    </a>
+                                                @else
+                                                    <span class="text-primary">{{ $transaction->sender_email }}</span>
+                                                @endif
+                                            </span>
                                         </div>
                                     </td>
-                                    <td><strong>{{ $transaction->trx }}</strong></td>
+                                    <td>
+                                        <strong>{{ $transaction->trx }}</strong>
+                                    </td>
                                     <td>
                                         <div>
-                                            {{ showDateTime($transaction->created_at) }}<br>
+                                            {{ showDateTime($transaction->created_at) }}
+                                            <br>
                                             {{ diffForHumans($transaction->created_at) }}
                                         </div>
                                     </td>
                                     <td>
-                                        <span class=" @if($transaction->trx_type == '+')text-success @else text-danger @endif">
-                                            {{ $transaction->trx_type }} {{showAmount($transaction->amount)}} {{ __($setting->site_cur) }}
-                                        </span> 
+                                        <span class="@if ($transaction->trx_type == '+') text-success @else text-danger @endif">
+                                            {{ showAmount($transaction->amount) . ' ' . __($setting->site_cur) }}
+                                        </span>
                                     </td>
                                     <td>
-                                        <span class="text-danger">{{ showAmount($transaction->charge) }} {{ __($setting->site_cur) }}</span>
+                                        <span class="text-danger">{{ showAmount($transaction->charge) . ' ' . __($setting->site_cur) }}</span>
                                     </td>
-                                    <td>{{ showAmount($transaction->post_balance) }} {{ __($setting->site_cur) }}</td>
-                                    <td>{{ __($transaction->details) }}</td>
+                                    <td>
+                                        {{ showAmount($transaction->post_balance) . ' ' . __($setting->site_cur) }}
+                                    </td>
+                                    <td>
+                                        {{ __($transaction->details) }}
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="100%" class="text-center">{{ __($emptyMessage) }}</td>
+                                    <td colspan="100%" class="text-center">
+                                        {{ __($emptyMessage) }}
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -112,27 +123,25 @@
     </div>
 @endsection
 
-@push('page-script-lib')
-    <script src="{{ asset('assets/admin/js/page/datepicker.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/page/datepicker.en.js') }}"></script>
+@push('page-style-lib')
+    <link rel="stylesheet" href="{{ asset('assets/universal/css/datepicker.css') }}">
 @endpush
 
-@push('page-style-lib')
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/datepicker.css')}}">
+@push('page-script-lib')
+    <script src="{{ asset('assets/universal/js/datepicker.js') }}"></script>
+    <script src="{{ asset('assets/universal/js/datepicker.en.js') }}"></script>
 @endpush
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('.datepicker-here').on('input keyup keydown keypress', function () {
+            $('.datepicker-here').on('input keyup keydown keypress', function() {
                 return false;
             });
-            
-            if(!$('.datepicker-here').val()){
-                $('.datepicker-here').datepicker();
-            }
+
+            if (!$('.datepicker-here').val()) $('.datepicker-here').datepicker();
         })(jQuery);
     </script>
 @endpush

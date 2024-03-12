@@ -237,7 +237,14 @@ class PaymentController extends Controller
 
         $adminNotification            = new AdminNotification();
         $adminNotification->user_id   = $deposit->user->id ?? 0;
-        $donor                        = $deposit->user->id ? $deposit->user->fullname : $deposit->full_name;
+
+        if ($deposit->donor_type) {
+            if ($deposit->user_id) $donor = $deposit->user->fullname;
+            else $donor = $deposit->full_name;
+        } else {
+            $donor = 'an anonymous user';
+        }
+
         $adminNotification->title     = "Deposit request from $donor for a campaign";
         $adminNotification->click_url = urlPath('admin.donations.pending');
         $adminNotification->save();
@@ -264,8 +271,9 @@ class PaymentController extends Controller
             'campaign_name'   => $deposit->campaign->name,
         ]);
 
-        $toast[] = ['success', 'Your donation request has been taken. Please wait for admin response'];
+        $toast[]   = ['success', 'Your donation request has been taken. Please wait for admin response'];
+        $routeName = auth()->check() ? 'user.donation.history' : 'campaign';
 
-        return to_route('user.donation.history')->withToasts($toast);
+        return to_route($routeName)->withToasts($toast);
     }
 }

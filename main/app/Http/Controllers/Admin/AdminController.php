@@ -225,12 +225,20 @@ class AdminController extends Controller
     function transaction() {
         $pageTitle    = 'Transactions';
         $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
-        $transactions = Transaction::searchable(['trx', 'user:username'])
-            ->filter(['trx_type', 'remark'])
+        $transactions = Transaction::with('user')
+            ->searchable(['trx', 'user:username'])
+            ->filter(['remark'])
             ->dateFilter()
             ->latest()
-            ->with('user')
             ->paginate(getPaginate());
+
+        $transactions->map(function ($transaction) {
+            if (is_null($transaction->user)) {
+                $deposit                   = Deposit::where('trx', $transaction->trx)->select('full_name', 'email')->first();
+                $transaction->sender_name  = $deposit->full_name;
+                $transaction->sender_email = $deposit->email;
+            }
+        });
 
         return view('admin.page.transaction', compact('pageTitle', 'transactions', 'remarks'));
     }

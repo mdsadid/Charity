@@ -61,15 +61,27 @@ class UserController extends Controller
     }
 
     function details($id) {
-        $user                  = User::with(['campaigns', 'withdrawals', 'transactions'])->findOrFail($id);
-        $pageTitle             = 'Details - ' . $user->username;
-        $campaigns             = $user->campaigns->pluck('id');
-        $totalReceivedDonation = Deposit::whereIn('campaign_id', $campaigns) ->done()->sum('amount');
-        $totalWithdrawal       = $user->withdrawals()->done()->sum('amount');
-        $totalTransactions     = $user->transactions->count();
-        $countries             = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $user = User::withCount(['campaigns', 
+            'campaigns as pending_campaigns'  => fn ($query) => $query->pending(),
+            'campaigns as approved_campaigns' => fn ($query) => $query->approve(),
+            'campaigns as rejected_campaigns' => fn ($query) => $query->reject(), 
+            'withdrawals', 
+            'deposits', 
+            'transactions'
+        ])->findOrFail($id);
 
-        return view('admin.user.detail', compact('pageTitle', 'user', 'totalReceivedDonation', 'totalWithdrawal', 'totalTransactions', 'countries'));
+        $pageTitle              = 'Details - ' . $user->username;
+        $campaigns              = $user->campaigns->pluck('id');
+        $totalReceivedDonation  = Deposit::whereIn('campaign_id', $campaigns)->done()->sum('amount');
+        $totalWithdrawal        = $user->withdrawals()->done()->sum('amount');
+        $totalGivenDonation     = $user->deposits()->done()->sum('amount');
+        $totalTransactions      = $user->transactions->count();
+        $totalPendingCampaigns  = $user->pending_campaigns;
+        $totalApprovedCampaigns = $user->approved_campaigns;
+        $totalRejectedCampaigns = $user->rejected_campaigns;
+        $countries              = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+
+        return view('admin.user.details', compact('pageTitle', 'user', 'totalReceivedDonation', 'totalWithdrawal', 'totalGivenDonation', 'totalTransactions', 'totalPendingCampaigns', 'totalApprovedCampaigns', 'totalRejectedCampaigns', 'countries'));
     }
 
     function update($id) {
@@ -99,20 +111,18 @@ class UserController extends Controller
         $user->sc           = request('sc') ? ManageStatus::VERIFIED : ManageStatus::UNVERIFIED;
         $user->ts           = request('ts') ? ManageStatus::ACTIVE   : ManageStatus::INACTIVE;
         $user->address      = [
-                                'city'    => request('city'),
-                                'state'   => request('state'),
-                                'zip'     => request('zip'),
-                                'country' => @$country,
-                            ];
+            'city'    => request('city'),
+            'state'   => request('state'),
+            'zip'     => request('zip'),
+            'country' => @$country,
+        ];
 
         if (!request('kc')) {
             $user->kc = ManageStatus::UNVERIFIED;
 
             if ($user->kyc_data) {
                 foreach ($user->kyc_data as $kycData) {
-                    if ($kycData->type == 'file') {
-                        fileManager()->removeFile(getFilePath('verify') . '/' . $kycData->value);
-                    }
+                    if ($kycData->type == 'file') fileManager()->removeFile(getFilePath('verify') . '/' . $kycData->value);
                 }
             }
 
@@ -123,12 +133,14 @@ class UserController extends Controller
 
         $user->save();
 
-        $toast[] = ['success', 'User details updated success'];
+        $toast[] = ['success', 'User details updated successfully'];
+
         return back()->withToasts($toast);
     }
 
     function login($id) {
         Auth::loginUsingId($id);
+
         return to_route('user.home');
     }
 
@@ -191,16 +203,16 @@ class UserController extends Controller
 
         if ($user->status == ManageStatus::ACTIVE) {
             $this->validate(request(), [
-                'ban_reason' => 'required|string|max:255'
+                'ban_reason' => 'required|string|max:255',
             ]);
 
             $user->status     = ManageStatus::INACTIVE;
             $user->ban_reason = request('ban_reason');
-            $toast[]          = ['success', 'User ban success'];
+            $toast[]          = ['success', 'User banned successfully'];
         } else {
             $user->status     = ManageStatus::ACTIVE;
             $user->ban_reason = null;
-            $toast[]          = ['success', 'User unbanned success'];
+            $toast[]          = ['success', 'User unbanned successfully'];
         }
 
         $user->save();
@@ -216,6 +228,7 @@ class UserController extends Controller
         notify($user, 'KYC_APPROVE', []);
 
         $toast[] = ['success', 'KYC approval success'];
+
         return back()->withToasts($toast);
     }
 
@@ -223,9 +236,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         foreach ($user->kyc_data as $kycData) {
-            if ($kycData->type == 'file') {
-                fileManager()->removeFile(getFilePath('verify') . '/' . $kycData->value);
-            }
+            if ($kycData->type == 'file') fileManager()->removeFile(getFilePath('verify') . '/' . $kycData->value);
         }
 
         $user->kc       = ManageStatus::UNVERIFIED;
@@ -235,15 +246,13 @@ class UserController extends Controller
         notify($user, 'KYC_REJECT', []);
 
         $toast[] = ['success', 'KYC cancellation success'];
+
         return back()->withToasts($toast);
     }
 
     protected function userData($scope = null) {
-        if ($scope) {
-            $users = User::$scope();
-        } else {
-            $users = User::query();
-        }
+        if ($scope) $users = User::$scope(); 
+        else $users = User::query();
 
         return $users->searchable(['username', 'email'])->dateFilter()->latest()->paginate(getPaginate());
     }

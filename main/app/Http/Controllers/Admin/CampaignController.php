@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Comment;
+use App\Models\Campaign;
 use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
-use App\Models\Campaign;
-use App\Models\Comment;
 
 class CampaignController extends Controller
 {
@@ -44,7 +44,7 @@ class CampaignController extends Controller
             $campaigns = Campaign::query();
         }
 
-        return $campaigns->with(['user', 'category'])->searchable(['name', 'category:name'])->latest()->paginate(getPaginate());
+        return $campaigns->with(['user', 'category'])->searchable(['name', 'category:name', 'user:username'])->latest()->paginate(getPaginate());
     }
 
     function details($id) {
