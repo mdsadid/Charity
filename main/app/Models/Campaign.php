@@ -94,14 +94,10 @@ class Campaign extends Model
      */
     public function scopeCampaignCheck($query)
     {
-        $query->whereHas('category', function ($innerQuery) {
-            $innerQuery->active();
-        })
-            ->whereHas('user', function ($innerQuery) {
-                $innerQuery->active();
-            })
-                ->whereDate('start_date', '<', now()->toDateString())
-                ->whereDate('end_date', '>', now()->toDateString());
+        $query->whereHas('category', fn ($innerQuery) => $innerQuery->active())
+            ->whereHas('user', fn ($innerQuery) => $innerQuery->active())
+            ->whereDate('start_date', '<', Carbon::now()->format('Y-m-d'))
+            ->whereDate('end_date', '>', Carbon::now()->format('Y-m-d'));
     }
 
     /**

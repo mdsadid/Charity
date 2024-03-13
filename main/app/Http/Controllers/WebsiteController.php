@@ -31,8 +31,16 @@ class WebsiteController extends Controller
         $volunteerContent        = getSiteData('volunteer.content', true);
         $volunteerElements       = getSiteData('volunteer.element', false, null, true);
         $counterElements         = getSiteData('counter.element', false, null, true);
+        $upcomingContent         = getSiteData('upcoming.content', true);
+        $upcomingCampaigns       = Campaign::whereHas('user', fn ($query) => $query->active())
+            ->whereHas('category', fn ($query) => $query->active())
+            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
+            ->approve()
+            ->orderby('start_date')
+            ->limit(6)
+            ->get();
 
-        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns'));
+        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns', 'upcomingContent', 'upcomingCampaigns'));
     }
 
     function aboutUs() {
@@ -251,10 +259,10 @@ class WebsiteController extends Controller
         }
     }
 
-    function events() {
-        $pageTitle = 'Events';
+    function upcoming() {
+        $pageTitle = 'Upcoming Campaigns';
 
-        return view($this->activeTheme . 'page.event', compact('pageTitle'));
+        return view($this->activeTheme . 'page.upcoming', compact('pageTitle'));
     }
 
     function contact() {

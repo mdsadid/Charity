@@ -415,72 +415,26 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">Upcoming Events</h2>
-                        <p class="section-heading__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.</p>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$upcomingContent->data_info->section_heading) }}</h2>
+                        <p class="section-heading__desc">{{ __(@$upcomingContent->data_info->description) }}</p>
                     </div>
                 </div>
             </div>
             <div class="upcoming-event__row">
-                <div class="upcoming-event__card" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="upcoming-event__schedule">
-                        <span class="upcoming-event__date">17</span>
-                        <span class="upcoming-event__month">March</span>
+                @forelse ($upcomingCampaigns as $upcomingCampaign)
+                    <div class="upcoming-event__card" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="upcoming-event__schedule">
+                            <span class="upcoming-event__date">{{ @$upcomingCampaign->start_date->format('d') }}</span>
+                            <span class="upcoming-event__month">{{ __(@$upcomingCampaign->start_date->format('F')) }}</span>
+                        </div>
+                        <div class="upcoming-event__txt">
+                            <h3 class="upcoming-event__title">{{ __(strLimit(@$upcomingCampaign->name, 30)) }}</h3>
+                            <p>{{ __(strLimit(strip_tags(@$upcomingCampaign->description), 100)) }}</p>
+                        </div>
                     </div>
-                    <div class="upcoming-event__txt">
-                        <h3 class="upcoming-event__title">Harmony for Hope Gala</h3>
-                        <p>Elevate spirits at the Harmony for Hope Gala, uniting for a night of generosity and compassion.</p>
-                    </div>
-                </div>
-                <div class="upcoming-event__card" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="upcoming-event__schedule">
-                        <span class="upcoming-event__date">17</span>
-                        <span class="upcoming-event__month">March</span>
-                    </div>
-                    <div class="upcoming-event__txt">
-                        <h3 class="upcoming-event__title">Rhythm of Giving: A Charity Concert</h3>
-                        <p>Immerse in melodies and generosity at Rhythm of Giving, a charity concert echoing support for noble causes.</p>
-                    </div>
-                </div>
-                <div class="upcoming-event__card" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="upcoming-event__schedule">
-                        <span class="upcoming-event__date">17</span>
-                        <span class="upcoming-event__month">March</span>
-                    </div>
-                    <div class="upcoming-event__txt">
-                        <h3 class="upcoming-event__title">Empower the Future 5K Run</h3>
-                        <p>Empower the future with every step at the 5K Run, a dynamic event merging fitness and philanthropy.</p>
-                    </div>
-                </div>
-                <div class="upcoming-event__card" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="upcoming-event__schedule">
-                        <span class="upcoming-event__date">17</span>
-                        <span class="upcoming-event__month">March</span>
-                    </div>
-                    <div class="upcoming-event__txt">
-                        <h3 class="upcoming-event__title">Auction Extravaganza</h3>
-                        <p>Bid for a better future at Artistry for a Cause, an auction extravaganza celebrating creativity and compassion.</p>
-                    </div>
-                </div>
-                <div class="upcoming-event__card" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="upcoming-event__schedule">
-                        <span class="upcoming-event__date">17</span>
-                        <span class="upcoming-event__month">March</span>
-                    </div>
-                    <div class="upcoming-event__txt">
-                        <h3 class="upcoming-event__title">Heartbeat for Humanity</h3>
-                        <p>Join the Heartbeat for Humanity Walkathon, where every step resonates with the rhythm of positive change.</p>
-                    </div>
-                </div>
-                <div class="upcoming-event__card" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="upcoming-event__schedule">
-                        <span class="upcoming-event__date">17</span>
-                        <span class="upcoming-event__month">March</span>
-                    </div>
-                    <div class="upcoming-event__txt">
-                        <h3 class="upcoming-event__title">Culinary Delights Fundraiser</h3>
-                        <p>Savor the flavors of generosity at Gourmet Giving, a culinary delights fundraiser supporting worthy causes.</p>
-                    </div>
-                </div>
+                @empty
+                    <p class="text-center">{{ __($emptyMessage) }}</p>
+                @endforelse
             </div>
         </div>
     </div>

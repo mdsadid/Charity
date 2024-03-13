@@ -330,6 +330,14 @@
             "modal": true
         }
     },
+    "upcoming": {
+        "builder": true,
+        "name": "Upcoming Campaigns Section",
+        "content": {
+            "section_heading": "text",
+            "description": "textarea"
+        }
+    },
     "policy_pages": {
         "builder": true,
         "no_selection": true,

@@ -12,7 +12,7 @@ Route::controller('WebsiteController')->group(function () {
         Route::post('comment', 'storeCampaignComment')->name('comment');
         Route::get('fetch-comment', 'fetchCampaignComment')->name('comment.fetch');
     });
-    Route::get('events', 'events')->name('event');
+    Route::get('upcoming', 'upcoming')->name('upcoming');
     Route::get('contact', 'contact')->name('contact');
     Route::post('contact', 'contactStore');
 

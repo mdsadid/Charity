@@ -54,7 +54,7 @@
                                 <a href="{{ route('campaign') }}" class="nav-link">@lang('Campaigns')</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('event') }}" class="nav-link">@lang('Events')</a>
+                                <a href="{{ route('upcoming') }}" class="nav-link">@lang('Upcoming')</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('contact') }}" class="nav-link">@lang('Contact')</a>
