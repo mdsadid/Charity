@@ -7605,20 +7605,10 @@ body .select2-container--default.select2-container--disabled .select2-selection-
     margin-bottom: 10px;
 }
 
-.event__info {
+.event__description {
     font-size: 1.125rem;
-    line-height: 1.8;
+    line-height: 1.5;
     margin-bottom: 20px;
-}
-
-.event__info li {
-    display: flex;
-    align-items: center;
-}
-
-.event__info li i {
-    font-size: 1.25rem;
-    color: hsl(var(--base));
 }
 
 @media screen and (max-width: 991px) {

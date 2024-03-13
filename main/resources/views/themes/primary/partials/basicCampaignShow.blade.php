@@ -16,9 +16,11 @@
             </button>
         @endif
 
-        <button type="button" class="nav-link" id="nav-comment-tab" data-bs-toggle="tab" data-bs-target="#nav-comment" role="tab" aria-controls="nav-comment" aria-selected="false">
-            @lang('Comments')
-        </button>
+        @if (!request()->routeIs('upcoming.show'))
+            <button type="button" class="nav-link" id="nav-comment-tab" data-bs-toggle="tab" data-bs-target="#nav-comment" role="tab" aria-controls="nav-comment" aria-selected="false">
+                @lang('Comments')
+            </button>
+        @endif
     </div>
 </nav>
 <div class="tab-content mb-4" id="nav-tabContent">
@@ -52,59 +54,61 @@
         </div>
     @endif
 
-    <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab" tabindex="0">
-        <div @class(['donation-details__comments', 'border-bottom-none' => $campaignData->user_id == @$authUser->id])>
-            <h3 class="donation-details__subtitle">@lang('Comments') ({{ @$commentCount }})</h3>
+    @if (!request()->routeIs('upcoming.show'))
+        <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab" tabindex="0">
+            <div @class(['donation-details__comments', 'border-bottom-none' => @$campaignData->user_id == @$authUser->id])>
+                <h3 class="donation-details__subtitle">@lang('Comments') ({{ @$commentCount }})</h3>
 
-            @if (count($comments))
-                <div id="loadMoreComment">
-                    @foreach ($comments->take(5) as $comment)
-                        <div class="donation-details__comment">
-                            <div class="donation-details__comment__img">
-                                <img src="{{ getImage(getFilePath('userProfile') . '/' . @$comment->user->image, getFileSize('userProfile')) }}" alt="image">
+                @if (count($comments))
+                    <div id="loadMoreComment">
+                        @foreach ($comments->take(5) as $comment)
+                            <div class="donation-details__comment">
+                                <div class="donation-details__comment__img">
+                                    <img src="{{ getImage(getFilePath('userProfile') . '/' . @$comment->user->image, getFileSize('userProfile')) }}" alt="image">
+                                </div>
+                                <div class="donation-details__comment__txt">
+                                    <h4 class="donation-details__comment__name">{{ __(@$comment->user ? @$comment->user->fullname : @$comment->name) }}</h4>
+                                    <p class="donation-details__comment__date">{{ showDateTime(@$comment->created_at, 'd M, Y') }}</p>
+                                    <p class="donation-details__comment__desc">{{ __(@$comment->comment) }}</p>
+                                </div>
                             </div>
-                            <div class="donation-details__comment__txt">
-                                <h4 class="donation-details__comment__name">{{ __(@$comment->user ? @$comment->user->fullname : @$comment->name) }}</h4>
-                                <p class="donation-details__comment__date">{{ showDateTime(@$comment->created_at, 'd M, Y') }}</p>
-                                <p class="donation-details__comment__desc">{{ __(@$comment->comment) }}</p>
-                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p>{{ __($emptyMessage) }}</p>
+                @endif
+
+                @if (count($comments) > 5)
+                    <div class="text-center loadComment">
+                        <button type="button" class="btn btn--base loadCommentButton" data-url="{{ route('campaign.comment.fetch', $campaignData->slug) }}">
+                            @lang('Load More')
+                        </button>
+                    </div>
+                @endif
+            </div>
+
+            @if (request()->routeIs('campaign.show') && $campaignData->user_id != @$authUser->id)
+                <div class="donation-details__post__comment">
+                    <h3 class="donation-details__subtitle">@lang('Post a comment')</h3>
+                    <form action="{{ route('campaign.comment', @$campaignData->slug) }}" method="POST" class="row g-4">
+                        @csrf
+                        <div class="col-sm-6">
+                            <input type="text" name="name" class="form--control" value="{{ old('name', @$authUser->fullname) }}" placeholder="Your Name*" required @readonly($authUser)>
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <p>{{ __($emptyMessage) }}</p>
-            @endif
-
-            @if (count($comments) > 5)
-                <div class="text-center loadComment">
-                    <button type="button" class="btn btn--base loadCommentButton" data-url="{{ route('campaign.comment.fetch', $campaignData->slug) }}">
-                        @lang('Load More')
-                    </button>
+                        <div class="col-sm-6">
+                            <input type="email" name="email" class="form--control" value="{{ old('email', @$authUser->email) }}" placeholder="Your Email*" required @readonly($authUser)>
+                        </div>
+                        <div class="col-12">
+                            <textarea class="form--control" name="comment" rows="10" placeholder="Your Comment*" required>{{ old('comment') }}</textarea>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn--base">@lang('Submit')</button>
+                        </div>
+                    </form>
                 </div>
             @endif
         </div>
-
-        @if (request()->routeIs('campaign.show') && $campaignData->user_id != @$authUser->id)
-            <div class="donation-details__post__comment">
-                <h3 class="donation-details__subtitle">@lang('Post a comment')</h3>
-                <form action="{{ route('campaign.comment', @$campaignData->slug) }}" method="POST" class="row g-4">
-                    @csrf
-                    <div class="col-sm-6">
-                        <input type="text" name="name" class="form--control" value="{{ old('name', @$authUser->fullname) }}" placeholder="Your Name*" required @readonly($authUser)>
-                    </div>
-                    <div class="col-sm-6">
-                        <input type="email" name="email" class="form--control" value="{{ old('email', @$authUser->email) }}" placeholder="Your Email*" required @readonly($authUser)>
-                    </div>
-                    <div class="col-12">
-                        <textarea class="form--control" name="comment" rows="10" placeholder="Your Comment*" required>{{ old('comment') }}</textarea>
-                    </div>
-                    <div class="col-12 d-flex justify-content-center">
-                        <button type="submit" class="btn btn--base">@lang('Submit')</button>
-                    </div>
-                </form>
-            </div>
-        @endif
-    </div>
+    @endif
 </div>
 
 @push('page-style')

@@ -114,9 +114,7 @@ class WebsiteController extends Controller
         $seoContents['image_size']         = $imageSize;
 
         $countries         = json_decode(file_get_contents(resource_path('views/partials/country.json')));
-        $gatewayCurrencies = GatewayCurrency::whereHas('method', function ($gateway) {
-            $gateway->active();
-        })
+        $gatewayCurrencies = GatewayCurrency::whereHas('method', fn ($gateway) => $gateway->active())
             ->with('method')
             ->orderby('method_code')
             ->get();
@@ -259,10 +257,56 @@ class WebsiteController extends Controller
         }
     }
 
-    function upcoming() {
-        $pageTitle = 'Upcoming Campaigns';
+    function upcomingCampaigns() {
+        $pageTitle         = 'Upcoming Campaigns';
+        $upcomingCampaigns = Campaign::when(request()->filled('category'), function ($query) {
+            $categorySlug = request('category');
+            $category     = Category::where('slug', $categorySlug)->active()->first();
 
-        return view($this->activeTheme . 'page.upcoming', compact('pageTitle'));
+            if ($category) $query->where('category_id', $category->id);
+        })
+            ->when(request()->filled('name'), function ($query) {
+                $query->where('name', 'like', '%' . request('name') . '%');
+            })
+            ->whereHas('user', fn ($query) => $query->active())
+            ->whereHas('category', fn ($query) => $query->active())
+            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
+            ->approve()
+            ->orderby('start_date')
+            ->paginate(getPaginate(10));
+
+        $categories = Category::active()->select('name', 'slug')->get();
+
+        return view($this->activeTheme . 'page.upcomingCampaign', compact('pageTitle', 'upcomingCampaigns', 'categories'));
+    }
+
+    function upcomingCampaignShow($slug) {
+        $pageTitle    = 'Upcoming Campaign Details';
+        $campaignData = Campaign::where('slug', $slug)
+            ->whereHas('user', fn ($query) => $query->active())
+            ->whereHas('category', fn ($query) => $query->active())
+            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
+            ->approve()
+            ->firstOrFail();
+
+        $seoContents['keywords']           = $campaignData->meta_keywords ?? [];
+        $seoContents['social_title']       = $campaignData->name;
+        $seoContents['description']        = strLimit($campaignData->description, 150);
+        $seoContents['social_description'] = strLimit($campaignData->description, 150);
+        $imageSize                         = getFileSize('campaign');
+        $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaignData->image, $imageSize);
+        $seoContents['image_size']         = $imageSize;
+
+        $moreUpcomingCampaigns = Campaign::whereHas('user', fn ($query) => $query->active())
+            ->whereHas('category', fn ($query) => $query->active())
+            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
+            ->whereNot('slug', $campaignData->slug)
+            ->approve()
+            ->orderby('start_date')
+            ->limit(3)
+            ->get();
+
+        return view($this->activeTheme . 'page.upcomingCampaignShow', compact('pageTitle', 'campaignData', 'seoContents', 'moreUpcomingCampaigns'));
     }
 
     function contact() {
@@ -287,7 +331,8 @@ class WebsiteController extends Controller
         $contactCheck = Contact::where('email', $email)->where('status', ManageStatus::NO)->first();
 
         if ($contactCheck) {
-            $toast[] = ['warning', 'There is an existing contact on record, kindly await the admin\'s response'];
+            $toast[] = ['warning', 'There is an existing contact on our record, kindly wait for the admin\'s response'];
+
             return back()->withToasts($toast);
         }
 
@@ -299,6 +344,7 @@ class WebsiteController extends Controller
         $contact->save();
 
         $toast[] = ['success', 'We have received your message, kindly wait for the admin\'s response'];
+
         return back()->withToasts($toast);
     }
 
@@ -306,7 +352,9 @@ class WebsiteController extends Controller
         $language = Language::where('code', $lang)->first();
 
         if (!$language) $lang = 'en';
+
         session()->put('lang', $lang);
+
         return back();
     }
 
@@ -322,9 +370,7 @@ class WebsiteController extends Controller
     }
 
     function maintenance() {
-        if(bs('site_maintenance') == ManageStatus::INACTIVE) {
-            return to_route('home');
-        }
+        if(bs('site_maintenance') == ManageStatus::INACTIVE) return to_route('home');
 
         $maintenance = SiteData::where('data_key', 'maintenance.data')->first();
         $pageTitle   = $maintenance->data_info->heading;
@@ -332,7 +378,7 @@ class WebsiteController extends Controller
         return view($this->activeTheme . 'page.maintenance', compact('pageTitle', 'maintenance'));
     }
 
-    function policyPages($slug,$id) {
+    function policyPages($slug, $id) {
         $policy    = SiteData::where('id', $id)->where('data_key', 'policy_pages.element')->firstOrFail();
         $pageTitle = $policy->data_info->title;
 
@@ -346,23 +392,22 @@ class WebsiteController extends Controller
         $fontFile  = realpath('assets/font/RobotoMono-Regular.ttf');
         $fontSize  = round(($imgWidth - 50) / 8);
 
-        if ($fontSize <= 9) {
-            $fontSize = 9;
-        }
+        if ($fontSize <= 9) $fontSize = 9;
 
-        if ($imgHeight < 100 && $fontSize > 30) {
-            $fontSize = 30;
-        }
+        if ($imgHeight < 100 && $fontSize > 30) $fontSize = 30;
 
         $image     = imagecreatetruecolor($imgWidth, $imgHeight);
         $colorFill = imagecolorallocate($image, 100, 100, 100);
         $bgFill    = imagecolorallocate($image, 175, 175, 175);
+
         imagefill($image, 0, 0, $bgFill);
+
         $textBox    = imagettfbbox($fontSize, 0, $fontFile, $text);
         $textWidth  = abs($textBox[4] - $textBox[0]);
         $textHeight = abs($textBox[5] - $textBox[1]);
         $textX      = ($imgWidth - $textWidth) / 2;
         $textY      = ($imgHeight + $textHeight) / 2;
+
         header('Content-Type: image/jpeg');
         imagettftext($image, $fontSize, 0, $textX, $textY, $colorFill, $fontFile, $text);
         imagejpeg($image);

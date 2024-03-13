@@ -11,8 +11,12 @@
             <div class="progress-bar" style="width: {{ $percentage }}%"><span class="progress-txt">{{ $percentage . '%' }}</span></div>
         </div>
         <ul class="campaign-status">
-            <li><span><i class="fa-solid fa-hand-holding-dollar"></i> @lang('Goal'):</span> {{ $setting->cur_sym . showAmount(@$campaignData->goal_amount) }}</li>
-            <li><span><i class="fa-solid fa-sack-dollar"></i> @lang('Raised'):</span> {{ $setting->cur_sym . showAmount(@$campaignData->raised_amount) }}</li>
+            <li>
+                <span><i class="fa-solid fa-hand-holding-dollar"></i> @lang('Goal'):</span> {{ $setting->cur_sym . showAmount(@$campaignData->goal_amount) }}
+            </li>
+            <li>
+                <span><i class="fa-solid fa-sack-dollar"></i> @lang('Raised'):</span> {{ $setting->cur_sym . showAmount(@$campaignData->raised_amount) }}
+            </li>
         </ul>
     </div>
 </div>
@@ -43,7 +47,7 @@
                 </a>
             </li>
             <li class="social-list__item">
-                <a href="https://pinterest.com/pin/create/bookmarklet/?media={{ getImage(getFilePath('campaign') . '/' . @$campaignData->image, getFileSize('campaign')) }}&url={{ urlencode(url()->current()) }}&is_video=[is_video]&description={{ @$campaignData->name }}" class="social-list__link flex-center" target="_blank">
+                <a href="https://pinterest.com/pin/create/bookmarklet/?media={{ $seoContents['image'] }}&url={{ urlencode(url()->current()) }}&is_video=[is_video]&description={{ @$campaignData->name }}" class="social-list__link flex-center" target="_blank">
                     <i class="fab fa-pinterest-p"></i>
                 </a>
             </li>

@@ -12,7 +12,8 @@ Route::controller('WebsiteController')->group(function () {
         Route::post('comment', 'storeCampaignComment')->name('comment');
         Route::get('fetch-comment', 'fetchCampaignComment')->name('comment.fetch');
     });
-    Route::get('upcoming', 'upcoming')->name('upcoming');
+    Route::get('upcoming-campaigns', 'upcomingCampaigns')->name('upcoming');
+    Route::get('upcoming-campaign/{slug}', 'upcomingCampaignShow')->name('upcoming.show');
     Route::get('contact', 'contact')->name('contact');
     Route::post('contact', 'contactStore');
 

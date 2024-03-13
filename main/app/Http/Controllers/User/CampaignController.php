@@ -112,7 +112,7 @@ class CampaignController extends Controller
         $this->validate(request(), [
             'category_id'         => 'required|integer|gt:0',
             'image'               => ['required', File::types(['png', 'jpg', 'jpeg'])],
-            'name'                => 'required|string|max:190',
+            'name'                => 'required|string|max:190|unique:campaigns,name',
             'description'         => 'required|min:30',
             'document'            => ['nullable', File::types('pdf')],
             'goal_amount'         => 'required|numeric|gt:0',
