@@ -1,15 +1,19 @@
 <div class="success-showcase__card">
     <div class="success-showcase__img">
-        <a href="success-details.html">
-            <img src="{{ getImage('assets/images/site/success_story/' . @$successElement->data_info->image, '415x230') }}" alt="image">
+        <a href="{{ route('stories.show', @$successElement->id) }}">
+            <img src="{{ getImage('assets/images/site/success_story/thumb_' . @$successElement->data_info->image, '415x230') }}" alt="image">
         </a>
     </div>
     <div class="success-showcase__txt">
         <h3 class="success-showcase__title">
-            <a href="success-details.html">{{ __(strLimit(@$successElement->data_info->title, 25)) }}</a>
+            <a href="{{ route('stories.show', @$successElement->id) }}">
+                {{ __(strLimit(@$successElement->data_info->title, 25)) }}
+            </a>
         </h3>
         <p class="success-showcase__desc">{{ __(strLimit(strip_tags(@$successElement->data_info->details), 100)) }}</p>
-        <a href="success-details.html" class="btn btn--sm btn--base">Read More</a>
+        <a href="{{ route('stories.show', @$successElement->id) }}" class="btn btn--sm btn--base">
+            @lang('Read More')
+        </a>
     </div>
 </div>
 

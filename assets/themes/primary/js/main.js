@@ -346,6 +346,13 @@
 
     // ========================= Aos Animation Start ==========
     AOS.init();
+
+    function handleDynamicChanges() {
+      AOS.refresh();
+    }
+
+    window.addEventListener('scroll', handleDynamicChanges);
+    window.addEventListener('resize', handleDynamicChanges);
     // ========================= Aos Animation End ==========
 
     // ========================= Campaign Countdown Start ==========

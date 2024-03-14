@@ -307,6 +307,23 @@ class WebsiteController extends Controller
         return view($this->activeTheme . 'page.stories', compact('pageTitle', 'successElements'));
     }
 
+    function storyShow($id) {
+        $pageTitle = 'Story Details';
+        $storyData = SiteData::findOrFail($id);
+
+        $seoContents['keywords']           = $storyData->data_info->meta_keywords ?? [];
+        $seoContents['social_title']       = $storyData->data_info->title;
+        $seoContents['description']        = strLimit($storyData->data_info->details, 150);
+        $seoContents['social_description'] = strLimit($storyData->data_info->details, 150);
+        $imageSize                         = '855x475';
+        $seoContents['image']              = getImage('assets/images/site/success_story/' . $storyData->data_info->image, $imageSize);
+        $seoContents['image_size']         = $imageSize;
+
+        $moreStories = SiteData::where('data_key', 'success_story.element')->whereNot('id', $id)->limit(3)->get();
+
+        return view($this->activeTheme . 'page.storyShow', compact('pageTitle', 'storyData', 'seoContents', 'moreStories'));
+    }
+
     function contact() {
         $pageTitle       = 'Contact';
         $user            = auth()->user();

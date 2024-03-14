@@ -15,6 +15,7 @@ Route::controller('WebsiteController')->group(function () {
     Route::get('upcoming-campaigns', 'upcomingCampaigns')->name('upcoming');
     Route::get('upcoming-campaign/{slug}', 'upcomingCampaignShow')->name('upcoming.show');
     Route::get('success-stories', 'stories')->name('stories');
+    Route::get('success-story/{id}', 'storyShow')->name('stories.show');
     Route::get('contact', 'contact')->name('contact');
     Route::post('contact', 'contactStore');
 
