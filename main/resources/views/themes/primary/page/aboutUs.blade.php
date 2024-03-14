@@ -18,14 +18,14 @@
                         <div class="row about__card-row">
                             <div class="col-sm-6">
                                 <div class="about__card">
-                                    <div class="counter">$ <span class="odometer">12,000</span></div>
+                                    <div class="counter">{{ $setting->cur_sym }}<span class="odometer" data-count="{{ $totalFundRaised }}">0</span></div>
                                     <span class="name">@lang('Total Fund Raised')</span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="about__card">
-                                    <div class="counter"><span class="odometer">150</span>+</div>
-                                    <span class="name">@lang('Total Causes')</span>
+                                    <div class="counter"><span class="odometer" data-count="{{ $totalCampaignCount }}">0</span>+</div>
+                                    <span class="name">@lang('Total Campaigns')</span>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">{{ __(@$clientContent->data_info->heading) }}</h2>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$clientContent->data_info->section_heading) }}</h2>
                         <p class="section-heading__desc">{{ __(@$clientContent->data_info->description) }}</p>
                     </div>
                 </div>
@@ -83,6 +83,10 @@
     @include($activeTheme . 'partials.basicPartner')
 @endsection
 
+@push('page-style-lib')
+    <link rel="stylesheet" href="{{ asset($activeThemeTrue . 'css/odometer.css') }}">
+@endpush
+
 @push('page-style')
     <style>
         .about__img::after {
@@ -104,4 +108,8 @@
             z-index: -1;
         }
     </style>
+@endpush
+
+@push('page-script-lib')
+    <script src="{{ asset($activeThemeTrue . 'js/odometer.min.js') }}"></script>
 @endpush

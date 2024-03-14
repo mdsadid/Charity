@@ -6,7 +6,7 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">{{ __(@$contactContent->data_info->heading) }}</h2>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$contactContent->data_info->section_heading) }}</h2>
                         <p class="section-heading__desc">{{ __(@$contactContent->data_info->description) }}</p>
                     </div>
                 </div>

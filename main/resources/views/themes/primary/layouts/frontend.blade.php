@@ -57,6 +57,9 @@
                                 <a href="{{ route('upcoming') }}" class="nav-link">@lang('Upcoming')</a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('stories') }}" class="nav-link">@lang('Stories')</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('contact') }}" class="nav-link">@lang('Contact')</a>
                             </li>
                         @else

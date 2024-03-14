@@ -22,6 +22,8 @@ class WebsiteController extends Controller
         $pageTitle               = 'Home';
         $bannerElements          = getSiteData('banner.element', false, null, true);
         $aboutUsContent          = getSiteData('about.content', true);
+        $totalFundRaised         = Campaign::campaignCheck()->approve()->sum('raised_amount');
+        $totalCampaignCount      = Campaign::campaignCheck()->approve()->count();
         $featuredCampaignContent = getSiteData('featured_campaign.content', true);
         $featuredCampaigns       = Campaign::campaignCheck()->approve()->featured()->latest()->get();
         $campaignCategoryContent = getSiteData('campaign_category.content', true);
@@ -33,17 +35,21 @@ class WebsiteController extends Controller
         $counterElements         = getSiteData('counter.element', false, null, true);
         $upcomingContent         = getSiteData('upcoming.content', true);
         $upcomingCampaigns       = Campaign::upcomingCheck()->approve()->orderby('start_date')->limit(6)->get();
+        $successContent          = getSiteData('success_story.content', true);
+        $successElements         = getSiteData('success_story.element', false, 4, true);
 
-        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns', 'upcomingContent', 'upcomingCampaigns'));
+        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns', 'upcomingContent', 'upcomingCampaigns', 'successContent', 'successElements', 'totalFundRaised', 'totalCampaignCount'));
     }
 
     function aboutUs() {
-        $pageTitle      = 'About Us';
-        $aboutUsContent = getSiteData('about.content', true);
-        $clientContent  = getSiteData('client_review.content', true);
-        $clientElements = getSiteData('client_review.element', false, null, true);
+        $pageTitle          = 'About Us';
+        $aboutUsContent     = getSiteData('about.content', true);
+        $totalFundRaised    = Campaign::campaignCheck()->approve()->sum('raised_amount');
+        $totalCampaignCount = Campaign::campaignCheck()->approve()->count();
+        $clientContent      = getSiteData('client_review.content', true);
+        $clientElements     = getSiteData('client_review.element', false, null, true);
 
-        return view($this->activeTheme . 'page.aboutUs', compact('pageTitle', 'aboutUsContent', 'clientContent', 'clientElements'));
+        return view($this->activeTheme . 'page.aboutUs', compact('pageTitle', 'aboutUsContent', 'clientContent', 'clientElements', 'totalFundRaised', 'totalCampaignCount'));
     }
 
     function faq() {
@@ -274,10 +280,7 @@ class WebsiteController extends Controller
 
     function upcomingCampaignShow($slug) {
         $pageTitle    = 'Upcoming Campaign Details';
-        $campaignData = Campaign::where('slug', $slug)
-            ->upcomingCheck()
-            ->approve()
-            ->firstOrFail();
+        $campaignData = Campaign::where('slug', $slug)->upcomingCheck()->approve()->firstOrFail();
 
         $seoContents['keywords']           = $campaignData->meta_keywords ?? [];
         $seoContents['social_title']       = $campaignData->name;
@@ -295,6 +298,13 @@ class WebsiteController extends Controller
             ->get();
 
         return view($this->activeTheme . 'page.upcomingCampaignShow', compact('pageTitle', 'campaignData', 'seoContents', 'moreUpcomingCampaigns'));
+    }
+
+    function stories() {
+        $pageTitle       = 'Success Stories';
+        $successElements = getSiteData('success_story.element', false, null, true);
+
+        return view($this->activeTheme . 'page.stories', compact('pageTitle', 'successElements'));
     }
 
     function contact() {

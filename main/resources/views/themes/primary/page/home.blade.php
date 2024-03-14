@@ -50,14 +50,14 @@
                         <div class="row about__card-row g-4">
                             <div class="col-sm-6">
                                 <div class="about__card">
-                                    <div class="counter">$ <span class="odometer" data-count="12000">0</span></div>
+                                    <div class="counter">{{ $setting->cur_sym }}<span class="odometer" data-count="{{ $totalFundRaised }}">0</span></div>
                                     <span class="name">@lang('Total Fund Raised')</span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="about__card">
-                                    <div class="counter"><span class="odometer" data-count="150">0</span>+</div>
-                                    <span class="name">@lang('Total Causes')</span>
+                                    <div class="counter"><span class="odometer" data-count="{{ $totalCampaignCount }}">0</span>+</div>
+                                    <span class="name">@lang('Total Campaigns')</span>
                                 </div>
                             </div>
                         </div>
@@ -443,52 +443,26 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">Success Showcase</h2>
-                        <p class="section-heading__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.</p>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$successContent->data_info->section_heading) }}</h2>
+                        <p class="section-heading__desc">{{ __(@$successContent->data_info->description) }}</p>
                     </div>
                 </div>
             </div>
             <div class="row g-4 justify-content-center">
-                <div class="col-xl-4 col-lg-5 col-md-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="success-showcase__card">
-                        <div class="success-showcase__img">
-                            <a href="success-details.html"><img src="assets/images/thumbs/success-1.png" alt="image"></a>
-                        </div>
-                        <div class="success-showcase__txt">
-                            <h3 class="success-showcase__title"><a href="success-details.html">Successful Fundraising Stories at Community Boost</a></h3>
-                            <p class="success-showcase__desc">It’s always heartwarming and inspiring to hear successful nonprofit fundraising stories.</p>
-                            <a href="success-details.html" class="btn btn--sm btn--base">Read More</a>
-                        </div>
+                @forelse ($successElements->take(3) as $successElement)
+                    <div class="col-xl-4 col-lg-5 col-md-6" data-aos="fade-up" data-aos-duration="1500">
+                        @include($activeTheme . 'partials.basicSuccessStory')
                     </div>
-                </div>
-                <div class="col-xl-4 col-lg-5 col-md-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="success-showcase__card">
-                        <div class="success-showcase__img">
-                            <a href="success-details.html"><img src="assets/images/thumbs/success-2.png" alt="image"></a>
-                        </div>
-                        <div class="success-showcase__txt">
-                            <h3 class="success-showcase__title"><a href="success-details.html">6 Reasons You Need Nonprofit Storytelling</a></h3>
-                            <p class="success-showcase__desc">Nonprofits are doing incredible boots-on-the-ground work every single day. Raising awareness. Providing education.</p>
-                            <a href="success-details.html" class="btn btn--sm btn--base">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-5 col-md-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="success-showcase__card">
-                        <div class="success-showcase__img">
-                            <a href="success-details.html"><img src="assets/images/thumbs/success-3.png" alt="image"></a>
-                        </div>
-                        <div class="success-showcase__txt">
-                            <h3 class="success-showcase__title"><a href="success-details.html">TikTok SEO: Tips to Increase Your Nonprofits Reach</a></h3>
-                            <p class="success-showcase__desc">TikTok is one of the fastest-growing social media platforms with over 800 million active users worldwide.</p>
-                            <a href="success-details.html" class="btn btn--sm btn--base">Read More</a>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                    <p class="text-center" data-aos="fade-up" data-aos-duration="1500">{{ __($emptyMessage) }}</p>
+                @endforelse
             </div>
-            <div class="d-flex justify-content-center pt-5" data-aos="fade-up" data-aos-duration="1500">
-                <a href="success-showcase.html" class="btn btn--base">View All Story</a>
-            </div>
+
+            @if (count($successElements) > 3)
+                <div class="d-flex justify-content-center pt-5" data-aos="fade-up" data-aos-duration="1500">
+                    <a href="{{ route('stories') }}" class="btn btn--base">@lang('View All Story')</a>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

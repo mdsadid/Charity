@@ -5681,9 +5681,6 @@ body .select2-container--default.select2-container--disabled .select2-selection-
 .success-showcase__img {
     min-height: 150px;
     background: hsl(var(--black)/0.05);
-    -webkit-mask-image: url("../images/thumbs/campaign-image-shape.png");
-    background: url("../images/thumbs/campaign-image-shape.png");
-    mask-image: url("../images/thumbs/campaign-image-shape.png");
     mask-mode: match-source;
     -webkit-mask-mode: match-source;
     -webkit-mask-size: contain;

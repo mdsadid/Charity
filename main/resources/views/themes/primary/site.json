@@ -215,7 +215,7 @@
         "builder": true,
         "name": "Client Review Section",
         "content": {
-            "heading": "text",
+            "section_heading": "text",
             "description": "textarea"
         },
         "element": {
@@ -246,7 +246,7 @@
         "builder": true,
         "name": "FAQ Section",
         "content": {
-            "heading": "text",
+            "section_heading": "text",
             "description": "textarea"
         },
         "element": {
@@ -260,7 +260,7 @@
         "no_selection": true,
         "name": "Contact Us Section",
         "content": {
-            "heading": "text",
+            "section_heading": "text",
             "description": "textarea",
             "form_heading": "text",
             "form_button_name": "text",
@@ -342,7 +342,7 @@
         "builder": true,
         "name": "Success Story Section",
         "content": {
-            "heading": "text",
+            "section_heading": "text",
             "description": "textarea"
         },
         "element": {
