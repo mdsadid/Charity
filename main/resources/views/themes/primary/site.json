@@ -338,6 +338,25 @@
             "description": "textarea"
         }
     },
+    "success_story": {
+        "builder": true,
+        "name": "Success Story Section",
+        "content": {
+            "heading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "images": {
+                "image": {
+                    "size": "855x475",
+                    "thumb": "415x230"
+                }
+            },
+            "title": "text",
+            "details": "textarea-editor",
+            "modal": false
+        }
+    },
     "policy_pages": {
         "builder": true,
         "no_selection": true,

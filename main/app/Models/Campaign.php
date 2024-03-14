@@ -89,15 +89,30 @@ class Campaign extends Model
         $query->where('featured', ManageStatus::YES);
     }
 
+    public function scopeCommonQuery($query)
+    {
+        $query->whereHas('category', fn ($innerQuery) => $innerQuery->active())
+            ->whereHas('user', fn ($innerQuery) => $innerQuery->active());
+    }
+
     /**
      * Scope a query to only include campaigns that meet certain criteria.
      */
     public function scopeCampaignCheck($query)
     {
-        $query->whereHas('category', fn ($innerQuery) => $innerQuery->active())
-            ->whereHas('user', fn ($innerQuery) => $innerQuery->active())
-            ->whereDate('start_date', '<', Carbon::now()->format('Y-m-d'))
-            ->whereDate('end_date', '>', Carbon::now()->format('Y-m-d'));
+        $now = Carbon::now()->format('Y-m-d');
+
+        $query->commonQuery()->whereDate('start_date', '<', $now)->whereDate('end_date', '>', $now);
+    }
+
+    /**
+     * Scope a query to only include upcoming campaigns that meet certain criteria.
+     */
+    public function scopeUpcomingCheck($query)
+    {
+        $now = Carbon::now()->format('Y-m-d');
+
+        $query->commonQuery()->whereDate('start_date', '>', $now);
     }
 
     /**

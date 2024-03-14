@@ -32,13 +32,7 @@ class WebsiteController extends Controller
         $volunteerElements       = getSiteData('volunteer.element', false, null, true);
         $counterElements         = getSiteData('counter.element', false, null, true);
         $upcomingContent         = getSiteData('upcoming.content', true);
-        $upcomingCampaigns       = Campaign::whereHas('user', fn ($query) => $query->active())
-            ->whereHas('category', fn ($query) => $query->active())
-            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
-            ->approve()
-            ->orderby('start_date')
-            ->limit(6)
-            ->get();
+        $upcomingCampaigns       = Campaign::upcomingCheck()->approve()->orderby('start_date')->limit(6)->get();
 
         return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns', 'upcomingContent', 'upcomingCampaigns'));
     }
@@ -268,9 +262,7 @@ class WebsiteController extends Controller
             ->when(request()->filled('name'), function ($query) {
                 $query->where('name', 'like', '%' . request('name') . '%');
             })
-            ->whereHas('user', fn ($query) => $query->active())
-            ->whereHas('category', fn ($query) => $query->active())
-            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
+            ->upcomingCheck()
             ->approve()
             ->orderby('start_date')
             ->paginate(getPaginate(10));
@@ -283,9 +275,7 @@ class WebsiteController extends Controller
     function upcomingCampaignShow($slug) {
         $pageTitle    = 'Upcoming Campaign Details';
         $campaignData = Campaign::where('slug', $slug)
-            ->whereHas('user', fn ($query) => $query->active())
-            ->whereHas('category', fn ($query) => $query->active())
-            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
+            ->upcomingCheck()
             ->approve()
             ->firstOrFail();
 
@@ -297,9 +287,7 @@ class WebsiteController extends Controller
         $seoContents['image']              = getImage(getFilePath('campaign') . '/' . $campaignData->image, $imageSize);
         $seoContents['image_size']         = $imageSize;
 
-        $moreUpcomingCampaigns = Campaign::whereHas('user', fn ($query) => $query->active())
-            ->whereHas('category', fn ($query) => $query->active())
-            ->whereDate('start_date', '>', Carbon::now()->format('Y-m-d'))
+        $moreUpcomingCampaigns = Campaign::upcomingCheck()
             ->whereNot('slug', $campaignData->slug)
             ->approve()
             ->orderby('start_date')
