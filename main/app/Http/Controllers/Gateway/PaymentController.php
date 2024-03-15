@@ -77,7 +77,7 @@ class PaymentController extends Controller
         $deposit                  = new Deposit();
         $deposit->campaign_id     = $campaign->id;
         $deposit->user_id         = auth()->check() ? auth()->id() : 0;
-        $deposit->donor_type      = request('anonymousDonation') == 'on' ? 0 : 1;
+        $deposit->donor_type      = request('anonymousDonation') == 'on' ? ManageStatus::ANONYMOUS_DONOR : ManageStatus::KNOWN_DONOR;
         $deposit->full_name       = $userFullName;
         $deposit->email           = $userEmail;
         $deposit->phone           = $userPhone;

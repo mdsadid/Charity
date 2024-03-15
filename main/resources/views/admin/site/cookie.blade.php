@@ -24,7 +24,7 @@
                                 <label class="col-sm-3 col-form-label required">@lang('Status')</label>
                                 <div class="col-sm-9">
                                     <label class="switch me-0">
-                                        <input type="checkbox" class="switch-input" name="status" @if(@$cookie->data_info->status) checked @endif>
+                                        <input type="checkbox" class="switch-input" name="status" @if (@$cookie->data_info->status) checked @endif>
                                         @include('admin.partials.switcher')
                                     </label>
                                 </div>
@@ -49,13 +49,18 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
             bkLib.onDomLoaded(function() {
-                $( ".nicEdit" ).each(function( index ) {
-                    $(this).attr("id","nicEditor"+index);
-                    new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
+                $(".nicEdit").each(function(index) {
+                    $(this).attr("id", "nicEditor" + index);
+
+                    new nicEditor({
+                        fullPanel: true
+                    }).panelInstance('nicEditor' + index, {
+                        hasPanel: true
+                    });
                 });
             });
         })(jQuery);

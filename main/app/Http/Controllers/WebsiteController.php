@@ -14,6 +14,7 @@ use App\Constants\ManageStatus;
 use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class WebsiteController extends Controller
@@ -32,13 +33,22 @@ class WebsiteController extends Controller
         $recentCampaigns         = Campaign::campaignCheck()->approve()->latest()->limit(10)->get();
         $volunteerContent        = getSiteData('volunteer.content', true);
         $volunteerElements       = getSiteData('volunteer.element', false, null, true);
+        $donorContent            = getSiteData('top_donor.content', true);
+        $topDonors               = Deposit::whereNot('user_id', 0)
+            ->where('donor_type', ManageStatus::KNOWN_DONOR)
+            ->where('status', ManageStatus::PAYMENT_SUCCESS)
+            ->select(DB::raw('user_id, sum(amount) as total_donation, full_name'))
+            ->groupBy('user_id')
+            ->orderByDesc('total_donation')
+            ->limit(20)
+            ->get();
         $counterElements         = getSiteData('counter.element', false, null, true);
         $upcomingContent         = getSiteData('upcoming.content', true);
         $upcomingCampaigns       = Campaign::upcomingCheck()->approve()->orderby('start_date')->limit(6)->get();
         $successContent          = getSiteData('success_story.content', true);
         $successElements         = getSiteData('success_story.element', false, 4, true);
 
-        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns', 'upcomingContent', 'upcomingCampaigns', 'successContent', 'successElements', 'totalFundRaised', 'totalCampaignCount'));
+        return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns', 'upcomingContent', 'upcomingCampaigns', 'successContent', 'successElements', 'totalFundRaised', 'totalCampaignCount', 'donorContent', 'topDonors'));
     }
 
     function aboutUs() {

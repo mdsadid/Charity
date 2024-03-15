@@ -26,4 +26,7 @@ class ManageStatus
     const CAMPAIGN_COMMENT_REJECTED = 0;
     const CAMPAIGN_COMMENT_APPROVED = 1;
     const CAMPAIGN_COMMENT_PENDING  = 2;
+
+    const ANONYMOUS_DONOR = 0;
+    const KNOWN_DONOR     = 1;
 }

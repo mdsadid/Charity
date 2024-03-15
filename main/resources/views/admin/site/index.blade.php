@@ -1,29 +1,31 @@
 @extends('admin.layouts.master')
 
 @section('master')
-    @if(@$section->content)
+    @if (@$section->content)
         <div class="row">
             <div class="col-xxl">
                 <div class="card mb-4">
-                    <form class="card-body" action="{{ route('admin.site.sections.content', $key)}}" method="POST" enctype="multipart/form-data">
+                    <form class="card-body" action="{{ route('admin.site.sections.content', $key) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="type" value="content">
 
                         <div class="row">
                             @php $imgCount = 0; @endphp
 
-                            @foreach($section->content as $k => $item)
-                                @if($k == 'images')
+                            @foreach ($section->content as $k => $item)
+                                @if ($k == 'images')
                                     @php $imgCount = collect($item)->count(); @endphp
 
-                                    @foreach($item as $imgKey => $image)
+                                    @foreach ($item as $imgKey => $image)
                                         <div class="col-lg-4 col-md-4 col-sm-6">
                                             <input type="hidden" name="has_image" value="1">
                                             <div class="image-upload">
                                                 <div class="thumb">
                                                     <div class="avatar-preview">
-                                                        <div class="profilePicPreview" style="background-image: url({{getImage('assets/images/site/' . $key .'/'. @$content->data_info->$imgKey, @$section->content->images->$imgKey->size) }})">
-                                                            <button type="button" class="remove-image"><i class="las la-times"></i></button>
+                                                        <div class="profilePicPreview" style="background-image: url({{ getImage('assets/images/site/' . $key . '/' . @$content->data_info->$imgKey, @$section->content->images->$imgKey->size) }})">
+                                                            <button type="button" class="remove-image">
+                                                                <i class="las la-times"></i>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <div class="avatar-edit">
@@ -34,11 +36,11 @@
                                                         <p class="pt-2">
                                                             @lang('Supported files'): <mark>@lang('jpeg'), @lang('jpg'), @lang('png').</mark>
 
-                                                            @if(@$section->content->images->$imgKey->size)
+                                                            @if (@$section->content->images->$imgKey->size)
                                                                 @lang('Image size') <mark>{{ @$section->content->images->$imgKey->size }}@lang('px').</mark>
                                                             @endif
 
-                                                            @if(@$section->content->images->$imgKey->thumb)
+                                                            @if (@$section->content->images->$imgKey->thumb)
                                                                 @lang('Thumb size') <mark>{{ @$section->content->images->$imgKey->thumb }}@lang('px').</mark>
                                                             @endif
                                                         </p>
@@ -48,15 +50,14 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="@if($imgCount > 1) col-lg-12 col-md-12 @else col-lg-8 col-md-8 @endif mt-3">
+                                    <div class="@if ($imgCount > 1) col-lg-12 col-md-12 @else col-lg-8 col-md-8 @endif mt-3">
                                         @push('divend')
                                     </div>
                                     @endpush
-
                                 @else
                                     <div class="col-12">
-                                        @if($k != 'images')
-                                            @if($item == 'icon')
+                                        @if ($k != 'images')
+                                            @if ($item == 'icon')
                                                 <div class="row mb-3">
                                                     <label class="col-sm-3 col-form-label required">{{ __(keyToTitle($k)) }}</label>
                                                     <div class="col-sm-9">
@@ -70,7 +71,7 @@
                                                 <div class="row mb-3">
                                                     <label class="col-sm-3 col-form-label required">{{ __(keyToTitle($k)) }}</label>
                                                     <div class="col-sm-9">
-                                                        <textarea class="form-control" name="{{ $k }}" rows="3" required>{{ @$content->data_info->$k}}</textarea>
+                                                        <textarea class="form-control" name="{{ $k }}" rows="3" required>{{ @$content->data_info->$k }}</textarea>
                                                     </div>
                                                 </div>
                                             @elseif($item == 'textarea-editor')
@@ -87,8 +88,10 @@
                                                     <label class="col-sm-3 col-form-label required">{{ __(keyToTitle(@$selectName)) }}</label>
                                                     <div class="col-sm-9">
                                                         <select class="form-select" name="{{ @$selectName }}" required>
-                                                            @foreach($item->options as $selectItemKey => $selectOption)
-                                                                <option value="{{ $selectItemKey }}" @if(@$content->data_info->$selectName == $selectItemKey) selected @endif>{{ $selectOption }}</option>
+                                                            @foreach ($item->options as $selectItemKey => $selectOption)
+                                                                <option value="{{ $selectItemKey }}" @if (@$content->data_info->$selectName == $selectItemKey) selected @endif>
+                                                                    {{ $selectOption }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -97,7 +100,7 @@
                                                 <div class="row mb-3">
                                                     <label class="col-sm-3 col-form-label required">{{ __(keyToTitle($k)) }}</label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control" name="{{ $k }}" value="{{@$content->data_info->$k }}" required>
+                                                        <input type="text" class="form-control" name="{{ $k }}" value="{{ @$content->data_info->$k }}" required>
                                                     </div>
                                                 </div>
                                             @endif
@@ -121,7 +124,7 @@
         </div>
     @endif
 
-    @if(@$section->element)
+    @if (@$section->element)
         <div class="row">
             <div class="col-xxl">
                 <div class="card mb-4">
@@ -135,12 +138,12 @@
                                 </div>
                             </div>
 
-                            @if($section->element->modal)
+                            @if ($section->element->modal)
                                 <button type="button" class="btn btn-label-primary addBtn">
                                     <span class="tf-icons las la-plus-circle me-1"></span> @lang('Add New')
                                 </button>
                             @else
-                                <a href="{{route('admin.site.sections.element', $key) }}" type="button" class="btn btn-label-primary">
+                                <a href="{{ route('admin.site.sections.element', $key) }}" type="button" class="btn btn-label-primary">
                                     <span class="tf-icons las la-plus-circle me-1"></span> @lang('Add New')
                                 </a>
                             @endif
@@ -157,16 +160,16 @@
                         <table class="table table-hover custom-data-table">
                             <thead>
                                 <tr>
-                                    @if(@$section->element->images)
+                                    @if (@$section->element->images)
                                         <th>@lang('Image')</th>
                                     @endif
 
-                                    @foreach($section->element as $k => $type)
-                                        @if($k !='modal')
-                                            @if($type=='text' || $type=='icon')
+                                    @foreach ($section->element as $k => $type)
+                                        @if ($k != 'modal')
+                                            @if ($type == 'text' || $type == 'icon')
                                                 <th>{{ __(keyToTitle($k)) }}</th>
                                             @elseif($k == 'select')
-                                                <th>{{keyToTitle(@$section->element->$k->name)}}</th>
+                                                <th>{{ keyToTitle(@$section->element->$k->name) }}</th>
                                             @endif
                                         @endif
                                     @endforeach
@@ -178,26 +181,27 @@
                             <tbody class="table-border-bottom-0">
                                 @forelse ($elements as $data)
                                     <tr>
-                                        @if(@$section->element->images)
+                                        @if (@$section->element->images)
                                             @php $firstKey = collect($section->element->images)->keys()[0]; @endphp
 
                                             <td>
                                                 <div class="avatar me-2">
-                                                    <img src="{{ getImage('assets/images/site/' . $key .'/'. @$data->data_info->$firstKey,@$section->element->images->$firstKey->size) }}" alt="image" class="rounded">
+                                                    <img src="{{ getImage('assets/images/site/' . $key . '/' . @$data->data_info->$firstKey, @$section->element->images->$firstKey->size) }}" alt="image" class="rounded">
                                                 </div>
                                             </td>
                                         @endif
 
-                                        @foreach($section->element as $k => $type)
-                                            @if($k !='modal')
-                                                @if($type == 'text' || $type == 'icon')
-                                                    @if($type == 'icon')
+                                        @foreach ($section->element as $k => $type)
+                                            @if ($k != 'modal')
+                                                @if ($type == 'text' || $type == 'icon')
+                                                    @if ($type == 'icon')
                                                         <td>@php echo @$data->data_info->$k; @endphp</td>
                                                     @else
                                                         <td>{{ __(@$data->data_info->$k) }}</td>
                                                     @endif
                                                 @elseif($k == 'select')
                                                     @php $dataVal = @$section->element->$k->name; @endphp
+
                                                     <td>{{ @$data->data_info->$dataVal }}</td>
                                                 @endif
                                             @endif
@@ -205,28 +209,27 @@
 
                                         <td>
                                             <div>
-                                                @if($section->element->modal)
+                                                @if ($section->element->modal)
                                                     @php
                                                         $images = [];
-    
-                                                        if(@$section->element->images){
-                                                            foreach($section->element->images as $imgKey => $imgs){
-                                                                $images[] = getImage('assets/images/site/' . $key .'/'. @$data->data_info->$imgKey,@$section->element->images->$imgKey->size);
+
+                                                        if (@$section->element->images) {
+                                                            foreach ($section->element->images as $imgKey => $imgs) {
+                                                                $images[] = getImage('assets/images/site/' . $key . '/' . @$data->data_info->$imgKey, @$section->element->images->$imgKey->size);
                                                             }
                                                         }
                                                     @endphp
-    
-                                                    <button class="btn btn-sm btn-label-primary editBtn" data-id="{{$data->id}}"
-                                                        data-all="{{json_encode($data->data_info)}}" @if(@$section->element->images) data-images="{{ json_encode($images) }}" @endif>
+
+                                                    <button class="btn btn-sm btn-label-primary editBtn" data-id="{{ $data->id }}" data-all="{{ json_encode($data->data_info) }}" @if (@$section->element->images) data-images="{{ json_encode($images) }}" @endif>
                                                         <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
                                                     </button>
                                                 @else
-                                                    <a href="{{ route('admin.site.sections.element', [ $key, $data->id ]) }}" class="btn btn-sm btn-label-primary">
+                                                    <a href="{{ route('admin.site.sections.element', [$key, $data->id]) }}" class="btn btn-sm btn-label-primary">
                                                         <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
                                                     </a>
                                                 @endif
-    
-                                                <button class="btn btn-sm btn-label-danger decisionBtn" data-question="@lang('Are you confirming the removal of this item?')" data-action="{{ route('admin.site.remove',$data->id) }}">
+
+                                                <button class="btn btn-sm btn-label-danger decisionBtn" data-question="@lang('Are you confirming the removal of this item?')" data-action="{{ route('admin.site.remove', $data->id) }}">
                                                     <span class="tf-icons las la-trash me-1"></span> @lang('Delete')
                                                 </button>
                                             </div>
@@ -258,9 +261,9 @@
                         <input type="hidden" name="type" value="element">
 
                         <div class="modal-body">
-                            @foreach($section->element as $k => $type)
-                                @if($k != 'modal')
-                                    @if($type == 'icon')
+                            @foreach ($section->element as $k => $type)
+                                @if ($k != 'modal')
+                                    @if ($type == 'icon')
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label required">{{ __(keyToTitle($k)) }}</label>
                                             <div class="col-sm-9">
@@ -275,14 +278,14 @@
                                             <label class="col-sm-3 col-form-label required">{{ __(keyToTitle(@$section->element->$k->name)) }}</label>
                                             <div class="col-sm-9">
                                                 <select class="form-select" name="{{ @$section->element->$k->name }}" required>
-                                                    @foreach($section->element->$k->options as $selectKey => $options)
+                                                    @foreach ($section->element->$k->options as $selectKey => $options)
                                                         <option value="{{ $selectKey }}">{{ $options }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                     @elseif($k == 'images')
-                                        @foreach($type as $imgKey => $image)
+                                        @foreach ($type as $imgKey => $image)
                                             <div class="row mb-3">
                                                 <label class="col-sm-3 col-form-label required">{{ __(keyToTitle($k)) }}</label>
                                                 <div class="col-sm-9">
@@ -291,8 +294,10 @@
                                                     <div class="image-upload">
                                                         <div class="thumb">
                                                             <div class="avatar-preview">
-                                                                <div class="profilePicPreview" style="background-image: url({{ getImage('/',@$section->element->images->$imgKey->size) }})">
-                                                                    <button type="button" class="remove-image"><i class="las la-times"></i></button>
+                                                                <div class="profilePicPreview" style="background-image: url({{ getImage('/', @$section->element->images->$imgKey->size) }})">
+                                                                    <button type="button" class="remove-image">
+                                                                        <i class="las la-times"></i>
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                             <div class="avatar-edit">
@@ -303,11 +308,11 @@
                                                                 <p class="pt-2">
                                                                     @lang('Supported files'): <mark>@lang('jpeg'), @lang('jpg'), @lang('png').</mark>
 
-                                                                    @if(@$section->element->images->$imgKey->size)
+                                                                    @if (@$section->element->images->$imgKey->size)
                                                                         @lang('Image size') <mark>{{ @$section->element->images->$imgKey->size }}@lang('px').</mark>
                                                                     @endif
 
-                                                                    @if(@$section->element->images->$imgKey->thumb)
+                                                                    @if (@$section->element->images->$imgKey->thumb)
                                                                         @lang('Thumb size') <mark>{{ @$section->element->images->$imgKey->thumb }}@lang('px').</mark>
                                                                     @endif
                                                                 </p>
@@ -344,8 +349,8 @@
                         </div>
                         <hr>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                             <button type="submit" class="btn btn-primary">@lang('Add')</button>
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         </div>
                     </form>
                 </div>
@@ -367,9 +372,9 @@
                         <input type="hidden" name="id">
 
                         <div class="modal-body">
-                            @foreach($section->element as $k => $type)
-                                @if($k != 'modal')
-                                    @if($type == 'icon')
+                            @foreach ($section->element as $k => $type)
+                                @if ($k != 'modal')
+                                    @if ($type == 'icon')
                                         <div class="row mb-3">
                                             <label class="col-sm-3 col-form-label required">{{ __(keyToTitle($k)) }}</label>
                                             <div class="col-sm-9">
@@ -384,14 +389,14 @@
                                             <label class="col-sm-3 col-form-label required">{{ __(keyToTitle(@$section->element->$k->name)) }}</label>
                                             <div class="col-sm-9">
                                                 <select class="form-select" name="{{ @$section->element->$k->name }}" required>
-                                                    @foreach($section->element->$k->options as $selectKey => $options)
+                                                    @foreach ($section->element->$k->options as $selectKey => $options)
                                                         <option value="{{ $selectKey }}">{{ $options }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                     @elseif($k == 'images')
-                                        @foreach($type as $imgKey => $image)
+                                        @foreach ($type as $imgKey => $image)
                                             <div class="row mb-3">
                                                 <label class="col-sm-3 col-form-label">{{ __(keyToTitle($k)) }}</label>
                                                 <div class="col-sm-9">
@@ -412,11 +417,11 @@
                                                                 <p class="pt-2">
                                                                     @lang('Supported files'): <mark>@lang('jpeg'), @lang('jpg'), @lang('png').</mark>
 
-                                                                    @if(@$section->element->images->$imgKey->size)
+                                                                    @if (@$section->element->images->$imgKey->size)
                                                                         @lang('Image size') <mark>{{ @$section->element->images->$imgKey->size }}@lang('px').</mark>
                                                                     @endif
 
-                                                                    @if(@$section->element->images->$imgKey->thumb)
+                                                                    @if (@$section->element->images->$imgKey->thumb)
                                                                         @lang('Thumb size') <mark>{{ @$section->element->images->$imgKey->thumb }}@lang('px').</mark>
                                                                     @endif
                                                                 </p>
@@ -453,8 +458,8 @@
                         </div>
                         <hr>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                             <button type="submit" class="btn btn-primary">@lang('Update')</button>
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         </div>
                     </form>
                 </div>
@@ -482,43 +487,45 @@
 @endpush
 
 @push('page-script-lib')
-    <script src="{{asset('assets/admin/js/page/iconpicker.js')}}"></script>
-    <script src="{{asset('assets/admin/js/page/ckEditor.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/page/iconpicker.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/page/ckEditor.js') }}"></script>
     <script src="{{ asset('assets/admin/js/page/nicEdit.js') }}"></script>
 @endpush
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('.addBtn').on('click', function () {
+            $('.addBtn').on('click', function() {
                 let modal = $('#addModal');
                 modal.modal('show');
             });
 
-            $('.editBtn').on('click', function () {
-                let modal  = $('#editModal');
-                let obj    = $(this).data('all');
+            $('.editBtn').on('click', function() {
+                let modal = $('#editModal');
+                let obj = $(this).data('all');
                 let images = $(this).data('images');
 
                 if (images) {
                     for (let i = 0; i < images.length; i++) {
                         let imglocation = images[i];
+
                         $(`.imageModalUpdate${i}`).css("background-image", "url(" + imglocation + ")");
                     }
                 }
 
-                $.each(obj, function (index, value) {
-                    let element= modal.find('[name=' + index + ']')
+                $.each(obj, function(index, value) {
+                    let element = modal.find('[name=' + index + ']')
                     element.val(value);
 
-                    if(element.hasClass('iconpicker-element')){
-                        let iconElement=$(element).parent().find(".existedIcon");
+                    if (element.hasClass('iconpicker-element')) {
+                        let iconElement = $(element).parent().find(".existedIcon");
+
                         iconElement.html(value)
                     }
                 });
-                
+
                 modal.find('[name=id]').val($(this).data('id'));
                 modal.modal('show');
             });
@@ -532,13 +539,18 @@
             }
 
             bkLib.onDomLoaded(function() {
-                $( ".nicEdit" ).each(function( index ) {
-                    $(this).attr("id","nicEditor"+index);
-                    new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
+                $(".nicEdit").each(function(index) {
+                    $(this).attr("id", "nicEditor" + index);
+
+                    new nicEditor({
+                        fullPanel: true
+                    }).panelInstance('nicEditor' + index, {
+                        hasPanel: true
+                    });
                 });
             });
 
-            $('.iconPicker').iconpicker().on('iconpickerSelected', function (e) {
+            $('.iconPicker').iconpicker().on('iconpickerSelected', function(e) {
                 $(this).closest('.input-group').find('.iconpicker-input').val(`<i class="${e.iconpickerValue}"></i>`);
             });
         })(jQuery);

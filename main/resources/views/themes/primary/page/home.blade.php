@@ -204,196 +204,32 @@
             <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1500">
                 <div class="col-lg-6">
                     <div class="section-heading text-center">
-                        <h2 class="section-heading__title mx-auto">Our Top Donors</h2>
-                        <p class="section-heading__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus recusandae iste fugit assumenda.</p>
+                        <h2 class="section-heading__title mx-auto">{{ __(@$donorContent->data_info->section_heading) }}</h2>
+                        <p class="section-heading__desc">{{ __(@$donorContent->data_info->description) }}</p>
                     </div>
                 </div>
             </div>
             <div class="row g-4 donor__row">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">01</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
+                @forelse ($topDonors as $topDonor)
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
+                        <div class="donor__card">
+                            <span class="donor__number">{{ $loop->iteration }}</span>
+                            <span class="donor__txt">
+                                <span class="donor__name">{{ __(@$topDonor->full_name) }}</span>
+                                <span class="donor__amount">{{ $setting->cur_sym . showAmount(@$topDonor->total_donation) }}</span>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">02</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">03</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">04</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">05</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">06</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">07</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">08</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">09</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">10</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">11</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">12</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">13</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">14</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">15</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">16</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">17</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">18</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">19</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6" data-aos="fade-up" data-aos-duration="1500">
-                    <div class="donor__card">
-                        <span class="donor__number">20</span>
-                        <span class="donor__txt">
-                            <span class="donor__name">Mr. Donor Khan</span>
-                            <span class="donor__amount">$12,001.23</span>
-                        </span>
-                    </div>
-                </div>
+                @empty
+                    <p class="text-center" data-aos="fade-up" data-aos-duration="1500">{{ __($emptyMessage) }}</p>
+                @endforelse
             </div>
-            <div class="d-flex justify-content-center pt-lg-5 pt-4" data-aos="fade-up" data-aos-duration="1500">
-                <a href="donor-list.html" class="btn btn--base">View All Donors</a>
-            </div>
+
+            @if (count($topDonors) > 20)
+                <div class="d-flex justify-content-center pt-lg-5 pt-4" data-aos="fade-up" data-aos-duration="1500">
+                    <a href="donor-list.html" class="btn btn--base">@lang('View All Donors')</a>
+                </div>
+            @endif
         </div>
     </div>
     <div class="counter-section py-60">

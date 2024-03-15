@@ -8,6 +8,7 @@
                     <img class="card-img-top" src="{{ $theme['image'] }}" alt="Card image cap" />
                     <div class="card-body text-center">
                         <h5 class="card-title">{{ __(keyToTitle($theme['name'])) }}</h5>
+
                         @if ($setting->active_theme == $theme['name'])
                             <button type="button" class="btn btn-success" disabled>
                                 <i class="lar la-check-circle me-1"></i> @lang('Activated')
@@ -46,8 +47,8 @@
                     <input type="hidden" name="name">
 
                     <div class="modal-footer border-0 justify-content-center">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
                         <button type="submit" class="btn btn-primary">@lang('Yes')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
                     </div>
                 </form>
             </div>
@@ -68,10 +69,10 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('.activeBtn').on('click', function () {
+            $('.activeBtn').on('click', function() {
                 let modal = $('#activeModal');
 
                 modal.find('[name=name]').val($(this).data('name'));

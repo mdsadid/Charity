@@ -321,6 +321,14 @@
             "modal": false
         }
     },
+    "top_donor": {
+        "builder": true,
+        "name": "Top Donor Section",
+        "content": {
+            "section_heading": "text",
+            "description": "textarea"
+        }
+    },
     "counter": {
         "builder": true,
         "name": "Counter Section",
