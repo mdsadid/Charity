@@ -34,7 +34,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row">
                         <label class="col-sm-3 col-form-label required">@lang('Form Label')</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="form_label" required>
@@ -45,8 +45,8 @@
                 </div>
                 <hr>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     <button type="submit" class="btn btn-primary generatorSubmit">@lang('Add')</button>
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                 </div>
             </form>
         </div>

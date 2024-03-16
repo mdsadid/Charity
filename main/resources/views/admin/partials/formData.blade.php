@@ -37,7 +37,7 @@
                                         'type'        => $formData->type,
                                         'is_required' => $formData->is_required,
                                         'label'       => $formData->name,
-                                        'extensions'  => explode(',',$formData->extensions) ?? 'null',
+                                        'extensions'  => explode(',', $formData->extensions) ?? 'null',
                                         'options'     => $formData->options,
                                         'old_id'      => '',
                                     ]);

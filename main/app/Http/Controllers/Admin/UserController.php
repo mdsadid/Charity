@@ -163,10 +163,11 @@ class UserController extends Controller
             $transaction->remark   = 'balance_add';
             $notifyTemplate        = 'BAL_ADD';
 
-            $toast[] = ['success', bs('cur_sym') . $amount . ' add success'];
+            $toast[] = ['success', 'The amount of ' . bs('cur_sym') . $amount . ' has been added successfully'];
         } else {
             if ($amount > $user->balance) {
-                $toast[] = ['error', $user->username . ' doesn\'t have sufficient balance.'];
+                $toast[] = ['error', $user->username . ' doesn\'t have sufficient balance'];
+
                 return back()->withToasts($toast);
             }
 
@@ -175,7 +176,7 @@ class UserController extends Controller
             $transaction->remark   = 'balance_subtract';
             $notifyTemplate        = 'BAL_SUB';
 
-            $toast[] = ['success', bs('cur_sym') . $amount . ' subtract success'];
+            $toast[] = ['success', 'The amount of ' . bs('cur_sym') . $amount . ' has been subtracted successfully'];
         }
 
         $user->save();
@@ -192,7 +193,7 @@ class UserController extends Controller
             'trx'          => $trx,
             'amount'       => showAmount($amount),
             'remark'       => request('remark'),
-            'post_balance' => showAmount($user->balance)
+            'post_balance' => showAmount($user->balance),
         ]);
 
         return back()->withToasts($toast);

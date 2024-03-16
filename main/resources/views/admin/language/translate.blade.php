@@ -20,7 +20,7 @@
                                     <td>{{ $value }}</td>
                                     <td>
                                         <div>
-                                            <button type="button" class="btn btn-sm btn-label-primary editBtn" data-key="{{ $key }}" data-value="{{ $value }}">
+                                            <button type="button" class="btn btn-sm btn-label-primary editBtn me-1" data-key="{{ $key }}" data-value="{{ $value }}">
                                                 <span class="tf-icons las la-pen me-1"></span> @lang('Edit')
                                             </button>
                                             <button type="button" class="btn btn-sm btn-label-danger deleteBtn" data-key="{{ $key }}" data-value="{{ $value }}">
@@ -73,8 +73,8 @@
                 </div>
                 <hr>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     <button type="button" class="btn btn-primary importLang">@lang('Import')</button>
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
                                 <textarea class="form-control" name="key" value="{{ old('key') }}" rows="2" required></textarea>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row">
                             <label class="col-sm-3 col-form-label required">@lang('Value')</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="value" value="{{ old('value') }}" rows="2" required></textarea>
@@ -107,8 +107,8 @@
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         <button type="submit" class="btn btn-primary">@lang('Submit')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     </div>
                 </form>
             </div>
@@ -127,7 +127,7 @@
                 <form action="{{ route('admin.language.update.key', $language->id) }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="row mb-3">
+                        <div class="row">
                             <label class="col-sm-3 col-form-label formHeading required"></label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="value" rows="2" required></textarea>
@@ -137,8 +137,8 @@
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         <button type="submit" class="btn btn-primary">@lang('Update')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     </div>
                 </form>
             </div>
@@ -160,7 +160,7 @@
                     </div>
                     <div class="onboarding-content mb-0">
                         <h4 class="onboarding-title text-body">@lang('Make Your Decision')</h4>
-                        <div class="onboarding-info">@lang('Are you confirming the removal of this key from the current language?')</div>
+                        <div class="onboarding-info">@lang('Are you confirm to remove this key from the current language?')</div>
                     </div>
                 </div>
                 <form action="{{ route('admin.language.delete.key', $language->id) }}" method="POST">
@@ -169,8 +169,8 @@
                     <input type="hidden" name="value">
 
                     <div class="modal-footer border-0 justify-content-center">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
                         <button type="submit" class="btn btn-primary">@lang('Yes')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('No')</button>
                     </div>
                 </form>
             </div>
@@ -183,7 +183,9 @@
         <div class="d-inline">
             <div class="input-group justify-content-end">
                 <input type="search" name="search" class="form-control" placeholder="@lang('Search by key')" value="{{ request()->search }}">
-                <button class="btn btn-label-primary input-group-text" type="submit"><i class="fa fa-search"></i></button>
+                <button class="btn btn-label-primary input-group-text" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
             </div>
         </div>
     </form>
@@ -204,7 +206,7 @@
                 var id = $('[name=select_lang]').val();
 
                 if (id == '') {
-                    showToasts('error', 'Invalide selection');
+                    showToasts('error', 'Invalid selection');
                     return 0;
                 } else {
                     $.ajax({

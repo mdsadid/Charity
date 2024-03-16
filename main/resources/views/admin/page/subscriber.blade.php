@@ -47,7 +47,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalCenterTitle">@lang('Email to subscribers')</h5>
+                    <h5 class="modal-title" id="modalCenterTitle">@lang('Email to Subscribers')</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <hr>
@@ -69,8 +69,8 @@
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         <button type="submit" class="btn btn-primary">@lang('Send')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     </div>
                 </form>
             </div>
@@ -97,12 +97,12 @@
 @endpush
 
 @push('page-script-lib')
-    <script src="{{asset('assets/admin/js/page/ckEditor.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/page/ckEditor.js') }}"></script>
 @endpush
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
             if ($(".trumEdit")[0]) {

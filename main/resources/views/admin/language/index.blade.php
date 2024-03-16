@@ -92,7 +92,7 @@
                                 <input type="text" class="form-control" name="name" placeholder="@lang('Portuguese')" required>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row">
                             <label class="col-sm-3 col-form-label required">@lang('Code')</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="code" placeholder="@lang('pr')" required>
@@ -101,8 +101,8 @@
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         <button type="submit" class="btn btn-primary">@lang('Add')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     </div>
                 </form>
             </div>
@@ -121,7 +121,7 @@
                 <form method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="row mb-3">
+                        <div class="row">
                             <label class="col-sm-3 col-form-label required">@lang('Name')</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="name" placeholder="@lang('Portuguese')" required>
@@ -130,8 +130,8 @@
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                         <button type="submit" class="btn btn-primary">@lang('Update')</button>
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     </div>
                 </form>
             </div>

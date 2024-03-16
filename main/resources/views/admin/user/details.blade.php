@@ -310,8 +310,8 @@
                 </div>
                 <hr class="mt-0">
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                     <button type="submit" class="btn btn-primary">@lang('Submit')</button>
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">@lang('Close')</button>
                 </div>
             </form>
         </div>
@@ -342,15 +342,17 @@
                                 @if ($user->status)
                                     @lang('Banning this user will restrict their access to the dashboard')
                                 @else
-                                    @lang('Do you confirm the action to unban on this user?') <br>
-                                    <b>@lang('Banning reason was')</b>
-                                    <p>{{ __($user->ban_reason) }}</p>
+                                    @lang('Are you confirming the action to unban this user?')
+                                    <div class="mt-3">
+                                        <h5>@lang('Banning reason was')</h5>
+                                        <p>{{ __($user->ban_reason) }}</p>
+                                    </div>
                                 @endif
                             </div>
 
                             @if ($user->status)
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 mt-3">
                                         <b>@lang('Reason')</b>
                                         <div class="mb-3">
                                             <textarea class="form-control" name="ban_reason" rows="3" required></textarea>

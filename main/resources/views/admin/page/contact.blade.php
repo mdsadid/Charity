@@ -88,17 +88,18 @@
 
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('Contact Details')</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h4 id="offcanvasBothLabel" class="offcanvas-title">@lang('Contact Details')</h4>
         </div>
-        <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+        <div class="offcanvas-body mx-0 flex-grow-0">
             <div class="mb-4">
                 <h5>@lang('User Message')</h5>
                 <div class="border rounded p-3">
-                    <p class="userMessage"></p>
+                    <p class="userMessage mb-0"></p>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">@lang('Cancel')</button>
+            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
+                @lang('Close')
+            </button>
         </div>
     </div>
 
@@ -111,14 +112,14 @@
 
 @push('page-script')
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('.detailBtn').on('click', function () {
-                let message   = $(this).data('message');
+            $('.detailBtn').on('click', function() {
+                let message = $(this).data('message');
+
                 $('.userMessage').text(message);
             });
-
         })(jQuery);
     </script>
 @endpush
