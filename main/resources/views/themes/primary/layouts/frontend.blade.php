@@ -214,22 +214,26 @@
                             </ul>
                         </div>
                     </div>
+
+                    @php $policyPages = getSiteData('policy_pages.element', false, null, true); @endphp
+
                     <div class="col-xl-2 col-sm-6 col-xsm-6">
                         <div class="footer-item">
                             <h5 class="footer-item__title">@lang('Useful Links')</h5>
                             <ul class="footer-menu">
                                 <li class="footer-menu__item">
-                                    <a href="{{ route('about.us') }}" class="footer-menu__link">@lang('About Us')</a>
+                                    <a href="{{ route('cookie.policy') }}" class="footer-menu__link" target="_blank">
+                                        @lang('Cookie Policy')
+                                    </a>
                                 </li>
-                                <li class="footer-menu__item">
-                                    <a href="{{ route('faq') }}" class="footer-menu__link">@lang('FAQ')</a>
-                                </li>
-                                <li class="footer-menu__item">
-                                    <a href="{{ route('upcoming') }}" class="footer-menu__link">@lang('Upcoming')</a>
-                                </li>
-                                <li class="footer-menu__item">
-                                    <a href="{{ route('stories') }}" class="footer-menu__link">@lang('Stories')</a>
-                                </li>
+
+                                @foreach ($policyPages as $policyPage)
+                                    <li class="footer-menu__item">
+                                        <a href="{{ route('policy.pages', [slug($policyPage->data_info->title), $policyPage->id]) }}" class="footer-menu__link" target="_blank">
+                                            {{ __($policyPage->data_info->title) }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
