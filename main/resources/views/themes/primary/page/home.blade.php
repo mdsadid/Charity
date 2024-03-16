@@ -154,49 +154,18 @@
                 </div>
             </div>
             <div class="row g-4 justify-content-center">
-                @foreach ($volunteerElements as $volunteer)
-                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6" data-aos="fade-up" data-aos-duration="1500">
-                        <div class="volunteer__card">
-                            <div class="volunteer__img">
-                                <img src="{{ getImage('assets/images/site/volunteer/' . @$volunteer->data_info->volunteer_image, '305x350') }}" alt="image">
-                            </div>
-                            <div class="volunteer__txt">
-                                <h3 class="volunteer__name">{{ __(@$volunteer->data_info->name) }}</h3>
-                                <ul>
-                                    <li>
-                                        <span>@lang('Participate'):</span>
-                                        {{ @$volunteer->data_info->participated }} @lang('Campaigns')
-                                    </li>
-                                    <li>
-                                        <span>@lang('From'):</span>
-                                        {{ __(@$volunteer->data_info->from) }}
-                                    </li>
-                                    <li>
-                                        <span>@lang('Social'):</span>
-                                        <div class="social">
-                                            <a href="{{ @$volunteer->data_info->facebook }}" target="_blank">
-                                                <i class="fa-brands fa-facebook-f"></i>
-                                            </a>
-                                            <a href="{{ @$volunteer->data_info->twitter }}" target="_blank">
-                                                <i class="fa-brands fa-x-twitter"></i>
-                                            </a>
-                                            <a href="{{ @$volunteer->data_info->instagram }}" target="_blank">
-                                                <i class="fa-brands fa-instagram"></i>
-                                            </a>
-                                            <a href="{{ @$volunteer->data_info->linkedin }}" target="_blank">
-                                                <i class="fa-brands fa-linkedin-in"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                @forelse ($volunteerElements->take(4) as $volunteer)
+                    @include($activeTheme . 'partials.basicVolunteer')
+                @empty
+                    <p class="text-center" data-aos="fade-up" data-aos-duration="1500">{{ __($emptyMessage) }}</p>
+                @endforelse
             </div>
-            <div class="d-flex justify-content-center pt-lg-5 pt-4" data-aos="fade-up" data-aos-duration="1500">
-                <a href="volunteer.html" class="btn btn--base">@lang('See All Volunteer')</a>
-            </div>
+
+            @if (count($volunteerElements) > 4)
+                <div class="d-flex justify-content-center pt-lg-5 pt-4" data-aos="fade-up" data-aos-duration="1500">
+                    <a href="{{ route('volunteers') }}" class="btn btn--base">@lang('See All Volunteer')</a>
+                </div>
+            @endif
         </div>
     </div>
     <div class="donor py-120 bg-light-gradient">

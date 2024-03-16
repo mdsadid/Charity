@@ -32,7 +32,7 @@ class WebsiteController extends Controller
         $recentCampaignContent   = getSiteData('recent_campaign.content', true);
         $recentCampaigns         = Campaign::campaignCheck()->approve()->latest()->limit(10)->get();
         $volunteerContent        = getSiteData('volunteer.content', true);
-        $volunteerElements       = getSiteData('volunteer.element', false, null, true);
+        $volunteerElements       = getSiteData('volunteer.element', false, 5, true);
         $donorContent            = getSiteData('top_donor.content', true);
         $topDonors               = Deposit::whereNot('user_id', 0)
             ->where('donor_type', ManageStatus::KNOWN_DONOR)
@@ -49,6 +49,13 @@ class WebsiteController extends Controller
         $successElements         = getSiteData('success_story.element', false, 4, true);
 
         return view($this->activeTheme . 'page.home', compact('pageTitle', 'bannerElements', 'aboutUsContent', 'featuredCampaignContent', 'volunteerContent', 'volunteerElements', 'counterElements', 'campaignCategoryContent', 'campaignCategories', 'recentCampaignContent', 'recentCampaigns', 'featuredCampaigns', 'upcomingContent', 'upcomingCampaigns', 'successContent', 'successElements', 'totalFundRaised', 'totalCampaignCount', 'donorContent', 'topDonors'));
+    }
+
+    function volunteers() {
+        $pageTitle         = 'Volunteers';
+        $volunteerElements = getSiteData('volunteer.element', false, null, true);
+
+        return view($this->activeTheme . 'page.volunteers', compact('pageTitle', 'volunteerElements'));
     }
 
     function aboutUs() {

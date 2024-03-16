@@ -216,12 +216,20 @@
                     </div>
                     <div class="col-xl-2 col-sm-6 col-xsm-6">
                         <div class="footer-item">
-                            <h5 class="footer-item__title">@lang('Useful Link')</h5>
+                            <h5 class="footer-item__title">@lang('Useful Links')</h5>
                             <ul class="footer-menu">
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link">Home</a></li>
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link">About Us </a></li>
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link">Contact Us </a></li>
-                                <li class="footer-menu__item"><a href="#" class="footer-menu__link">FAQ</a></li>
+                                <li class="footer-menu__item">
+                                    <a href="{{ route('about.us') }}" class="footer-menu__link">@lang('About Us')</a>
+                                </li>
+                                <li class="footer-menu__item">
+                                    <a href="{{ route('faq') }}" class="footer-menu__link">@lang('FAQ')</a>
+                                </li>
+                                <li class="footer-menu__item">
+                                    <a href="{{ route('upcoming') }}" class="footer-menu__link">@lang('Upcoming')</a>
+                                </li>
+                                <li class="footer-menu__item">
+                                    <a href="{{ route('stories') }}" class="footer-menu__link">@lang('Stories')</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
