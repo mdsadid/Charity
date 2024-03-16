@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\Form;
 use App\Models\Deposit;
 use App\Lib\FormProcessor;
@@ -10,6 +11,7 @@ use App\Models\Transaction;
 use App\Constants\ManageStatus;
 use App\Lib\GoogleAuthenticator;
 use App\Http\Controllers\Controller;
+use App\Models\Withdrawal;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
@@ -36,7 +38,45 @@ class UserController extends Controller
         $widgetData['sendDonation']          = Deposit::where('user_id', $user->id)->done()->sum('amount');
         $widgetData['withdrawalAmount']      = $user->withdrawals()->done()->sum('amount');
 
-        return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent', 'user', 'widgetData'));
+        // Monthly Deposit & Withdraw Report Graph
+        $report['donationAmount'] = collect([]);
+        $report['withdrawAmount'] = collect([]);
+
+        $monthWiseDonation = Deposit::where('receiver_id', $user->id)
+            ->where('status', ManageStatus::PAYMENT_SUCCESS)
+            ->whereYear('created_at', now()->format('Y'))
+            ->selectRaw('date_format(created_at, "%M") as month')
+            ->selectRaw('sum(amount) as donation_amount')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        $monthWiseWithdraw = Withdrawal::where('user_id', $user->id)
+            ->where('status', ManageStatus::PAYMENT_SUCCESS)
+            ->whereYear('created_at', now()->format('Y'))
+            ->selectRaw('date_format(created_at, "%M") as month')
+            ->selectRaw('sum(amount) as withdraw_amount')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        for ($i = 1; $i <= 12; $i++) {
+            $monthName = Carbon::create()->month($i)->format('F');
+            $donation  = $monthWiseDonation->firstWhere('month', $monthName);
+
+            if ($donation) $report['donationAmount']->push(intval($donation->donation_amount));
+            else $report['donationAmount']->push(0);
+
+            $withdraw = $monthWiseWithdraw->firstWhere('month', $monthName);
+
+            if ($withdraw) $report['withdrawAmount']->push(intval($withdraw->withdraw_amount));
+            else $report['withdrawAmount']->push(0);
+        }
+
+        $donations   = $report['donationAmount']->toArray();
+        $withdrawals = $report['withdrawAmount']->toArray();
+
+        return view($this->activeTheme . 'user.page.dashboard', compact('pageTitle', 'kycContent', 'user', 'widgetData', 'donations', 'withdrawals'));
     }
 
     function kycForm() {

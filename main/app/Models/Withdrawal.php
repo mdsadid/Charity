@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Constants\ManageStatus;
 use App\Traits\Searchable;
+use App\Constants\ManageStatus;
 use App\Traits\UniversalStatus;
 use Illuminate\Database\Eloquent\Model;
 

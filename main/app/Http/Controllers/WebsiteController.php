@@ -14,7 +14,6 @@ use App\Constants\ManageStatus;
 use App\Models\GatewayCurrency;
 use App\Models\AdminNotification;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class WebsiteController extends Controller
@@ -37,7 +36,7 @@ class WebsiteController extends Controller
         $topDonors               = Deposit::whereNot('user_id', 0)
             ->where('donor_type', ManageStatus::KNOWN_DONOR)
             ->where('status', ManageStatus::PAYMENT_SUCCESS)
-            ->select(DB::raw('user_id, sum(amount) as total_donation, full_name'))
+            ->selectRaw('user_id, sum(amount) as total_donation, full_name')
             ->groupBy('user_id')
             ->orderByDesc('total_donation')
             ->limit(20)

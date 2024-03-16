@@ -113,7 +113,7 @@
                 <div class="col-lg-6">
                     <div class="custom--card">
                         <div class="card-header">
-                            <h3 class="title">Monthly Donation Report</h3>
+                            <h3 class="title">@lang('Monthly Donation Report')</h3>
                         </div>
                         <div id="donationReport"></div>
                     </div>
@@ -121,7 +121,7 @@
                 <div class="col-lg-6">
                     <div class="custom--card">
                         <div class="card-header">
-                            <h3 class="title">Monthly Withdraw Report</h3>
+                            <h3 class="title">@lang('Monthly Withdraw Report')</h3>
                         </div>
                         <div id="withdrawReport"></div>
                     </div>
@@ -133,4 +133,190 @@
 
 @push('page-script-lib')
     <script src="{{ asset($activeThemeTrue . 'js/apexcharts.js') }}"></script>
+@endpush
+
+@push('page-script')
+    <script>
+        (function($) {
+            'use strict'
+
+            if ($('#donationReport').length) {
+                var baseColorForChart = $('html').css('--success')
+                var donationReportOptions = {
+                    series: [{
+                        name: 'Donation',
+                        color: "hsl(" + baseColorForChart + " / .5)",
+                        data: JSON.parse('<?php echo json_encode($donations); ?>')
+                    }],
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shade: 'light',
+                            type: 'vertical',
+                            shadeIntensity: 0,
+                            gradientToColors: ["hsl(" + baseColorForChart + " / .1)"],
+                            inverseColors: false,
+                            opacityFrom: 1,
+                            opacityTo: 1,
+                            stops: [0, 100]
+                        }
+                    },
+                    chart: {
+                        height: 400,
+                        type: 'area',
+                        toolbar: {
+                            show: false
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        width: 2,
+                        curve: 'smooth'
+                    },
+                    title: {
+                        text: 'Year - ' + new Date().getFullYear(),
+                        align: 'center'
+                    },
+                    xaxis: {
+                        fill: '#FFFFFF',
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        labels: {
+                            format: 'dddd',
+                        },
+                        axisBorder: {
+                            show: false,
+                        },
+                    },
+                    responsive: [
+                        {
+                            breakpoint: 1199,
+                            options: {
+                                chart: {
+                                    height: 300,
+                                },
+                            },
+                        }, 
+                        {
+                            breakpoint: 991,
+                            options: {
+                                chart: {
+                                    height: 350,
+                                },
+                            },
+                        }, 
+                        {
+                            breakpoint: 767,
+                            options: {
+                                chart: {
+                                    height: 300,
+                                },
+                            },
+                        }, 
+                        {
+                            breakpoint: 575,
+                            options: {
+                                chart: {
+                                    height: 250,
+                                },
+                            },
+                        }
+                    ]
+                }
+
+                var donationReport = new ApexCharts(document.querySelector("#donationReport"), donationReportOptions)
+                donationReport.render()
+            }
+
+            if ($('#withdrawReport').length) {
+                var baseColorForChart = $('html').css('--warning')
+                var withdrawReportOptions = {
+                    series: [{
+                        name: 'Withdraw',
+                        color: "hsl(" + baseColorForChart + " / .5)",
+                        data: JSON.parse('<?php echo json_encode($withdrawals); ?>')
+                    }],
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shade: 'light',
+                            type: 'vertical',
+                            shadeIntensity: 0,
+                            gradientToColors: ["hsl(" + baseColorForChart + " / .1)"],
+                            inverseColors: false,
+                            opacityFrom: 1,
+                            opacityTo: 1,
+                            stops: [0, 100]
+                        }
+                    },
+                    chart: {
+                        height: 400,
+                        type: 'area',
+                        toolbar: {
+                            show: false
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        width: 2,
+                        curve: 'smooth'
+                    },
+                    title: {
+                        text: 'Year - ' + new Date().getFullYear(),
+                        align: 'center'
+                    },
+                    xaxis: {
+                        fill: '#FFFFFF',
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        labels: {
+                            format: 'dddd',
+                        },
+                        axisBorder: {
+                            show: false,
+                        },
+                    },
+                    responsive: [
+                        {
+                            breakpoint: 1199,
+                            options: {
+                                chart: {
+                                    height: 300,
+                                },
+                            },
+                        }, 
+                        {
+                            breakpoint: 991,
+                            options: {
+                                chart: {
+                                    height: 350,
+                                },
+                            },
+                        }, 
+                        {
+                            breakpoint: 767,
+                            options: {
+                                chart: {
+                                    height: 300,
+                                },
+                            },
+                        }, 
+                        {
+                            breakpoint: 575,
+                            options: {
+                                chart: {
+                                    height: 250,
+                                },
+                            },
+                        }
+                    ]
+                }
+
+                var withdrawReport = new ApexCharts(document.querySelector("#withdrawReport"), withdrawReportOptions)
+                withdrawReport.render()
+            }
+        })(jQuery)
+    </script>
 @endpush

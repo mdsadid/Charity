@@ -193,12 +193,6 @@
                     <p class="text-center" data-aos="fade-up" data-aos-duration="1500">{{ __($emptyMessage) }}</p>
                 @endforelse
             </div>
-
-            @if (count($topDonors) > 20)
-                <div class="d-flex justify-content-center pt-lg-5 pt-4" data-aos="fade-up" data-aos-duration="1500">
-                    <a href="donor-list.html" class="btn btn--base">@lang('View All Donors')</a>
-                </div>
-            @endif
         </div>
     </div>
     <div class="counter-section py-60">
