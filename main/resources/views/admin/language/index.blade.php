@@ -12,7 +12,7 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <div class="row gy-3">
+                                    <div class="row gy-3 align-items-center">
                                         <div class="col-sm-7">
                                             <span class="d-flex align-items-center">
                                                 <span class="me-2">

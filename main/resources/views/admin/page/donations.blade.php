@@ -57,6 +57,7 @@
                         <thead>
                             <tr>
                                 <th>@lang('Campaign')</th>
+                                <th>@lang('Donor')</th>
                                 <th>@lang('Gateway | Transaction')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Conversion Rate')</th>
@@ -75,6 +76,20 @@
                                     </td>
                                     <td>
                                         <div>
+                                            <span class="fw-bold">{{ __($deposit->donorName) }}</span>
+                                            <br>
+
+                                            @if ($deposit->user && $deposit->donor_type)
+                                                <span class="small">
+                                                    <a href="{{ appendQuery('search', $deposit->user->username) }}">
+                                                        <span>@</span>{{ $deposit->user->username }}
+                                                    </a>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
                                             <span class="text-primary">{{ __($deposit->gateway->name) }}</span>
                                             <br>
                                             <small title="@lang('Transaction Number')">
@@ -83,18 +98,22 @@
                                         </div>
                                     </td>
                                     <td>
-                                        {{ $setting->cur_sym . showAmount($deposit->amount) }} + <span class="text-danger" title="@lang('Charge')">{{ showAmount($deposit->charge) }}</span>
-                                        <br>
-                                        <strong title="@lang('Amount With Charge')">
-                                            {{ showAmount($deposit->amount + $deposit->charge) . ' ' . __($setting->site_cur) }}
-                                        </strong>
+                                        <div>
+                                            {{ $setting->cur_sym . showAmount($deposit->amount) }} + <span class="text-danger" title="@lang('Charge')">{{ showAmount($deposit->charge) }}</span>
+                                            <br>
+                                            <strong title="@lang('Amount With Charge')">
+                                                {{ showAmount($deposit->amount + $deposit->charge) . ' ' . __($setting->site_cur) }}
+                                            </strong>
+                                        </div>
                                     </td>
                                     <td>
-                                        1 {{ $setting->site_cur }} = {{ showAmount($deposit->rate, 4) . ' ' . __($deposit->method_currency) }}
-                                        <br>
-                                        <strong>
-                                            {{ showAmount($deposit->final_amount) . ' ' . __($deposit->method_currency) }}
-                                        </strong>
+                                        <div>
+                                            1 {{ $setting->site_cur }} = {{ showAmount($deposit->rate, 4) . ' ' . __($deposit->method_currency) }}
+                                            <br>
+                                            <strong>
+                                                {{ showAmount($deposit->final_amount) . ' ' . __($deposit->method_currency) }}
+                                            </strong>
+                                        </div>
                                     </td>
                                     <td>
                                         <div>
@@ -115,7 +134,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-label-info donorViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-donor_type="{{ $deposit->donor_type }}" data-donor_name="{{ $deposit->donorName }}" data-donor_email="{{ $deposit->donorEmail }}" data-donor_phone="{{ $deposit->donorPhone }}" data-donor_country="{{ $deposit->donorCountry }}" data-user_data="{{ json_encode($deposit->details) }}" data-admin_feedback="{{ $deposit->admin_feedback }}" data-url="{{ route('admin.file.download', ['filePath' => 'verify']) }}">
+                                        <button type="button" class="btn btn-sm btn-label-info donorViewBtn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth" data-donor_type="{{ $deposit->donor_type }}" data-donor_name="{{ __($deposit->donorName) }}" data-donor_email="{{ $deposit->donorEmail }}" data-donor_phone="{{ $deposit->donorPhone }}" data-donor_country="{{ $deposit->donorCountry }}" data-user_data="{{ json_encode($deposit->details) }}" data-admin_feedback="{{ $deposit->admin_feedback }}" data-url="{{ route('admin.file.download', ['filePath' => 'verify']) }}">
                                             <span class="tf-icons las la-info-circle me-1"></span> @lang('Details')
                                         </button>
 

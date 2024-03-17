@@ -101,12 +101,13 @@
 
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasBothLabel" class="offcanvas-title">@lang('KYC Details')</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h4 id="offcanvasBothLabel" class="offcanvas-title">@lang('KYC Details')</h4>
         </div>
-        <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+        <div class="offcanvas-body mx-0 flex-grow-0">
             <div class="kycData"></div>
-            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">@lang('Cancel')</button>
+            <button type="button" class="btn btn-secondary d-grid w-100 mt-4" data-bs-dismiss="offcanvas">
+                @lang('Close')
+            </button>
         </div>
     </div>
 
@@ -132,8 +133,9 @@
                                                 <ul class="list-group">`;
     
                     kycData.forEach(element => {
-                        if (!element.value) { return; }
-                        if(element.type != 'file') {
+                        if (!element.value) return;
+
+                        if (element.type != 'file') {
                             infoHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                             <b>${element.name}</b>
                                             <span>${element.value}</span>
@@ -152,8 +154,6 @@
 
                     infoHtml += `</ul>
                             </div>`;
-
-                    
                 } else {
                     infoHtml += `<div class="mt-3">
                                     <ul class="list-group">
@@ -161,7 +161,7 @@
                                             <b>{{ __($emptyMessage) }}</b>
                                         </li>
                                     </ul>
-                                </div>`
+                                </div>`;
                 }
 
                 $('.kycData').html(infoHtml);

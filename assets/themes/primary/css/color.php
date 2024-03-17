@@ -1,87 +1,75 @@
 <?php
+
 header("Content-Type:text/css");
-function checkhexcolor($color){
+
+function checkHexColor($color)
+{
     return preg_match('/^#[a-f0-9]{6}$/i', $color);
 }
-if (isset($_GET['color']) AND $_GET['color'] != '') {
-    $color = "#" . $_GET['color'];
+
+if (isset($_GET['color1']) and $_GET['color1'] != '') {
+    $color1 = "#" . $_GET['color1'];
 }
 
-if (!$color OR !checkhexcolor($color)) {
-    $color = "#336699";
+if (!$color1 or !checkHexColor($color1)) {
+    $color1 = "#336699";
 }
 
-
-if (isset($_GET['secondColor']) AND $_GET['secondColor'] != '') {
-    $secondColor = "#" . $_GET['secondColor'];
+if (isset($_GET['color2']) and $_GET['color2'] != '') {
+    $color2 = "#" . $_GET['color2'];
 }
 
-if (!$secondColor OR !checkhexcolor($secondColor)) {
-    $secondColor = "#336699";
+if (!$color2 or !checkHexColor($color2)) {
+    $color2 = "#336699";
 }
 
-
-function hexToRgb($hex, $alpha = false) {
-    $hex      = str_replace('#', '', $hex);
-    $length   = strlen($hex);
-    $rgb['r'] = hexdec($length == 6 ? substr($hex, 0, 2) : ($length == 3 ? str_repeat(substr($hex, 0, 1), 2) : 0));
-    $rgb['g'] = hexdec($length == 6 ? substr($hex, 2, 2) : ($length == 3 ? str_repeat(substr($hex, 1, 1), 2) : 0));
-    $rgb['b'] = hexdec($length == 6 ? substr($hex, 4, 2) : ($length == 3 ? str_repeat(substr($hex, 2, 1), 2) : 0));
-    if ( $alpha ) {
-       $rgb['a'] = $alpha;
-    }
-    return $rgb;
-}
-
-
-function hexToHsl($hex){
-    $hex      = str_replace('#', '', $hex);
-    $red = hexdec(substr($hex, 0, 2)) / 255;
+function hexToHsl($hex)
+{
+    $hex   = str_replace('#', '', $hex);
+    $red   = hexdec(substr($hex, 0, 2)) / 255;
     $green = hexdec(substr($hex, 2, 2)) / 255;
-    $blue = hexdec(substr($hex, 4, 2)) / 255;
+    $blue  = hexdec(substr($hex, 4, 2)) / 255;
 
-    $cmin = min($red, $green, $blue);
-    $cmax = max($red, $green, $blue);
-    $delta = $cmax - $cmin;
+    $cMin  = min($red, $green, $blue);
+    $cMax  = max($red, $green, $blue);
+    $delta = $cMax - $cMin;
 
     if ($delta == 0) {
         $hue = 0;
-    } elseif ($cmax === $red) {
+    } elseif ($cMax === $red) {
         $hue = (($green - $blue) / $delta);
-    } elseif ($cmax === $green) {
+    } elseif ($cMax === $green) {
         $hue = ($blue - $red) / $delta + 2;
     } else {
         $hue = ($red - $green) / $delta + 4;
     }
 
     $hue = round($hue * 60);
-    if ($hue < 0) {
-        $hue += 360;
-    }
 
+    if ($hue < 0) $hue += 360;
 
-    $lightness = (($cmax + $cmin) / 2);
+    $lightness  = ($cMax + $cMin) / 2;
     $saturation = $delta === 0 ? 0 : ($delta / (1 - abs(2 * $lightness - 1)));
-    if ($saturation < 0) {
-        $saturation += 1;
-    }
 
-    $lightness = round($lightness*100);
-    $saturation = round($saturation*100);
+    if ($saturation < 0) $saturation += 1;
+
+    $lightness  = round($lightness * 100);
+    $saturation = round($saturation * 100);
 
     $hsl['h'] = $hue;
     $hsl['s'] = $saturation;
     $hsl['l'] = $lightness;
+
     return $hsl;
-
 }
-
 
 ?>
 
 :root{
-    --main: <?php echo hexToHsl($color)['h']; ?>,
-            <?php echo hexToHsl($color)['s']; ?>,
-            <?php echo hexToHsl($color)['l']; ?>;
+    --base-h: <?php echo hexToHsl($color1)['h']; ?>;
+    --base-s: <?php echo hexToHsl($color1)['s'] . '%'; ?>;
+    --base-l: <?php echo hexToHsl($color1)['l'] . '%'; ?>;
+    --base-two-h: <?php echo hexToHsl($color2)['h']; ?>;
+    --base-two-s: <?php echo hexToHsl($color2)['s'] . '%'; ?>;
+    --base-two-l: <?php echo hexToHsl($color2)['l'] . '%'; ?>;
 }
-

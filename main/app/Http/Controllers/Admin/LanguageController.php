@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
 use App\Models\Language;
 use App\Models\SiteData;
-use Illuminate\Pagination\LengthAwarePaginator;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class LanguageController extends Controller
 {
     function index() {
         $pageTitle = 'Language Setting';
         $languages = Language::get();
-        
+
         return view('admin.language.index', compact('pageTitle', 'languages'));
     }
 
@@ -43,8 +44,7 @@ class LanguageController extends Controller
             $keyText .= "$langKey \n";
         }
 
-        return rtrim($keyText,"\n");
-        return response()->json($keys);
+        return rtrim($keyText, "\n");
     }
 
     function store($id = 0) {
@@ -52,7 +52,7 @@ class LanguageController extends Controller
 
         $this->validate(request(), [
             'name' => 'required|string|max:40',
-            'code' => $codeValidate
+            'code' => $codeValidate,
         ]);
 
         if ($id) {
@@ -69,10 +69,11 @@ class LanguageController extends Controller
             File::put($path, $data);
         }
 
-        $language->name   = request('name');
+        $language->name = request('name');
         $language->save();
 
         $toast[] = ['success', $notification];
+
         return back()->withToasts($toast);
     }
 
@@ -87,6 +88,7 @@ class LanguageController extends Controller
         $language->delete();
 
         $toast[] = ['success', 'Language delete success'];
+
         return back()->withToasts($toast);
     }
 
@@ -99,6 +101,7 @@ class LanguageController extends Controller
 
         if (empty($json)) {
             $toast[] = ['error', 'File doesn\'t exist'];
+
             return back()->withToasts($toast);
         }
 
@@ -107,24 +110,24 @@ class LanguageController extends Controller
         if ($searchKey) {
             if (array_key_exists($searchKey, $json)) {
                 $json = [
-                    $searchKey => $json[$searchKey]
+                    $searchKey => $json[$searchKey],
                 ];
             } else {
                 $json = [];
             }
         }
-        
+
         $perPage     = getPaginate();
         $currentPage = request()->get('page', 1);
         $offset      = ($currentPage - 1) * $perPage;
         $items       = array_slice($json, $offset, $perPage, true);
         $json        = new LengthAwarePaginator(
-                            $items,
-                            count($json),
-                            $perPage,
-                            $currentPage,
-                            ['path'  => url()->current()]
-                        );
+            $items,
+            count($json),
+            $perPage,
+            $currentPage,
+            ['path' => url()->current()],
+        );
 
         return view('admin.language.translate', compact('pageTitle', 'json', 'language', 'allLang'));
     }
@@ -136,9 +139,9 @@ class LanguageController extends Controller
             $fromLang = Language::find(request('id'));
             $json     = file_get_contents(resource_path('lang/') . $fromLang->code . '.json');
             $keywords = json_decode($json, true);
-        }else{
+        } else {
             $text     = $this->keywords();
-            $keywords = explode("\n",$text);
+            $keywords = explode("\n", $text);
         }
 
         $items = file_get_contents(resource_path('lang/') . $toLang->code . '.json');
@@ -153,7 +156,8 @@ class LanguageController extends Controller
 
         if (isset($newArr)) {
             $itemData = json_decode($items, true);
-            $result = array_merge($itemData, $newArr);
+            $result   = array_merge($itemData, $newArr);
+
             file_put_contents(resource_path('lang/') . $toLang->code . '.json', json_encode($result));
         }
 
@@ -165,50 +169,52 @@ class LanguageController extends Controller
 
         $this->validate(request(), [
             'key'   => 'required',
-            'value' => 'required'
+            'value' => 'required',
         ]);
 
         $json   = file_get_contents(resource_path('lang/') . $language->code . '.json');
         $reqKey = trim(request('key'));
 
         if (array_key_exists($reqKey, json_decode($json, true))) {
-            $toast[] = ['error', 'This key is taken already'];
+            $toast[] = ['error', 'This key has already been taken'];
+
             return back()->withToasts($toast);
         } else {
             $newArr[$reqKey] = trim(request('value'));
             $itemData        = json_decode($json, true);
             $result          = array_merge($itemData, $newArr);
+
             file_put_contents(resource_path('lang/') . $language->code . '.json', json_encode($result));
 
             $toast[] = ['success', 'Language key added success'];
+
             return back()->withToasts($toast);
         }
     }
 
-    function languageKeyUpdate($id)
-    {
+    function languageKeyUpdate($id) {
         $this->validate(request(), [
             'key'   => 'required',
-            'value' => 'required'
+            'value' => 'required',
         ]);
 
-        $key      = trim(request('key'));
-        $language = Language::find($id);
-        $data     = file_get_contents(resource_path('lang/') . $language->code . '.json');
-        $jsonArr  = json_decode($data, true);
-
+        $key           = trim(request('key'));
+        $language      = Language::find($id);
+        $data          = file_get_contents(resource_path('lang/') . $language->code . '.json');
+        $jsonArr       = json_decode($data, true);
         $jsonArr[$key] = request('value');
 
         file_put_contents(resource_path('lang/') . $language->code . '.json', json_encode($jsonArr));
 
         $toast[] = ['success', 'Language key update success'];
+
         return back()->withToasts($toast);
     }
 
     function languageKeyDelete($id) {
         $this->validate(request(), [
             'key'   => 'required',
-            'value' => 'required'
+            'value' => 'required',
         ]);
 
         $key      = request('key');
@@ -217,23 +223,23 @@ class LanguageController extends Controller
         $jsonArr  = json_decode($data, true);
 
         unset($jsonArr[$key]);
+
         file_put_contents(resource_path('lang/') . $language->code . '.json', json_encode($jsonArr));
 
         $toast[] = ['success', 'Language key delete success'];
+
         return back()->withToasts($toast);
     }
 
-    private function getAllFiles($dir)
-    {
+    private function getAllFiles($dir) {
         $root = $dir;
 
-        $iter = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($root, \RecursiveDirectoryIterator::SKIP_DOTS),
-                    \RecursiveIteratorIterator::SELF_FIRST,
-                    \RecursiveIteratorIterator::CATCH_GET_CHILD
-                );
+        $iter = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($root, \RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST,
+            RecursiveIteratorIterator::CATCH_GET_CHILD
+        );
 
-        $paths = array($root);
         foreach ($iter as $path => $dir) {
             if (!$dir->isDir() && substr($dir, -4) == '.php') {
                 $files[] = $path;
@@ -243,33 +249,39 @@ class LanguageController extends Controller
         return $files;
     }
 
-    private function getKeys($path)
-    {
+    private function getKeys($path) {
         $code      = file_get_contents($path);
         $exp       = explode("')", $code);
         $finalCode = '';
 
         foreach ($exp as $dd) {
-            $finalCode .= $dd . "')
-
-            ";
+            $finalCode .= $dd . "')";
         }
 
-        preg_match_all("/@lang\(\\'(.*)\\'\)/",  $finalCode, $keys);
+        preg_match_all("/@lang\(\\'(.*)\\'\)/", $finalCode, $keys);
+
         return $this->fixMultiIssue($keys[1]);
     }
 
-    private function fixMultiIssue($arr)
-    {
+    private function fixMultiIssue($arr) {
         $res = array();
+
         foreach ($arr as $keys) {
             $exp = explode("')", $keys);
+            
             foreach ($exp as $child) {
-                if (!strpos($child, '@lang') && !strpos($child, '}') && !strpos($child, '<') && !strpos($child, '{') && !strpos($child, '>')) {
-                    $res[] =  $child;
+                if (
+                    !strpos($child, '@lang') && 
+                    !strpos($child, '}') && 
+                    !strpos($child, '<') && 
+                    !strpos($child, '{') && 
+                    !strpos($child, '>')
+                ) {
+                    $res[] = $child;
                 }
             }
         }
+
         return $res;
     }
 }

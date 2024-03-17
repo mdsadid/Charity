@@ -1,5 +1,9 @@
 @extends($activeTheme . 'layouts.app')
 
+@if ($setting->language)
+    @php $languages = App\Models\Language::active()->get() @endphp
+@endif
+
 @section('content')
     <header class="header" id="header">
         <div class="container">
@@ -15,12 +19,17 @@
                     <ul class="navbar-nav nav-menu ms-auto align-items-lg-center">
                         <li class="nav-item d-block d-lg-none">
                             <div class="top-button d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="language-box">
-                                    <select class="select form--control form-select">
-                                        <option selected value="en">English</option>
-                                        <option value="bn">Bangla</option>
-                                    </select>
-                                </div>
+                                @if ($setting->language)
+                                    <div class="language-box">
+                                        <select class="select form--control form-select langSel">
+                                            @foreach ($languages as $language)
+                                                <option value="{{ $language->code }}" @selected(session('lang') == $language->code)>
+                                                    {{ __($language->name) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
 
                                 <ul class="login-registration-list d-flex flex-wrap align-items-center">
                                     <li class="login-registration-list__item">
@@ -150,12 +159,17 @@
                                     @endif
                                 @endauth
 
-                                <div class="language-box language-box-web">
-                                    <select class="select form--control form-select">
-                                        <option selected value="en">English</option>
-                                        <option value="bn">Bangla</option>
-                                    </select>
-                                </div>
+                                @if ($setting->language)
+                                    <div class="language-box language-box-web">
+                                        <select class="select form--control form-select langSel">
+                                            @foreach ($languages as $language)
+                                                <option value="{{ $language->code }}" @selected(session('lang') == $language->code)>
+                                                    {{ __($language->name) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
                             </div>
                         </li>
                     </ul>

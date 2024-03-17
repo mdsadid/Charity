@@ -69,33 +69,49 @@
                             @forelse ($withdrawals as $withdraw)
                                 <tr>
                                     <td>
-                                        <span class="fw-bold">
-                                            <a href="{{ appendQuery('method', @$withdraw->method->id) }}">{{ __(@$withdraw->method->name) }}</a>
-                                        </span>
-                                        <br>
-                                        <small title="@lang('Transaction Number')">{{ $withdraw->trx }}</small>
+                                        <div>
+                                            <span class="fw-bold">
+                                                <a href="{{ appendQuery('method', $withdraw->method->id) }}">
+                                                    {{ __($withdraw->method->name) }}
+                                                </a>
+                                            </span>
+                                            <br>
+                                            <small title="@lang('Transaction Number')">{{ $withdraw->trx }}</small>
+                                        </div>
                                     </td>
                                     <td>
-                                        {{ showDateTime($withdraw->created_at) }}<br>
-                                        {{ diffForHumans($withdraw->created_at) }}
+                                        <div>
+                                            {{ showDateTime($withdraw->created_at) }}
+                                            <br>
+                                            {{ diffForHumans($withdraw->created_at) }}
+                                        </div>
                                     </td>
                                     <td>
-                                        <span class="fw-bold">{{ $withdraw->user->fullname }}</span><br>
-                                        <span class="small">
-                                            <a href="{{ appendQuery('search', @$withdraw->user->username) }}"><span>@</span>{{ $withdraw->user->username }}</a>
-                                        </span>
+                                        <div>
+                                            <span class="fw-bold">{{ $withdraw->user->fullname }}</span>
+                                            <br>
+                                            <span class="small">
+                                                <a href="{{ appendQuery('search', $withdraw->user->username) }}">
+                                                    <span>@</span>{{ $withdraw->user->username }}
+                                                </a>
+                                            </span>
+                                        </div>
                                     </td>
                                     <td>
-                                        {{ __($setting->cur_sym) }}{{ showAmount($withdraw->amount) }} - <span class="text-danger" title="@lang('Charge')">{{ showAmount($withdraw->charge) }}</span>
-                                        <br>
-                                        <strong title="@lang('Amount Without Charge')">
-                                            {{ showAmount($withdraw->amount - $withdraw->charge) }} {{ __($setting->site_cur) }}
-                                        </strong>
+                                        <div>
+                                            {{ __($setting->cur_sym) . showAmount($withdraw->amount) }} - <span class="text-danger" title="@lang('Charge')">{{ showAmount($withdraw->charge) }}</span>
+                                            <br>
+                                            <strong title="@lang('Amount Without Charge')">
+                                                {{ showAmount($withdraw->amount - $withdraw->charge) . ' ' . __($setting->site_cur) }}
+                                            </strong>
+                                        </div>
                                     </td>
                                     <td>
-                                        1 {{ __($setting->site_cur) }} = {{ showAmount($withdraw->rate) }} {{ __($withdraw->currency) }}
-                                        <br>
-                                        <strong>{{ showAmount($withdraw->final_amount) }} {{ __($withdraw->currency) }}</strong>
+                                        <div>
+                                            1 {{ __($setting->site_cur) }} = {{ showAmount($withdraw->rate) }} {{ __($withdraw->currency) }}
+                                            <br>
+                                            <strong>{{ showAmount($withdraw->final_amount) }} {{ __($withdraw->currency) }}</strong>
+                                        </div>
                                     </td>
                                     <td>
                                         @if ($withdraw->status == ManageStatus::PAYMENT_PENDING)
@@ -113,8 +129,8 @@
                                             aria-controls       = "offcanvasBoth"
                                             data-date           = "{{ showDateTime($withdraw->created_at) }}"
                                             data-trx            = "{{ $withdraw->trx }}"
-                                            data-username       = "{{ @$withdraw->user->username }}"
-                                            data-method         = "{{ __(@$withdraw->method->name) }}"
+                                            data-username       = "{{ $withdraw->user->username }}"
+                                            data-method         = "{{ __($withdraw->method->name) }}"
                                             data-amount         = "{{ showAmount($withdraw->amount) }} {{ __($setting->site_cur) }}"
                                             data-charge         = "{{ showAmount($withdraw->charge) }} {{ __($setting->site_cur) }}"
                                             data-after_charge   = "{{ showAmount($withdraw->after_charge) }} {{ __($setting->site_cur) }}"
