@@ -7,9 +7,9 @@
                 <div class="col-lg-10">
                     <div class="card custom--card" data-aos="fade-up" data-aos-duration="1500">
                         <div class="card-header">
-                            <h3 class="title">{{ __($pageTitle) }}</h3>
+                            <h3 class="title">@lang('Read Our') {{ __($pageTitle) }}</h3>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body cookie--details">
                             @php echo $cookie->data_info->details @endphp
                         </div>
                     </div>
@@ -21,7 +21,7 @@
 
 @push('page-style')
     <style>
-        .cookie-policy p {
+        .cookie--details p {
             color: hsl(var(--secondary));
         }
     </style>

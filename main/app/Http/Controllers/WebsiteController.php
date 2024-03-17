@@ -401,7 +401,7 @@ class WebsiteController extends Controller
     }
 
     function maintenance() {
-        if(bs('site_maintenance') == ManageStatus::INACTIVE) return to_route('home');
+        if (bs('site_maintenance') == ManageStatus::INACTIVE) return to_route('home');
 
         $maintenance = SiteData::where('data_key', 'maintenance.data')->first();
         $pageTitle   = $maintenance->data_info->heading;
