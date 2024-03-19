@@ -96,7 +96,7 @@
                                             <i class="las la-wallet me-2"></i><span class="fw-bold">@lang('Raised Amount'):</span> {{ $setting->cur_sym . showAmount($campaign->raised_amount) }}
                                         </p>
                                         <p class="text-nowrap">
-                                            <i class="las la-users me-2"></i><span class="fw-bold">@lang('Total Donor'):</span> 0
+                                            <i class="las la-users me-2"></i><span class="fw-bold">@lang('Total Donor'):</span> {{ $donationCount }}
                                         </p>
                                     </div>
                                     <div class="col-12">

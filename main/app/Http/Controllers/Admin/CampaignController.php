@@ -48,16 +48,17 @@ class CampaignController extends Controller
     }
 
     function details($id) {
-        $pageTitle = 'Campaign Details';
-        $backRoute = route('admin.campaigns.index');
-        $campaign  = Campaign::with(['user', 'category'])->where('id', $id)->first();
-        $comments  = Comment::with('user')
+        $pageTitle     = 'Campaign Details';
+        $backRoute     = route('admin.campaigns.index');
+        $campaign      = Campaign::with(['user', 'category'])->where('id', $id)->first();
+        $donationCount = $campaign->deposits()->done()->count();
+        $comments      = Comment::with('user')
             ->where('campaign_id', $campaign->id)
             ->approve()
             ->latest()
             ->paginate(getPaginate());
 
-        return view('admin.campaign.details', compact('pageTitle', 'backRoute', 'campaign', 'comments'));
+        return view('admin.campaign.details', compact('pageTitle', 'backRoute', 'campaign', 'donationCount', 'comments'));
     }
 
     function updateStatus($id, $type) {
