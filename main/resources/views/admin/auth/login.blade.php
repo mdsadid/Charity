@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+
 @section('content')
     <div class="authentication-wrapper authentication-cover">
         <div class="authentication-inner row m-0">
@@ -12,7 +13,7 @@
                 <div class="w-px-400 mx-auto">
                     <div class="app-brand mb-3 justify-content-center">
                         <a href="{{ route('home') }}" target="_blank" class="app-brand-link gap-2">
-                          <span class="app-brand-logo demo"><img src="{{ getImage(getFilePath('logoFavicon').'/logo_dark.png') }}" alt="logo"></span>
+                            <span class="app-brand-logo demo"><img src="{{ getImage(getFilePath('logoFavicon') . '/logo_dark.png') }}" alt="logo"></span>
                         </a>
                     </div>
                     <div class="text-center">
@@ -26,15 +27,16 @@
                     <form class="mb-3 verify-gcaptcha" action="{{ route('admin.login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label">@lang('Username')e</label>
-                            <input value="admin" type="text" class="form-control" name="username"value="{{ old('username') }}" placeholder="@lang('Enter your username')" required autofocus>
+                            <label class="form-label">@lang('Username')</label>
+                            <input type="text" class="form-control" name="username" value="mradmin" placeholder="@lang('Enter your username')" required autofocus>
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label">@lang('Password')</label>
-
                             <div class="input-group">
-                                <input value="admin" type="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required>
-                                <span aria-valuemax="" class="input-group-text cursor-pointer"><i class="las la-eye-slash"></i></span>
+                                <input type="password" class="form-control" name="password" value="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required>
+                                <span aria-valuemax="" class="input-group-text cursor-pointer">
+                                    <i class="las la-eye-slash"></i>
+                                </span>
                             </div>
                         </div>
                         <x-captcha />
@@ -49,7 +51,7 @@
                                 </a>
                             </div>
                         </div>
-                        <button class="btn btn-primary d-grid w-100" type="submit">@lang('Sign in')</button>
+                        <button class="btn btn-primary d-grid w-100" type="submit">@lang('Sign In')</button>
                     </form>
                 </div>
             </div>
@@ -58,5 +60,5 @@
 @endsection
 
 @push('page-style-lib')
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/auth.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/auth.css') }}">
 @endpush

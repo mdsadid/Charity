@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+
 @section('content')
     <div class="authentication-wrapper authentication-cover">
         <div class="authentication-inner row m-0">
@@ -12,7 +13,9 @@
                 <div class="w-px-400 mx-auto">
                     <div class="app-brand mb-3 justify-content-center">
                         <a href="{{ route('home') }}" target="_blank" class="app-brand-link gap-2">
-                          <span class="app-brand-logo demo"><img src="{{ getImage(getFilePath('logoFavicon').'/logo_dark.png') }}" alt="logo"></span>
+                            <span class="app-brand-logo demo">
+                                <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_dark.png') }}" alt="logo">
+                            </span>
                         </a>
                     </div>
                     <div class="text-center">
@@ -31,19 +34,21 @@
 
                         <div class="mb-3">
                             <label class="form-label">@lang('New Password')</label>
-
                             <div class="input-group">
                                 <input type="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required autofocus>
-                                <span class="input-group-text cursor-pointer"><i class="las la-eye-slash"></i></span>
+                                <span class="input-group-text cursor-pointer">
+                                    <i class="las la-eye-slash"></i>
+                                </span>
                             </div>
                         </div>
 
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label">@lang('Confirm Password')</label>
-
                             <div class="input-group">
                                 <input type="password" class="form-control" name="password_confirmation" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required>
-                                <span class="input-group-text cursor-pointer"><i class="las la-eye-slash"></i></span>
+                                <span class="input-group-text cursor-pointer">
+                                    <i class="las la-eye-slash"></i>
+                                </span>
                             </div>
                         </div>
 
@@ -61,5 +66,5 @@
 @endsection
 
 @push('page-style-lib')
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/auth.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/auth.css') }}">
 @endpush

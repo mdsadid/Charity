@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+
 @section('content')
     <div class="authentication-wrapper authentication-cover">
         <div class="authentication-inner row m-0">
@@ -12,7 +13,9 @@
                 <div class="w-px-400 mx-auto">
                     <div class="app-brand mb-3 justify-content-center">
                         <a href="{{ route('home') }}" target="_blank" class="app-brand-link gap-2">
-                          <span class="app-brand-logo demo"><img src="{{ getImage(getFilePath('logoFavicon').'/logo_dark.png') }}" alt="logo"></span>
+                            <span class="app-brand-logo demo">
+                                <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_dark.png') }}" alt="logo">
+                            </span>
                         </a>
                     </div>
                     <div class="text-center">
@@ -45,5 +48,5 @@
 @endsection
 
 @push('page-style-lib')
-    <link rel="stylesheet" href="{{asset('assets/admin/css/page/auth.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/page/auth.css') }}">
 @endpush
