@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\User\Auth;
 
+use Illuminate\Http\Request;
 use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -24,6 +24,33 @@ class LoginController extends Controller
         $loginContent = getSiteData('login.content', true);
 
         return view($this->activeTheme . 'user.auth.login', compact('pageTitle', 'loginContent'));
+    }
+
+    function findUsername() {
+        $login     = request()->input('username');
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        request()->merge([$fieldType => $login]);
+
+        return $fieldType;
+    }
+
+    function username() {
+        return $this->username;
+    }
+
+    protected function validateLogin() {
+        $this->validate(request(), [
+            $this->username() => 'required|string',
+            'password'        => 'required|string',
+        ]);
+    }
+
+    function authenticated(Request $request, $user) {
+        $user->tc = $user->ts == ManageStatus::VERIFIED ? ManageStatus::UNVERIFIED : ManageStatus::VERIFIED;
+        $user->save();
+
+        return to_route('user.home');
     }
 
     function login() {
@@ -54,37 +81,12 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse(request());
     }
 
-    function findUsername() {
-        $login     = request()->input('username');
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        request()->merge([$fieldType => $login]);
-        return $fieldType;
-    }
-
-    function username() {
-        return $this->username;
-    }
-
-    protected function validateLogin() {
-        $this->validate(request(), [
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-        ]);
-    }
-
     function logout() {
         $this->guard()->logout();
         request()->session()->invalidate();
 
-        $toast[] = ['success', 'Logout success'];
+        $toast[] = ['success', 'You have logged out'];
+
         return back()->withToasts($toast);
-    }
-
-    function authenticated(Request $request, $user) {
-        $user->tc = $user->ts == ManageStatus::VERIFIED ? ManageStatus::UNVERIFIED : ManageStatus::VERIFIED;
-        $user->save();
-
-        return to_route('user.home');
     }
 }
