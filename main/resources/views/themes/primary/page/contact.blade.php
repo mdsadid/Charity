@@ -46,14 +46,16 @@
                 <div class="col-lg-4">
                     <div class="contact__info">
                         <div class="contact__info__card d-flex flex-column gap-4">
-                            @foreach ($contactElements as $contact)
+                            @forelse ($contactElements as $contact)
                                 <div class="custom--card" data-aos="fade-up" data-aos-duration="1500">
                                     <div class="card-body">
                                         <h3 class="card-subtitle d-flex align-items-center gap-2 mb-2">@php echo $contact->data_info->icon @endphp {{ __(@$contact->data_info->heading) }}:</h3>
                                         <p>{{ __(@$contact->data_info->data) }}</p>
                                     </div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <p class="text-center" data-aos="fade-up" data-aos-duration="1500">{{ __($emptyMessage) }}</p>
+                            @endforelse
                         </div>
                     </div>
                 </div>
