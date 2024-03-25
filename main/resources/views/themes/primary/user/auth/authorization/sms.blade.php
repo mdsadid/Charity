@@ -25,7 +25,7 @@
                                 <div class="col-sm-12 form-group">
                                     <div class="have-account text-left">
                                         <p class="have-account__text">
-                                            @lang('A six-digit verification code has been sent to') <b>{{ '+' . showEmailAddress($user->mobile) }}</b>
+                                            @lang('A six-digit verification code has been sent to') <b>{{ '+' . showMobileNumber($user->mobile) }}</b>
                                         </p>
                                     </div>
                                 </div>
