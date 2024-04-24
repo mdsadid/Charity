@@ -91,7 +91,7 @@ class DepositController extends Controller
             'admin_feedback' => 'required|max:255',
         ]);
 
-        $deposit                 = Deposit::where('id', $id)->pending()->with('user')->firstOrFail();
+        $deposit                 = Deposit::where('id', $id)->pending()->firstOrFail();
         $deposit->status         = ManageStatus::PAYMENT_CANCEL;
         $deposit->admin_feedback = request('admin_feedback');
         $deposit->save();
@@ -99,21 +99,20 @@ class DepositController extends Controller
         $user = User::find($deposit->user_id);
 
         if (!$user) {
-            $donationData = $deposit->donation;
-            $user         = [
-                'fullname' => $donationData->full_name,
-                'username' => $donationData->email,
-                'email'    => $donationData->email,
-                'mobile'   => $donationData->phone,
+            $user = [
+                'fullname' => $deposit->full_name,
+                'username' => $deposit->email,
+                'email'    => $deposit->email,
+                'mobile'   => $deposit->phone,
             ];
         }
 
-        $campaign = $deposit->donation->campaign;
+        $campaign = $deposit->campaign;
 
-        notify($deposit->user, 'DONATION_REJECT', [
+        notify($user, 'DONATION_REJECT', [
             'method_name'       => $deposit->gatewayCurrency()->name,
             'method_currency'   => $deposit->method_currency,
-            'method_amount'     => showAmount($deposit->final_amo),
+            'method_amount'     => showAmount($deposit->final_amount),
             'amount'            => showAmount($deposit->amount),
             'charge'            => showAmount($deposit->charge),
             'rate'              => showAmount($deposit->rate),

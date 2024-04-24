@@ -62,8 +62,8 @@ class ProcessController extends Controller
         $response = curl_exec($ch);
         curl_close($ch);
 
-        $response        = json_decode($response);
-        $deposit->detail = $response->data;
+        $response         = json_decode($response);
+        $deposit->details = $response->data;
         $deposit->save();
 
         if ($response->status == 'error') {

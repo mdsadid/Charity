@@ -30,7 +30,7 @@ class ProcessController extends Controller
             );
 
             $deposit->btc_wallet = $invoice->getData()['id'];
-            $deposit->detail     = json_encode($invoice->getData());
+            $deposit->details    = json_encode($invoice->getData());
             $deposit->save();
 
             $send['redirect']     = true;
